@@ -37,12 +37,8 @@ export function LoginForm() {
                 title="Inicio de sesión"
                 subtitle="Bienvenido a SIGUE Network"
                 iconNode={
-                    <div className={styles.shieldWrapper}>
-                        <div className={styles.shieldOuter}>
-                            <div className={styles.shieldInner}>
-                                <Lock size={48} strokeWidth={2.5} />
-                            </div>
-                        </div>
+                    <div className={styles.shieldInner}>
+                        <Lock size={45} strokeWidth={2.5} />
                     </div>
                 }
             />

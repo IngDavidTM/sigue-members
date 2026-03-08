@@ -46,10 +46,8 @@ export function RegisterForm() {
                 title="Registro"
                 subtitle="Bienvenido a SIGUE Network"
                 iconNode={
-                    <div className={styles.circleWrapper}>
-                        <div className={styles.circleInner}>
-                            <User size={50} strokeWidth={2.5} />
-                        </div>
+                    <div className={styles.circleInner}>
+                        <User size={50} strokeWidth={2.5} />
                     </div>
                 }
             />

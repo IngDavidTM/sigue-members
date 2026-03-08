@@ -1,27 +1,13 @@
 .bannerContainer {
     width: 100%;
     display: flex;
-    flex-direction: column;
-    margin-bottom: 2.5rem;
-}
-
-.stripeTop {
-    height: 45px;
-    background-color: var(--color-primary);
-    width: 100%;
-}
-
-.stripeBottom {
-    height: 25px;
-    background-color: var(--color-primary);
-    width: 100%;
-}
-
-.stripeWhite {
-    background-color: white;
-    width: 100%;
-    display: flex;
     justify-content: center;
+    background-color: var(--color-primary);
+    padding-top: 3.5rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+    /* Crucial for preventing horizontal scroll from the ::after stretch */
 }
 
 .contentWrapper {
@@ -30,12 +16,14 @@
     width: 100%;
     max-width: var(--auth-max-width);
     padding: 0 1.5rem;
-    gap: 1.5rem;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    gap: 20px;
+    /* Precise gap between icon and text */
 }
 
 .iconBox {
+    background-color: white;
+    width: 110px;
+    height: 110px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -49,9 +37,24 @@
 }
 
 .textContainer {
+    background-color: white;
+    height: 110px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    flex-grow: 1;
+    padding: 0 2rem;
+    position: relative;
+}
+
+.textContainer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100vw;
+    height: 100%;
+    background-color: white;
 }
 
 .title {
@@ -63,8 +66,9 @@
 }
 
 .subtitle {
-    color: var(--color-text-light);
-    font-size: 1rem;
+    color: #7d708d;
+    /* A more purple-gray matching the mockup */
+    font-size: 0.95rem;
     font-weight: 600;
     margin: 0;
     margin-top: 0.2rem;
@@ -73,5 +77,15 @@
 @media (max-width: 600px) {
     .title {
         font-size: 1.8rem;
+    }
+
+    .iconBox {
+        width: 90px;
+        height: 90px;
+    }
+
+    .textContainer {
+        height: 90px;
+        padding: 0 1rem;
     }
 }

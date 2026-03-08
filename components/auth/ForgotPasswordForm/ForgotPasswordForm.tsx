@@ -34,12 +34,8 @@ export function ForgotPasswordForm() {
                 title="Recuperar"
                 subtitle="Restablecer tu contraseña"
                 iconNode={
-                    <div className={styles.keyWrapper}>
-                        <div className={styles.keyOuter}>
-                            <div className={styles.keyInner}>
-                                <Key size={48} strokeWidth={2.5} />
-                            </div>
-                        </div>
+                    <div className={styles.keyInner}>
+                        <Key size={45} strokeWidth={2.5} />
                     </div>
                 }
             />
