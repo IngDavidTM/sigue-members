@@ -2,13 +2,16 @@
 
 :root {
   /* Brand Colors from Mockup */
-  --color-primary: #e6155a; /* Magenta/Pink */
+  --color-primary: #e6155a;
+  /* Magenta/Pink */
   --color-primary-hover: #c4124c;
-  --color-text-dark: #4a154b; /* Deep Purple */
+  --color-text-dark: #4a154b;
+  /* Deep Purple */
   --color-text-light: #9b779c;
-  --color-input-bg: #fdf5f9; /* Very light pink/white */
+  --color-input-bg: #fdf5f9;
+  /* Very light pink/white */
   --color-input-placeholder: #d1b8cc;
-  
+
   /* Neutral Colors */
   --color-bg: #ffffff;
   --color-surface: #f7f9fc;
@@ -17,7 +20,7 @@
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  
+
   /* Layout */
   --auth-max-width: 500px;
 }
@@ -51,4 +54,28 @@ a:hover {
 
 ul {
   list-style: none;
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-input-placeholder);
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-input-placeholder) var(--color-surface);
 }
