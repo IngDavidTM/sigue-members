@@ -114,8 +114,8 @@ export function LoginForm() {
                 </div>
 
                 <div className={styles.footerLinks}>
-                    <Link href="/register" className={styles.link}>No tiene una cuenta?</Link>
-                    <Link href="/forgot-password" className={styles.link}>Olvido su contraseña?</Link>
+                    <Link href="/register" className={styles.link}>¿No tienes una cuenta?</Link>
+                    <Link href="/forgot-password" className={styles.link}>¿Olvidaste tu contraseña?</Link>
                 </div>
             </div>
         </div>

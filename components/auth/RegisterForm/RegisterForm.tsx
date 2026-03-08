@@ -136,8 +136,7 @@ export function RegisterForm() {
                 </form>
 
                 <div className={styles.footerLinks}>
-                    <Link href="/login" className={styles.link}>¿Ya tiene una cuenta?</Link>
-                    <Link href="/login" className={styles.link}>Iniciar sesión</Link>
+                    <Link href="/login" className={styles.link}>¿Ya tienes una cuenta?</Link>
                 </div>
             </div>
         </div>

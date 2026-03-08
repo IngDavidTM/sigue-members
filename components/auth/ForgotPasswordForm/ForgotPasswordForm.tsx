@@ -66,7 +66,7 @@ export function ForgotPasswordForm() {
 
                 <div className={styles.footerLinks}>
                     <Link href="/login" className={styles.link}>Volver a Iniciar sesión</Link>
-                    <Link href="/register" className={styles.link}>¿No tiene una cuenta?</Link>
+                    <Link href="/register" className={styles.link}>¿No tienes una cuenta?</Link>
                 </div>
             </div>
         </div>
