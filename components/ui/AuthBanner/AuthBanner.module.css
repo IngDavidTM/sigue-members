@@ -20,6 +20,20 @@
     /* Precise gap between icon and text */
 }
 
+.iconInner {
+    height: 90px;
+    width: 90px;
+    background-color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.iconInnerCircle {
+    border-radius: 50%;
+}
+
 .iconBox {
     background-color: white;
     width: 110px;

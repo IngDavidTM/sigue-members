@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button/Button";
 import { loginWithEmail, loginWithGoogle } from "@/services/auth/login";
 
 import styles from "./LoginForm.module.css";
+import sharedStyles from "../AuthShared.module.css";
 
 export function LoginForm() {
     const [showPassword, setShowPassword] = useState(false);
@@ -32,20 +33,16 @@ export function LoginForm() {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={sharedStyles.container}>
             <AuthBanner
                 title="Inicio de sesión"
                 subtitle="Bienvenido a SIGUE Network"
-                iconNode={
-                    <div className={styles.shieldInner}>
-                        <Lock size={45} strokeWidth={2.5} />
-                    </div>
-                }
+                iconNode={<Lock size={45} strokeWidth={2.5} />}
             />
 
-            <div className={styles.formContent}>
-                <form action={handleEmailLogin} className={styles.form}>
-                    <div className={styles.inputs}>
+            <div className={sharedStyles.formContent}>
+                <form action={handleEmailLogin} className={sharedStyles.form}>
+                    <div className={sharedStyles.inputs}>
                         <Input
                             id="email"
                             name="email"
@@ -80,9 +77,9 @@ export function LoginForm() {
                         </label>
                     </div>
 
-                    {errorStr && <p className={styles.errorMessage}>{errorStr}</p>}
+                    {errorStr && <p className={sharedStyles.errorMessage}>{errorStr}</p>}
 
-                    <div className={styles.actions}>
+                    <div className={sharedStyles.actions}>
                         <LoginSubmitButton />
                     </div>
                 </form>
@@ -113,9 +110,9 @@ export function LoginForm() {
                     </Button>
                 </div>
 
-                <div className={styles.footerLinks}>
-                    <Link href="/register" className={styles.link}>¿No tienes una cuenta?</Link>
-                    <Link href="/forgot-password" className={styles.link}>¿Olvidaste tu contraseña?</Link>
+                <div className={sharedStyles.footerLinks}>
+                    <Link href="/register" className={sharedStyles.link}>¿No tienes una cuenta?</Link>
+                    <Link href="/forgot-password" className={sharedStyles.link}>¿Olvidaste tu contraseña?</Link>
                 </div>
             </div>
         </div>

@@ -1,0 +1,67 @@
+.container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.formContent {
+    width: 100%;
+    max-width: var(--auth-max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    padding-bottom: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.errorMessage {
+    color: var(--color-error);
+    font-size: 0.875rem;
+    text-align: center;
+    margin: 0;
+    background-color: rgba(239, 68, 68, 0.1);
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.successMessage {
+    color: #10b981;
+    font-size: 0.875rem;
+    text-align: center;
+    margin: 0;
+    background-color: rgba(16, 185, 129, 0.1);
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.actions {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.footerLinks {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.link {
+    font-size: 0.9rem;
+    font-style: italic;
+    font-weight: 700;
+    color: #551b8c;
+}
+
+.link:hover {
+    color: var(--color-primary);
+}

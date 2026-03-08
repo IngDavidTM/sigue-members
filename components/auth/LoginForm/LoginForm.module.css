@@ -1,40 +1,3 @@
-.container {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-/* Shield Icon Design from the mock */
-.shieldInner {
-    height: 90px;
-    width: 90px;
-    background-color: var(--color-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-}
-
-.formContent {
-    width: 100%;
-    max-width: var(--auth-max-width);
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    padding-bottom: 2rem;
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-}
-
 .eyeIcon {
     color: var(--color-input-placeholder);
 }
@@ -63,20 +26,6 @@
     border-radius: 4px;
 }
 
-.errorMessage {
-    color: var(--color-error);
-    font-size: 0.875rem;
-    text-align: center;
-    margin: 0;
-    background-color: rgba(239, 68, 68, 0.1);
-    padding: 0.5rem;
-    border-radius: 4px;
-}
-
-.actions {
-    margin-top: 1rem;
-}
-
 .divider {
     display: flex;
     align-items: center;
@@ -98,21 +47,4 @@
 
 .googleAction {
     margin-bottom: 2rem;
-}
-
-.footerLinks {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.link {
-    font-size: 0.9rem;
-    font-style: italic;
-    font-weight: 700;
-    color: #551b8c;
-}
-
-.link:hover {
-    color: var(--color-primary);
 }

@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button/Button";
 import { resetPasswordForEmail } from "@/services/auth/reset-password";
 
 import styles from "./ForgotPasswordForm.module.css";
+import sharedStyles from "../AuthShared.module.css";
 
 export function ForgotPasswordForm() {
     const [errorStr, setErrorStr] = useState<string | null>(null);
@@ -29,20 +30,16 @@ export function ForgotPasswordForm() {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={sharedStyles.container}>
             <AuthBanner
                 title="Recuperar"
                 subtitle="Restablecer tu contraseña"
-                iconNode={
-                    <div className={styles.keyInner}>
-                        <Key size={45} strokeWidth={2.5} />
-                    </div>
-                }
+                iconNode={<Key size={45} strokeWidth={2.5} />}
             />
 
-            <div className={styles.formContent}>
-                <form action={handleReset} className={styles.form}>
-                    <div className={styles.inputs}>
+            <div className={sharedStyles.formContent}>
+                <form action={handleReset} className={sharedStyles.form}>
+                    <div className={sharedStyles.inputs}>
                         <p className={styles.instructionText}>
                             Ingresa el correo electrónico asociado a tu cuenta y te enviaremos un enlace para crear una nueva contraseña.
                         </p>
@@ -56,17 +53,17 @@ export function ForgotPasswordForm() {
                         />
                     </div>
 
-                    {errorStr && <p className={styles.errorMessage}>{errorStr}</p>}
-                    {successStr && <p className={styles.successMessage}>{successStr}</p>}
+                    {errorStr && <p className={sharedStyles.errorMessage}>{errorStr}</p>}
+                    {successStr && <p className={sharedStyles.successMessage}>{successStr}</p>}
 
-                    <div className={styles.actions}>
+                    <div className={sharedStyles.actions}>
                         <ResetSubmitButton />
                     </div>
                 </form>
 
-                <div className={styles.footerLinks}>
-                    <Link href="/login" className={styles.link}>Volver a Iniciar sesión</Link>
-                    <Link href="/register" className={styles.link}>¿No tienes una cuenta?</Link>
+                <div className={sharedStyles.footerLinks}>
+                    <Link href="/login" className={sharedStyles.link}>Volver a Iniciar sesión</Link>
+                    <Link href="/register" className={sharedStyles.link}>¿No tienes una cuenta?</Link>
                 </div>
             </div>
         </div>

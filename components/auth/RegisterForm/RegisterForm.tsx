@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button/Button";
 import { registerWithEmail } from "@/services/auth/register";
 
 import styles from "./RegisterForm.module.css";
+import sharedStyles from "../AuthShared.module.css";
 
 export function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false);
@@ -41,19 +42,16 @@ export function RegisterForm() {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={sharedStyles.container}>
             <AuthBanner
                 title="Registro"
                 subtitle="Bienvenido a SIGUE Network"
-                iconNode={
-                    <div className={styles.circleInner}>
-                        <User size={50} strokeWidth={2.5} />
-                    </div>
-                }
+                iconNode={<User size={50} strokeWidth={2.5} />}
+                iconShape="circle"
             />
 
-            <div className={styles.formContent}>
-                <form action={handleRegister} className={styles.form}>
+            <div className={sharedStyles.formContent}>
+                <form action={handleRegister} className={sharedStyles.form}>
 
                     <div className={styles.rowInputs}>
                         <Input
@@ -74,7 +72,7 @@ export function RegisterForm() {
                         />
                     </div>
 
-                    <div className={styles.inputs}>
+                    <div className={sharedStyles.inputs}>
                         <Input
                             id="email"
                             name="email"
@@ -128,15 +126,15 @@ export function RegisterForm() {
                         </label>
                     </div>
 
-                    {errorStr && <p className={styles.errorMessage}>{errorStr}</p>}
+                    {errorStr && <p className={sharedStyles.errorMessage}>{errorStr}</p>}
 
-                    <div className={styles.actions}>
+                    <div className={sharedStyles.actions}>
                         <RegisterSubmitButton />
                     </div>
                 </form>
 
-                <div className={styles.footerLinks}>
-                    <Link href="/login" className={styles.link}>¿Ya tienes una cuenta?</Link>
+                <div className={sharedStyles.footerLinks}>
+                    <Link href="/login" className={sharedStyles.link}>¿Ya tienes una cuenta?</Link>
                 </div>
             </div>
         </div>

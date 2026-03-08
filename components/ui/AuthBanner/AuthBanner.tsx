@@ -6,9 +6,10 @@ interface AuthBannerProps {
     iconNode?: React.ReactNode;
     title: string;
     subtitle?: string;
+    iconShape?: 'square' | 'circle';
 }
 
-export function AuthBanner({ iconUrl, iconNode, title, subtitle }: AuthBannerProps) {
+export function AuthBanner({ iconUrl, iconNode, title, subtitle, iconShape = 'square' }: AuthBannerProps) {
     return (
         <div className={styles.bannerContainer}>
             <div className={styles.stripeTop} />
@@ -18,7 +19,9 @@ export function AuthBanner({ iconUrl, iconNode, title, subtitle }: AuthBannerPro
                         {iconUrl ? (
                             <img src={iconUrl} alt="Icon" className={styles.imageIcon} />
                         ) : (
-                            iconNode
+                            <div className={`${styles.iconInner} ${iconShape === 'circle' ? styles.iconInnerCircle : ''}`}>
+                                {iconNode}
+                            </div>
                         )}
                     </div>
                     <div className={styles.textContainer}>
