@@ -1,0 +1,124 @@
+.container {
+    max-width: var(--auth-max-width);
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* User Icon Design from the mock */
+.circleWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 100px;
+    background-color: var(--color-primary);
+}
+
+.circleInner {
+    height: 80px;
+    width: 80px;
+    border: 3px solid white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.formContent {
+    padding: 0 10%;
+    padding-bottom: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.rowInputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 480px) {
+    .rowInputs {
+        grid-template-columns: 1fr;
+    }
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.eyeIcon {
+    color: var(--color-input-placeholder);
+}
+
+.optionsRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 0.5rem;
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    cursor: pointer;
+}
+
+.checkbox {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-top: 2px;
+    accent-color: var(--color-primary);
+    border-color: var(--color-primary);
+    cursor: pointer;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.termsText {
+    line-height: 1.4;
+}
+
+.errorMessage {
+    color: var(--color-error);
+    font-size: 0.875rem;
+    text-align: center;
+    margin: 0;
+    background-color: rgba(239, 68, 68, 0.1);
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.actions {
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.footerLinks {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.link {
+    font-size: 0.9rem;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+
+.link:hover {
+    color: var(--color-primary);
+}

@@ -1,0 +1,79 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+
+.inputContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input {
+    width: 100%;
+    padding: 1rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    background-color: var(--color-input-bg);
+    border: 1px solid transparent;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.input::placeholder {
+    color: var(--color-input-placeholder);
+    font-weight: 600;
+}
+
+.input:focus {
+    border-color: var(--color-text-light);
+    background-color: var(--color-bg);
+    box-shadow: 0 0 0 3px rgba(155, 119, 156, 0.1);
+}
+
+.inputError {
+    border-color: var(--color-error);
+}
+
+.inputError:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.iconButton {
+    position: absolute;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--color-text-light);
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.iconButton:hover:not(.iconStatic) {
+    color: var(--color-text-dark);
+}
+
+.iconStatic {
+    cursor: default;
+}
+
+.errorText {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-error);
+    font-weight: 500;
+}
