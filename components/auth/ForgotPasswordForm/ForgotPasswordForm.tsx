@@ -13,13 +13,28 @@ import { resetPasswordForEmail } from "@/services/auth/reset-password";
 import styles from "./ForgotPasswordForm.module.css";
 import sharedStyles from "../AuthShared.module.css";
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export function ForgotPasswordForm() {
     const [errorStr, setErrorStr] = useState<string | null>(null);
     const [successStr, setSuccessStr] = useState<string | null>(null);
+    const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+    const [email, setEmail] = useState("");
 
     async function handleReset(formData: FormData) {
         setErrorStr(null);
         setSuccessStr(null);
+        setFieldErrors({});
+
+        const emailVal = formData.get("email") as string;
+        if (!emailVal) {
+            setFieldErrors({ email: "Este campo es obligatorio" });
+            return;
+        } else if (!EMAIL_REGEX.test(emailVal)) {
+            setFieldErrors({ email: "Ingresa un correo electrónico válido" });
+            return;
+        }
+
         const result = await resetPasswordForEmail(formData);
 
         if (result?.error) {
@@ -38,7 +53,7 @@ export function ForgotPasswordForm() {
             />
 
             <div className={sharedStyles.formContent}>
-                <form action={handleReset} className={sharedStyles.form}>
+                <form action={handleReset} className={sharedStyles.form} noValidate>
                     <div className={sharedStyles.inputs}>
                         <p className={styles.instructionText}>
                             Ingresa el correo electrónico asociado a tu cuenta y te enviaremos un enlace para crear una nueva contraseña.
@@ -50,6 +65,12 @@ export function ForgotPasswordForm() {
                             label="Correo electrónico"
                             placeholder="Ingresa tu correo electrónico"
                             required
+                            error={fieldErrors.email}
+                            value={email}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                                if (fieldErrors.email) setFieldErrors(prev => ({ ...prev, email: "" }));
+                            }}
                         />
                     </div>
 

@@ -9,10 +9,19 @@ import { createClient } from "@/lib/supabase/server";
 export async function loginWithEmail(formData: FormData) {
     const supabase = await createClient();
 
-    const data = {
-        email: formData.get("email") as string,
-        password: formData.get("password") as string,
-    };
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    if (!email || !password) {
+        return { error: "Correo electrónico y contraseña son obligatorios." };
+    }
+
+    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!EMAIL_REGEX.test(email)) {
+        return { error: "El correo electrónico no tiene un formato válido." };
+    }
+
+    const data = { email, password };
 
     const { error } = await supabase.auth.signInWithPassword(data);
 

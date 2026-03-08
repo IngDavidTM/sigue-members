@@ -13,13 +13,38 @@ import { loginWithEmail, loginWithGoogle } from "@/services/auth/login";
 import styles from "./LoginForm.module.css";
 import sharedStyles from "../AuthShared.module.css";
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export function LoginForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [errorStr, setErrorStr] = useState<string | null>(null);
+    const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
     const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     async function handleEmailLogin(formData: FormData) {
         setErrorStr(null);
+        setFieldErrors({});
+
+        const emailVal = formData.get("email") as string;
+        const passwordVal = formData.get("password") as string;
+
+        const errors: Record<string, string> = {};
+        if (!emailVal) {
+            errors.email = "Este campo es obligatorio";
+        } else if (!EMAIL_REGEX.test(emailVal)) {
+            errors.email = "Ingresa un correo electrónico válido";
+        }
+
+        if (!passwordVal) errors.password = "Este campo es obligatorio";
+
+        if (Object.keys(errors).length > 0) {
+            setFieldErrors(errors);
+            return;
+        }
+
         const result = await loginWithEmail(formData);
         if (result?.error) {
             setErrorStr(result.error);
@@ -41,15 +66,21 @@ export function LoginForm() {
             />
 
             <div className={sharedStyles.formContent}>
-                <form action={handleEmailLogin} className={sharedStyles.form}>
+                <form action={handleEmailLogin} className={sharedStyles.form} noValidate>
                     <div className={sharedStyles.inputs}>
                         <Input
                             id="email"
                             name="email"
                             type="email"
-                            label="Nombre de usuario"
+                            label="Correo electrónico"
                             placeholder="Ingresa tu correo electrónico"
                             required
+                            error={fieldErrors.email}
+                            value={email}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                                if (fieldErrors.email) setFieldErrors(prev => ({ ...prev, email: "" }));
+                            }}
                         />
 
                         <Input
@@ -59,6 +90,12 @@ export function LoginForm() {
                             label="Contraseña"
                             placeholder="Ingrese su contraseña"
                             required
+                            error={fieldErrors.password}
+                            value={password}
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                                if (fieldErrors.password) setFieldErrors(prev => ({ ...prev, password: "" }));
+                            }}
                             icon={
                                 showPassword ? (
                                     <EyeOff size={20} className={styles.eyeIcon} />
