@@ -1,5 +1,5 @@
 import { ForgotPasswordForm } from "@/components/auth/ForgotPasswordForm/ForgotPasswordForm";
-import styles from "../login/page.module.css"; // Reuse the centered flat layout
+import styles from "../login/page.module.css"; // Reuse the flat top-aligned layout
 
 export const metadata = {
     title: "Recuperar Contraseña | SIGUE Network",

@@ -124,7 +124,7 @@
     font-size: 0.9rem;
     font-style: italic;
     font-weight: 700;
-    color: var(--color-text-dark);
+    color: #551b8c;
 }
 
 .link:hover {
