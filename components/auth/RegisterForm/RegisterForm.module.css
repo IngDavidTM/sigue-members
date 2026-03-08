@@ -1,7 +1,6 @@
 .container {
-    max-width: var(--auth-max-width);
     width: 100%;
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
 }
 
@@ -27,7 +26,10 @@
 }
 
 .formContent {
-    padding: 0 10%;
+    width: 100%;
+    max-width: var(--auth-max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
     padding-bottom: 2rem;
 }
 
