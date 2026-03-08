@@ -2,92 +2,76 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    position: relative;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
 }
 
 .stripeTop {
-    height: 80px;
+    height: 45px;
     background-color: var(--color-primary);
     width: 100%;
 }
 
 .stripeBottom {
-    height: 30px;
+    height: 25px;
     background-color: var(--color-primary);
     width: 100%;
+}
+
+.stripeWhite {
+    background-color: white;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .contentWrapper {
     display: flex;
     align-items: center;
     width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    margin-top: -60px;
-    margin-bottom: -15px;
-    padding: 0 1rem;
+    max-width: var(--auth-max-width);
+    padding: 0 1.5rem;
     gap: 1.5rem;
-    z-index: 10;
-    position: relative;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .iconBox {
-    width: 120px;
-    height: 120px;
-    background-color: white;
-    border: 4px solid var(--color-primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-primary);
     flex-shrink: 0;
+}
+
+.imageIcon {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .textContainer {
     display: flex;
     flex-direction: column;
-    background-color: white;
-    padding: 0.5rem 1.5rem;
+    justify-content: center;
 }
 
 .title {
     color: var(--color-primary);
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 800;
     margin: 0;
     letter-spacing: -0.5px;
-    white-space: nowrap;
 }
 
 .subtitle {
     color: var(--color-text-light);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     margin: 0;
-    margin-top: 0.25rem;
+    margin-top: 0.2rem;
 }
 
 @media (max-width: 600px) {
-    .contentWrapper {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0;
-        margin-top: -40px;
-    }
-
-    .textContainer {
-        padding: 0.5rem 0;
-        background-color: transparent;
-    }
-
     .title {
-        font-size: 2rem;
-        white-space: normal;
-    }
-
-    .iconBox {
-        width: 80px;
-        height: 80px;
+        font-size: 1.8rem;
     }
 }

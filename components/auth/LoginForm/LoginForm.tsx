@@ -35,6 +35,7 @@ export function LoginForm() {
         <div className={styles.container}>
             <AuthBanner
                 title="Inicio de sesión"
+                subtitle="Bienvenido a SIGUE Network"
                 iconNode={
                     <div className={styles.shieldWrapper}>
                         <div className={styles.shieldOuter}>

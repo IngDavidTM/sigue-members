@@ -63,7 +63,7 @@ export function RegisterForm() {
                             name="firstName"
                             type="text"
                             label="Nombre"
-                            placeholder=""
+                            placeholder="Ingrese su nombre"
                             required
                         />
                         <Input
@@ -71,7 +71,7 @@ export function RegisterForm() {
                             name="lastName"
                             type="text"
                             label="Apellido"
-                            placeholder=""
+                            placeholder="Ingrese su apellido"
                             required
                         />
                     </div>
