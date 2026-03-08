@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
+import { getURL } from "@/lib/utils";
 
 export async function loginWithEmail(formData: FormData) {
     const supabase = await createClient();
@@ -35,13 +36,11 @@ export async function loginWithEmail(formData: FormData) {
 
 export async function loginWithGoogle() {
     const supabase = await createClient();
-    const headersList = await headers();
-    const origin = headersList.get("origin") || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-            redirectTo: `${origin}/auth/callback`,
+            redirectTo: `${getURL()}/auth/callback`,
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
+import { getURL } from "@/lib/utils";
 
 export async function registerWithEmail(formData: FormData) {
     const supabase = await createClient();
@@ -29,7 +30,7 @@ export async function registerWithEmail(formData: FormData) {
     const { error } = await supabase.auth.signUp({
         ...data,
         options: {
-            emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/auth/callback`,
+            emailRedirectTo: `${getURL()}/auth/callback`,
         },
     });
 
