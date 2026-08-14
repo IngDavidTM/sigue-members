@@ -1,28 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import 'tailwindcss';
 
 :root {
-  /* Brand Colors from Mockup */
-  --color-primary: #e6155a;
-  /* Magenta/Pink */
+  --color-primary: #ef1351;
   --color-primary-hover: #c4124c;
   --color-text-dark: #4a154b;
-  /* Deep Purple */
   --color-text-light: #9b779c;
   --color-input-bg: #fdf5f9;
-  /* Very light pink/white */
   --color-input-placeholder: #d1b8cc;
-
-  /* Neutral Colors */
   --color-bg: #ffffff;
   --color-surface: #f7f9fc;
   --color-border: #e2e8f0;
   --color-error: #ef4444;
-
-  /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-
-  /* Layout */
+  --font-auth: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --auth-max-width: 500px;
+}
+
+@theme {
+  --color-primary: #ef1351;
+  --color-secondary: #5d17eb;
+  --color-secondary-dark: #4510f2;
+  --color-secondary-deep: #502076;
+  --color-accent-soft-purple: #e0caff;
+  --color-accent-light-purple: #d5c8fe;
+  --color-accent-pink: #ffe5f2;
+  --color-accent-lavender: #cfc1ff;
+  --color-accent-highlight: #cb62eb;
+  --color-accent-medium-purple: #a992f8;
+  --color-background: #ffffff;
+  --color-background-soft: #f3edfd;
+  --color-background-neutral: #f6f4ee;
+  --font-sans: var(--font-heebo), 'Heebo', sans-serif;
+  --font-heading: var(--font-roboto), 'Roboto', sans-serif;
 }
 
 * {
@@ -35,22 +44,12 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  font-family: var(--font-sans);
+  font-family: var(--font-auth);
   background-color: var(--color-surface);
   color: var(--color-text-dark);
 }
 
-a {
-  color: var(--color-primary);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  text-decoration: underline;
-  color: var(--color-primary-hover);
-}
+a { text-decoration: none; }
 
 ul {
   list-style: none;
@@ -78,4 +77,12 @@ ul {
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--color-input-placeholder) var(--color-surface);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }

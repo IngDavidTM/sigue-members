@@ -1,0 +1,642 @@
+{
+  "header": {
+    "nav": {
+      "inicio": "INICIO",
+      "conoceSigue": "CONOCE SIGUE",
+      "sigueTracks": "SIGUE TRACKS",
+      "sigueConsulting": "SIGUE CONSULTING",
+      "sigueHub": "SIGUE HUB",
+      "unete": "ÚNETE",
+      "contactanos": "CONTÁCTANOS",
+      "donacion": "DONACIÓN"
+    },
+    "topBar": {
+      "unete": "Únete",
+      "conoceSigue": "Conoce SIGUE"
+    },
+    "aria": {
+      "toggleMenu": "Abrir menú",
+      "english": "English",
+      "espanol": "Español"
+    }
+  },
+  "footer": {
+    "conoceSigue": {
+      "title": "Conoce SIGUE",
+      "description1": "Potenciamos y conectamos proyectos sociales, ONGs y empresas, fundamentados en valores cristianos para transformar comunidades integralmente.",
+      "description2": "Somos una organización sin fines de lucro, exenta de impuestos, con estatus 501c3, establecida en Georgia, Estados Unidos. EIN: 26-2010006."
+    },
+    "newsletter": {
+      "title": "Mantente conectado",
+      "subtitle": "Suscríbete para mantenerte al día con las noticias de SIGUE Network",
+      "placeholder": "Dirección de correo electrónico",
+      "button": "Suscríbete"
+    },
+    "links": {
+      "title": "Enlaces",
+      "inicio": "INICIO",
+      "conoceSigue": "CONOCE SIGUE",
+      "sigueTracks": "SIGUE TRACKS",
+      "eventos": "EVENTOS",
+      "membresia": "MEMBRESÍA",
+      "sigueAcademy": "SIGUE ACADEMY"
+    },
+    "transparency": {
+      "title": "Certificado de transparencia",
+      "badgeAlt": "Candid Transparency Badge"
+    },
+    "bottom": {
+      "address": "3913 Griese Lane, Grovetown, GA, 30813, USA",
+      "email": "Email:",
+      "copyright": "© 2026 All rights reserved."
+    }
+  },
+  "hero": {
+    "title": "Conectamos y potenciamos ONGs, proyectos sociales y empresas que transforman comunidades integralmente, ayudándolos a escalar su impacto de manera sostenible.",
+    "subtitle": "Unidos para servir, más fuertes para impactar",
+    "cta": "Conoce más de SIGUE Network"
+  },
+  "info": {
+    "title": "Comunidad y estrategia para un impacto sostenible",
+    "p1": "Formar parte de SIGUE Network significa acceder a una red diseñada para fortalecer y expandir tu misión. Sabemos que muchas organizaciones enfrentan barreras como ",
+    "p1Bold": "falta de financiamiento, baja visibilidad y dificultades para medir su impacto",
+    "p2": "Por eso, en SIGUE Network, te ayudamos a ",
+    "p2Bold1": "estructurar, fortalecer y escalar tu labor",
+    "p2Mid": " con estrategias prácticas, mentoría y alianzas clave, asegurando una ",
+    "p2Bold2": "transformación integral de comunidades",
+    "p2End": " que sea sostenible y de largo alcance.",
+    "cta": "DESCUBRE",
+    "ctaSub": "cómo SIGUE puede fortalecer tu organización"
+  },
+  "join": {
+    "title": "¿Quién puede unirse a SIGUE Network?",
+    "titleStart": "¿Quién puede unirse a ",
+    "titleBold": "SIGUE Network?",
+    "p1": "Si lideras, o eres parte de, un ",
+    "p1Bold1": "proyecto social, una ONG, una empresa de impacto",
+    "p1Mid": " o formas parte de un ",
+    "p1Bold2": "equipo de acción social en una iglesia o misión",
+    "p1End": ", en SIGUE Network encontrarás el apoyo que necesitas. Nuestra membresía te conecta con ",
+    "p1Bold3": "herramientas, formación y aliados estratégicos",
+    "p1End2": " para que tu impacto sea ",
+    "p1Bold4": "sostenible y escalable",
+    "cta": "HAZTE",
+    "ctaSub": "miembro y lleva tu impacto al siguiente nivel"
+  },
+  "involvement": {
+    "heading": "Cómo involucrarte:",
+    "subheading": "Sé parte del impacto",
+    "intro": "En SIGUE Network, creemos que la transformación integral de comunidades es un esfuerzo colectivo. Tú también puedes ser parte del cambio aportando tu tiempo, talento o recursos para fortalecer proyectos que generan impacto físico, emocional y espiritual.",
+    "imageAlt": "Voluntario de SIGUE Network",
+    "cards": {
+      "volunteer": {
+        "title": "ÚNETE",
+        "subtitle": "COMO VOLUNTARIO(A)",
+        "question": "¿Quieres contribuir con tus habilidades y experiencia?",
+        "description": "Puedes apoyar con mentoría, formación, acompañamiento estratégico o participación en eventos y actividades clave.",
+        "ctaLabel": "ÚNETE",
+        "ctaSubLabel": "como voluntario y sé parte del impacto"
+      },
+      "donate": {
+        "title": "DONA",
+        "subtitle": "Y MULTIPLICA EL IMPACTO",
+        "question": "Tu aporte permite que más proyectos sociales crezcan y logren sostenibilidad.",
+        "description": "Con tu apoyo, promovemos la formación, asesoría y expansión de iniciativas que transforman comunidades de manera integral.",
+        "ctaLabel": "DONA",
+        "ctaSubLabel": "ahora y multiplica el impacto"
+      },
+      "pray": {
+        "title": "ORA",
+        "subtitle": "Y SÉ PARTE DEL CAMBIO",
+        "question": "Únete en oración por líderes, proyectos y comunidades.",
+        "description": "Juntos, creemos en el poder de la oración para abrir caminos, fortalecer propósitos y transformar vidas.",
+        "ctaLabel": "ORA",
+        "ctaSubLabel": "por quienes transforman comunidades"
+      }
+    }
+  },
+  "connect": {
+    "heading": "¿Cómo conectamos?",
+    "headingLine1": "¿Cómo",
+    "headingLine2": "conecta-",
+    "headingLine3": "mos?",
+    "intro": "En SIGUE Network, creemos que ",
+    "introBold": "cuando nos unimos para servir, somos más fuertes para impactar",
+    "introEnd": ". Por eso, creamos espacios donde líderes, organizaciones y empresas que transforman comunidades en lo físico, emocional y espiritual pueden compartir experiencias, fortalecer alianzas y crecer juntos. Así conectamos:",
+    "cards": {
+      "community": {
+        "title": "Comunidad Online",
+        "question": "¿Quieres conectarte con líderes y acceder a recursos en tiempo real?",
+        "description": "Únete a ",
+        "descriptionBold": "nuestra comunidad exclusiva en Hispanoamérica",
+        "descriptionEnd": ", donde puedes conocer otros proyectos, compartir inspiración y desafíos, innovar, formar alianzas estratégicas y orar juntos para fortalecer tu impacto y generar una transformación integral en las comunidades que sirves.",
+        "ctaLabel": "ÚNETE",
+        "ctaSubLabel": "a nuestra comunidad online y fortalece tu impacto"
+      },
+      "events": {
+        "title": "Eventos",
+        "question": "¿Quieres inspirarte y conectar para impulsar la transformación integral?",
+        "description": "Nuestros eventos, cumbres, talleres y webinars reúnen a líderes y organizaciones comprometidos con transformar comunidades. Fomentamos el aprendizaje y las alianzas estratégicas entre ONGs, empresas y equipos de acción social de iglesias, fortaleciendo su impacto ",
+        "descriptionBold": "físico, emocional y espiritual",
+        "descriptionEnd": ".",
+        "ctaLabel": "PARTICIPA",
+        "ctaSubLabel": "en nuestros eventos y amplía tu impacto"
+      },
+      "alliances": {
+        "title": "Alianzas Estratégicas",
+        "question": "¿Buscas conexiones clave para expandir tu alcance?",
+        "description": "Facilitamos alianzas con organizaciones, empresas y líderes estratégicos para ayudarte a ampliar el impacto y la sostenibilidad de tu proyecto u organización. Te conectamos con recursos, oportunidades y colaboraciones clave que potencian tu crecimiento y contribuyen a una transformación integral.",
+        "ctaLabel": "CONÉCTATE",
+        "ctaSubLabel": "con nosotros para explicarte cómo lo hacemos."
+      }
+    }
+  },
+  "tracks": {
+    "heading": "¿Cómo potenciamos?",
+    "headingLine1": "¿Cómo",
+    "headingLine2": "poten-",
+    "headingLine3": "ciamos?",
+    "intro": "Para escalar su impacto, ",
+    "introBold": "las organizaciones y proyectos de transformación integral necesitan ser financiables y visibles",
+    "introEnd": ", sin comprometer su propósito. En SIGUE Network, les ayudamos a lograrlo de manera sostenible a través de tres tracks de impacto escalable:",
+    "cards": {
+      "consulting": {
+        "title": "SIGUE Consulting",
+        "question": "¿Necesitas asesoría para que tu proyecto social, ONG o empresa logre un impacto transformador?",
+        "description": "En ",
+        "descriptionBold": "SIGUE Consulting",
+        "descriptionEnd": ", te brindamos estrategias avanzadas y acompañamiento experto para optimizar operaciones, visibilidad y financiamiento, asegurando una transformación integral — física, emocional y espiritual — en las comunidades que sirves.",
+        "ctaLabel": "PREGÚNTANOS",
+        "ctaSubLabel": "cómo llevar tu proyecto al siguiente nivel"
+      },
+      "academy": {
+        "title": "SIGUE Academy",
+        "question": "¿Quieres fortalecer y estructurar tu proyecto para un impacto sostenible?",
+        "description": "En ",
+        "descriptionBold": "SIGUE Academy",
+        "descriptionEnd": ", te preparamos con la Certificación SIGUE, un programa diseñado para líderes y organizaciones que buscan escalar su impacto mediante estrategias de gestión, visibilidad y sostenibilidad con un enfoque de transformación integral.",
+        "ctaLabel": "CONOCE MÁS",
+        "ctaSubLabel": "sobre SIGUE Academy y solicita información"
+      },
+      "hub": {
+        "title": "SIGUE Hub",
+        "question": "¿Quieres ampliar tu alcance y fortalecer alianzas estratégicas?",
+        "description": "En ",
+        "descriptionBold": "SIGUE Hub",
+        "descriptionEnd": ", te conectamos con recursos, herramientas, otros líderes de impacto integral y aliados estratégicos para optimizar la gestión, visibilidad y medición de impacto de tu proyecto, permitiéndote escalar y transformar comunidades de manera integral.",
+        "ctaLabel": "CONÉCTATE",
+        "ctaSubLabel": "con aliados estratégicos y amplía tu impacto"
+      }
+    }
+  },
+  "events": {
+    "heading": "Próximos",
+    "headingLine2": "eventos",
+    "subheading": "y oportunidades",
+    "registerBtn": "REGÍSTRATE",
+    "registerBtnSub": "en el próximo evento",
+    "today": "hoy",
+    "month": "mes",
+    "week": "semana",
+    "allDay": "todo el día"
+  },
+  "resources": {
+    "hero": {
+      "imageAlt": "Comunidad de personas",
+      "textStart": "Accede a recursos y herramientas",
+      "textBold": "para impulsar tu impacto",
+      "textEnd": "y transformar comunidades"
+    },
+    "intro": {
+      "question": "¿Buscas estrategias y conocimientos para fortalecer tu proyecto?",
+      "answer": "Aquí tienes recursos\nlistos para usar:"
+    },
+    "cta": "Accede",
+    "ctaSub": "a recursos y fortalece tu impacto",
+    "tools": {
+      "title": "Descarga herramientas",
+      "description": "Encuentra guías prácticas y materiales clave",
+      "imageAlt": "Equipo colaborando"
+    },
+    "blog": {
+      "title": "Lee el blog",
+      "description": "Explora artículos con estrategias sobre financiamiento, visibilidad y sostenibilidad",
+      "imageAlt": "Personas en reunión"
+    },
+    "video": {
+      "title": "Mira un video",
+      "description": "Accede a webinars y capacitaciones en YouTube",
+      "imageAlt": "Conferencia y capacitación"
+    }
+  },
+  "conoceSiguePage": {
+    "banner": {
+      "badgeLine1": "CONOCE",
+      "badgeLine2": "SIGUE",
+      "heading": "El 76% de las ONGs en EE.UU. y el 60% en LATAM no logran escalar. Sin ellas, comunidades enteras quedan vulnerables.",
+      "bodyStart": "Las organizaciones sociales no solo ayudan, sino que ",
+      "bodyBold1": "sostienen, transforman y restauran vidas.",
+      "bodyMid": " Sin acceso a financiamiento, estructura y apoyo estratégico, muchas desaparecen, dejando a miles sin la ayuda que necesitan. ",
+      "bodyBold2": "SIGUE NETWORK existe para cambiar esta realidad.",
+      "ctaLabel": "DESCUBRE",
+      "ctaSub": "cómo SIGUE impulsa el crecimiento de organizaciones que transforman comunidades.",
+      "imageAlt": "Grupo diverso de personas abrazadas mirando hacia el horizonte"
+    },
+    "desafio": {
+      "titleLine1Start": "El ",
+      "titleLine1Bold": "desafío",
+      "titleLine2": "que enfrentamos en",
+      "titleLine3Bold": "SIGUE",
+      "titleLine3End": " Network",
+      "imageAlt": "Equipo de SIGUE Network trabajando juntos",
+      "descStart": "Demasiadas organizaciones con el potencial de transformar comunidades luchan por crecer debido a la falta de recursos, estructura y visibilidad. Estos desafíos son mayores para aquellas que sirven a comunidades hispanas en EE.UU. y LATAM, y se intensifica para las que fundamentan su labor en principios de fe. ",
+      "descBold": "Nuestra misión es cambiar esta realidad.",
+      "introStart": "Las organizaciones de ",
+      "introBold1": "base enfrentan barreras ",
+      "introMid": " críticas que",
+      "introMid2": " amenazan su sostenibilidad y crecimiento. ",
+      "introMid3": " Entre los  ",
+      "introBold2": "desafíos más urgentes",
+      "introEnd": " se encuentran:",
+      "barriers": {
+        "funding": {
+          "title": "Falta de financiamiento",
+          "body": "Recursos limitados y una competencia intensa por donaciones. (solo 1% de donaciones a comunidades latinas y solo 3% a organizaciones de fe)"
+        },
+        "impact": {
+          "title": "Presión para demostrar impacto",
+          "body": "Exigencia de métricas tangibles para justificar apoyo financiero."
+        },
+        "sustainability": {
+          "title": "Sostenibilidad operativa",
+          "body": "Falta de estructura interna que dificulta su expansión."
+        },
+        "visibility": {
+          "title": "Baja visibilidad y comunicación inefectiva",
+          "body": "Dificultad para compartir su impacto y atraer aliados estratégicos."
+        }
+      },
+      "resultLabel": "El resultado:",
+      "resultText": " Muchas ONGs operan con recursos mínimos, agotando a sus equipos y limitando su capacidad de transformación. ",
+      "resultBold": "Sin apoyo, su misión se frena",
+      "resultEnd": " y las comunidades a las que sirven quedan sin acceso a servicios esenciales."
+    },
+    "respuesta": {
+      "titleLine1": "Nuestra respuesta:",
+      "titleConectar": "Conectar",
+      "titlePlus": " + ",
+      "titlePotenciar": "Potenciar",
+      "imageAlt": "Presentación del equipo SIGUE Network",
+      "bodyIntro": "En SIGUE NETWORK, ofrecemos un camino para que estas organizaciones superen estas barreras y logren un impacto sostenible:",
+      "benefits": {
+        "strengthen": {
+          "bold": "Fortalecemos",
+          "rest": " su estructura operativa con herramientas y estrategias innovadoras."
+        },
+        "impulse": {
+          "bold": "Impulsamos",
+          "rest": " su visibilidad para que sean financiables y encontrables por donantes y aliados."
+        },
+        "accompany": {
+          "bold": "Acompañamos",
+          "rest": " su crecimiento con mentoría experta y redes de colaboración."
+        }
+      },
+      "closingStart": "Trabajamos para que se conviertan en organizaciones ",
+      "closingBold1": "sostenibles, escalables",
+      "closingMid": " e ",
+      "closingBold2": "influyentes",
+      "closingEnd": " en el ecosistema de impacto social."
+    },
+    "motivation": {
+      "heroTitleStart": "Nuestra mayor",
+      "heroTitleBold": "motivación",
+      "heroText": "Lo hacemos porque una comunidad verdaderamente transformada impacta generaciones enteras.",
+      "heroCTATitle": "DESCUBRE",
+      "heroCTASubtitle": "cómo SIGUE potencia y conecta a las organizaciones de transformación integral.",
+      "heroImageAlt": "Niños impactados por organizaciones de transformación integral",
+
+      "identity": {
+        "proposito": {
+          "title": "Nuestro propósito",
+          "description": "Existimos para inspirar y empoderar a proyectos sociales, ONGs, equipos de iglesias y empresas que basan su servicio en principios cristianos, logrando transformaciones en las áreas física, emocional y espiritual de aquellos a quienes sirven.",
+          "cta": "Descubre cómo inspiramos y empoderamos",
+          "imageAlt": "Equipo en comunidad sirviendo"
+        },
+        "vision": {
+          "title": "Nuestra visión",
+          "description": "Vemos comunidades transformadas en lo físico, emocional y espiritual, a través de proyectos y organizaciones con un impacto sostenible y escalable que trasciende generaciones.",
+          "cta": "Descubre cómo",
+          "imageAlt": "Comunidad unida vista desde arriba"
+        },
+        "mision": {
+          "title": "Nuestra misión",
+          "description": "Potenciamos y conectamos ONGs, proyectos sociales y empresas, basados en principios cristianos con estrategias, herramientas y asesoría para ampliar su impacto y transformar integralmente comunidades.",
+          "cta": "Conoce cómo",
+          "imageAlt": "Diversidad de personas en la red SIGUE"
+        },
+        "alcance": {
+          "title": "Nuestro alcance",
+          "description": "Nuestra red abarca Hispanoamérica y las comunidades hispanas en los Estados Unidos, sirviendo a diversas poblaciones: niños y niñas, jóvenes, mujeres, hombres y familias, adaptando nuestro apoyo a las realidades y necesidades de los proyectos y organizaciones que forman parte de la red.",
+          "cta": "Conoce nuestros miembros",
+          "imageAlt": "Familia hispana feliz"
+        }
+      }
+    },
+    "teoriaDelCambio": {
+      "banner": {
+        "nuestra": "Nuestra",
+        "title": "Teoría del Cambio"
+      },
+      "desafio": {
+        "title": "Desafío",
+        "subtitle": "baja escala",
+        "subtitleEnd": "baja sostenibilidad",
+        "item1Light": "Falta de ",
+        "item1Bold": "financiamiento",
+        "item2Light": "Baja ",
+        "item2Bold": "visibilidad",
+        "item3Light": "Estructura ",
+        "item3Bold": "operativa frágil",
+        "item1": "Falta de financiamiento",
+        "item2": "Baja visibilidad",
+        "item3": "Estructura operativa frágil"
+      },
+      "solucion": {
+        "title": "Solución",
+        "subtitle": "conectar",
+        "subtitleEnd": "potenciar",
+        "conectarTitle": "conectar",
+        "conectarDesc": "Facilitamos alianzas estratégicas con donantes, empresas y proyectos afines.",
+        "potenciarTitle": "potenciar",
+        "potenciarDesc": "Brindamos herramientas, formación y acompañamiento experto para fortalecer su sostenibilidad y crecimiento."
+      },
+      "impacto": {
+        "title": "Impacto",
+        "item1Title": "Organizaciones",
+        "item1Desc": "sostenibles, escalables y visibles",
+        "item2Title": "Proyectos",
+        "item2Desc": "con acceso a recursos y alianzas, logrando cambio físico, emocional y espiritual medible",
+        "item3Title": "Comunidades",
+        "item3Desc": "transformadas que rompen ciclos de vulnerabilidad y restauran su propósito, abriendo un nuevo camino para las generaciones futuras."
+      },
+      "cta": {
+        "label": "DESCUBRE",
+        "sub": "cómo SIGUE potencia organizaciones para un impacto sostenible"
+      }
+    },
+    "sigue": {
+      "sectionTitle": "NUESTRA ESENCIA",
+      "subtitle": "Los valores que impulsan nuestra labor se resumen en el acrónimo",
+      "subtitleBold": "SIGUE",
+      "items": [
+        {
+          "letter": "S",
+          "label": "Servir",
+          "description": "La transformación integral de comunidades comienza con identificar a quién, porqué y cómo les vamos a servir.",
+          "verse": "Mateo 25:35-36 (NVI)."
+        },
+        {
+          "letter": "I",
+          "label": "Impactar",
+          "description": "La transformación integral de comunidades gira en torno al impacto que se quiere alcanzar en las comunidades.",
+          "verse": "2 Corintios 9:12-13 (NVI) y Mateo 5:16 (NVI)."
+        },
+        {
+          "letter": "G",
+          "label": "Guiar",
+          "description": "La transformación integral de comunidades requiere guiar a otros, los proyectos y las organizaciones con las herramientas que nos permitan crecer y perdurar en el tiempo de manera sostenible.",
+          "verse": "1 Timoteo 4:12 (NVI)."
+        },
+        {
+          "letter": "U",
+          "label": "Unir fuerzas",
+          "description": "La transformación integral de comunidades requiere unir fuerzas, integrando diversas habilidades alrededor de un propósito compartido.",
+          "verse": "1 Pedro 4:10 y Filipenses 2:2-4."
+        },
+        {
+          "letter": "E",
+          "label": "Empoderar para expandir",
+          "description": "La transformación integral de comunidades necesita que los líderes y las comunidades se empoderen personal y profesionalmente para expandir el alcance de su propósito.",
+          "verse": "Efesios 3:16 y 1 Crónicas 4:10"
+        }
+      ],
+      "closeAriaLabel": "Cerrar"
+    }
+  },
+  "sigueConsulting": {
+    "hero": {
+      "badgeLine1": "SIGUE",
+      "badgeLine2": "Consulting",
+      "title": "Potencia tu impacto con estrategias de transformación física, emocional y espiritual",
+      "ctaLabel": "Solicita una consulta estratégica ahora",
+      "imageAlt": "Profesionales trabajando en laptops"
+    }
+  },
+  "contactPage": {
+    "hero": {
+      "badge": "CONTACTO",
+      "title": "Estamos aquí para que juntos transformemos comunidades. Contáctanos y descubre cómo podemos trabajar juntos.",
+      "imageAlt": "Manos protegiendo símbolos de teléfono, correo y contacto"
+    },
+    "details": {
+      "title": "CONTACTO",
+      "emailLabel": "E.mail:",
+      "addressLabel": "Dirección:",
+      "address": "3913 Griese Lane, Grovetown, GA, 30813, USA"
+    }
+  },
+  "joinPage": {
+    "hero": {
+      "badge": "ÚNETE",
+      "line1": "Sé parte del cambio:",
+      "line2": "Involúcrate con",
+      "line3": "SIGUE Network",
+      "subtitle": "Encuentra aquí las diversas formas de unirte:",
+      "imageAlt": "Equipo unido alrededor de una mesa"
+    },
+    "gallery": {
+      "imageAlt": "Voluntario de SIGUE Network",
+      "title": "Voluntariado",
+      "subtitle": "con propósito"
+    },
+    "intro": {
+      "titleStart": "Únete como",
+      "titleBold": "voluntario:",
+      "titleEnd": "transforma, sirve y crece",
+      "bodyStart": "En SIGUE Network, ",
+      "bodyBold1": "creemos que servir también transforma a quien lo hace.",
+      "bodyMid": " Si deseas ",
+      "bodyBold2": "contribuir con tu tiempo,",
+      "bodyEnd": " talentos y experiencia a la transformación física, emocional y espiritual de comunidades, ¡estás en el lugar correcto!"
+    },
+    "meaning": {
+      "title": "¿Qué significa ser voluntario en SIGUE Network?",
+      "items": {
+        "projects": "Apoyas proyectos con enfoque cristiano de transformación integral.",
+        "network": "Te unes a una red global de líderes, mentores y expertos con propósito.",
+        "growth": "Recibes acompañamiento, formación y oportunidades de crecimiento."
+      }
+    },
+    "areas": {
+      "headingStart": "Áreas en las que",
+      "headingBold": "puedes servir",
+      "items": {
+        "mentoring": "Mentoría y capacitación",
+        "workshops": "Facilitación de talleres",
+        "technical": "Soporte técnico y digital",
+        "content": "Diseño de contenido educativo y creativo",
+        "social": "Comunicación y redes sociales",
+        "impact": "Evaluación de impacto",
+        "events": "Organización de eventos"
+      }
+    },
+    "process": {
+      "headingStart": "¿Cómo funciona el proceso",
+      "headingBold": "para hacerte voluntario?",
+      "imageAlt": "Ruta de cinco pasos para ser voluntario",
+      "steps": {
+        "interest": "Formulario de interés e inventario de habilidades",
+        "interview": "Entrevista personal",
+        "orientation": "Orientación y capacitación",
+        "assignment": "Asignación según tu perfil",
+        "service": "Inicio de servicio con acompañamiento"
+      }
+    },
+    "ready": {
+      "headingStart": "¿Listo para",
+      "headingBold": "empezar?",
+      "description": "Completa el formulario de interés y el inventario de habilidades para comenzar tu camino como voluntario en SIGUE Network.",
+      "buttonLine1": "FORMULARIO",
+      "buttonLine2": "DE INTERÉS",
+      "imageAlt": "Voluntaria facilitando una capacitación"
+    },
+    "support": {
+      "cards": {
+        "mission": {
+          "title": "Apoya nuestra misión",
+          "description": "Tu apoyo nos fortalece para llegar más lejos"
+        },
+        "donate": {
+          "title": "Dona para transformar comunidades",
+          "description": "Cada donación contribuye a cambiar vidas"
+        },
+        "academy": {
+          "title": "Patrocina SIGUE Academy",
+          "description": "Ayuda a formar líderes transformadores"
+        },
+        "summit": {
+          "title": "Auspicia la Cumbre SIGUE",
+          "description": "Haz posible un evento de impacto."
+        },
+        "prayer": {
+          "title": "Únete al círculo de oración",
+          "description": "52 semanas de oración por la transformación integral."
+        },
+        "volunteers": {
+          "title": "Únete a los voluntarios",
+          "description": "Únete a los voluntarios. Usa tus talentos para servir y transformar."
+        }
+      }
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "items": {
+        "benefits": {
+          "question": "¿Cómo benefician las donaciones a nuestra organización?",
+          "answer": "Tus donaciones nos permiten empoderar proyectos y organizaciones sin fines de lucro, financiando operaciones y actividades que generan un impacto integral en comunidades necesitadas."
+        },
+        "deductible": {
+          "question": "¿Son deducibles de impuestos las donaciones?",
+          "answer": "Sí, todas las donaciones son deducibles de impuestos, lo cual genera beneficios tanto para ti como para las comunidades que apoyamos."
+        },
+        "howTo": {
+          "question": "¿Cómo puedo realizar una donación?",
+          "answer": "Puedes hacer tu donación de forma rápida y segura a través de nuestro sitio web. Simplemente haz clic en el botón “Haz tu donación aquí” y sigue las instrucciones."
+        },
+        "specific": {
+          "question": "¿Puedo apoyar un proyecto o programa específico?",
+          "answer": "¡Claro! Contáctanos para elegir un proyecto o programa que quieras financiar directamente, y nos aseguraremos de que tu donación sea dirigida a ese propósito."
+        },
+        "transparency": {
+          "question": "¿Cómo garantizamos la transparencia y la responsabilidad?",
+          "answer": "Mantenemos un alto estándar de transparencia y responsabilidad mediante auditorías regulares, informes detallados y actualizaciones periódicas que compartimos con nuestros donantes."
+        },
+        "updates": {
+          "question": "¿Cómo puedo mantenerme al día sobre el trabajo que realizamos?",
+          "answer": "Al donar, recibirás actualizaciones exclusivas y podrás unirte a nuestra comunidad para estar al tanto de los avances y resultados de nuestros proyectos."
+        },
+        "companies": {
+          "question": "¿Cómo pueden las empresas o corporaciones asociarse con nosotros?",
+          "answer": "Las empresas pueden colaborar a través de patrocinios, donaciones o programas de responsabilidad social. Contáctanos para conocer opciones personalizadas de asociación."
+        },
+        "questions": {
+          "question": "¿Qué hago si tengo más preguntas?",
+          "answer": "Si tienes alguna otra consulta, estaremos encantados de ayudarte. Escríbenos a contacto@siguenetwork.org."
+        }
+      }
+    },
+    "closing": {
+      "title": "¿Alguna pregunta sobre tu donación?",
+      "cta": "Escríbenos"
+    }
+  },
+  "sigueTracksPage": {
+    "banner": {
+      "badgeLine1": "SIGUE",
+      "badgeLine2": "TRACKS",
+      "badgeLine3": "Descubre tu ruta",
+      "badgeLine4": "para crecer y",
+      "badgeLine5": "transformar",
+      "imageAlt": "Personas en reunión"
+    },
+    "intro": {
+      "introLine1": "¿Qué son los SIGUE tracks?",
+      "introLine2": "Son rutas personalizables que combinan",
+      "introLine3_bold": "formación, asesoría y conexiones",
+      "introLine3_regular": "estratégicas",
+      "introLine4": "para tu proyecto y organización.",
+      "buttonLabel": "COMIENZA TU",
+      "buttonSubLabel": "AUTOEVALUACIÓN"
+    },
+    "creamos": {
+      "line1": "Creamos",
+      "line1_bold": "SIGUE TRACKS:",
+      "line2": "que",
+      "line2_bold": "tres rutas flexibles",
+      "line3": "fortalecen tu propósito,",
+      "line4": "escalan tu impacto y",
+      "line5": "transforman comunidades",
+      "line6": "de forma integral - física,",
+      "line7": "emocional y espiritual."
+    },
+    "trackCards": {
+      "items": [
+        {
+          "cardTitle": "SIGUE Consulting",
+          "cardSubTitle": "Estrategia para transformar con propósito",
+          "cardBody": "Diagnóstico, diseño e implementación de estrategias que fortalecen operaciones, visibilidad y sostenibilidad.",
+          "btnLabel": "CONOCE",
+          "btnSubLabel": "SIGUE CONSULTING",
+          "imageAlt": "Escritorio con documentos de mercado"
+        },
+        {
+          "cardTitle": "SIGUE Academy",
+          "cardSubTitle": "Formación que multiplica tu impacto",
+          "cardBody": "Capacitación y certificación para fortalecer liderazgo, estructura y gestión de tu proyecto. Requisito para conectarte a recursos financieros.",
+          "btnLabel": "CONOCE",
+          "btnSubLabel": "SIGUE ACADEMY",
+          "imageAlt": "Instructor dando una clase a un grupo de personas"
+        },
+        {
+          "cardTitle": "SIGUE Hub",
+          "cardSubTitle": "Conexiones que expanden tu misión",
+          "cardBody": "Alianzas, visibilidad, comunidad online y eventos que abren nuevas oportunidades para fortalecer la gestión de tus proyectos.",
+          "btnLabel": "CONOCE",
+          "btnSubLabel": "SIGUE HUB",
+          "imageAlt": "Grupo diverso de personas juntando sus manos en el centro"
+        }
+      ]
+    }
+  }
+}

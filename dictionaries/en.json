@@ -1,0 +1,642 @@
+{
+  "header": {
+    "nav": {
+      "inicio": "HOME",
+      "conoceSigue": "ABOUT SIGUE",
+      "sigueTracks": "SIGUE TRACKS",
+      "sigueConsulting": "SIGUE CONSULTING",
+      "sigueHub": "SIGUE HUB",
+      "unete": "JOIN US",
+      "contactanos": "CONTACT US",
+      "donacion": "DONATION"
+    },
+    "topBar": {
+      "unete": "Join Us",
+      "conoceSigue": "About SIGUE"
+    },
+    "aria": {
+      "toggleMenu": "Toggle menu",
+      "english": "English",
+      "espanol": "Español"
+    }
+  },
+  "footer": {
+    "conoceSigue": {
+      "title": "About SIGUE",
+      "description1": "We empower and connect social projects, NGOs and businesses, grounded in Christian values to transform communities holistically.",
+      "description2": "We are a nonprofit organization, tax-exempt with 501c3 status, established in Georgia, United States. EIN: 26-2010006."
+    },
+    "newsletter": {
+      "title": "Stay connected",
+      "subtitle": "Subscribe to stay up to date with SIGUE Network news",
+      "placeholder": "Email address",
+      "button": "Subscribe"
+    },
+    "links": {
+      "title": "Links",
+      "inicio": "HOME",
+      "conoceSigue": "ABOUT SIGUE",
+      "sigueTracks": "SIGUE TRACKS",
+      "eventos": "EVENTS",
+      "membresia": "MEMBERSHIP",
+      "sigueAcademy": "SIGUE ACADEMY"
+    },
+    "transparency": {
+      "title": "Transparency certificate",
+      "badgeAlt": "Candid Transparency Badge"
+    },
+    "bottom": {
+      "address": "3913 Griese Lane, Grovetown, GA, 30813, USA",
+      "email": "Email:",
+      "copyright": "© 2026 All rights reserved."
+    }
+  },
+  "hero": {
+    "title": "We connect and empower NGOs, social projects and businesses that transform communities holistically, helping them scale their impact sustainably.",
+    "subtitle": "United to serve, stronger to impact",
+    "cta": "Learn more about SIGUE Network"
+  },
+  "info": {
+    "title": "Community and strategy for sustainable impact",
+    "p1": "Being part of SIGUE Network means accessing a network designed to strengthen and expand your mission. We know that many organizations face barriers such as ",
+    "p1Bold": "lack of funding, low visibility and difficulties measuring their impact",
+    "p2": "That is why, at SIGUE Network, we help you ",
+    "p2Bold1": "structure, strengthen and scale your work",
+    "p2Mid": " with practical strategies, mentorship and key alliances, ensuring a ",
+    "p2Bold2": "holistic community transformation",
+    "p2End": " that is sustainable and far-reaching.",
+    "cta": "DISCOVER",
+    "ctaSub": "how SIGUE can strengthen your organization"
+  },
+  "join": {
+    "title": "Who can join SIGUE Network?",
+    "titleStart": "Who can join ",
+    "titleBold": "SIGUE Network?",
+    "p1": "If you lead, or are part of, a ",
+    "p1Bold1": "social project, an NGO, an impact business",
+    "p1Mid": " or are part of a ",
+    "p1Bold2": "social action team in a church or mission",
+    "p1End": ", at SIGUE Network you will find the support you need. Our membership connects you with ",
+    "p1Bold3": "tools, training and strategic allies",
+    "p1End2": " so your impact is ",
+    "p1Bold4": "sustainable and scalable",
+    "cta": "JOIN",
+    "ctaSub": "as a member and take your impact to the next level"
+  },
+  "involvement": {
+    "heading": "How to get involved:",
+    "subheading": "Be part of the impact",
+    "intro": "At SIGUE Network, we believe that holistic community transformation is a collective effort. You can also be part of the change by contributing your time, talent or resources to strengthen projects that generate physical, emotional and spiritual impact.",
+    "imageAlt": "SIGUE Network volunteer",
+    "cards": {
+      "volunteer": {
+        "title": "JOIN US",
+        "subtitle": "AS A VOLUNTEER",
+        "question": "Would you like to contribute your skills and experience?",
+        "description": "You can support mentoring, training, strategic guidance, or participation in key events and activities.",
+        "ctaLabel": "JOIN",
+        "ctaSubLabel": "as a volunteer and be part of the impact"
+      },
+      "donate": {
+        "title": "DONATE",
+        "subtitle": "AND MULTIPLY THE IMPACT",
+        "question": "Your contribution allows more social projects to grow and become sustainable.",
+        "description": "With your support, we promote the training, guidance and expansion of initiatives that transform communities holistically.",
+        "ctaLabel": "DONATE",
+        "ctaSubLabel": "now and multiply the impact"
+      },
+      "pray": {
+        "title": "PRAY",
+        "subtitle": "AND BE PART OF THE CHANGE",
+        "question": "Join us in prayer for leaders, projects and communities.",
+        "description": "Together, we believe in the power of prayer to open paths, strengthen purpose and transform lives.",
+        "ctaLabel": "PRAY",
+        "ctaSubLabel": "for those transforming communities"
+      }
+    }
+  },
+  "connect": {
+    "heading": "How do we connect?",
+    "headingLine1": "How do",
+    "headingLine2": "we con-",
+    "headingLine3": "nect?",
+    "intro": "At SIGUE Network, we believe that ",
+    "introBold": "when we unite to serve, we are stronger to impact",
+    "introEnd": ". That is why we create spaces where leaders, organizations and businesses that transform communities physically, emotionally and spiritually can share experiences, strengthen alliances and grow together. Here is how we connect:",
+    "cards": {
+      "community": {
+        "title": "Online Community",
+        "question": "Do you want to connect with leaders and access resources in real time?",
+        "description": "Join ",
+        "descriptionBold": "our exclusive community in Latin America",
+        "descriptionEnd": ", where you can meet other projects, share inspiration and challenges, innovate, form strategic alliances and pray together to strengthen your impact and generate holistic transformation in the communities you serve.",
+        "ctaLabel": "JOIN",
+        "ctaSubLabel": "our online community and strengthen your impact"
+      },
+      "events": {
+        "title": "Events",
+        "question": "Do you want to be inspired and connect to drive holistic transformation?",
+        "description": "Our events, summits, workshops and webinars bring together leaders and organizations committed to transforming communities. We foster learning and strategic alliances between NGOs, businesses and church social action teams, strengthening their ",
+        "descriptionBold": "physical, emotional and spiritual",
+        "descriptionEnd": " impact.",
+        "ctaLabel": "PARTICIPATE",
+        "ctaSubLabel": "in our events and expand your impact"
+      },
+      "alliances": {
+        "title": "Strategic Alliances",
+        "question": "Are you looking for key connections to expand your reach?",
+        "description": "We facilitate alliances with organizations, businesses and strategic leaders to help you expand the impact and sustainability of your project or organization. We connect you with key resources, opportunities and collaborations that boost your growth and contribute to holistic transformation.",
+        "ctaLabel": "CONNECT",
+        "ctaSubLabel": "with us so we can explain how we do it."
+      }
+    }
+  },
+  "tracks": {
+    "heading": "How do we empower?",
+    "headingLine1": "How do",
+    "headingLine2": "we em-",
+    "headingLine3": "power?",
+    "intro": "To scale their impact, ",
+    "introBold": "organizations and holistic transformation projects need to be fundable and visible",
+    "introEnd": ", without compromising their purpose. At SIGUE Network, we help them achieve this sustainably through three scalable impact tracks:",
+    "cards": {
+      "consulting": {
+        "title": "SIGUE Consulting",
+        "question": "Do you need guidance so your social project, NGO or business achieves a transformative impact?",
+        "description": "At ",
+        "descriptionBold": "SIGUE Consulting",
+        "descriptionEnd": ", we provide advanced strategies and expert support to optimize operations, visibility and funding, ensuring holistic transformation — physical, emotional and spiritual — in the communities you serve.",
+        "ctaLabel": "ASK US",
+        "ctaSubLabel": "how to take your project to the next level"
+      },
+      "academy": {
+        "title": "SIGUE Academy",
+        "question": "Do you want to strengthen and structure your project for sustainable impact?",
+        "description": "At ",
+        "descriptionBold": "SIGUE Academy",
+        "descriptionEnd": ", we equip you with the SIGUE Certification, a program designed for leaders and organizations seeking to scale their impact through management, visibility and sustainability strategies with a holistic transformation approach.",
+        "ctaLabel": "LEARN MORE",
+        "ctaSubLabel": "about SIGUE Academy and request information"
+      },
+      "hub": {
+        "title": "SIGUE Hub",
+        "question": "Do you want to expand your reach and strengthen strategic alliances?",
+        "description": "At ",
+        "descriptionBold": "SIGUE Hub",
+        "descriptionEnd": ", we connect you with resources, tools, other holistic impact leaders and strategic allies to optimize the management, visibility and impact measurement of your project, enabling you to scale and transform communities holistically.",
+        "ctaLabel": "CONNECT",
+        "ctaSubLabel": "with strategic allies and expand your impact"
+      }
+    }
+  },
+  "events": {
+    "heading": "Upcoming",
+    "headingLine2": "events",
+    "subheading": "and opportunities",
+    "registerBtn": "REGISTER",
+    "registerBtnSub": "for the next event",
+    "today": "today",
+    "month": "month",
+    "week": "week",
+    "allDay": "all-day"
+  },
+  "resources": {
+    "hero": {
+      "imageAlt": "Community of people",
+      "textStart": "Access resources and tools",
+      "textBold": "to boost your impact",
+      "textEnd": "and transform communities"
+    },
+    "intro": {
+      "question": "Looking for strategies and knowledge to strengthen your project?",
+      "answer": "Here are resources\nready to use:"
+    },
+    "cta": "Access",
+    "ctaSub": "resources and strengthen your impact",
+    "tools": {
+      "title": "Download tools",
+      "description": "Find practical guides and key materials",
+      "imageAlt": "Team collaborating"
+    },
+    "blog": {
+      "title": "Read the blog",
+      "description": "Explore articles with strategies on funding, visibility and sustainability",
+      "imageAlt": "People in a meeting"
+    },
+    "video": {
+      "title": "Watch a video",
+      "description": "Access webinars and training sessions on YouTube",
+      "imageAlt": "Conference and training"
+    }
+  },
+  "conoceSiguePage": {
+    "banner": {
+      "badgeLine1": "ABOUT",
+      "badgeLine2": "SIGUE",
+      "heading": "76% of NGOs in the U.S. and 60% in LATAM fail to scale. Without them, entire communities are left vulnerable.",
+      "bodyStart": "Social organizations do not just help — they ",
+      "bodyBold1": "sustain, transform and restore lives.",
+      "bodyMid": " Without access to funding, structure and strategic support, many disappear, leaving thousands without the help they need. ",
+      "bodyBold2": "SIGUE NETWORK exists to change this reality.",
+      "ctaLabel": "DISCOVER",
+      "ctaSub": "how SIGUE drives the growth of organizations that transform communities.",
+      "imageAlt": "Diverse group of people with arms around each other looking toward the horizon"
+    },
+    "desafio": {
+      "titleLine1Start": "The ",
+      "titleLine1Bold": "challenge",
+      "titleLine2": "we face at",
+      "titleLine3Bold": "SIGUE",
+      "titleLine3End": " Network",
+      "imageAlt": "SIGUE Network team working together",
+      "descStart": "Too many organizations with the potential to transform communities struggle to grow due to lack of resources, structure and visibility. These challenges are greater for those serving Hispanic communities in the U.S. and LATAM, and intensify for those whose work is grounded in faith. ",
+      "descBold": "Our mission is to change this reality.",
+      "introStart": "Grassroots organizations ",
+      "introBold1": "face critical barriers",
+      "introMid": " that threaten their ",
+      "introMid2": "  sustainability and growth. ",
+      "introMid3": " Among the ",
+      "introBold2": "most urgent challenges",
+      "introEnd": " are:",
+      "barriers": {
+        "funding": {
+          "title": "Lack of funding",
+          "body": "Limited resources and intense competition for donations. (only 1% of donations go to Latino communities and only 3% to faith-based organizations)"
+        },
+        "impact": {
+          "title": "Pressure to demonstrate impact",
+          "body": "Demand for tangible metrics to justify financial support."
+        },
+        "sustainability": {
+          "title": "Operational sustainability",
+          "body": "Lack of internal structure that hinders expansion."
+        },
+        "visibility": {
+          "title": "Low visibility and ineffective communication",
+          "body": "Difficulty sharing their impact and attracting strategic allies."
+        }
+      },
+      "resultLabel": "The result:",
+      "resultText": " Many NGOs operate with minimal resources, exhausting their teams and limiting their capacity for transformation. ",
+      "resultBold": "Without support, their mission stalls",
+      "resultEnd": " and the communities they serve are left without access to essential services."
+    },
+    "respuesta": {
+      "titleLine1": "Our response:",
+      "titleConectar": "Connect",
+      "titlePlus": " + ",
+      "titlePotenciar": "Empower",
+      "imageAlt": "SIGUE Network team presentation",
+      "bodyIntro": "At SIGUE NETWORK, we offer a path for these organizations to overcome these barriers and achieve a sustainable impact:",
+      "benefits": {
+        "strengthen": {
+          "bold": "We strengthen",
+          "rest": " their operational structure with innovative tools and strategies."
+        },
+        "impulse": {
+          "bold": "We boost",
+          "rest": " their visibility so they become fundable and findable by donors and allies."
+        },
+        "accompany": {
+          "bold": "We accompany",
+          "rest": " their growth with expert mentorship and collaboration networks."
+        }
+      },
+      "closingStart": "We work so they become ",
+      "closingBold1": "sustainable, scalable",
+      "closingMid": " and ",
+      "closingBold2": "influential",
+      "closingEnd": " organizations in the social impact ecosystem."
+    },
+    "motivation": {
+      "heroTitleStart": "Our greatest",
+      "heroTitleBold": "motivation",
+      "heroText": "We do it because a truly transformed community impacts entire generations.",
+      "heroCTATitle": "DISCOVER",
+      "heroCTASubtitle": "how SIGUE empowers and connects holistic transformation organizations.",
+      "heroImageAlt": "Children impacted by holistic transformation organizations",
+
+      "identity": {
+        "proposito": {
+          "title": "Our purpose",
+          "description": "We exist to inspire and empower social projects, NGOs, church teams and businesses that base their service on Christian principles, achieving transformations in the physical, emotional and spiritual areas of those they serve.",
+          "cta": "Discover how we inspire and empower",
+          "imageAlt": "Team serving in community"
+        },
+        "vision": {
+          "title": "Our vision",
+          "description": "We see communities transformed physically, emotionally and spiritually, through projects and organizations with a sustainable and scalable impact that transcends generations.",
+          "cta": "Discover how",
+          "imageAlt": "United community seen from above"
+        },
+        "mision": {
+          "title": "Our mission",
+          "description": "We empower and connect NGOs, social projects and businesses, grounded in Christian principles with strategies, tools and advisory services to expand their impact and holistically transform communities.",
+          "cta": "Learn how",
+          "imageAlt": "Diversity of people in the SIGUE network"
+        },
+        "alcance": {
+          "title": "Our reach",
+          "description": "Our network spans Latin America and Hispanic communities in the United States, serving diverse populations: boys and girls, youth, women, men and families, adapting our support to the realities and needs of the projects and organizations that are part of the network.",
+          "cta": "Meet our members",
+          "imageAlt": "Happy Hispanic family"
+        }
+      }
+    },
+    "teoriaDelCambio": {
+      "banner": {
+        "nuestra": "Our",
+        "title": "Theory of Change"
+      },
+      "desafio": {
+        "title": "Challenge",
+        "subtitle": "low scale",
+        "subtitleEnd": "low sustainability",
+        "item1Light": "Lack of ",
+        "item1Bold": "funding",
+        "item2Light": "Low ",
+        "item2Bold": "visibility",
+        "item3Light": "Fragile ",
+        "item3Bold": "operational structure",
+        "item1": "Lack of funding",
+        "item2": "Low visibility",
+        "item3": "Fragile operational structure"
+      },
+      "solucion": {
+        "title": "Solution",
+        "subtitle": "connect",
+        "subtitleEnd": "empower",
+        "conectarTitle": "connect",
+        "conectarDesc": "We facilitate strategic alliances with donors, businesses and like-minded projects.",
+        "potenciarTitle": "empower",
+        "potenciarDesc": "We provide tools, training and expert accompaniment to strengthen their sustainability and growth."
+      },
+      "impacto": {
+        "title": "Impact",
+        "item1Title": "Organizations",
+        "item1Desc": "sustainable, scalable and visible",
+        "item2Title": "Projects",
+        "item2Desc": "with access to resources and alliances, achieving measurable physical, emotional and spiritual change",
+        "item3Title": "Communities",
+        "item3Desc": "transformed that break cycles of vulnerability and restore their purpose, opening a new path for future generations."
+      },
+      "cta": {
+        "label": "DISCOVER",
+        "sub": "how SIGUE empowers organizations for sustainable impact"
+      }
+    },
+    "sigue": {
+      "sectionTitle": "OUR ESSENCE",
+      "subtitle": "The values that drive our work are summarized in the acronym",
+      "subtitleBold": "SIGUE",
+      "items": [
+        {
+          "letter": "S",
+          "label": "Serve",
+          "description": "Holistic community transformation begins with identifying who, why and how we will serve them.",
+          "verse": "Matthew 25:35-36 (NIV)."
+        },
+        {
+          "letter": "I",
+          "label": "Impact",
+          "description": "Holistic community transformation revolves around the impact we want to achieve in communities.",
+          "verse": "2 Corinthians 9:12-13 (NIV) and Matthew 5:16 (NIV)."
+        },
+        {
+          "letter": "G",
+          "label": "Guide",
+          "description": "Holistic community transformation requires guiding others, projects and organizations with tools that allow us to grow and endure sustainably over time.",
+          "verse": "1 Timothy 4:12 (NIV)."
+        },
+        {
+          "letter": "U",
+          "label": "Unite forces",
+          "description": "Holistic community transformation requires uniting forces, integrating diverse skills around a shared purpose.",
+          "verse": "1 Peter 4:10 and Philippians 2:2-4."
+        },
+        {
+          "letter": "E",
+          "label": "Empower to expand",
+          "description": "Holistic community transformation needs leaders and communities to empower themselves personally and professionally to expand the reach of their purpose.",
+          "verse": "Ephesians 3:16 and 1 Chronicles 4:10"
+        }
+      ],
+      "closeAriaLabel": "Close"
+    }
+  },
+  "sigueConsulting": {
+    "hero": {
+      "badgeLine1": "SIGUE",
+      "badgeLine2": "Consulting",
+      "title": "Boost your impact with physical, emotional and spiritual transformation strategies",
+      "ctaLabel": "Request a strategic consultation now",
+      "imageAlt": "Professionals working on laptops"
+    }
+  },
+  "contactPage": {
+    "hero": {
+      "badge": "CONTACT",
+      "title": "We are here to transform communities together. Contact us and discover how we can work together.",
+      "imageAlt": "Hands protecting phone, email and contact symbols"
+    },
+    "details": {
+      "title": "CONTACT",
+      "emailLabel": "Email:",
+      "addressLabel": "Address:",
+      "address": "3913 Griese Lane, Grovetown, GA, 30813, USA"
+    }
+  },
+  "joinPage": {
+    "hero": {
+      "badge": "JOIN US",
+      "line1": "Be part of the change:",
+      "line2": "Get involved with",
+      "line3": "SIGUE Network",
+      "subtitle": "Discover the different ways you can join us:",
+      "imageAlt": "Team gathered together around a table"
+    },
+    "gallery": {
+      "imageAlt": "SIGUE Network volunteer",
+      "title": "Volunteering",
+      "subtitle": "with purpose"
+    },
+    "intro": {
+      "titleStart": "Join us as a",
+      "titleBold": "volunteer:",
+      "titleEnd": "transform, serve and grow",
+      "bodyStart": "At SIGUE Network, ",
+      "bodyBold1": "we believe serving also transforms those who serve.",
+      "bodyMid": " If you want to ",
+      "bodyBold2": "contribute your time,",
+      "bodyEnd": " talents and experience to the physical, emotional and spiritual transformation of communities, you are in the right place!"
+    },
+    "meaning": {
+      "title": "What does it mean to volunteer with SIGUE Network?",
+      "items": {
+        "projects": "You support projects with a Christian approach to holistic transformation.",
+        "network": "You join a global network of purpose-driven leaders, mentors and experts.",
+        "growth": "You receive support, training and opportunities for growth."
+      }
+    },
+    "areas": {
+      "headingStart": "Areas where",
+      "headingBold": "you can serve",
+      "items": {
+        "mentoring": "Mentoring and training",
+        "workshops": "Workshop facilitation",
+        "technical": "Technical and digital support",
+        "content": "Educational and creative content design",
+        "social": "Communications and social media",
+        "impact": "Impact assessment",
+        "events": "Event organization"
+      }
+    },
+    "process": {
+      "headingStart": "How does the process work",
+      "headingBold": "to become a volunteer?",
+      "imageAlt": "Five-step path to becoming a volunteer",
+      "steps": {
+        "interest": "Interest form and skills inventory",
+        "interview": "Personal interview",
+        "orientation": "Orientation and training",
+        "assignment": "Assignment based on your profile",
+        "service": "Begin serving with ongoing support"
+      }
+    },
+    "ready": {
+      "headingStart": "Ready to",
+      "headingBold": "get started?",
+      "description": "Complete the interest form and skills inventory to begin your journey as a SIGUE Network volunteer.",
+      "buttonLine1": "INTEREST",
+      "buttonLine2": "FORM",
+      "imageAlt": "Volunteer facilitating a training session"
+    },
+    "support": {
+      "cards": {
+        "mission": {
+          "title": "Support our mission",
+          "description": "Your support strengthens us and helps us go further"
+        },
+        "donate": {
+          "title": "Donate to transform communities",
+          "description": "Every donation helps change lives"
+        },
+        "academy": {
+          "title": "Sponsor SIGUE Academy",
+          "description": "Help develop transformational leaders"
+        },
+        "summit": {
+          "title": "Sponsor the SIGUE Summit",
+          "description": "Help make an impactful event possible."
+        },
+        "prayer": {
+          "title": "Join the prayer circle",
+          "description": "52 weeks of prayer for holistic transformation."
+        },
+        "volunteers": {
+          "title": "Join our volunteers",
+          "description": "Use your talents to serve and transform."
+        }
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": {
+        "benefits": {
+          "question": "How do donations benefit our organization?",
+          "answer": "Your donations allow us to empower nonprofit projects and organizations by funding operations and activities that create holistic impact in communities in need."
+        },
+        "deductible": {
+          "question": "Are donations tax-deductible?",
+          "answer": "Yes, all donations are tax-deductible, creating benefits for both you and the communities we support."
+        },
+        "howTo": {
+          "question": "How can I make a donation?",
+          "answer": "You can donate quickly and securely through our website. Simply click the “Make your donation here” button and follow the instructions."
+        },
+        "specific": {
+          "question": "Can I support a specific project or program?",
+          "answer": "Of course! Contact us to choose a project or program you would like to fund directly, and we will make sure your donation is directed to that purpose."
+        },
+        "transparency": {
+          "question": "How do we ensure transparency and accountability?",
+          "answer": "We maintain a high standard of transparency and accountability through regular audits, detailed reports and periodic updates shared with our donors."
+        },
+        "updates": {
+          "question": "How can I stay up to date with our work?",
+          "answer": "When you donate, you will receive exclusive updates and can join our community to follow the progress and results of our projects."
+        },
+        "companies": {
+          "question": "How can companies or corporations partner with us?",
+          "answer": "Companies can collaborate through sponsorships, donations or corporate social responsibility programs. Contact us to explore customized partnership options."
+        },
+        "questions": {
+          "question": "What if I have more questions?",
+          "answer": "If you have any other questions, we will be happy to help. Write to us at contacto@siguenetwork.org."
+        }
+      }
+    },
+    "closing": {
+      "title": "Have a question about your donation?",
+      "cta": "Write to us"
+    }
+  },
+  "sigueTracksPage": {
+    "banner": {
+      "badgeLine1": "SIGUE",
+      "badgeLine2": "TRACKS",
+      "badgeLine3": "Discover your path",
+      "badgeLine4": "to grow and",
+      "badgeLine5": "transform",
+      "imageAlt": "People in a meeting"
+    },
+    "intro": {
+      "introLine1": "What are SIGUE tracks",
+      "introLine2": "They are customizable routes that combine training, advice, and strategic",
+      "introLine3_bold": "connections",
+      "introLine3_regular": "",
+      "introLine4": "for your project or organization.",
+      "buttonLabel": "START YOUR",
+      "buttonSubLabel": "SELF-ASSESSMENT"
+    },
+    "creamos": {
+      "line1": "We created",
+      "line1_bold": "SIGUE TRACKS:",
+      "line2": "that",
+      "line2_bold": "three flexible routes",
+      "line3": "strengthen your purpose,",
+      "line4": "scale your impact and",
+      "line5": "transform communities",
+      "line6": "holistically - physically,",
+      "line7": "emotionally and spiritually."
+    },
+    "trackCards": {
+      "items": [
+        {
+          "cardTitle": "SIGUE Consulting",
+          "cardSubTitle": "Strategy to transform with purpose",
+          "cardBody": "Diagnosis, design and implementation of strategies that strengthen operations, visibility and sustainability.",
+          "btnLabel": "GET TO KNOW",
+          "btnSubLabel": "SIGUE CONSULTING",
+          "imageAlt": "a Desk showing some marketing files and documents"
+        },
+        {
+          "cardTitle": "SIGUE Academy",
+          "cardSubTitle": "Training that multiplies your impact",
+          "cardBody": "Skills development and certification to strengthen your project's leadership, structure, and management. A requirement for accessing financial resources.",
+          "btnLabel": "GET TO KNOW",
+          "btnSubLabel": "SIGUE ACADEMY",
+          "imageAlt": "Instructor giving a class to a small group of people"
+        },
+        {
+          "cardTitle": "SIGUE Hub",
+          "cardSubTitle": "Connections that expand your mission",
+          "cardBody": "Alliances, visibility, online community, and events that open new opportunities to strengthen the management of your projects.",
+          "btnLabel": "GET TO KNOW",
+          "btnSubLabel": "SIGUE HUB",
+          "imageAlt": "Diverse group of people holding their hands together"
+        }
+      ]
+    }
+  }
+}

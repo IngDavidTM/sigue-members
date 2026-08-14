@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "Taller: Medición de Impacto Social",
+    "date": "2026-04-03",
+    "location": "Bogotá, Colombia",
+    "description": "Aprende a estructurar indicadores y herramientas para medir el impacto real de tu organización. Dirigido a líderes de ONGs y fundaciones.",
+    "registerUrl": "https://siguenetwork.com/eventos/medicion-impacto"
+  },
+  {
+    "id": 2,
+    "title": "Mentoría Colectiva SIGUE",
+    "date": "2026-04-10",
+    "location": "Medellín, Colombia",
+    "description": "Sesión grupal de mentoría con expertos en estrategia y sostenibilidad para organizaciones del sector social.",
+    "registerUrl": "https://siguenetwork.com/eventos/mentoria-colectiva"
+  },
+  {
+    "id": 3,
+    "title": "Foro de Financiamiento para ONGs",
+    "date": "2026-05-17",
+    "location": "Cali, Colombia",
+    "description": "Espacio de conexión entre organizaciones sociales, cooperantes internacionales y fondos de inversión de impacto.",
+    "registerUrl": "https://siguenetwork.com/eventos/foro-financiamiento"
+  },
+  {
+    "id": 4,
+    "title": "Cumbre de Alianzas Estratégicas",
+    "date": "2026-06-07",
+    "location": "Barranquilla, Colombia",
+    "description": "Encuentro anual de la red SIGUE para construir alianzas clave entre organizaciones y ampliar el alcance comunitario.",
+    "registerUrl": "https://siguenetwork.com/eventos/cumbre-alianzas"
+  },
+  {
+    "id": 5,
+    "title": "Lanzamiento Programa Escala 2026",
+    "date": "2026-06-20",
+    "location": "Bogotá, Colombia",
+    "description": "Presentación oficial del programa de acompañamiento para escalar organizaciones sociales con estrategias prácticas y sostenibles.",
+    "registerUrl": "https://siguenetwork.com/eventos/escala-2026"
+  }
+]
