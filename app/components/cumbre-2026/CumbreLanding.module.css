@@ -14,15 +14,6 @@
   font-family: var(--font-heebo), 'Heebo', sans-serif;
 }
 
-:global(body:has([data-cumbre-page]) [data-site-header]),
-:global(body:has([data-cumbre-page]) [data-site-footer]) {
-  display: none;
-}
-
-:global(body:has([data-cumbre-page])) {
-  background: #fff;
-}
-
 .page *,
 .page *::before,
 .page *::after {

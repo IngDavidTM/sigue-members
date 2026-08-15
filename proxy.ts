@@ -1,5 +1,5 @@
 import createIntlMiddleware from "next-intl/middleware";
-import { type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 import { routing } from "@/i18n/routing";
 import { updateSession } from "@/lib/supabase/middleware";
@@ -9,8 +9,13 @@ const handleI18nRouting = createIntlMiddleware(routing);
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
+    if (pathname === "/robots.txt" || pathname === "/sitemap.xml") {
+        return NextResponse.next();
+    }
+
     if (
         pathname === "/" ||
+        pathname === "/cumbre-sigue-2026" ||
         pathname === "/es" ||
         pathname.startsWith("/es/") ||
         pathname === "/en" ||

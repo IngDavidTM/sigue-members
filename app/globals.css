@@ -49,6 +49,15 @@ body {
   color: var(--color-text-dark);
 }
 
+body:has([data-cumbre-page]) {
+  background: #fff;
+}
+
+body:has([data-cumbre-page]) [data-site-header],
+body:has([data-cumbre-page]) [data-site-footer] {
+  display: none;
+}
+
 a { text-decoration: none; }
 
 ul {
