@@ -452,7 +452,7 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                   </article>
                 ))}
               </div>
-              <a className={styles.primaryButton} href="https://siguenetwork.org/">
+              <a className={styles.primaryButton} href="https://siguenetwork.org/conoce-sigue/">
                 {text('Conoce más sobre SIGUE', 'Learn more about SIGUE')}
               </a>
             </div>
@@ -519,7 +519,7 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                 />
               ))}
             </div>
-            <a className={styles.primaryButton} href="https://siguenetwork.org/">
+            <a className={styles.primaryButton} href="https://siguenetwork.org/miembros-sigue/">
               {text('Conoce a nuestra comunidad', 'Meet our community')}
             </a>
           </section>
