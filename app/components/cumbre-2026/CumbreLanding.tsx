@@ -121,31 +121,31 @@ const included: readonly [string, LocalizedText][] = [
 const faqs = [
   {
     question: ['¿Para asistir tengo que ser miembro de SIGUE?', 'Do I have to be a SIGUE member to attend?'] as LocalizedText,
-    answer: ['No. La Cumbre está abierta a miembros y a personas que aún no hacen parte de SIGUE.', 'No. The Summit is open to members and people who are not yet part of SIGUE.'] as LocalizedText,
+    answer: ['No. Pero te invitamos a hacerte miembro y disfrutar de los beneficios de membresía.', 'No. However, we invite you to become a member and enjoy membership benefits.'] as LocalizedText,
   },
   {
     question: ['¿El hospedaje es obligatorio?', 'Is lodging required?'] as LocalizedText,
-    answer: ['No. Puedes elegir solo el Pase Cumbre o la modalidad Cumbre + Hospedaje.', 'No. You can choose the Summit Pass only or the Summit + Lodging option.'] as LocalizedText,
+    answer: ['No. Pero hemos logrado una tarifa muy favorable para los participantes en el sitio del evento.', 'No. However, we have secured a very favorable rate for participants at the event venue.'] as LocalizedText,
   },
   {
-    question: ['¿Qué noches incluye?', 'Which nights are included?'] as LocalizedText,
-    answer: ['La modalidad con hospedaje incluye las noches del 27 y 28 de octubre.', 'The lodging option includes the nights of October 27 and 28.'] as LocalizedText,
+    question: ['¿Cuántas noches y qué está incluido en el hospedaje?', 'How many nights are included and what does lodging include?'] as LocalizedText,
+    answer: ['Incluye el hospedaje del 27 y 28 de octubre y los desayunos del 28 y 29 de octubre.', 'It includes lodging on October 27 and 28, plus breakfast on October 28 and 29.'] as LocalizedText,
   },
   {
-    question: ['¿Las cenas están incluidas?', 'Are dinners included?'] as LocalizedText,
-    answer: ['Sí. El Pase Cumbre incluye las cenas del 27 y 28 de octubre.', 'Yes. The Summit Pass includes dinner on October 27 and 28.'] as LocalizedText,
+    question: ['¿Las cenas, almuerzos y refrigerios están incluidas?', 'Are dinners, lunches, and refreshments included?'] as LocalizedText,
+    answer: ['Sí, los refrigerios, almuerzos y cenas del 27 y 28 están incluidos en la inscripción a la Cumbre.', 'Yes. Refreshments, lunches, and dinners on October 27 and 28 are included with Summit registration.'] as LocalizedText,
   },
   {
     question: ['¿Cuándo comienza y termina?', 'When does it begin and end?'] as LocalizedText,
-    answer: ['La experiencia comienza la tarde del 27 de octubre y termina el 29 de octubre.', 'The experience begins on the afternoon of October 27 and ends on October 29.'] as LocalizedText,
+    answer: ['Del 27 en la tarde al 29 antes de la cena.', 'From the afternoon of October 27 until before dinner on October 29.'] as LocalizedText,
   },
   {
     question: ['¿Puedo transferir mi inscripción?', 'Can I transfer my registration?'] as LocalizedText,
-    answer: ['Consulta tu caso con el equipo SIGUE escribiendo a contacto@siguenetwork.org.', 'Contact the SIGUE team at contacto@siguenetwork.org to discuss your situation.'] as LocalizedText,
+    answer: ['Sí, puedes transferir tu cupo a otra persona hasta 7 días antes del evento escribiéndonos a operaciones@siguenetwork.org.', 'Yes. You can transfer your spot to another person up to 7 days before the event by writing to operaciones@siguenetwork.org.'] as LocalizedText,
   },
   {
     question: ['¿Cuál es la política de reembolso?', 'What is the refund policy?'] as LocalizedText,
-    answer: ['El equipo SIGUE confirmará las condiciones aplicables antes de completar el pago.', 'The SIGUE team will confirm the applicable terms before payment is completed.'] as LocalizedText,
+    answer: ['Reembolso del 80% hasta 30 días antes del evento, 50% entre 30 y 15 días antes, y sin reembolso a partir de los 14 días previos a la Cumbre. En todos los casos puedes optar por transferir tu cupo en lugar de solicitar reembolso.', 'An 80% refund is available up to 30 days before the event, 50% between 30 and 15 days before, and no refund from 14 days before the Summit. In every case, you may transfer your spot instead of requesting a refund.'] as LocalizedText,
   },
 ];
 
