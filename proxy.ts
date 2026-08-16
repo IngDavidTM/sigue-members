@@ -9,7 +9,7 @@ const handleI18nRouting = createIntlMiddleware(routing);
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    if (pathname === "/robots.txt" || pathname === "/sitemap.xml") {
+    if (pathname === "/robots.txt" || pathname === "/sitemap.xml" || pathname === "/api/exchange-rate") {
         return NextResponse.next();
     }
 

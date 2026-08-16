@@ -1,5 +1,5 @@
 export const tariffs = {
-  general: { label: 'Tarifa General', pass: 575000, lodging: 836000 },
+  general: { label: 'Tarifa General', pass: 599000, lodging: 836000 },
   early: { label: 'Early Bird', pass: 489000, lodging: 711000 },
   member: { label: 'Miembro Activo SIGUE', pass: 449000, lodging: 652000 },
 } as const;

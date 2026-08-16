@@ -251,7 +251,7 @@ function getStructuredData(locale: CumbreLocale) {
           {
             '@type': 'Offer',
             name: locale === 'es' ? 'Tarifa General' : 'General Rate',
-            price: '575000',
+            price: '599000',
             priceCurrency: 'COP',
             availability: 'https://schema.org/InStock',
             url: `${pageUrl}#inscripcion`,

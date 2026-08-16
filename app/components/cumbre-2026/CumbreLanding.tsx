@@ -3,6 +3,8 @@ import Link from 'next/link';
 import Reveal from '../ui/Reveal';
 import RegistrationForm from './RegistrationForm';
 import { MobileNavigation, RegistrationCta, RegistrationProvider } from './RegistrationControls';
+import { tariffs } from './registration';
+import UsdEquivalents from './UsdEquivalents';
 import styles from './CumbreLanding.module.css';
 
 const asset = '/images/cumbre-2026';
@@ -153,22 +155,21 @@ const pricing = [
   {
     id: 'general' as const,
     name: ['Tarifa General', 'General Rate'] as LocalizedText,
-    price: '575.000',
-    lodging: '836.000',
+    price: tariffs.general.pass,
+    lodging: tariffs.general.lodging,
   },
   {
     id: 'early' as const,
     name: ['Early Bird', 'Early Bird'] as LocalizedText,
-    price: '489.000',
-    lodging: '711.000',
+    price: tariffs.early.pass,
+    lodging: tariffs.early.lodging,
     benefit: ['15% de beneficio', '15% savings'] as LocalizedText,
-    featured: true,
   },
   {
     id: 'member' as const,
     name: ['Miembro Activo SIGUE', 'Active SIGUE Member'] as LocalizedText,
-    price: '449.000',
-    lodging: '652.000',
+    price: tariffs.member.pass,
+    lodging: tariffs.member.lodging,
     benefit: ['22% de beneficio', '22% savings'] as LocalizedText,
   },
 ];
@@ -213,6 +214,7 @@ function SectionHeading({
 export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale }) {
   const text = (spanish: string, english: string) => (locale === 'en' ? english : spanish);
   const localized = ([spanish, english]: LocalizedText) => text(spanish, english);
+  const formatCop = (amount: number) => new Intl.NumberFormat(locale === 'en' ? 'en-US' : 'es-CO').format(amount);
 
   return (
     <RegistrationProvider>
@@ -715,15 +717,14 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
               {pricing.map((price) => (
                 <article
                   key={price.id}
-                  className={price.featured ? styles.featuredPrice : undefined}
                 >
                   {price.benefit ? <span className={styles.benefit}>{localized(price.benefit)}</span> : null}
                   <p>{localized(price.name)}</p>
                   <h3>
-                    <small>COP</small> ${locale === 'en' ? price.price.replaceAll('.', ',') : price.price}
+                    <small>COP</small> ${formatCop(price.price)}
                   </h3>
                   <strong>
-                    {text('Con hospedaje:', 'With lodging:')} COP ${locale === 'en' ? price.lodging.replaceAll('.', ',') : price.lodging}
+                    {text('Con hospedaje:', 'With lodging:')} COP ${formatCop(price.lodging)}
                   </strong>
                   <RegistrationCta tariff={price.id} withLodging={false}>
                     {text('Elegir', 'Choose')} {localized(price.name).replace(text('Tarifa ', ' Rate'), '')}
@@ -731,12 +732,7 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                 </article>
               ))}
             </div>
-            <p className={styles.exchangeNote}>
-              {text(
-                'Equivalentes aproximados en USD — General: US$192 / US$279 · Early Bird: US$163 / US$237 · Miembro: US$150 / US$217 — Tasa de referencia: COP $3.000 = US$1.',
-                'Approximate USD equivalents — General: US$192 / US$279 · Early Bird: US$163 / US$237 · Member: US$150 / US$217 — Reference rate: COP $3,000 = US$1.'
-              )}
-            </p>
+            <UsdEquivalents locale={locale} />
           </section>
 
           <section className={styles.lodgingSection}>
