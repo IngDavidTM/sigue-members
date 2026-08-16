@@ -53,8 +53,14 @@ body:has([data-cumbre-page]) {
   background: #fff;
 }
 
+body:has([data-home-2026]) {
+  background: #fff;
+}
+
 body:has([data-cumbre-page]) [data-site-header],
-body:has([data-cumbre-page]) [data-site-footer] {
+body:has([data-cumbre-page]) [data-site-footer],
+body:has([data-home-2026]) [data-site-header],
+body:has([data-home-2026]) [data-site-footer] {
   display: none;
 }
 
