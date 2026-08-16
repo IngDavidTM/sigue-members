@@ -383,6 +383,26 @@
   margin-bottom: 2.3rem;
 }
 
+.centralIdea .scriptureQuote {
+  max-width: 720px;
+  margin: 0 0 3.5rem;
+  color: var(--cumbre-ink);
+  font-size: clamp(1rem, 1.65vw, 1.22rem);
+  font-style: normal;
+  line-height: 1.22;
+}
+
+.scriptureQuote span,
+.scriptureQuote cite {
+  display: block;
+}
+
+.scriptureQuote cite {
+  margin-top: 0.45rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
 .centralIdea h2 {
   margin: 0 0 1.4rem;
   font-size: clamp(2.3rem, 4.6vw, 4.25rem);

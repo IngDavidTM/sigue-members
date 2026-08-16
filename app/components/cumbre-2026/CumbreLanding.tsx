@@ -352,6 +352,15 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
           <section className={styles.centralIdea}>
             <p className={styles.eyebrow}>{text('Idea central', 'Central idea')}</p>
             <HeartMark />
+            <blockquote className={styles.scriptureQuote}>
+              <span>
+                {text(
+                  '“Ciertamente he visto la opresión que sufre mi pueblo... Los he escuchado... y conozco bien sus penurias. Así que he descendido para librarlos...”',
+                  '“I have indeed seen the oppression of my people... I have heard them... and I am well aware of their suffering. So I have come down to rescue them...”'
+                )}
+              </span>
+              <cite>{text('Éxodo 3:7–8, NVI', 'Exodus 3:7–8, NIV')}</cite>
+            </blockquote>
             <h2>{text('Del corazón a la estrategia', 'From heart to strategy')}</h2>
             <p>
               {text(
