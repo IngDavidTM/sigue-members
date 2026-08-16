@@ -1,19 +1,56 @@
-import ConoceSigueBanner from '@/app/components/conoce-sigue/ConoceSigueBanner';
-import ConoceDesafioSection from '@/app/components/conoce-sigue/ConoceDesafioSection';
-import ConoceRespuestaSection from '@/app/components/conoce-sigue/ConoceRespuestaSection';
-import ConoceMotivationSection from '@/app/components/conoce-sigue/ConoceMotivationSection';
-import ConoceTeoriaDelCambioSection from '@/app/components/conoce-sigue/ConoceTeoriaDelCambioSection';
-import ConoceInteractiveSigue from '@/app/components/conoce-sigue/ConoceInteractiveSigue';
+import type { Metadata } from 'next';
+import ConoceLanding from '@/app/components/conoce-2026/ConoceLanding';
+import { absoluteUrl } from '@/lib/site-url';
 
-export default function ConoceSiguePage() {
-  return (
-    <main>
-      <ConoceSigueBanner />
-      <ConoceDesafioSection />
-      <ConoceRespuestaSection />
-      <ConoceMotivationSection />
-      <ConoceTeoriaDelCambioSection />
-      <ConoceInteractiveSigue />
-    </main>
-  );
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: requestedLocale } = await params;
+  const locale = requestedLocale === 'en' ? 'en' : 'es';
+  const isEnglish = locale === 'en';
+  const title = isEnglish
+    ? 'About SIGUE Network | United to serve, stronger to make an impact'
+    : 'Conoce SIGUE Network | Unidos para servir, fuertes para impactar';
+  const description = isEnglish
+    ? 'Discover how SIGUE Network strengthens and connects Christian organizations so they can grow sustainably and multiply their impact across Latin America.'
+    : 'Conoce cómo SIGUE Network potencia y conecta organizaciones cristianas para que crezcan de forma sostenible y multipliquen su impacto en Latinoamérica.';
+  const canonical = absoluteUrl(`/${locale}/conoce-sigue`);
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        es: absoluteUrl('/es/conoce-sigue'),
+        en: absoluteUrl('/en/conoce-sigue'),
+      },
+    },
+    openGraph: {
+      type: 'website',
+      locale: isEnglish ? 'en_US' : 'es_CO',
+      alternateLocale: isEnglish ? ['es_CO'] : ['en_US'],
+      url: canonical,
+      siteName: 'SIGUE Network',
+      title,
+      description,
+      images: [{
+        url: absoluteUrl('/images/conoce-2026/hero.webp'),
+        width: 1280,
+        height: 720,
+        alt: isEnglish ? 'SIGUE Network community' : 'Comunidad SIGUE Network',
+      }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [absoluteUrl('/images/conoce-2026/hero.webp')],
+    },
+  };
+}
+
+export default async function ConoceSiguePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: requestedLocale } = await params;
+  const locale = requestedLocale === 'en' ? 'en' : 'es';
+
+  return <ConoceLanding locale={locale} />;
 }
