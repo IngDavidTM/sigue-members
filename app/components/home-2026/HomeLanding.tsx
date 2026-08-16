@@ -8,12 +8,12 @@ import {
   HandCoins,
   Handshake,
   Heart,
-  Menu,
   MonitorPlay,
   Store,
 } from 'lucide-react';
 import Reveal from '@/app/components/ui/Reveal';
 import { absoluteUrl } from '@/lib/site-url';
+import HomeMobileNavigation from './HomeMobileNavigation';
 import styles from './HomeLanding.module.css';
 
 type Locale = 'es' | 'en';
@@ -24,12 +24,59 @@ const content = {
     menu: 'Abrir menú de navegación',
     slide: 'Desliza para ver más',
     nav: [
-      ['Inicio', '#inicio'],
-      ['Conoce', '/conoce-sigue'],
-      ['Portafolio', '#portafolio'],
-      ['Membresía', '/unete'],
-      ['Donar', '/donacion'],
-      ['Blog', '/blog'],
+      {
+        label: 'Inicio',
+        href: '#inicio',
+        children: [
+          ['Nuestra red', '#nuestra-red'],
+          ['¿Para quién es SIGUE?', '#para-quien'],
+          ['Nuestro primer año', '#impacto'],
+          ['Nuestro portafolio', '#portafolio'],
+          ['Tu ruta de crecimiento', '#ruta-crecimiento'],
+          ['Lo que dicen nuestros miembros', '#testimonios'],
+          ['Espacios de conexión', '#conexion'],
+          ['Calendario', '#eventos'],
+          ['Conéctate con nosotros', '#conectate'],
+          ['Tu organización puede más', '#potencial'],
+        ],
+      },
+      {
+        label: 'Conoce',
+        href: '/conoce-sigue',
+        children: [
+          ['Conoce SIGUE', '/conoce-sigue'],
+          ['SIGUE Tracks', '/sigue-tracks'],
+          ['Recursos y herramientas', '/recursos'],
+        ],
+      },
+      {
+        label: 'Portafolio',
+        href: '#portafolio',
+        children: [
+          ['Nuestro portafolio', '#portafolio'],
+          ['SIGUE Tracks', '/sigue-tracks'],
+          ['SIGUE Consulting', '/sigue-consulting'],
+          ['SIGUE Academy', '/sigue-academy'],
+          ['SIGUE Hub', '/sigue-hub'],
+        ],
+      },
+      {
+        label: 'Membresía',
+        href: '/unete',
+        children: [
+          ['Únete a SIGUE', '/unete'],
+          ['Miembros SIGUE', '/miembros-sigue'],
+        ],
+      },
+      {
+        label: 'Donar',
+        href: '/donacion',
+        children: [
+          ['Donación', '/donacion'],
+          ['Transparencia', 'https://app.candid.org/profile/8856365/sigue-network-inc-26-2010006/?pkId=69ae89f8-7514-4198-ad73-e733554cd736'],
+        ],
+      },
+      { label: 'Blog', href: '/blog', children: [] },
     ],
     hero: {
       eyebrow: 'SIGUE SCALE-UP FRAMEWORK™ — AUTOEVALUACIÓN —',
@@ -213,12 +260,59 @@ const content = {
     menu: 'Open navigation menu',
     slide: 'Swipe to see more',
     nav: [
-      ['Home', '#inicio'],
-      ['About', '/conoce-sigue'],
-      ['Portfolio', '#portafolio'],
-      ['Membership', '/unete'],
-      ['Donate', '/donacion'],
-      ['Blog', '/blog'],
+      {
+        label: 'Home',
+        href: '#inicio',
+        children: [
+          ['Our network', '#nuestra-red'],
+          ['Who is SIGUE for?', '#para-quien'],
+          ['Our first year', '#impacto'],
+          ['Our portfolio', '#portafolio'],
+          ['Your growth path', '#ruta-crecimiento'],
+          ['What our members say', '#testimonios'],
+          ['Connection spaces', '#conexion'],
+          ['Calendar', '#eventos'],
+          ['Connect with us', '#conectate'],
+          ['Your organization can do more', '#potencial'],
+        ],
+      },
+      {
+        label: 'About',
+        href: '/conoce-sigue',
+        children: [
+          ['About SIGUE', '/conoce-sigue'],
+          ['SIGUE Tracks', '/sigue-tracks'],
+          ['Resources and tools', '/recursos'],
+        ],
+      },
+      {
+        label: 'Portfolio',
+        href: '#portafolio',
+        children: [
+          ['Our portfolio', '#portafolio'],
+          ['SIGUE Tracks', '/sigue-tracks'],
+          ['SIGUE Consulting', '/sigue-consulting'],
+          ['SIGUE Academy', '/sigue-academy'],
+          ['SIGUE Hub', '/sigue-hub'],
+        ],
+      },
+      {
+        label: 'Membership',
+        href: '/unete',
+        children: [
+          ['Join SIGUE', '/unete'],
+          ['SIGUE members', '/miembros-sigue'],
+        ],
+      },
+      {
+        label: 'Donate',
+        href: '/donacion',
+        children: [
+          ['Donation', '/donacion'],
+          ['Transparency', 'https://app.candid.org/profile/8856365/sigue-network-inc-26-2010006/?pkId=69ae89f8-7514-4198-ad73-e733554cd736'],
+        ],
+      },
+      { label: 'Blog', href: '/blog', children: [] },
     ],
     hero: {
       eyebrow: 'SIGUE SCALE-UP FRAMEWORK™ — SELF-ASSESSMENT —',
@@ -399,9 +493,34 @@ function PrimaryLink({ locale, href, children }: { locale: Locale; href: string;
   );
 }
 
+function NavigationLink({
+  locale,
+  href,
+  children,
+  className,
+}: {
+  locale: Locale;
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const external = href.startsWith('http');
+
+  return (
+    <Link
+      className={className}
+      href={localizedHref(locale, href)}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noopener noreferrer' : undefined}
+    >
+      {children}
+    </Link>
+  );
+}
+
 export default function HomeLanding({ locale, preview = false }: { locale: Locale; preview?: boolean }) {
   const c = content[locale];
-  const otherLocale: Locale = locale === 'es' ? 'en' : 'es';
+  const previewPath = preview ? '/inicio-2026' : '';
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'NGO',
@@ -430,24 +549,49 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
       <a className={styles.skipLink} href="#contenido-principal">{c.skip}</a>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
 
+      <nav className={styles.localeToggle} aria-label={locale === 'es' ? 'Cambiar idioma' : 'Change language'}>
+        <Link
+          href={`/es${previewPath}`}
+          className={locale === 'es' ? styles.localeActive : undefined}
+          aria-current={locale === 'es' ? 'page' : undefined}
+          hrefLang="es"
+          lang="es"
+        >
+          ES
+        </Link>
+        <Link
+          href={`/en${previewPath}`}
+          className={locale === 'en' ? styles.localeActive : undefined}
+          aria-current={locale === 'en' ? 'page' : undefined}
+          hrefLang="en"
+          lang="en"
+        >
+          EN
+        </Link>
+      </nav>
+
       <header className={styles.header}>
         <div className={styles.headerInner}>
-          <Link className={styles.logoLink} href={`/${locale}`} aria-label="SIGUE Network">
+          <Link className={styles.logoLink} href={`/${locale}${previewPath}`} aria-label="SIGUE Network">
             <Image src="/images/home-2026/logo-transparent.png" alt="SIGUE Network" width={134} height={161} priority />
           </Link>
           <nav className={styles.desktopNav} aria-label={locale === 'es' ? 'Navegación principal' : 'Main navigation'}>
-            {c.nav.map(([label, href]) => <Link key={label} href={localizedHref(locale, href)}>{label}</Link>)}
+            {c.nav.map((item) => (
+              <div className={styles.navGroup} key={item.label}>
+                <NavigationLink locale={locale} href={item.href} className={styles.navParent}>
+                  {item.label}
+                </NavigationLink>
+                {item.children.length > 0 && (
+                  <div className={styles.navDropdown}>
+                    {item.children.map(([label, href]) => (
+                      <NavigationLink locale={locale} href={href} key={label}>{label}</NavigationLink>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
           </nav>
-          <div className={styles.languageSwitch} aria-label={locale === 'es' ? 'Idioma' : 'Language'}>
-            <span aria-current="page">{locale.toUpperCase()}</span>
-            <Link href={`/${otherLocale}${preview ? '/inicio-2026' : ''}`} hrefLang={otherLocale}>{otherLocale.toUpperCase()}</Link>
-          </div>
-          <details className={styles.mobileMenu}>
-            <summary aria-label={c.menu}><Menu size={28} aria-hidden="true" /></summary>
-            <nav>
-              {c.nav.map(([label, href]) => <Link key={label} href={localizedHref(locale, href)}>{label}</Link>)}
-            </nav>
-          </details>
+          <HomeMobileNavigation items={c.nav} locale={locale} label={c.menu} />
         </div>
       </header>
 
@@ -483,7 +627,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
           </div>
         </section>
 
-        <section className={styles.networkSection} aria-labelledby="network-title">
+        <section id="nuestra-red" className={styles.networkSection} aria-labelledby="network-title">
           <div className={styles.networkImage}>
             <Image src="/images/home-2026/network.webp" alt={c.network.imageAlt} fill sizes="100vw" priority={false} />
             <span className={styles.photoAccent} aria-hidden="true" />
@@ -498,7 +642,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
           </div>
         </section>
 
-        <section className={styles.audienceSection} aria-labelledby="audience-title">
+        <section id="para-quien" className={styles.audienceSection} aria-labelledby="audience-title">
           <div className={styles.container}>
             <SectionHeading label={c.audience.label} title={c.audience.titleStart} accent={c.audience.titleBrand} />
             <p className={styles.sectionIntro}>{c.audience.intro}</p>
@@ -521,7 +665,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
               <div key={file}><Image src={`/images/home-2026/${file}`} alt="" fill sizes="33vw" className={styles.coverImage} /></div>
             ))}
           </div>
-          <div className={styles.impactBand}>
+          <div id="impacto" className={styles.impactBand}>
             <Reveal>
               <SectionHeading label={c.impact.label} title={c.impact.title} accent={c.impact.accent} />
               <p>{c.impact.intro}</p>
@@ -556,7 +700,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
           </div>
         </section>
 
-        <section className={styles.routeSection} aria-labelledby="route-title">
+        <section id="ruta-crecimiento" className={styles.routeSection} aria-labelledby="route-title">
           <div className={styles.routeTop}>
             <div className={styles.routeVisual}>
               <DecorativeBlock />
@@ -584,7 +728,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
           </div>
         </section>
 
-        <section className={styles.testimonialsSection} aria-labelledby="testimonials-title">
+        <section id="testimonios" className={styles.testimonialsSection} aria-labelledby="testimonials-title">
           <div className={styles.container}>
             <p id="testimonials-title" className={`${styles.eyebrow} ${styles.centerText}`}>{c.testimonials.label}</p>
             <p className={styles.mobileScrollHint}>{c.slide} →</p>
@@ -599,7 +743,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
           </div>
         </section>
 
-        <section className={styles.connectionsSection} aria-labelledby="connections-title">
+        <section id="conexion" className={styles.connectionsSection} aria-labelledby="connections-title">
           <div className={styles.connectionsImage}><Image src="/images/home-2026/connections.webp" alt={c.connections.imageAlt} fill sizes="100vw" className={styles.coverImage} /></div>
           <div className={styles.container}>
             <div className={styles.headingCentered}>
@@ -623,7 +767,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
           </div>
         </section>
 
-        <section className={styles.eventsSection} aria-labelledby="events-title">
+        <section id="eventos" className={styles.eventsSection} aria-labelledby="events-title">
           <div className={styles.eventsHeading}>
             <DecorativeBlock />
             <div>
@@ -645,7 +789,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
           </div>
         </section>
 
-        <section className={styles.newsletterSection} aria-labelledby="newsletter-title">
+        <section id="conectate" className={styles.newsletterSection} aria-labelledby="newsletter-title">
           <DecorativeBlock />
           <Reveal className={styles.newsletterCopy} variant="slide-right">
             <SectionHeading label={c.newsletter.label} title={c.newsletter.title} accent={c.newsletter.accent} centered={false} />
@@ -658,7 +802,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
           </Reveal>
         </section>
 
-        <section className={styles.finalSection} aria-labelledby="final-title">
+        <section id="potencial" className={styles.finalSection} aria-labelledby="final-title">
           <div className={styles.finalImage}><Image src="/images/home-2026/final-cta.webp" alt={c.final.imageAlt} fill sizes="100vw" className={styles.coverImage} /></div>
           <div className={styles.finalBody}>
             <DecorativeBlock />
