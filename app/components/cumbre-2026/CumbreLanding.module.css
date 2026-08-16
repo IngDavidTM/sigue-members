@@ -1151,7 +1151,13 @@
 }
 
 .lodgingCard .primaryButton {
+  display: flex;
+  width: fit-content;
   margin-top: 2rem;
+}
+
+.lodgingCard > div > strong {
+  display: block;
 }
 
 .lodgingCard > img {
