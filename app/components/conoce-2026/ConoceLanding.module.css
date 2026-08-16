@@ -377,15 +377,9 @@
 }
 
 .latinMap {
-  display: grid;
-  aspect-ratio: 0.82;
-  place-items: center;
-  color: var(--pink-soft);
-  font-size: clamp(4.5rem, 11vw, 9rem);
-  font-weight: 950;
-  letter-spacing: -0.1em;
-  opacity: 0.9;
-  transform: rotate(-8deg);
+  width: min(100%, 520px);
+  height: auto;
+  justify-self: center;
 }
 
 .resourcesBarrier > .actionLink {
@@ -1583,7 +1577,9 @@
   }
 
   .latinMap {
-    display: none;
+    display: block;
+    width: min(88vw, 420px);
+    margin: 1rem auto 0;
   }
 
   .responseFeature blockquote {

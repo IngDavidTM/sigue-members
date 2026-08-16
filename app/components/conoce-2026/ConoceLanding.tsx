@@ -140,7 +140,15 @@ export default function ConoceLanding({ locale }: { locale: ConoceLocale }) {
                 </div>
                 <p>{c.barriers.closing}</p>
               </div>
-              <div className={styles.latinMap} aria-hidden="true">LATAM</div>
+              <Image
+                className={styles.latinMap}
+                src="/images/conoce-2026/latin-america-map.webp"
+                alt=""
+                width={553}
+                height={631}
+                sizes="(max-width: 800px) 88vw, 42vw"
+                aria-hidden="true"
+              />
             </div>
             <ActionLink locale={locale} href="#respuesta">{c.barriers.cta}</ActionLink>
           </div>

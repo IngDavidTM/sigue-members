@@ -184,7 +184,7 @@ export const conoceContent = {
         ['Sandra Prieto', 'Presidenta', 'sandra-prieto-cutout.webp'],
         ['Mernela Añez', 'Miembro', 'mernela-anez-cutout.webp'],
         ['Mirelida Morales', 'Miembro', 'mirelida-morales-cutout.webp'],
-        ['Oscar Lugo', 'Miembro', 'oscar-lugo-cutout.webp'],
+        ['Oscar Lugo', 'Miembro', 'oscar-lugo-cutout-v2.webp'],
       ],
       volunteers: [
         ['Ana M. Peña', 'ana-pena-cutout.webp'],
@@ -193,8 +193,8 @@ export const conoceContent = {
         ['Jorge H. Mejía', 'jorge-mejia-cutout.webp'],
         ['Alejandro Peralta', 'alejandro-peralta-cutout.webp'],
         ['Mario Blanco', 'mario-blanco-cutout.webp'],
-        ['Oscar Lugo', 'oscar-lugo-cutout.webp'],
-        ['David Tamayo', 'david-tamayo-cutout.webp'],
+        ['Oscar Lugo', 'oscar-lugo-cutout-v2.webp'],
+        ['David Tamayo', 'david-tamayo-cutout-v2.webp'],
       ],
     },
     join: {
@@ -410,13 +410,13 @@ export const conoceContent = {
         ['Sandra Prieto', 'President', 'sandra-prieto-cutout.webp'],
         ['Mernela Añez', 'Member', 'mernela-anez-cutout.webp'],
         ['Mirelida Morales', 'Member', 'mirelida-morales-cutout.webp'],
-        ['Oscar Lugo', 'Member', 'oscar-lugo-cutout.webp'],
+        ['Oscar Lugo', 'Member', 'oscar-lugo-cutout-v2.webp'],
       ],
       volunteers: [
         ['Ana M. Peña', 'ana-pena-cutout.webp'], ['Belinda Florez', 'belinda-florez-cutout.webp'],
         ['Mitzi Machado', 'mitzi-machado-cutout.webp'], ['Jorge H. Mejía', 'jorge-mejia-cutout.webp'],
         ['Alejandro Peralta', 'alejandro-peralta-cutout.webp'], ['Mario Blanco', 'mario-blanco-cutout.webp'],
-        ['Oscar Lugo', 'oscar-lugo-cutout.webp'], ['David Tamayo', 'david-tamayo-cutout.webp'],
+        ['Oscar Lugo', 'oscar-lugo-cutout-v2.webp'], ['David Tamayo', 'david-tamayo-cutout-v2.webp'],
       ],
     },
     join: {
