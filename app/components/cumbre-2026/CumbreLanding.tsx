@@ -660,7 +660,11 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                 </article>
               ))}
             </div>
-            <a className={styles.primaryButton} href="#inscripcion">
+            <a
+              className={styles.primaryButton}
+              href="/downloads/programa-inicial-cumbre-sigue-2026.pdf"
+              download="PROGRAMA INICIAL CUMBRE SIGUE 2026-Del corazon a la estrategia.pdf"
+            >
               {text('Ver agenda completa', 'View full schedule')}
             </a>
           </section>
@@ -799,8 +803,8 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                 {text('Inscríbete a la Cumbre', 'Register for the Summit')}
               </SectionHeading>
               <p className={styles.registrationLead}>
-                {text('Completa tus datos y elige tu tarifa. ', 'Enter your information and choose your rate. ')}
-                <strong>{text('El resumen se actualiza en vivo al hacer tu selección.', 'The summary updates instantly as you make your selection.')}</strong>
+                {text('Elige tu pase, registra tus datos y completa el pago seguro. ', 'Choose your pass, enter your details, and complete secure payment. ')}
+                <strong>{text('Tu inscripción se confirma directamente en Zeffy.', 'Your registration is confirmed directly through Zeffy.')}</strong>
               </p>
             </div>
             <RegistrationForm locale={locale} />

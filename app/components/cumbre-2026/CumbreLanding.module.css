@@ -1265,6 +1265,54 @@
   font-size: clamp(1.5rem, 2.4vw, 2rem);
 }
 
+.zeffyIntro {
+  max-width: 43rem;
+  margin: 0;
+  color: var(--cumbre-ink);
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.zeffyFeatures {
+  display: grid;
+  gap: 1rem;
+  margin: 2.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.zeffyFeatures li {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  color: var(--cumbre-ink);
+  font-size: 1.04rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.zeffyFeatures li::before {
+  display: grid;
+  flex: 0 0 1.55rem;
+  width: 1.55rem;
+  height: 1.55rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--cumbre-pink);
+  color: #fff;
+  content: '✓';
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.zeffyNote {
+  margin: 2.25rem 0 0;
+  color: var(--cumbre-purple);
+  font-weight: 800;
+  line-height: 1.5;
+}
+
 .fieldGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1457,6 +1505,29 @@
   cursor: pointer;
   font: inherit;
   font-weight: 900;
+}
+
+.zeffyCheckout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  margin-top: auto;
+  padding: 0.8rem 1rem;
+  border: 3px solid #fff;
+  border-radius: 0.8rem;
+  background: var(--cumbre-pink);
+  color: #fff;
+  font: inherit;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+}
+
+.zeffyCheckout:hover,
+.zeffyCheckout:focus-visible {
+  background: #d90f47;
+  color: #fff;
 }
 
 .formSummary .formNotice {
