@@ -46,7 +46,7 @@ const content = {
       ['¿Cuándo comienza y termina la Cumbre?', 'Del 27 en la tarde al 29 antes de la cena.'],
       [
         '¿Puedo transferir mi inscripción?',
-        'Sí, puedes transferir tu cupo a otra persona hasta 7 días antes del evento escribiéndonos a operaciones@siguenetwork.org.',
+        'Sí, puedes transferir tu cupo a otra persona hasta 7 días antes del evento escribiéndonos a info@siguenetwork.org.',
       ],
       [
         '¿Cuál es la política de reembolso?',
@@ -93,7 +93,7 @@ const content = {
       ],
       [
         'Can I transfer my registration?',
-        'Yes. You can transfer your spot to another person up to 7 days before the event by writing to operaciones@siguenetwork.org.',
+        'Yes. You can transfer your spot to another person up to 7 days before the event by writing to info@siguenetwork.org.',
       ],
       [
         'What is the refund policy?',

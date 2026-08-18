@@ -1243,15 +1243,235 @@
 }
 
 .registrationForm {
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.5fr);
-  gap: 0;
   width: min(1180px, calc(100% - 3rem));
   margin: 4rem auto 0;
   overflow: hidden;
   border: 3px solid var(--cumbre-border);
   border-radius: 1.35rem;
   background: var(--cumbre-lilac);
+}
+
+.paymentChoiceHeader {
+  padding: clamp(2rem, 4vw, 3.5rem);
+  text-align: center;
+}
+
+.paymentChoiceHeader > p {
+  margin: 0 0 0.5rem;
+  color: var(--cumbre-pink);
+  font-size: 0.86rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.paymentChoiceHeader h3 {
+  margin: 0;
+  color: var(--cumbre-purple);
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  line-height: 1.15;
+}
+
+.paymentChoiceHeader span {
+  display: block;
+  max-width: 48rem;
+  margin: 0.85rem auto 0;
+  color: var(--cumbre-ink);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.paymentMethods {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+  gap: 1.5rem;
+  padding: 0 clamp(1.25rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.paymentMethodCard {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 3px solid var(--cumbre-border);
+  border-radius: 1.15rem;
+  background: #fff;
+}
+
+.cardPayment {
+  border-color: var(--cumbre-purple);
+  background: var(--cumbre-purple);
+  color: #fff;
+}
+
+.transferPayment {
+  border-color: var(--cumbre-pink);
+}
+
+.paymentMethodNumber {
+  margin: 0 0 0.55rem;
+  color: var(--cumbre-pink);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.cardPayment .paymentMethodNumber {
+  color: #ffd3e8;
+}
+
+.paymentMethodCard h4 {
+  margin: 0;
+  color: var(--cumbre-purple);
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  line-height: 1.2;
+}
+
+.cardPayment h4 {
+  color: #fff;
+}
+
+.paymentMethodCard > h4 + p {
+  margin: 0.85rem 0 0;
+  line-height: 1.5;
+}
+
+.paymentFeatures {
+  display: grid;
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.paymentFeatures li {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.paymentFeatures li::before {
+  display: grid;
+  flex: 0 0 1.45rem;
+  width: 1.45rem;
+  height: 1.45rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--cumbre-pink);
+  color: #fff;
+  content: '✓';
+  font-size: 0.82rem;
+}
+
+.paymentMethodButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  margin-top: auto;
+  padding: 0.8rem 1rem;
+  border: 3px solid #fff;
+  border-radius: 0.8rem;
+  background: var(--cumbre-pink);
+  color: #fff;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+}
+
+.paymentMethodButton:hover,
+.paymentMethodButton:focus-visible {
+  background: #d90f47;
+  color: #fff;
+}
+
+.transferCalculator {
+  margin-top: 1.6rem;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  background: var(--cumbre-lilac);
+}
+
+.transferCalculator h5 {
+  margin: 0;
+  color: var(--cumbre-purple);
+  font-size: 1.05rem;
+}
+
+.calculatorControls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.calculatorControls label {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--cumbre-purple);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.calculatorControls select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.65rem 2.25rem 0.65rem 0.75rem;
+  border: 2px solid var(--cumbre-border);
+  border-radius: 0.7rem;
+  background: #fff;
+  color: var(--cumbre-ink);
+  font: inherit;
+  font-weight: 700;
+  text-transform: none;
+}
+
+.calculatorControls select:focus-visible {
+  border-color: var(--cumbre-pink);
+  outline: 3px solid rgb(239 21 82 / 18%);
+}
+
+.transferTotal {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.85rem;
+  background: var(--cumbre-pink);
+  color: #fff;
+  text-align: center;
+}
+
+.transferTotal span {
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.transferTotal strong {
+  margin-top: 0.25rem;
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  line-height: 1.1;
+}
+
+.transferTotal small {
+  margin-top: 0.4rem;
+  font-weight: 700;
+}
+
+.breInfoGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(145px, 175px);
+  gap: 1.5rem;
+  align-items: start;
+  margin-top: 1.5rem;
 }
 
 .formFields {
@@ -1311,6 +1531,117 @@
   color: var(--cumbre-purple);
   font-weight: 800;
   line-height: 1.5;
+}
+
+.brePayment {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 190px);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+  margin-top: 3rem;
+  padding: clamp(1.35rem, 3vw, 2rem);
+  border: 2px solid var(--cumbre-border);
+  border-radius: 1.15rem;
+  background: #fff;
+}
+
+.breEyebrow {
+  margin: 0 0 0.45rem;
+  color: var(--cumbre-pink);
+  font-size: 0.84rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.brePayment h4 {
+  margin: 0;
+  color: var(--cumbre-purple);
+  font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+}
+
+.brePayment h4 + p {
+  margin: 0.75rem 0 0;
+  line-height: 1.5;
+}
+
+.breDetails {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem 1rem;
+  margin: 1.3rem 0 0;
+}
+
+.breDetails div {
+  min-width: 0;
+}
+
+.breDetails dt {
+  color: var(--cumbre-purple);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.breDetails dd {
+  margin: 0.2rem 0 0;
+  color: var(--cumbre-ink);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.breVerification,
+.breConcept,
+.breReceipt {
+  margin: 1.15rem 0 0;
+  line-height: 1.5;
+}
+
+.breVerification {
+  color: var(--cumbre-purple);
+  font-weight: 800;
+}
+
+.breConcept strong {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--cumbre-pink);
+  font-size: 0.96rem;
+  letter-spacing: 0.04em;
+}
+
+.breReceipt a,
+.breQr a {
+  color: var(--cumbre-pink);
+  font-weight: 900;
+}
+
+.breQr {
+  margin: 0;
+  text-align: center;
+}
+
+.breQr img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 2px solid var(--cumbre-border);
+  border-radius: 0.8rem;
+}
+
+.breQr figcaption {
+  margin-top: 0.65rem;
+  color: var(--cumbre-purple);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.breQr a {
+  display: inline-block;
+  margin-top: 0.7rem;
+  font-size: 0.88rem;
 }
 
 .fieldGrid {
@@ -2049,6 +2380,10 @@
     grid-template-columns: 1fr;
   }
 
+  .paymentMethods {
+    grid-template-columns: 1fr;
+  }
+
   .footer {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2217,8 +2552,18 @@
   .audienceGrid,
   .fieldGrid,
   .tariffSelector > div,
-  .lodgingSelector > div {
+  .lodgingSelector > div,
+  .brePayment,
+  .breDetails,
+  .calculatorControls,
+  .breInfoGrid {
     grid-template-columns: 1fr;
+  }
+
+  .breQr {
+    width: min(210px, 100%);
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .includedSection {

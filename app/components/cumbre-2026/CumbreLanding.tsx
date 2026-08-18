@@ -143,7 +143,7 @@ const faqs = [
   },
   {
     question: ['¿Puedo transferir mi inscripción?', 'Can I transfer my registration?'] as LocalizedText,
-    answer: ['Sí, puedes transferir tu cupo a otra persona hasta 7 días antes del evento escribiéndonos a operaciones@siguenetwork.org.', 'Yes. You can transfer your spot to another person up to 7 days before the event by writing to operaciones@siguenetwork.org.'] as LocalizedText,
+    answer: ['Sí, puedes transferir tu cupo a otra persona hasta 7 días antes del evento escribiéndonos a info@siguenetwork.org.', 'Yes. You can transfer your spot to another person up to 7 days before the event by writing to info@siguenetwork.org.'] as LocalizedText,
   },
   {
     question: ['¿Cuál es la política de reembolso?', 'What is the refund policy?'] as LocalizedText,
@@ -803,8 +803,8 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                 {text('Inscríbete a la Cumbre', 'Register for the Summit')}
               </SectionHeading>
               <p className={styles.registrationLead}>
-                {text('Elige tu pase, registra tus datos y completa el pago seguro. ', 'Choose your pass, enter your details, and complete secure payment. ')}
-                <strong>{text('Tu inscripción se confirma directamente en Zeffy.', 'Your registration is confirmed directly through Zeffy.')}</strong>
+                {text('Elige tu pase y la forma de pago que más te convenga. ', 'Choose your pass and the payment method that works best for you. ')}
+                <strong>{text('Paga con tarjeta o transfiere el valor exacto en pesos colombianos.', 'Pay by card or transfer the exact amount in Colombian pesos.')}</strong>
               </p>
             </div>
             <RegistrationForm locale={locale} />

@@ -1,60 +1,133 @@
+'use client';
+
+import Image from 'next/image';
+import { useRegistration } from './RegistrationControls';
+import { money, tariffs, type Tariff } from './registration';
 import styles from './CumbreLanding.module.css';
 
 const zeffyCampaignUrl = 'https://www.zeffy.com/en-US/ticketing/2nd-conference-sigue-network';
 
 export default function RegistrationForm({ locale = 'es' }: { locale?: 'es' | 'en' }) {
+  const { tariff, setTariff, withLodging, setWithLodging } = useRegistration();
   const english = locale === 'en';
   const text = (spanish: string, englishText: string) => (english ? englishText : spanish);
+  const tariffLabel = (key: Tariff) => {
+    if (key === 'general') return text('Tarifa General', 'General Rate');
+    if (key === 'member') return text('Miembro Activo SIGUE', 'Active SIGUE Member');
+    return 'Early Bird';
+  };
+  const transferTotal = withLodging ? tariffs[tariff].lodging : tariffs[tariff].pass;
 
   return (
     <div className={styles.registrationForm}>
-      <div className={styles.formFields}>
-        <h3>{text('Inscripción en línea', 'Online registration')}</h3>
-        <p className={styles.zeffyIntro}>
+      <header className={styles.paymentChoiceHeader}>
+        <p>{text('Dos formas de pago', 'Two payment methods')}</p>
+        <h3>{text('Elige cómo quieres pagar tu inscripción', 'Choose how you want to pay for your registration')}</h3>
+        <span>
           {text(
-            'Completa tu inscripción y pago seguro directamente en Zeffy.',
-            'Complete your registration and secure payment directly through Zeffy.'
+            'Con tarjeta a través de Zeffy o mediante transferencia o depósito desde Colombia.',
+            'By card through Zeffy, or by bank transfer or deposit from Colombia.'
           )}
-        </p>
-        <ul className={styles.zeffyFeatures}>
-          <li>{text('Elige una de las seis opciones de pase y hospedaje.', 'Choose from the six Summit pass and lodging options.')}</li>
-          <li>{text('Registra tus datos de contacto y organización.', 'Enter your contact and organization details.')}</li>
-          <li>{text('Recibe la confirmación de tu inscripción por correo.', 'Receive your registration confirmation by email.')}</li>
-        </ul>
-        <p className={styles.zeffyNote}>
-          {text(
-            'Zeffy gestiona de forma segura la inscripción, el pago y la confirmación de tu cupo.',
-            'Zeffy securely manages your registration, payment, and place confirmation.'
-          )}
-        </p>
-      </div>
+        </span>
+      </header>
 
-      <aside className={styles.formSummary}>
-        <h3>{text('Tu cupo te espera', 'Your spot is waiting')}</h3>
-        <dl>
-          <div>
-            <dt>{text('Evento', 'Event')}</dt>
-            <dd>{text('Cumbre SIGUE Network 2026', 'SIGUE Network Summit 2026')}</dd>
+      <div className={styles.paymentMethods}>
+        <article className={`${styles.paymentMethodCard} ${styles.cardPayment}`}>
+          <p className={styles.paymentMethodNumber}>{text('Opción 1 · Tarjeta', 'Option 1 · Card')}</p>
+          <h4>{text('Pago con tarjeta en Zeffy', 'Card payment through Zeffy')}</h4>
+          <p>
+            {text(
+              'Recomendado para pagos con tarjeta y para participantes fuera de Colombia.',
+              'Recommended for card payments and participants outside Colombia.'
+            )}
+          </p>
+          <ul className={styles.paymentFeatures}>
+            <li>{text('Elige una de las seis opciones de pase y hospedaje.', 'Choose from the six Summit pass and lodging options.')}</li>
+            <li>{text('Completa tus datos y el pago seguro en Zeffy.', 'Enter your information and complete secure payment through Zeffy.')}</li>
+            <li>{text('Recibe la confirmación por correo.', 'Receive confirmation by email.')}</li>
+          </ul>
+          <a className={styles.paymentMethodButton} href={zeffyCampaignUrl}>
+            {text('Pagar con tarjeta en Zeffy', 'Pay by card through Zeffy')}
+          </a>
+        </article>
+
+        <article className={`${styles.paymentMethodCard} ${styles.transferPayment}`}>
+          <p className={styles.paymentMethodNumber}>{text('Opción 2 · Colombia', 'Option 2 · Colombia')}</p>
+          <h4>{text('Transferencia o depósito con Bre-B', 'Bank transfer or deposit through Bre-B')}</h4>
+          <p>
+            {text(
+              'Calcula el valor exacto en pesos colombianos y realiza el pago desde tu entidad financiera.',
+              'Calculate the exact amount in Colombian pesos and pay from your financial institution.'
+            )}
+          </p>
+
+          <section className={styles.transferCalculator} aria-labelledby="transfer-calculator-title">
+            <h5 id="transfer-calculator-title">{text('Calcula cuánto debes transferir', 'Calculate how much to transfer')}</h5>
+            <div className={styles.calculatorControls}>
+              <label>
+                {text('Tarifa', 'Rate')}
+                <select value={tariff} onChange={(event) => setTariff(event.target.value as Tariff)}>
+                  {(Object.keys(tariffs) as Tariff[]).map((key) => (
+                    <option key={key} value={key}>{tariffLabel(key)}</option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                {text('Hospedaje', 'Lodging')}
+                <select value={withLodging ? 'yes' : 'no'} onChange={(event) => setWithLodging(event.target.value === 'yes')}>
+                  <option value="no">{text('Sin hospedaje', 'Without lodging')}</option>
+                  <option value="yes">{text('Con hospedaje', 'With lodging')}</option>
+                </select>
+              </label>
+            </div>
+            <div className={styles.transferTotal} aria-live="polite">
+              <span>{text('Total exacto a transferir', 'Exact amount to transfer')}</span>
+              <strong>{money[locale].format(transferTotal)}</strong>
+              <small>{text('Transfiere este valor en pesos colombianos.', 'Transfer this amount in Colombian pesos.')}</small>
+            </div>
+          </section>
+
+          <div className={styles.breInfoGrid}>
+            <div>
+              <dl className={styles.breDetails}>
+                <div><dt>{text('Llave Bre-B', 'Bre-B key')}</dt><dd>52104099</dd></div>
+                <div><dt>{text('Titular', 'Account holder')}</dt><dd>Sandra Bibiana Prieto Garzón</dd></div>
+                <div><dt>{text('Banco', 'Bank')}</dt><dd>Davivienda</dd></div>
+                <div><dt>RUT</dt><dd>52104099</dd></div>
+              </dl>
+              <p className={styles.breVerification}>
+                {text(
+                  'Antes de confirmar, verifica que aparezca el nombre de Sandra Bibiana Prieto Garzón.',
+                  'Before confirming, verify that the name Sandra Bibiana Prieto Garzón appears.'
+                )}
+              </p>
+              <p className={styles.breConcept}>
+                {text('Concepto o destino del pago:', 'Payment reference:')}
+                <strong>CUMBRE SIGUE NETWORK 2026</strong>
+              </p>
+            </div>
+            <figure className={styles.breQr}>
+              <Image
+                src="/images/cumbre-2026/pago-bre-b-qr.png"
+                alt={text('Código QR Bre-B para pagar a Sandra Bibiana Prieto Garzón', 'Bre-B QR code to pay Sandra Bibiana Prieto Garzón')}
+                width={882}
+                height={1323}
+                sizes="(max-width: 600px) 210px, 170px"
+              />
+              <figcaption>{text('Escanea el QR desde tu aplicación financiera.', 'Scan the QR code from your financial app.')}</figcaption>
+              <a href="/downloads/codigo-qr-bre-b-sandra-prieto.pdf" download>
+                {text('Descargar código QR', 'Download QR code')}
+              </a>
+            </figure>
           </div>
-          <div>
-            <dt>{text('Fechas', 'Dates')}</dt>
-            <dd>{text('27–29 de octubre', 'October 27–29')}</dd>
-          </div>
-          <div>
-            <dt>{text('Lugar', 'Venue')}</dt>
-            <dd>CELAM · Bogotá</dd>
-          </div>
-        </dl>
-        <a className={styles.zeffyCheckout} href={zeffyCampaignUrl}>
-          {text('Inscribirme y pagar en Zeffy', 'Register and pay on Zeffy')}
-        </a>
-        <small className={styles.emailDisclosure}>
-          {text(
-            'Serás dirigido a Zeffy para seleccionar tu entrada y completar el pago seguro.',
-            'You will be directed to Zeffy to select your ticket and complete secure payment.'
-          )}
-        </small>
-      </aside>
+
+          <p className={styles.breReceipt}>
+            {text('Después del pago, envía el comprobante, tu nombre completo y tus datos de facturación a ', 'After payment, send the receipt, your full name, and billing details to ')}
+            <a href="mailto:info@siguenetwork.org">info@siguenetwork.org</a>.{' '}
+            {text('Tu cupo y factura se confirman una vez verificado el pago.', 'Your place and invoice are confirmed once payment is verified.')}
+          </p>
+        </article>
+      </div>
     </div>
   );
 }
