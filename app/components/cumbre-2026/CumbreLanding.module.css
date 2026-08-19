@@ -683,7 +683,7 @@
 .memberLogoTrack {
   display: flex;
   width: max-content;
-  animation: member-logo-marquee 72s linear infinite;
+  animation: member-logo-marquee 150s linear infinite;
   will-change: transform;
 }
 
@@ -837,7 +837,7 @@
 .speakersGrid article {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   min-height: 470px;
   padding: 1.2rem;
   border: 4px solid var(--cumbre-border);
@@ -848,8 +848,8 @@
 
 .speakerImage {
   position: relative;
-  flex: 1;
-  min-height: 340px;
+  flex: 0 0 340px;
+  height: 340px;
 }
 
 .speakersGrid h3 {
