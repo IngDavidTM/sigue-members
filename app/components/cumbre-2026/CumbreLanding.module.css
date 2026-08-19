@@ -673,18 +673,46 @@
 }
 
 .memberLogos {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 2rem;
-  align-items: center;
-  padding: 2.3rem max(1.5rem, calc((100vw - 1100px) / 2));
+  position: relative;
+  overflow: hidden;
+  padding: 2.1rem 0;
   background: var(--cumbre-lilac);
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
 }
 
-.memberLogos img {
+.memberLogoTrack {
+  display: flex;
+  width: max-content;
+  animation: member-logo-marquee 72s linear infinite;
+  will-change: transform;
+}
+
+.memberLogoGroup {
+  display: flex;
+  flex: none;
+  gap: clamp(2rem, 4vw, 4.5rem);
+  align-items: center;
+  padding-right: clamp(2rem, 4vw, 4.5rem);
+}
+
+.memberLogoItem {
+  display: grid;
+  flex: 0 0 clamp(160px, 14vw, 220px);
+  width: clamp(160px, 14vw, 220px);
+  height: 105px;
+  place-items: center;
+}
+
+.memberLogoItem img {
   width: 100%;
-  height: 80px;
+  height: 100%;
   object-fit: contain;
+}
+
+@keyframes member-logo-marquee {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .communitySection > .primaryButton {
@@ -835,14 +863,50 @@
   line-height: 1.15;
 }
 
+.speakerRole {
+  font-weight: 800;
+}
+
+.speakerInitiatives {
+  display: grid;
+  gap: 0.08rem;
+  margin-top: 0.4rem !important;
+  font-family: var(--font-roboto), 'Roboto', sans-serif;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.speakerOrganization,
+.speakerCountry {
+  font-family: var(--font-roboto), 'Roboto', sans-serif;
+  font-style: italic;
+  font-weight: 800;
+}
+
+.speakerCountry {
+  margin-top: 0.65rem !important;
+}
+
 .speakerSoon {
   justify-content: center !important;
   align-items: center;
   border-style: dashed !important;
 }
 
-.speakerSoon .heart {
-  width: 120px;
+.speakerSoonMark {
+  display: block;
+  width: 104px;
+  height: 104px;
+  margin-bottom: 1.25rem;
+  border: 2px dashed var(--cumbre-ink);
+  border-radius: 50%;
+  background: #c5c0d7;
+}
+
+.speakerSoonLead {
+  margin-top: 2.4rem !important;
+  font-size: 1.2rem;
+  font-weight: 900;
 }
 
 .agendaSection {
@@ -2336,10 +2400,6 @@
     display: none;
   }
 
-  .memberLogos {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .speakersGrid,
   .agendaGrid,
   .pricingGrid {
@@ -2500,7 +2560,19 @@
   }
 
   .memberLogos {
-    gap: 1rem;
+    padding: 1.5rem 0;
+    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  }
+
+  .memberLogoGroup {
+    gap: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .memberLogoItem {
+    flex-basis: 145px;
+    width: 145px;
+    height: 82px;
   }
 
   .experienceGrid {
@@ -2645,6 +2717,20 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .memberLogos {
+    overflow-x: auto;
+    mask-image: none;
+    scrollbar-width: none;
+  }
+
+  .memberLogos::-webkit-scrollbar {
+    display: none;
+  }
+
+  .memberLogoGroup[aria-hidden='true'] {
+    display: none;
+  }
+
   .page *,
   .page *::before,
   .page *::after {

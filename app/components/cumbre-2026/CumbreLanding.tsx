@@ -8,6 +8,11 @@ import UsdEquivalents from './UsdEquivalents';
 import styles from './CumbreLanding.module.css';
 
 const asset = '/images/cumbre-2026';
+const memberLogoFiles = Array.from({ length: 26 }, (_, index) => {
+  const number = String(index + 1).padStart(2, '0');
+
+  return `${asset}/member-logos/member-${number}.png`;
+});
 export type CumbreLocale = 'es' | 'en';
 type LocalizedText = readonly [spanish: string, english: string];
 
@@ -514,21 +519,27 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
               </strong>
             </p>
             <div className={styles.memberLogos} aria-label={text('Organizaciones de nuestra comunidad', 'Organizations in our community')}>
-              {[
-                ['unicas.png', 'Únicas'],
-                ['camec.png', 'CAMEC'],
-                ['misiones-on-fire.png', 'Misiones on Fire'],
-                ['fundacion-transformar.png', 'Fundación Social Transformar'],
-              ].map(([image, name]) => (
-                <Image
-                  key={image}
-                  src={`${asset}/${image}`}
-                  alt={name}
-                  width={180}
-                  height={82}
-                  unoptimized
-                />
-              ))}
+              <div className={styles.memberLogoTrack}>
+                {[false, true].map((duplicate) => (
+                  <div
+                    className={styles.memberLogoGroup}
+                    aria-hidden={duplicate || undefined}
+                    key={duplicate ? 'duplicate' : 'original'}
+                  >
+                    {memberLogoFiles.map((image, index) => (
+                      <span className={styles.memberLogoItem} key={`${duplicate ? 'duplicate' : 'original'}-${image}`}>
+                        <Image
+                          src={image}
+                          alt={duplicate ? '' : text(`Logo de organización miembro ${index + 1}`, `Member organization logo ${index + 1}`)}
+                          width={240}
+                          height={110}
+                          unoptimized
+                        />
+                      </span>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
             <a className={styles.primaryButton} href="https://siguenetwork.org/miembros-sigue/">
               {text('Conoce a nuestra comunidad', 'Meet our community')}
@@ -600,7 +611,19 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                     unoptimized
                   />
                 </div>
-                <h3>Mike &amp; Lorena Bunster</h3>
+                <h3>{text('Pastores Mike y Lorena Bunster', 'Pastors Mike and Lorena Bunster')}</h3>
+                <p className={styles.speakerRole}>
+                  {text(
+                    'Fundadores y líderes de iniciativas de impacto social',
+                    'Founders and leaders of social impact initiatives'
+                  )}
+                </p>
+                <p className={styles.speakerInitiatives}>
+                  <span>· Alas de Refugio</span>
+                  <span>· Expansión de Amor</span>
+                  <span>· Colegio de Luz</span>
+                </p>
+                <p className={styles.speakerCountry}>Chile</p>
               </article>
               <article>
                 <div className={styles.speakerImage}>
@@ -614,12 +637,15 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                   />
                 </div>
                 <h3>Sandra B. Prieto</h3>
-                <p>{text('Fundadora · SIGUE Network', 'Founder · SIGUE Network')}</p>
+                <p className={styles.speakerRole}>{text('Fundadora', 'Founder')}</p>
+                <p className={styles.speakerOrganization}>SIGUE Network</p>
+                <p className={styles.speakerCountry}>{text('Estados Unidos', 'United States')}</p>
               </article>
               <article className={styles.speakerSoon}>
-                <HeartMark />
+                <span className={styles.speakerSoonMark} aria-hidden="true" />
                 <h3>{text('Próximamente', 'Coming soon')}</h3>
-                <p>{text('Más voces que sirven e inspiran.', 'More voices that serve and inspire.')}</p>
+                <p className={styles.speakerSoonLead}>{text('Más invitados', 'More guests')}</p>
+                <p>{text('Iremos anunciando', 'We will announce them soon')}</p>
               </article>
             </div>
           </section>
