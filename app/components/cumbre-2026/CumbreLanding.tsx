@@ -88,15 +88,42 @@ const connectMethod = [
   },
 ];
 
-const audiences: LocalizedText[] = [
-  ['Directores y líderes de organizaciones sociales', 'Directors and leaders of social organizations'],
-  ['Pastores y líderes de acción social de iglesias', 'Pastors and church social-action leaders'],
-  ['Fundaciones y proyectos comunitarios', 'Foundations and community projects'],
-  ['Emprendedores sociales', 'Social entrepreneurs'],
-  ['Profesionales comprometidos con el servicio e impacto', 'Professionals committed to service and impact'],
-  ['Donantes y financiadores', 'Donors and funders'],
-  ['Empresas con propósito', 'Purpose-driven companies'],
-  ['Aliados estratégicos', 'Strategic partners'],
+interface CumbreAudienceItem {
+  target: LocalizedText;
+  benefit: LocalizedText;
+}
+
+const cumbreAudiences: CumbreAudienceItem[] = [
+  {
+    target: [
+      'Directores y líderes de organizaciones sociales cristianas — fundaciones, ONG y proyectos comunitarios—, así como pastores y líderes de acción social de iglesias.',
+      'Directors and leaders of Christian social organizations — foundations, NGOs, and community projects —, as well as pastors and church social-action leaders.',
+    ],
+    benefit: [
+      'Se llevarán herramientas prácticas, conexiones estratégicas y próximos pasos concretos para escuchar mejor a sus comunidades, comprender sus necesidades físicas, emocionales y espirituales, fortalecer sus organizaciones y traducir su misión en respuestas pertinentes, sostenibles y de mayor impacto.',
+      'They will gain practical tools, strategic connections, and concrete next steps to better listen to their communities, understand their physical, emotional, and spiritual needs, strengthen their organizations, and translate their mission into relevant, sustainable, and high-impact responses.',
+    ],
+  },
+  {
+    target: [
+      'Emprendedores, profesionales y líderes empresariales cristianos comprometidos con generar impacto social.',
+      'Christian entrepreneurs, professionals, and business leaders committed to generating social impact.',
+    ],
+    benefit: [
+      'Encontrarán ideas, conexiones y oportunidades para aplicar su talento y capacidad empresarial a desafíos reales, fortalecer modelos de negocio que combinen rentabilidad e impacto social y construir alianzas que beneficien a las comunidades.',
+      'They will find ideas, connections, and opportunities to apply their talent and business capability to real challenges, strengthen business models that combine profitability and social impact, and build alliances that benefit communities.',
+    ],
+  },
+  {
+    target: [
+      'Donantes y aliados estratégicos interesados en impulsar iniciativas cristianas de impacto social.',
+      'Donors and strategic partners interested in driving Christian social impact initiatives.',
+    ],
+    benefit: [
+      'Conocerán de primera mano a líderes e iniciativas cristianas que están transformando comunidades, comprenderán mejor sus desafíos y descubrirán oportunidades concretas para movilizar recursos y conexiones, construir alianzas estratégicas y ampliar el alcance de su impacto.',
+      'They will meet first-hand Christian leaders and initiatives transforming communities, better understand their challenges, and discover concrete opportunities to mobilize resources and connections, build strategic alliances, and expand their impact.',
+    ],
+  },
 ];
 
 const faithPractices: readonly [string, LocalizedText][] = [
@@ -693,33 +720,61 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
             </a>
           </section>
 
-          <section className={styles.audienceSection}>
+          <section className={styles.audienceSection} id="para-quien">
             <div className={styles.audienceContent}>
-              <SectionHeading eyebrow={text('Está pensada para ti', 'Designed for you')}>
-                {text('¿Para quién es?', 'Who is it for?')}
-              </SectionHeading>
-              <div className={styles.audienceGrid}>
-                {audiences.map((audience) => (
-                  <span key={audience[0]}>
-                    <i aria-hidden="true">✓</i>
-                    {localized(audience)}
-                  </span>
-                ))}
+              <div className={styles.audienceHeader}>
+                <SectionHeading eyebrow={text('Está pensada para ti', 'Designed for you')}>
+                  {text('¿Para quién es la Cumbre?', 'Who is the Summit for?')}
+                </SectionHeading>
+                <p className={styles.audienceSubtitle}>
+                  {text(
+                    'Es para quienes sirven y para quienes hacen posible que el servicio se multiplique',
+                    'It is for those who serve and for those who make it possible for service to multiply'
+                  )}
+                </p>
+              </div>
+
+              <div className={styles.audienceContainer}>
+                <div className={styles.audienceImageBg}>
+                  <Image
+                    src={`${asset}/participantes.webp`}
+                    alt={text('Participantes de una experiencia SIGUE', 'Participants in a SIGUE experience')}
+                    fill
+                    className={styles.coverImage}
+                    sizes="(max-width: 900px) 100vw, 55vw"
+                  />
+                </div>
+
+                <div className={styles.audienceRows}>
+                  {cumbreAudiences.map((item, idx) => (
+                    <div key={idx} className={styles.audienceRowPair}>
+                      <div className={styles.audienceTargetCard}>
+                        <span className={styles.checkIconCircle} aria-hidden="true">
+                          <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.5 5.5L5.5 9.5L13.5 1.5" stroke="#FFFFFF" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </span>
+                        <p>{localized(item.target)}</p>
+                      </div>
+                      <div className={styles.audienceBenefitCard}>
+                        <p>{localized(item.benefit)}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-            <div className={styles.audienceImage}>
-              <Image
-                src={`${asset}/participantes.webp`}
-                alt={text('Participantes de una experiencia SIGUE', 'Participants in a SIGUE experience')}
-                fill
-                className={styles.coverImage}
-                sizes="(max-width: 850px) 100vw, 32vw"
-              />
+            <div className={styles.audienceClosing}>
+              <p>
+                {text(
+                  'Nos reuniremos para escuchar, descubrir y responder juntos, uniendo capacidades, recursos y esfuerzos para servir mejor y multiplicar el impacto.',
+                  'We gather to listen, discover, and respond together—uniting abilities, resources, and efforts to serve better and multiply impact.'
+                )}
+              </p>
+              <strong>
+                {text('No necesitas ser miembro de SIGUE Network para participar.', 'You do not need to be a SIGUE Network member to participate.')}
+              </strong>
             </div>
-            <p className={styles.audienceNote}>
-              {text('No necesitas ser miembro de ', 'You do not need to be a member of ')}
-              <strong>{text('SIGUE Network para participar.', 'SIGUE Network to participate.')}</strong>
-            </p>
           </section>
 
           <section className={styles.includedSection}>

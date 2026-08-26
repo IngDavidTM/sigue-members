@@ -976,68 +976,169 @@
 }
 
 .audienceSection {
-  display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.55fr);
-  background: var(--cumbre-blush);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(4.5rem, 6vw, 6.5rem) 0 0;
+  background: #ffffff;
 }
 
 .audienceContent {
-  padding: clamp(6rem, 9vw, 9rem) clamp(1.5rem, 5vw, 5rem);
+  width: min(1280px, calc(100% - 3rem));
+  margin: 0 auto;
 }
 
-.audienceImage {
-  position: relative;
-  min-height: 720px;
+.audienceHeader {
+  margin-bottom: 1.5rem;
 }
 
-.audienceGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
-  margin-top: 3rem;
+.audienceHeader .eyebrow {
+  margin-left: calc(12% + 1.25rem);
+  margin-bottom: 1.05rem;
 }
 
-.audienceGrid span {
-  display: flex;
+.audienceHeader .headingLine {
   gap: 0.9rem;
+  margin-left: 12%;
+}
+
+.audienceHeader .heartSmall {
+  width: clamp(44px, 4.3vw, 62px);
+}
+
+.audienceHeader .sectionHeading h2 {
+  font-size: clamp(2rem, 3vw, 3.15rem);
+  letter-spacing: -0.03em;
+}
+
+.audienceSubtitle {
+  max-width: 500px;
+  margin-top: 0.65rem;
+  margin-left: calc(12% + clamp(44px, 4.3vw, 62px) + 1.7rem);
+  margin-bottom: 0;
+  color: var(--cumbre-ink);
+  font-size: clamp(1rem, 1.35vw, 1.22rem);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.audienceContainer {
+  position: relative;
+  width: 100%;
+  min-height: clamp(390px, 35vw, 510px);
+  padding-left: 18%;
+}
+
+.audienceImageBg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 50%;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: inset 0 0 0 1px rgb(81 33 123 / 9%);
+}
+
+.audienceRows {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 4vw, 3.5rem);
+  width: 100%;
+}
+
+.audienceRowPair {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+.audienceTargetCard {
+  position: relative;
+  z-index: 3;
+  flex: 0 0 44%;
+  width: 44%;
+  display: flex;
   align-items: center;
-  min-height: 76px;
-  padding: 0.9rem 1rem;
-  border: 4px solid var(--cumbre-border);
+  gap: 1.3rem;
+  padding: clamp(1.1rem, 1.65vw, 1.75rem) clamp(1.25rem, 2vw, 2.1rem);
+  border: 2px solid #c9bce8;
   border-radius: 1.2rem;
-  background: #fff;
-  font-size: 1.05rem;
-  line-height: 1.15;
+  background: rgb(247 190 220 / 96%);
+  box-shadow: 0 5px 18px rgb(81 33 123 / 8%);
 }
 
-.audienceGrid i {
-  display: grid;
+.checkIconCircle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 0 0 auto;
-  place-items: center;
-  width: 35px;
-  height: 35px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: var(--cumbre-pink);
-  color: #fff;
-  font-size: 1.35rem;
-  font-style: normal;
-  font-weight: 900;
+  background: #b8b2d4;
+  box-shadow: 0 2px 8px rgb(81 33 123 / 14%);
 }
 
-.audienceNote {
-  grid-column: 1 / -1;
+.audienceTargetCard p {
   margin: 0;
-  padding: 2.2rem 1.5rem 4rem;
-  background: #fff;
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
-  font-weight: 800;
-  letter-spacing: 0.09em;
+  color: var(--cumbre-ink);
+  font-size: clamp(1.02rem, 1.25vw, 1.15rem);
+  font-weight: 700;
+  line-height: 1.38;
+}
+
+.audienceBenefitCard {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 55%;
+  width: 55%;
+  margin-left: 1%;
+  display: flex;
+  align-items: center;
+  padding: clamp(1.1rem, 1.65vw, 1.75rem) clamp(1.25rem, 2vw, 2.1rem);
+  border: 2px solid rgb(201 188 232 / 88%);
+  border-radius: 1.2rem;
+  background: rgb(242 239 255 / 76%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 7px 24px rgb(81 33 123 / 8%);
+}
+
+.audienceBenefitCard p {
+  margin: 0;
+  color: #4a1d70;
+  font-size: clamp(0.96rem, 1.15vw, 1.04rem);
+  font-weight: 500;
+  line-height: 1.48;
+}
+
+.audienceClosing {
+  width: 100%;
+  margin: 0;
+  padding: clamp(3.25rem, 5vw, 4.5rem) max(1.5rem, calc((100vw - 1280px) / 2));
+  color: #ffd0e7;
+  background: var(--cumbre-purple);
   text-align: center;
 }
 
-.audienceNote strong {
+.audienceClosing p {
+  max-width: 700px;
+  margin: 0 auto 1.25rem;
+  font-size: clamp(0.9rem, 1.2vw, 1.06rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+}
+
+.audienceClosing strong {
   display: block;
-  color: var(--cumbre-pink);
+  max-width: 360px;
+  margin: 0 auto;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  letter-spacing: 0.08em;
+  line-height: 1;
 }
 
 .includedSection {
@@ -2338,9 +2439,49 @@
   }
 
   .contentGrid,
-  .faithSection,
-  .audienceSection {
+  .faithSection {
     grid-template-columns: 1fr;
+  }
+
+  .audienceHeader .eyebrow,
+  .audienceHeader .headingLine,
+  .audienceSubtitle {
+    margin-left: 0;
+  }
+
+  .audienceContainer {
+    min-height: 0;
+    padding-left: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .audienceRows {
+    gap: 1.5rem;
+  }
+
+  .audienceRowPair {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .audienceImageBg {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0.16;
+  }
+
+  .audienceTargetCard,
+  .audienceBenefitCard {
+    flex-basis: auto;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .audienceClosing {
+    margin-top: 0;
   }
 
   .introMark {
