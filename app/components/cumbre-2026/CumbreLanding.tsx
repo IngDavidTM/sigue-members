@@ -8,11 +8,9 @@ import UsdEquivalents from './UsdEquivalents';
 import styles from './CumbreLanding.module.css';
 
 const asset = '/images/cumbre-2026';
-const memberLogoFiles = Array.from({ length: 26 }, (_, index) => {
-  const number = String(index + 1).padStart(2, '0');
-
-  return `${asset}/member-logos/member-${number}.png`;
-});
+const memberLogoFiles = [1, 3, 4, 5, 6, 11, 12, 13, 14, 15, 16, 19, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31].map(
+  (number) => `${asset}/member-logos/member-${String(number).padStart(2, '0')}.png`
+);
 export type CumbreLocale = 'es' | 'en';
 type LocalizedText = readonly [spanish: string, english: string];
 
