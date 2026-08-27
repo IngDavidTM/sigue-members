@@ -157,7 +157,7 @@ const content = {
       intro: 'Creamos espacios donde líderes y organizaciones pueden compartir experiencias, fortalecer alianzas y crecer juntos.',
       imageAlt: 'Equipo de SIGUE Network en un espacio de conexión',
       cards: [
-        ['Comunidad Online', '¿Quieres conectarte con otros líderes y aprender juntos todo el año?', 'Un espacio exclusivo para compartir experiencias, acceder a recursos y crecer junto a una comunidad comprometida con la transformación integral.', 'Únete a la comunidad', '/unete'],
+        ['Comunidad Online', '¿Quieres conectarte con otros líderes y aprender juntos todo el año?', 'Un espacio exclusivo para compartir experiencias, acceder a recursos y crecer junto a una comunidad comprometida con la transformación integral.', 'Únete a la comunidad', '/miembros-sigue'],
         ['Eventos', '¿Quieres aprender, inspirarte, formar sinergias y ampliar tu red de contactos?', 'Webinars, talleres y cumbres para fortalecer capacidades, compartir buenas prácticas y generar nuevas oportunidades de colaboración.', 'Participa', '/eventos'],
         ['Red de expertos', '¿Necesitas apoyo especializado para fortalecer tu organización?', 'Acceso a profesionales que ofrecen servicios especializados para responder a necesidades clave de su gestión.', 'Conócelos', '/contacto'],
         ['Financiamiento', '¿Buscas recursos para impulsar o expandir tu misión?', 'Identificamos oportunidades de financiamiento y conectamos organizaciones elegibles con fundaciones, donantes y otras fuentes de apoyo.', 'Pregúntanos', '/contacto'],
@@ -196,7 +196,7 @@ const content = {
       discover: 'DESCUBRE',
       participate: 'PARTICIPA',
       linksDiscover: [['Inicio', '#inicio'], ['Conoce SIGUE', '/conoce-sigue'], ['SIGUE Tracks', '/sigue-tracks'], ['Consulting', '/sigue-consulting'], ['SIGUE Hub', '/sigue-hub']],
-      linksParticipate: [['Únete', '/unete'], ['Contáctanos', '/contacto'], ['Donación', '/donacion'], ['Voluntariado', '/unete']],
+      linksParticipate: [['Únete', '/miembros-sigue'], ['Contáctanos', '/contacto'], ['Donación', '/donacion'], ['Voluntariado', '/unete']],
       rights: '© 2026 SIGUE NETWORK. TODOS LOS DERECHOS RESERVADOS.',
     },
   },
@@ -292,7 +292,7 @@ const content = {
       intro: 'We create spaces where leaders and organizations can share experiences, strengthen alliances, and grow together.',
       imageAlt: 'SIGUE Network team in a connection space',
       cards: [
-        ['Online community', 'Would you like to connect with other leaders and learn together throughout the year?', 'An exclusive space to share experiences, access resources, and grow with a community committed to holistic transformation.', 'Join the community', '/unete'],
+        ['Online community', 'Would you like to connect with other leaders and learn together throughout the year?', 'An exclusive space to share experiences, access resources, and grow with a community committed to holistic transformation.', 'Join the community', '/miembros-sigue'],
         ['Events', 'Would you like to learn, find inspiration, build synergy, and expand your network?', 'Webinars, workshops, and summits to build capacity, share good practices, and create new opportunities for collaboration.', 'Take part', '/eventos'],
         ['Expert network', 'Do you need specialized support to strengthen your organization?', 'Access professionals who offer specialized services to address key management needs.', 'Meet them', '/contacto'],
         ['Funding', 'Are you looking for resources to advance or expand your mission?', 'We identify funding opportunities and connect eligible organizations with foundations, donors, and other sources of support.', 'Ask us', '/contacto'],
@@ -331,7 +331,7 @@ const content = {
       discover: 'DISCOVER',
       participate: 'PARTICIPATE',
       linksDiscover: [['Home', '#inicio'], ['About SIGUE', '/conoce-sigue'], ['SIGUE Tracks', '/sigue-tracks'], ['Consulting', '/sigue-consulting'], ['SIGUE Hub', '/sigue-hub']],
-      linksParticipate: [['Join', '/unete'], ['Contact us', '/contacto'], ['Donate', '/donacion'], ['Volunteer', '/unete']],
+      linksParticipate: [['Join', '/miembros-sigue'], ['Contact us', '/contacto'], ['Donate', '/donacion'], ['Volunteer', '/unete']],
       rights: '© 2026 SIGUE NETWORK. ALL RIGHTS RESERVED.',
     },
   },
@@ -482,7 +482,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
                 );
               })}
             </div>
-            <div className={styles.centeredButton}><PrimaryLink locale={locale} href="/unete">{c.audience.cta}</PrimaryLink></div>
+            <div className={styles.centeredButton}><PrimaryLink locale={locale} href="/miembros-sigue">{c.audience.cta}</PrimaryLink></div>
           </div>
           <div className={styles.communityGallery} aria-label={c.audience.galleryAlt}>
             {['community-1.webp', 'community-2.webp', 'community-3.webp'].map((file) => (

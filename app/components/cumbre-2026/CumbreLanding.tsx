@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Reveal from '../ui/Reveal';
 import RegistrationForm from './RegistrationForm';
-import { MobileNavigation, RegistrationCta, RegistrationProvider } from './RegistrationControls';
+import { RegistrationCta, RegistrationProvider } from './RegistrationControls';
 import { tariffs } from './registration';
 import UsdEquivalents from './UsdEquivalents';
 import styles from './CumbreLanding.module.css';
@@ -248,56 +248,7 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
 
   return (
     <RegistrationProvider>
-      <div className={styles.page} data-cumbre-page>
-        <nav
-          className={styles.localeToggle}
-          aria-label={text('Cambiar idioma', 'Change language')}
-        >
-          <Link
-            href="/es/cumbre-sigue-2026"
-            className={locale === 'es' ? styles.localeActive : undefined}
-            aria-current={locale === 'es' ? 'page' : undefined}
-            lang="es"
-          >
-            ES
-          </Link>
-          <Link
-            href="/en/cumbre-sigue-2026"
-            className={locale === 'en' ? styles.localeActive : undefined}
-            aria-current={locale === 'en' ? 'page' : undefined}
-            lang="en"
-          >
-            EN
-          </Link>
-        </nav>
-
-        <header className={styles.header} id="inicio">
-          <div className={styles.headerInner}>
-            <a href="#inicio" aria-label={text('Cumbre SIGUE Network 2026', 'SIGUE Network Summit 2026')}>
-              <Image
-                src={`${asset}/logo-sigue.png`}
-                alt="SIGUE Network"
-                width={84}
-                height={101}
-                className={styles.logo}
-                priority
-                unoptimized
-              />
-            </a>
-
-            <nav className={styles.desktopNav} aria-label={text('Navegación de la Cumbre', 'Summit navigation')}>
-              <a href="#cumbre">{text('La Cumbre', 'The Summit')}</a>
-              <a href="#experiencia">{text('Experiencia', 'Experience')}</a>
-              <a href="#invitados">{text('Invitados', 'Guests')}</a>
-              <a href="#agenda">{text('Agenda', 'Schedule')}</a>
-              <a href="#sigue">SIGUE</a>
-              <a href="#tarifas">{text('Tarifas', 'Rates')}</a>
-              <a href="#faq">FAQ</a>
-            </nav>
-
-            <MobileNavigation className={styles.mobileNav} locale={locale} />
-          </div>
-        </header>
+      <div className={styles.page} data-cumbre-page id="inicio">
 
         <main>
           <section className={styles.hero} aria-labelledby="cumbre-title">
@@ -493,9 +444,9 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                   </article>
                 ))}
               </div>
-              <a className={styles.primaryButton} href="https://siguenetwork.org/conoce-sigue/">
+              <Link className={styles.primaryButton} href={`/${locale}/conoce-sigue`}>
                 {text('Conoce más sobre SIGUE', 'Learn more about SIGUE')}
-              </a>
+              </Link>
             </div>
           </section>
 
@@ -566,9 +517,9 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                 ))}
               </div>
             </div>
-            <a className={styles.primaryButton} href="https://siguenetwork.org/miembros-sigue/">
+            <Link className={styles.primaryButton} href={`/${locale}/miembros-sigue`}>
               {text('Conoce a nuestra comunidad', 'Meet our community')}
-            </a>
+            </Link>
           </section>
 
           <section className={styles.experienceSection} id="experiencia">
@@ -1021,7 +972,7 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
             <strong>{text('La Cumbre', 'The Summit')}</strong>
             <a href="#inscripcion">{text('Inscríbete', 'Register')}</a>
             <a href="#ubicacion">{text('Ubicación', 'Location')}</a>
-            <a href="https://siguenetwork.org/">SIGUE Network</a>
+            <Link href={`/${locale}`}>SIGUE Network</Link>
           </nav>
         </footer>
       </div>

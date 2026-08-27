@@ -16,7 +16,6 @@ export default function DonationEmbed({ locale }: { locale: Locale }) {
           title={title}
           src={donationFormUrl}
           allow="payment *"
-          allowTransparency
         />
       </div>
     </main>

@@ -17,7 +17,7 @@ const content = {
       ['SIGUE Hub', '/sigue-hub'],
     ],
     participateLinks: [
-      ['Únete', '/unete'],
+      ['Únete', '/miembros-sigue'],
       ['Contáctanos', '/contacto'],
       ['Donación', '/donacion'],
       ['Voluntariado', '/unete'],
@@ -36,7 +36,7 @@ const content = {
       ['SIGUE Hub', '/sigue-hub'],
     ],
     participateLinks: [
-      ['Join', '/unete'],
+      ['Join', '/miembros-sigue'],
       ['Contact us', '/contacto'],
       ['Donate', '/donacion'],
       ['Volunteer', '/unete'],

@@ -181,7 +181,7 @@ export default function MembershipLanding({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className={styles.members} aria-labelledby="members-title">
+      <section id="comunidad" className={styles.members} aria-labelledby="members-title">
         <p className={styles.eyebrow}>{c.membersEyebrow}</p>
         <h2 id="members-title">{c.membersTitle}</h2>
         <div className={styles.logoViewport}>
@@ -196,7 +196,7 @@ export default function MembershipLanding({ locale }: { locale: Locale }) {
         <p className={styles.membersBody}>{c.membersBody}</p>
       </section>
 
-      <section className={styles.benefits} aria-labelledby="benefits-title">
+      <section id="beneficios" className={styles.benefits} aria-labelledby="benefits-title">
         <h2 id="benefits-title">{c.benefitsTitle}</h2>
         <p className={styles.sectionSubtitle}>{c.benefitsSubtitle}</p>
         <div className={styles.benefitGrid}>

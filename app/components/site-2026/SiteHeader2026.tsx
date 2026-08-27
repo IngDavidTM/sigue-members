@@ -21,6 +21,16 @@ function resolvePreviewHref(href: string, previewHome: boolean) {
   return href;
 }
 
+function hrefMatchesPath(href: string | undefined, localePath: string) {
+  if (!href || href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('/#')) {
+    return false;
+  }
+
+  const path = href.split('#')[0];
+  if (path === '/') return localePath === '' || localePath === '/';
+  return localePath === path || localePath.startsWith(`${path}/`);
+}
+
 function NavigationLink({
   locale,
   href,
@@ -157,11 +167,12 @@ export default function SiteHeader2026({
           <nav className={styles.desktopNav} aria-label={locale === 'es' ? 'Navegación principal' : 'Main navigation'}>
             {navigation.items.map((item) => {
               if (item.href) {
+                const isActive = onHomePage || hrefMatchesPath(item.href, localePath);
                 return (
                   <NavigationLink
                     locale={locale}
                     href={resolvePreviewHref(item.href, previewHome)}
-                    className={`${styles.navParent} ${onHomePage ? styles.navParentActive : ''}`}
+                    className={`${styles.navParent} ${isActive ? styles.navParentActive : ''}`}
                     key={item.label}
                     onClick={closeDropdown}
                   >
@@ -171,6 +182,9 @@ export default function SiteHeader2026({
               }
 
               const isOpen = openDropdown === item.label;
+              const isActive =
+                hrefMatchesPath(item.topLink?.href, localePath) ||
+                item.children?.some((child) => hrefMatchesPath(child.href, localePath));
               return (
                 <div
                   className={styles.navGroup}
@@ -180,7 +194,7 @@ export default function SiteHeader2026({
                   onMouseLeave={closeDropdown}
                 >
                   <button
-                    className={`${styles.navParent} ${item.accent ? styles.navParentAccent : ''}`}
+                    className={`${styles.navParent} ${item.accent ? styles.navParentAccent : ''} ${isActive ? styles.navParentActive : ''}`}
                     type="button"
                     aria-haspopup="menu"
                     aria-expanded={isOpen}

@@ -42,6 +42,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  scroll-padding-top: 68px;
   font-family: var(--font-auth);
   background-color: var(--color-surface);
   color: var(--color-text-dark);
@@ -59,7 +60,6 @@ body:has([data-conoce-2026]) {
   background: #fff;
 }
 
-body:has([data-cumbre-page]) [data-site-header],
 body:has([data-cumbre-page]) [data-site-footer],
 body:has([data-home-2026]) [data-site-header],
 body:has([data-home-2026]) [data-site-footer],

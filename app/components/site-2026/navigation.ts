@@ -77,10 +77,10 @@ export const siteNavigation: Record<SiteLocale, NavigationContent> = {
       {
         label: 'Membresía',
         children: [
-          { label: 'Conoce la membresía', description: 'Qué es y quiénes pueden unirse', href: '/unete', icon: 'membership', color: '#501f76' },
-          { label: 'Beneficios', description: 'Lo que obtienes como miembro', icon: 'benefits', color: '#5e17eb' },
-          { label: 'Nuestra comunidad', description: 'Conoce a los miembros', href: '/miembros-sigue', icon: 'community', color: '#b41ba1' },
-          { label: 'Hazte miembro', description: 'Únete a la red SIGUE', href: '/unete', icon: 'join', color: '#ef1451' },
+          { label: 'Conoce la membresía', description: 'Qué es y quiénes pueden unirse', href: '/miembros-sigue', icon: 'membership', color: '#501f76' },
+          { label: 'Beneficios', description: 'Lo que obtienes como miembro', href: '/miembros-sigue#beneficios', icon: 'benefits', color: '#5e17eb' },
+          { label: 'Nuestra comunidad', description: 'Conoce a los miembros', href: '/miembros-sigue#comunidad', icon: 'community', color: '#b41ba1' },
+          { label: 'Hazte miembro', description: 'Únete a la red SIGUE', href: '/miembros-sigue#membresia-para-ti', icon: 'join', color: '#ef1451' },
         ],
       },
       {
@@ -136,10 +136,10 @@ export const siteNavigation: Record<SiteLocale, NavigationContent> = {
       {
         label: 'Membership',
         children: [
-          { label: 'Explore membership', description: 'What it is and who can join', href: '/unete', icon: 'membership', color: '#501f76' },
-          { label: 'Benefits', description: 'What you receive as a member', icon: 'benefits', color: '#5e17eb' },
-          { label: 'Our community', description: 'Meet our members', href: '/miembros-sigue', icon: 'community', color: '#b41ba1' },
-          { label: 'Become a member', description: 'Join the SIGUE network', href: '/unete', icon: 'join', color: '#ef1451' },
+          { label: 'Explore membership', description: 'What it is and who can join', href: '/miembros-sigue', icon: 'membership', color: '#501f76' },
+          { label: 'Benefits', description: 'What you receive as a member', href: '/miembros-sigue#beneficios', icon: 'benefits', color: '#5e17eb' },
+          { label: 'Our community', description: 'Meet our members', href: '/miembros-sigue#comunidad', icon: 'community', color: '#b41ba1' },
+          { label: 'Become a member', description: 'Join the SIGUE network', href: '/miembros-sigue#membresia-para-ti', icon: 'join', color: '#ef1451' },
         ],
       },
       {

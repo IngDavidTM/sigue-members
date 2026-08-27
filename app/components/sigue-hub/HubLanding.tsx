@@ -35,7 +35,7 @@ const content = {
         title: 'Membresía SIGUE',
         question: '¿Deseas llevar tu propósito al siguiente nivel y transformar comunidades?',
         body: 'La membresía en SIGUE Network te brinda acceso a recursos exclusivos, conexiones valiosas y orientación estratégica para líderes comprometidos con la transformación integral. Al unirte, formas parte de una red que fortalece el impacto físico, emocional y espiritual, y abre nuevas oportunidades para crecer y multiplicar el alcance de tu proyecto.',
-        cta: 'Únete ahora', path: '/unete', image: images.membership,
+        cta: 'Únete ahora', path: '/miembros-sigue', image: images.membership,
         alt: 'Reunión de miembros de SIGUE Network',
       },
       {
@@ -88,7 +88,7 @@ const content = {
         title: 'SIGUE Membership',
         question: 'Do you want to take your purpose to the next level and transform communities?',
         body: 'SIGUE Network membership gives you access to exclusive resources, valuable connections, and strategic guidance for leaders committed to holistic transformation. By joining, you become part of a network that strengthens physical, emotional, and spiritual impact while opening new opportunities to grow and multiply your project’s reach.',
-        cta: 'Join now', path: '/unete', image: images.membership,
+        cta: 'Join now', path: '/miembros-sigue', image: images.membership,
         alt: 'SIGUE Network members meeting together',
       },
       {
