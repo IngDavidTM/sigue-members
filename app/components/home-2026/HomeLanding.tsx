@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import Reveal from '@/app/components/ui/Reveal';
 import SiteHeader2026 from '@/app/components/site-2026/SiteHeader2026';
+import SiteFooter2026 from '@/app/components/site-2026/SiteFooter2026';
 import { absoluteUrl } from '@/lib/site-url';
 import styles from './HomeLanding.module.css';
 
@@ -426,7 +427,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
               <h1 id="home-hero-title">{c.hero.title}</h1>
               <p className={styles.heroAccent}>{c.hero.accent}</p>
               <p className={styles.heroBody}>{c.hero.body}</p>
-              <PrimaryLink locale={locale} href="/contacto">{c.hero.cta}</PrimaryLink>
+              <PrimaryLink locale={locale} href="/sigue-tracks">{c.hero.cta}</PrimaryLink>
               <div className={styles.heroStats}>
                 {c.hero.stats.map(([value, label]) => (
                   <div key={label}><strong>{value}</strong><span>{label}</span></div>
@@ -445,7 +446,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
                   </div>
                 ))}
               </div>
-              <PrimaryLink locale={locale} href="/contacto">{c.hero.cta}</PrimaryLink>
+              <PrimaryLink locale={locale} href="/sigue-tracks">{c.hero.cta}</PrimaryLink>
             </Reveal>
           </div>
         </section>
@@ -538,7 +539,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
             <div className={styles.steps}>
               {c.route.steps.map(([letter, title]) => <div key={letter}><strong>{letter}</strong><span>{title}</span></div>)}
             </div>
-            <PrimaryLink locale={locale} href="/contacto">{c.route.cta}</PrimaryLink>
+            <PrimaryLink locale={locale} href="/sigue-tracks">{c.route.cta}</PrimaryLink>
           </div>
           <div className={styles.storyBand}>
             <Reveal className={styles.storyImage} variant="slide-left"><Image src="/images/home-2026/misiones.webp" alt={c.route.storyImageAlt} fill sizes="(max-width: 780px) 100vw, 45vw" className={styles.coverImage} /></Reveal>
@@ -546,7 +547,7 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
               <p className={styles.storyLabel}>{c.route.storyLabel}</p>
               <div className={styles.storyLogo}><Image src="/images/home-2026/misiones-on-fire-transparent.png" alt="Misiones on Fire" fill sizes="260px" className={styles.containImage} /></div>
               <strong>{c.route.storyOrg}</strong>
-              <PrimaryLink locale={locale} href="/contacto">{c.route.cta}</PrimaryLink>
+              <PrimaryLink locale={locale} href="/sigue-tracks">{c.route.cta}</PrimaryLink>
             </Reveal>
           </div>
         </section>
@@ -632,28 +633,13 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
             <Reveal className={styles.finalCopy} variant="slide-right">
               <SectionHeading label={c.final.label} title={c.final.title} accent={c.final.accent} centered={false} />
               <p>{c.final.body}</p>
-              <PrimaryLink locale={locale} href="/contacto">{c.final.cta}</PrimaryLink>
+              <PrimaryLink locale={locale} href="/sigue-tracks">{c.final.cta}</PrimaryLink>
             </Reveal>
           </div>
         </section>
       </main>
 
-      <footer className={styles.footer}>
-        <div className={styles.footerGrid}>
-          <div className={styles.footerAbout}><strong>SIGUE NETWORK</strong><p>{c.footer.body}</p><address>501(C)(3) SIN FINES DE LUCRO · EIN: 26-2010006<br />3913 GRIESE LANE, GROVETOWN, GA 30813<br /><a href="mailto:info@siguenetwork.org">INFO@SIGUENETWORK.ORG</a></address></div>
-          <div><strong>{c.footer.discover}</strong><nav>{c.footer.linksDiscover.map(([label, href]) => <Link key={label} href={localizedHref(locale, href)}>{label}</Link>)}</nav></div>
-          <div><strong>{c.footer.participate}</strong><nav>{c.footer.linksParticipate.map(([label, href]) => <Link key={label} href={localizedHref(locale, href)}>{label}</Link>)}</nav></div>
-        </div>
-        <div className={styles.footerBottom}>
-          <p>{c.footer.rights}</p>
-          <nav aria-label={locale === 'es' ? 'Redes sociales' : 'Social media'}>
-            <a href="https://www.instagram.com/siguenetwork/" target="_blank" rel="noreferrer">INSTAGRAM</a>
-            <a href="https://www.facebook.com/people/SIGUE-Network/61566310019607/" target="_blank" rel="noreferrer">FACEBOOK</a>
-            <a href="https://www.linkedin.com/company/sigue-network/" target="_blank" rel="noreferrer">LINKEDIN</a>
-            <a href="https://www.youtube.com/@SIGUENetwork" target="_blank" rel="noreferrer">YOUTUBE</a>
-          </nav>
-        </div>
-      </footer>
+      <SiteFooter2026 locale={locale} />
     </div>
   );
 }

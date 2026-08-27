@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import HomeLanding from '@/app/components/home-2026/HomeLanding';
 import { absoluteUrl } from '@/lib/site-url';
-
-const TEMPORARY_CUMBRE_REDIRECT = true;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
@@ -51,10 +48,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: requestedLocale } = await params;
   const locale = requestedLocale === 'en' ? 'en' : 'es';
-
-  if (TEMPORARY_CUMBRE_REDIRECT) {
-    redirect(`/${locale}/cumbre-sigue-2026`);
-  }
 
   return <HomeLanding locale={locale} />;
 }

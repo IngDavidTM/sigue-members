@@ -73,7 +73,7 @@ export default function ConoceLanding({ locale }: { locale: ConoceLocale }) {
     <div data-conoce-2026 className={styles.page}>
       <a className={styles.skipLink} href="#contenido-conoce">{c.skip}</a>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
-      <SiteHeader2026 locale={locale} previewHome localePath="/conoce-sigue" />
+      <SiteHeader2026 locale={locale} localePath="/conoce-sigue" />
 
       <div id="contenido-conoce">
         <section id="inicio" className={styles.hero} aria-labelledby="conoce-hero-title">

@@ -1,168 +1,129 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { ArrowRight, ChevronDown, Heart } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import HomeMobileNavigation from '@/app/components/home-2026/HomeMobileNavigation';
+import NavigationIcon from './NavigationIcon';
+import {
+  localizedNavigationHref,
+  siteNavigation,
+  type NavigationChild,
+  type SiteLocale,
+} from './navigation';
 import styles from './SiteHeader2026.module.css';
 
-type Locale = 'es' | 'en';
-
-const navigation = {
-  es: [
-    {
-      label: 'Inicio',
-      href: '#inicio',
-      children: [
-        ['Nuestra red', '#nuestra-red'],
-        ['¿Para quién es SIGUE?', '#para-quien'],
-        ['Nuestro primer año', '#impacto'],
-        ['Nuestro portafolio', '#portafolio'],
-        ['Tu ruta de crecimiento', '#ruta-crecimiento'],
-        ['Lo que dicen nuestros miembros', '#testimonios'],
-        ['Espacios de conexión', '#conexion'],
-        ['Calendario', '#eventos'],
-        ['Conéctate con nosotros', '#conectate'],
-        ['Tu organización puede más', '#potencial'],
-      ],
-    },
-    {
-      label: 'Conoce',
-      href: '/conoce-sigue',
-      children: [
-        ['Conoce SIGUE', '/conoce-sigue'],
-        ['SIGUE Tracks', '/sigue-tracks'],
-        ['Recursos y herramientas', '/recursos'],
-      ],
-    },
-    {
-      label: 'Portafolio',
-      href: '#portafolio',
-      children: [
-        ['Nuestro portafolio', '#portafolio'],
-        ['SIGUE Tracks', '/sigue-tracks'],
-        ['SIGUE Consulting', '/sigue-consulting'],
-        ['SIGUE Academy', '/sigue-academy'],
-        ['SIGUE Hub', '/sigue-hub'],
-      ],
-    },
-    {
-      label: 'Membresía',
-      href: '/unete',
-      children: [
-        ['Únete a SIGUE', '/unete'],
-        ['Miembros SIGUE', '/miembros-sigue'],
-      ],
-    },
-    {
-      label: 'Donar',
-      href: '/donacion',
-      children: [
-        ['Donación', '/donacion'],
-        ['Transparencia', 'https://app.candid.org/profile/8856365/sigue-network-inc-26-2010006/?pkId=69ae89f8-7514-4198-ad73-e733554cd736'],
-      ],
-    },
-    { label: 'Blog', href: '/blog', children: [] },
-  ],
-  en: [
-    {
-      label: 'Home',
-      href: '#inicio',
-      children: [
-        ['Our network', '#nuestra-red'],
-        ['Who is SIGUE for?', '#para-quien'],
-        ['Our first year', '#impacto'],
-        ['Our portfolio', '#portafolio'],
-        ['Your growth path', '#ruta-crecimiento'],
-        ['What our members say', '#testimonios'],
-        ['Connection spaces', '#conexion'],
-        ['Calendar', '#eventos'],
-        ['Connect with us', '#conectate'],
-        ['Your organization can do more', '#potencial'],
-      ],
-    },
-    {
-      label: 'About',
-      href: '/conoce-sigue',
-      children: [
-        ['About SIGUE', '/conoce-sigue'],
-        ['SIGUE Tracks', '/sigue-tracks'],
-        ['Resources and tools', '/recursos'],
-      ],
-    },
-    {
-      label: 'Portfolio',
-      href: '#portafolio',
-      children: [
-        ['Our portfolio', '#portafolio'],
-        ['SIGUE Tracks', '/sigue-tracks'],
-        ['SIGUE Consulting', '/sigue-consulting'],
-        ['SIGUE Academy', '/sigue-academy'],
-        ['SIGUE Hub', '/sigue-hub'],
-      ],
-    },
-    {
-      label: 'Membership',
-      href: '/unete',
-      children: [
-        ['Join SIGUE', '/unete'],
-        ['SIGUE members', '/miembros-sigue'],
-      ],
-    },
-    {
-      label: 'Donate',
-      href: '/donacion',
-      children: [
-        ['Donation', '/donacion'],
-        ['Transparency', 'https://app.candid.org/profile/8856365/sigue-network-inc-26-2010006/?pkId=69ae89f8-7514-4198-ad73-e733554cd736'],
-      ],
-    },
-    { label: 'Blog', href: '/blog', children: [] },
-  ],
-} as const;
-
-function localizedHref(locale: Locale, href: string) {
-  if (href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto:')) return href;
-  return `/${locale}${href === '/' ? '' : href}`;
+function resolvePreviewHref(href: string, previewHome: boolean) {
+  if (!previewHome) return href;
+  if (href === '/') return '/inicio-2026';
+  if (href.startsWith('/#')) return `/inicio-2026${href.slice(1)}`;
+  return href;
 }
 
-function NavigationLink({ locale, href, children, className }: {
-  locale: Locale;
+function NavigationLink({
+  locale,
+  href,
+  children,
+  className,
+  onClick,
+}: {
+  locale: SiteLocale;
   href: string;
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }) {
   const external = href.startsWith('http');
 
   return (
     <Link
       className={className}
-      href={localizedHref(locale, href)}
+      href={localizedNavigationHref(locale, href)}
       target={external ? '_blank' : undefined}
       rel={external ? 'noopener noreferrer' : undefined}
+      onClick={onClick}
     >
       {children}
     </Link>
   );
 }
 
+function DropdownEntry({
+  child,
+  locale,
+  previewHome,
+  close,
+}: {
+  child: NavigationChild;
+  locale: SiteLocale;
+  previewHome: boolean;
+  close: () => void;
+}) {
+  const content = (
+    <>
+      <span className={styles.menuIcon} style={{ background: child.color }}>
+        <NavigationIcon name={child.icon} />
+      </span>
+      <span className={styles.menuText}>
+        <span className={styles.menuLabel}>{child.label}</span>
+        {child.description && <span className={styles.menuDescription}>{child.description}</span>}
+      </span>
+    </>
+  );
+
+  if (!child.href) {
+    return (
+      <span className={`${styles.menuEntry} ${styles.menuEntryDisabled}`} aria-disabled="true">
+        {content}
+      </span>
+    );
+  }
+
+  return (
+    <NavigationLink
+      className={styles.menuEntry}
+      href={resolvePreviewHref(child.href, previewHome)}
+      locale={locale}
+      onClick={close}
+    >
+      {content}
+    </NavigationLink>
+  );
+}
+
 export default function SiteHeader2026({
   locale,
   onHomePage = false,
-  previewHome = true,
+  previewHome = false,
   localePath,
 }: {
-  locale: Locale;
+  locale: SiteLocale;
   onHomePage?: boolean;
   previewHome?: boolean;
   localePath: string;
 }) {
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const navigation = siteNavigation[locale];
   const homePath = previewHome ? '/inicio-2026' : '/';
-  const items = navigation[locale].map((item, index) => ({
-    ...item,
-    href: index === 0 ? homePath : item.href.startsWith('#') && !onHomePage ? `${homePath}${item.href}` : item.href,
-    children: item.children.map(([label, href]) => [
-      label,
-      href.startsWith('#') && !onHomePage ? `${homePath}${href}` : href,
-    ] as const),
-  }));
+  const closeDropdown = () => setOpenDropdown(null);
+
+  useEffect(() => {
+    const closeFromOutside = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) closeDropdown();
+    };
+    const closeFromKeyboard = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeDropdown();
+    };
+
+    document.addEventListener('pointerdown', closeFromOutside);
+    document.addEventListener('keydown', closeFromKeyboard);
+    return () => {
+      document.removeEventListener('pointerdown', closeFromOutside);
+      document.removeEventListener('keydown', closeFromKeyboard);
+    };
+  }, []);
 
   return (
     <>
@@ -187,30 +148,89 @@ export default function SiteHeader2026({
         </Link>
       </nav>
 
-      <header className={styles.header}>
+      <header ref={headerRef} className={styles.header}>
         <div className={styles.headerInner}>
-          <Link className={styles.logoLink} href={localizedHref(locale, homePath)} aria-label="SIGUE Network">
-            <Image src="/images/home-2026/logo-transparent.png" alt="SIGUE Network" width={134} height={161} priority />
-          </Link>
+          <NavigationLink locale={locale} href={homePath} className={styles.logoLink} onClick={closeDropdown}>
+            <Image src="/images/home-2026/logo-transparent.png" alt="SIGUE Network" width={88} height={106} priority />
+          </NavigationLink>
+
           <nav className={styles.desktopNav} aria-label={locale === 'es' ? 'Navegación principal' : 'Main navigation'}>
-            {items.map((item) => (
-              <div className={styles.navGroup} key={item.label}>
-                <NavigationLink locale={locale} href={item.href} className={styles.navParent}>
-                  {item.label}
-                </NavigationLink>
-                {item.children.length > 0 && (
-                  <div className={`${styles.navDropdown} ${item.children.length > 6 ? styles.navDropdownWide : ''}`}>
-                    {item.children.map(([label, href]) => (
-                      <NavigationLink locale={locale} href={href} key={label}>{label}</NavigationLink>
+            {navigation.items.map((item) => {
+              if (item.href) {
+                return (
+                  <NavigationLink
+                    locale={locale}
+                    href={resolvePreviewHref(item.href, previewHome)}
+                    className={`${styles.navParent} ${onHomePage ? styles.navParentActive : ''}`}
+                    key={item.label}
+                    onClick={closeDropdown}
+                  >
+                    {item.label}
+                  </NavigationLink>
+                );
+              }
+
+              const isOpen = openDropdown === item.label;
+              return (
+                <div
+                  className={styles.navGroup}
+                  data-open={isOpen || undefined}
+                  key={item.label}
+                  onMouseEnter={() => setOpenDropdown(item.label)}
+                  onMouseLeave={closeDropdown}
+                >
+                  <button
+                    className={`${styles.navParent} ${item.accent ? styles.navParentAccent : ''}`}
+                    type="button"
+                    aria-haspopup="menu"
+                    aria-expanded={isOpen}
+                    onClick={() => setOpenDropdown(isOpen ? null : item.label)}
+                  >
+                    {item.label}
+                    <ChevronDown className={styles.chevron} aria-hidden="true" />
+                  </button>
+                  <div
+                    className={`${styles.navDropdown} ${item.wide ? styles.navDropdownWide : ''}`}
+                    role="menu"
+                    aria-hidden={!isOpen}
+                  >
+                    {item.topLink && (
+                      <>
+                        <NavigationLink
+                          locale={locale}
+                          href={item.topLink.href}
+                          className={styles.menuTopLink}
+                          onClick={closeDropdown}
+                        >
+                          {item.topLink.label}<ArrowRight aria-hidden="true" />
+                        </NavigationLink>
+                        <span className={styles.menuDivider} aria-hidden="true" />
+                      </>
+                    )}
+                    {item.children?.map((child) => (
+                      <DropdownEntry
+                        child={child}
+                        locale={locale}
+                        previewHome={previewHome}
+                        close={closeDropdown}
+                        key={child.label}
+                      />
                     ))}
                   </div>
-                )}
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </nav>
+
+          <NavigationLink locale={locale} href="/donacion" className={styles.donateButton} onClick={closeDropdown}>
+            <Heart aria-hidden="true" />{navigation.donate}
+          </NavigationLink>
+
           <HomeMobileNavigation
-            items={items}
+            items={navigation.items}
+            donateLabel={navigation.donate}
             locale={locale}
+            previewHome={previewHome}
             label={locale === 'es' ? 'Abrir menú de navegación' : 'Open navigation menu'}
           />
         </div>

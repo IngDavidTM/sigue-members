@@ -10,7 +10,7 @@ export default function Footer() {
     { labelKey: 'links.conoceSigue', href: `/${locale}/conoce-sigue` },
     { labelKey: 'links.sigueTracks', href: `/${locale}/sigue-tracks` },
     { labelKey: 'links.eventos', href: `/${locale}/eventos` },
-    { labelKey: 'links.membresia', href: `/${locale}/membresia` },
+    { labelKey: 'links.membresia', href: `/${locale}/miembros-sigue` },
     { labelKey: 'links.sigueAcademy', href: `/${locale}/sigue-academy` },
   ];
 

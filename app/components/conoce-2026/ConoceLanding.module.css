@@ -18,7 +18,7 @@
 }
 
 .page :where(section[id], div[id]) {
-  scroll-margin-top: 1rem;
+  scroll-margin-top: calc(68px + 1rem);
 }
 
 .skipLink {
