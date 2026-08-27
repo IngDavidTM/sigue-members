@@ -1,0 +1,456 @@
+.page {
+  --tracks-purple: #501f76;
+  --tracks-purple-dark: #3d155b;
+  --tracks-violet: #7210f1;
+  --tracks-lavender: #d7ccff;
+  --tracks-lavender-light: #ebe7ff;
+  --tracks-pink: #f40d4f;
+  overflow: clip;
+  color: var(--tracks-purple);
+  background: #fff;
+  font-family: var(--font-heebo), Arial, sans-serif;
+}
+
+.page :where(h1, h2, h3, strong) {
+  font-family: var(--font-roboto), Arial, sans-serif;
+}
+
+.hero {
+  position: relative;
+  min-height: clamp(31rem, 56vw, 45rem);
+  overflow: hidden;
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.heroPanel {
+  position: absolute;
+  top: 50%;
+  right: clamp(2rem, 18vw, 21rem);
+  width: min(25rem, calc(100% - 3rem));
+  aspect-ratio: 1;
+  padding: 2rem;
+  color: #fff;
+  background: rgb(80 31 118 / 78%);
+  transform: translateY(-50%);
+}
+
+.heroGlass {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  width: 72%;
+  height: 31%;
+  background: rgb(255 255 255 / 32%);
+}
+
+.heroSquare {
+  position: absolute;
+  top: 2rem;
+  left: calc(100% + 2.2rem);
+  width: 31%;
+  aspect-ratio: 1;
+  background: rgb(180 27 161 / 65%);
+}
+
+.heroPanel > div {
+  position: absolute;
+  right: 2rem;
+  bottom: 2.2rem;
+  left: 2rem;
+}
+
+.heroPanel h1 {
+  margin: 0;
+  font-size: clamp(2rem, 3.1vw, 3.35rem);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.heroPanel h1 strong {
+  font-weight: 900;
+}
+
+.heroPanel p {
+  margin-top: 0.55rem;
+  font-size: clamp(1.8rem, 2.9vw, 3.05rem);
+  line-height: 1.03;
+}
+
+.intro,
+.routesIntro {
+  display: grid;
+  grid-template-columns: 57.2% 42.8%;
+}
+
+.intro {
+  margin-top: 1.5rem;
+}
+
+.introCopy {
+  display: flex;
+  justify-content: flex-end;
+  padding: clamp(2rem, 4vw, 3.6rem) clamp(2rem, 5vw, 5rem);
+  color: #fff;
+  background: var(--tracks-violet);
+  text-align: right;
+}
+
+.introCopy > div {
+  width: min(660px, 100%);
+}
+
+.introCopy h2 {
+  font-size: clamp(1.75rem, 2.5vw, 2.65rem);
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.introCopy p {
+  font-size: clamp(1.15rem, 1.65vw, 1.7rem);
+  line-height: 1.18;
+}
+
+.introAction {
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: var(--tracks-lavender);
+}
+
+.actionButton {
+  display: inline-flex;
+  min-width: 10.5rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.25rem;
+  color: #fff;
+  background: var(--tracks-pink);
+  box-shadow: 0 0 0 2px transparent;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.05;
+  text-align: center;
+  transition: box-shadow 180ms ease, transform 180ms ease, background-color 180ms ease;
+}
+
+.actionButton strong,
+.actionButton span {
+  font: inherit;
+}
+
+.actionButton:hover,
+.actionButton:focus-visible {
+  background: #d80e46;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--tracks-pink);
+  transform: translateY(-2px);
+}
+
+.routesIntro {
+  margin-top: 1.5rem;
+  color: #fff;
+}
+
+.geometry {
+  position: relative;
+  min-height: 20rem;
+  overflow: hidden;
+  background: var(--tracks-purple-dark);
+}
+
+.geometryBar,
+.geometrySquare {
+  position: absolute;
+  top: 50%;
+  display: block;
+  transform: translateY(-50%);
+}
+
+.geometryBar {
+  left: 0;
+  width: 51%;
+  height: 37%;
+  background: var(--tracks-pink);
+}
+
+.geometrySquare {
+  right: 25%;
+  height: 37%;
+  aspect-ratio: 1;
+  background: #fff;
+}
+
+.routesCopy {
+  display: flex;
+  min-height: 20rem;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.6rem clamp(2.5rem, 5.5vw, 5.5rem);
+  background: var(--tracks-violet);
+}
+
+.routesCopy h2,
+.routesCopy p {
+  font-size: clamp(1.45rem, 2.25vw, 2.35rem);
+  line-height: 1.15;
+}
+
+.routesCopy h2 {
+  font-weight: 400;
+}
+
+.routesCopy h2 strong,
+.routesCopy p strong {
+  font-weight: 900;
+}
+
+.tracksSection {
+  padding: clamp(3rem, 6vw, 5.5rem) 1.5rem 3rem;
+}
+
+.tracksGrid {
+  display: grid;
+  width: min(1100px, 100%);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin-inline: auto;
+}
+
+.track {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.trackCard {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  background: var(--tracks-lavender);
+}
+
+.trackImage {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1.16;
+  background: #ddd;
+}
+
+.trackImage img {
+  object-fit: cover;
+}
+
+.trackContent {
+  display: flex;
+  min-height: 18rem;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.4rem 2.4rem;
+  text-align: center;
+}
+
+.trackContent h2 {
+  font-size: clamp(1.6rem, 2.2vw, 2.15rem);
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.trackContent h3 {
+  margin-top: 1.25rem;
+  font-size: 1.12rem;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.trackContent p {
+  margin-top: 0.85rem;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.assessment {
+  display: grid;
+  min-height: 11rem;
+  grid-template-columns: 28% 14% 1fr;
+  align-items: center;
+  gap: 0;
+  padding-right: clamp(1.5rem, 10vw, 10rem);
+  background: var(--tracks-lavender-light);
+}
+
+.assessmentBlock {
+  display: block;
+  width: 90%;
+  height: 52%;
+  background: var(--tracks-lavender);
+}
+
+.assessmentQuestion {
+  display: flex;
+  width: 100%;
+  aspect-ratio: 1;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  color: #fff;
+  background: var(--tracks-violet);
+  font-size: 1.05rem;
+  line-height: 0.95;
+  text-align: right;
+}
+
+.assessmentQuestion strong {
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+.assessment > p {
+  padding-left: 2.2rem;
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  line-height: 1.12;
+}
+
+.assessment > p strong {
+  color: var(--tracks-violet);
+  font-size: 1.14em;
+  font-weight: 900;
+}
+
+.assessmentAction {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.actionButtonCompact {
+  min-width: 12rem;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 35rem;
+  }
+
+  .heroPanel {
+    right: 7vw;
+    width: min(22rem, calc(100% - 4rem));
+  }
+
+  .intro,
+  .routesIntro {
+    grid-template-columns: 1fr;
+  }
+
+  .introCopy {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .introAction {
+    min-height: 9rem;
+  }
+
+  .geometry {
+    min-height: 13rem;
+  }
+
+  .routesCopy {
+    min-height: auto;
+    align-items: center;
+    text-align: center;
+  }
+
+  .tracksGrid {
+    width: min(680px, 100%);
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .trackContent {
+    min-height: 0;
+  }
+
+  .assessment {
+    grid-template-columns: minmax(6rem, 25%) minmax(7rem, 25%) 1fr;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (max-width: 580px) {
+  .hero {
+    min-height: 31rem;
+  }
+
+  .heroImage {
+    object-position: 38% center;
+  }
+
+  .heroPanel {
+    top: auto;
+    right: 1.25rem;
+    bottom: 1.5rem;
+    left: 1.25rem;
+    width: auto;
+    aspect-ratio: auto;
+    min-height: 18rem;
+    transform: none;
+  }
+
+  .heroSquare {
+    top: -2.75rem;
+    right: 0;
+    left: auto;
+    width: 5.5rem;
+  }
+
+  .introCopy,
+  .routesCopy {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .geometryBar {
+    width: 56%;
+  }
+
+  .geometrySquare {
+    right: 12%;
+  }
+
+  .tracksSection {
+    padding-inline: 1rem;
+  }
+
+  .assessment {
+    grid-template-columns: 1fr;
+    padding: 2rem 1.25rem;
+    text-align: center;
+  }
+
+  .assessmentBlock {
+    display: none;
+  }
+
+  .assessmentQuestion {
+    width: 8rem;
+    margin: 0 auto 1.5rem;
+  }
+
+  .assessment > p {
+    padding-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .actionButton {
+    transition: none;
+  }
+}
