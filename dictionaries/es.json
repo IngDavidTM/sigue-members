@@ -572,12 +572,12 @@
         },
         "questions": {
           "question": "¿Qué hago si tengo más preguntas?",
-          "answer": "Si tienes alguna otra consulta, estaremos encantados de ayudarte. Escríbenos a contacto@siguenetwork.org."
+          "answer": "Si tienes alguna otra consulta, estaremos encantados de ayudarte. Escríbenos a info@siguenetwork.org."
         }
       }
     },
     "closing": {
-      "title": "¿Alguna pregunta sobre tu donación?",
+      "title": "¿Tienes preguntas sobre cómo participar?",
       "cta": "Escríbenos"
     }
   },

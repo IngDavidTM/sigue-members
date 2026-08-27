@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import PageHero from '@/app/components/ui/PageHero';
 import Reveal from '@/app/components/ui/Reveal';
 
@@ -27,7 +29,17 @@ const areas = [
 
 const processKeys = ['interest', 'interview', 'orientation', 'assignment', 'service'] as const;
 
-const supportKeys = ['mission', 'donate', 'academy', 'summit', 'prayer', 'volunteers'] as const;
+const interestFormUrl =
+  'https://docs.google.com/forms/d/1JYUumNnWCHKOCYZGvCZX-tko3UowVio2nHweL41Us2o/viewform?edit_requested=true';
+
+const supportItems = [
+  { key: 'mission', path: '/contacto' },
+  { key: 'donate', path: '/donacion' },
+  { key: 'academy', path: '/sigue-academy' },
+  { key: 'summit', path: '/cumbre-sigue-2026' },
+  { key: 'prayer', external: 'https://docs.google.com/forms/d/e/1FAIpQLSdj0gs75NwmuRb0qQdSrdZ4Y2SwQRdroBd5XxS7QtN960SR7w/viewform' },
+  { key: 'volunteers', external: interestFormUrl },
+] as const;
 
 const faqKeys = [
   'benefits',
@@ -39,9 +51,6 @@ const faqKeys = [
   'companies',
   'questions',
 ] as const;
-
-const interestFormUrl =
-  'https://docs.google.com/forms/d/1JYUumNnWCHKOCYZGvCZX-tko3UowVio2nHweL41Us2o/viewform?edit_requested=true';
 
 function SectionBand({
   children,
@@ -69,10 +78,11 @@ function SectionBand({
 
 export default function JoinPageContent() {
   const t = useTranslations('joinPage');
+  const locale = useLocale() === 'en' ? 'en' : 'es';
   const [openFaq, setOpenFaq] = useState<string | null>(null);
 
   return (
-    <main className="overflow-x-hidden bg-white">
+    <main className="overflow-x-hidden bg-white" data-join-page>
       <PageHero
         imageSrc="/images/join-hero.jpg"
         imageAlt={t('hero.imageAlt')}
@@ -85,6 +95,7 @@ export default function JoinPageContent() {
           </>
         }
         subtitle={t('hero.subtitle')}
+        imageOverlayClassName="bg-white/20"
       />
 
       <section className="relative bg-white pt-5 md:pt-12">
@@ -296,18 +307,29 @@ export default function JoinPageContent() {
 
       <section className="bg-[#f3f3f3] px-6 py-16 md:py-24">
         <div className="mx-auto grid max-w-6xl gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {supportKeys.map((key, index) => (
-            <Reveal key={key} variant="fade-up" delay={(index % 3) * 0.08}>
-              <article className="min-h-[245px] bg-white px-7 py-8 shadow-[0_8px_25px_rgba(0,0,0,0.03)] transition-transform duration-300 hover:-translate-y-1">
-                <h2 className="font-heading text-3xl font-black leading-tight text-[#222]">
-                  {t(`support.cards.${key}.title`)}
+          {supportItems.map((item, index) => {
+            const card = (
+              <article className="group relative min-h-[245px] bg-white px-7 py-8 shadow-[0_8px_25px_rgba(0,0,0,0.03)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_14px_35px_rgba(82,32,120,0.12)]">
+                <h2 className="max-w-[260px] font-heading text-3xl font-black leading-tight text-[#222]">
+                  {t(`support.cards.${item.key}.title`)}
                 </h2>
-                <p className="mt-14 font-heading text-lg font-bold leading-snug text-[#222]">
-                  {t(`support.cards.${key}.description`)}
+                <p className="mt-14 max-w-[260px] font-heading text-lg font-bold leading-snug text-[#222]">
+                  {t(`support.cards.${item.key}.description`)}
                 </p>
+                <ArrowUpRight className="absolute bottom-6 right-6 text-primary transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" aria-hidden="true" />
               </article>
-            </Reveal>
-          ))}
+            );
+
+            return (
+              <Reveal key={item.key} variant="fade-up" delay={(index % 3) * 0.08}>
+                {'external' in item ? (
+                  <a href={item.external} target="_blank" rel="noreferrer" aria-label={t(`support.cards.${item.key}.title`)}>{card}</a>
+                ) : (
+                  <Link href={`/${locale}${item.path}`} aria-label={t(`support.cards.${item.key}.title`)}>{card}</Link>
+                )}
+              </Reveal>
+            );
+          })}
         </div>
       </section>
 
@@ -367,6 +389,12 @@ export default function JoinPageContent() {
           <h2 className="font-heading text-3xl font-black text-black md:text-4xl">
             {t('closing.title')}
           </h2>
+          <Link
+            href={`/${locale}/contacto`}
+            className="mt-7 inline-flex min-h-12 items-center justify-center rounded-md border-2 border-white bg-primary px-7 py-3 font-heading text-sm font-black text-white shadow-[0_0_0_1px_#f50d4f] transition-transform hover:-translate-y-1"
+          >
+            {t('closing.cta')}
+          </Link>
         </Reveal>
       </section>
     </main>

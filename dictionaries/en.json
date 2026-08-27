@@ -572,12 +572,12 @@
         },
         "questions": {
           "question": "What if I have more questions?",
-          "answer": "If you have any other questions, we will be happy to help. Write to us at contacto@siguenetwork.org."
+          "answer": "If you have any other questions, we will be happy to help. Write to us at info@siguenetwork.org."
         }
       }
     },
     "closing": {
-      "title": "Have a question about your donation?",
+      "title": "Have questions about how to participate?",
       "cta": "Write to us"
     }
   },

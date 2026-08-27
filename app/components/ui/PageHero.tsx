@@ -12,6 +12,7 @@ interface PageHeroProps {
   subtitle?: string;
   strongOverlay?: boolean;
   titleClassName?: string;
+  imageOverlayClassName?: string;
 }
 
 export default function PageHero({
@@ -22,11 +23,12 @@ export default function PageHero({
   subtitle,
   strongOverlay = false,
   titleClassName = '',
+  imageOverlayClassName = 'bg-white/60',
 }: PageHeroProps) {
   return (
     <section className="relative h-[585px] w-full overflow-hidden lg:h-[800px]">
       <Image src={imageSrc} alt={imageAlt} fill priority sizes="100vw" className="object-cover" />
-      <div className="absolute inset-0 bg-white/60" aria-hidden="true" />
+      <div className={`absolute inset-0 ${imageOverlayClassName}`} aria-hidden="true" />
 
       <div className="absolute inset-0 flex items-center justify-center px-10">
         <Reveal variant="slide-left" className="relative w-full max-w-[600px]">
