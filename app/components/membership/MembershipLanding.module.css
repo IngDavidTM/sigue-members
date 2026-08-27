@@ -1,0 +1,466 @@
+.page {
+  --purple: #522078;
+  --lavender: #f0ecff;
+  --pink: #f50d4f;
+  overflow: hidden;
+  color: #211826;
+  background: #fff;
+  font-family: var(--font-heebo), Arial, sans-serif;
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  min-height: clamp(560px, 57vw, 820px);
+  align-items: center;
+  isolation: isolate;
+}
+
+.hero > img {
+  z-index: -2;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.hero::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: rgb(30 12 42 / 10%);
+  content: '';
+}
+
+.heroPanel {
+  display: grid;
+  width: min(760px, calc(100% - 48px));
+  min-height: 300px;
+  margin-left: max(24px, calc((100vw - 1120px) / 2));
+  grid-template-columns: 112px 1fr;
+  background: rgb(245 13 79 / 80%);
+  box-shadow: 24px 24px 0 rgb(255 255 255 / 82%);
+  color: #fff;
+}
+
+.heroPanel > span {
+  display: grid;
+  align-items: center;
+  padding: 18px;
+  background: rgb(69 16 242 / 88%);
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.heroPanel > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 38px 46px;
+}
+
+.hero h1 {
+  margin: 0 0 17px;
+  color: #fff;
+  font-size: clamp(36px, 4vw, 58px);
+  font-weight: 900;
+  letter-spacing: -.045em;
+  line-height: .98;
+}
+
+.hero p {
+  max-width: 550px;
+  margin-bottom: 25px;
+  font-size: clamp(17px, 1.45vw, 21px);
+  line-height: 1.35;
+}
+
+.button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 23px;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  background: var(--pink);
+  box-shadow: 0 0 0 1px var(--pink);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.button:hover,
+.button:focus-visible {
+  box-shadow: 0 10px 25px rgb(82 32 120 / 22%);
+  transform: translateY(-2px);
+}
+
+.questions {
+  padding: 90px max(28px, calc((100vw - 1120px) / 2)) 80px;
+}
+
+.questions > h2,
+.benefits > h2,
+.members > h2 {
+  margin: 0 auto;
+  color: #201b24;
+  font-size: clamp(35px, 4vw, 54px);
+  font-weight: 900;
+  letter-spacing: -.045em;
+  line-height: 1;
+  text-align: center;
+}
+
+.questionGrid {
+  display: grid;
+  margin-top: 55px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 38px 44px;
+}
+
+.questionGrid article {
+  padding: 5px 5px 5px 0;
+}
+
+.questionGrid h3 {
+  display: grid;
+  margin-bottom: 15px;
+  grid-template-columns: 22px 1fr;
+  gap: 10px;
+  color: #242028;
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.questionGrid h3 svg {
+  width: 20px;
+  color: #45b447;
+  stroke-width: 3;
+}
+
+.questionGrid p {
+  padding-left: 32px;
+  font-size: 15px;
+  line-height: 1.48;
+}
+
+.questionGrid strong {
+  color: var(--purple);
+}
+
+.membershipCta {
+  margin-top: 70px;
+  text-align: center;
+}
+
+.membershipCta > p {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.membershipCta > h2 {
+  margin: 6px 0 25px;
+  color: var(--purple);
+  font-size: clamp(27px, 3vw, 42px);
+  font-weight: 900;
+  letter-spacing: -.035em;
+}
+
+.members {
+  padding: 82px 0 88px;
+  background: var(--lavender);
+  text-align: center;
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+  color: var(--pink);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .28em;
+}
+
+.logoViewport {
+  overflow: hidden;
+  margin: 52px 0 40px;
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.logoTrack {
+  display: flex;
+  width: max-content;
+  gap: 20px;
+  animation: logo-scroll 58s linear infinite;
+}
+
+.logoViewport:hover .logoTrack,
+.logoViewport:focus-within .logoTrack {
+  animation-play-state: paused;
+}
+
+.logoCard {
+  position: relative;
+  width: 205px;
+  height: 125px;
+  flex: 0 0 auto;
+  border: 1px solid rgb(82 32 120 / 9%);
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 8px 22px rgb(70 30 100 / 6%);
+}
+
+.logoCard img {
+  padding: 20px;
+  object-fit: contain;
+}
+
+.membersBody {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 0 28px;
+  color: var(--purple);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.benefits {
+  padding: 95px max(28px, calc((100vw - 1120px) / 2)) 100px;
+  text-align: center;
+}
+
+.sectionSubtitle {
+  margin: 12px 0 50px;
+  color: var(--purple);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.benefitGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 26px;
+}
+
+.benefitGrid article {
+  padding: 12px 8px;
+}
+
+.benefitGrid svg {
+  width: 43px;
+  height: 43px;
+  margin-bottom: 18px;
+  color: var(--pink);
+  stroke-width: 2.4;
+}
+
+.benefitGrid h3 {
+  margin-bottom: 10px;
+  color: var(--pink);
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.benefitGrid p {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.contactLead {
+  max-width: 760px;
+  margin: 55px auto 23px;
+  color: #201b24;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.movement {
+  padding: 85px max(28px, calc((100vw - 1120px) / 2)) 95px;
+  background: var(--pink);
+  color: #fff;
+  text-align: center;
+}
+
+.movement > h2 {
+  max-width: 900px;
+  margin: 0 auto 16px;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+
+.movement > p {
+  max-width: 920px;
+  margin: 0 auto 30px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.movement > strong {
+  display: block;
+  margin-bottom: 35px;
+  font-size: 19px;
+}
+
+.participationGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  text-align: left;
+}
+
+.participationGrid > a {
+  position: relative;
+  display: block;
+  min-height: 180px;
+  padding: 28px 30px 50px;
+  background: #fff;
+  color: #211826;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.participationGrid > a:hover,
+.participationGrid > a:focus-visible {
+  box-shadow: 0 10px 30px rgb(62 14 78 / 20%);
+  transform: translateY(-3px);
+}
+
+.participationGrid h3 {
+  max-width: 260px;
+  font-size: 21px;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.participationGrid p {
+  margin-top: 28px;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.participationGrid svg {
+  position: absolute;
+  right: 22px;
+  bottom: 20px;
+  width: 21px;
+}
+
+.participationGrid .membershipCard {
+  min-height: 125px;
+  grid-column: 1 / -1;
+  background: rgb(255 255 255 / 28%);
+  color: #fff;
+}
+
+@keyframes logo-scroll {
+  to { transform: translateX(calc(-50% - 10px)); }
+}
+
+@media (max-width: 960px) {
+  .questionGrid,
+  .participationGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .benefitGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    min-height: 650px;
+    align-items: flex-end;
+    padding: 0 18px 48px;
+  }
+
+  .heroPanel {
+    width: 100%;
+    min-height: 0;
+    margin: 0;
+    grid-template-columns: 1fr;
+    box-shadow: 10px 10px 0 rgb(255 255 255 / 82%);
+  }
+
+  .heroPanel > span {
+    display: block;
+    padding: 10px 17px;
+    text-align: left;
+  }
+
+  .heroPanel > div {
+    padding: 27px 24px 30px;
+  }
+
+  .hero h1 {
+    font-size: clamp(33px, 9.5vw, 45px);
+  }
+
+  .questionGrid,
+  .benefitGrid,
+  .participationGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .questions,
+  .benefits {
+    padding: 65px 24px 70px;
+  }
+
+  .questionGrid {
+    margin-top: 42px;
+    gap: 28px;
+  }
+
+  .questionGrid article {
+    padding: 24px;
+    border-left: 5px solid var(--pink);
+    background: #faf8ff;
+  }
+
+  .membershipCta {
+    margin-top: 55px;
+  }
+
+  .members {
+    padding: 65px 0 70px;
+  }
+
+  .benefitGrid {
+    gap: 8px;
+  }
+
+  .benefitGrid article {
+    padding: 28px 24px;
+    border-bottom: 1px solid #eee7f5;
+  }
+
+  .movement {
+    padding: 65px 20px 70px;
+  }
+
+  .participationGrid > a,
+  .participationGrid .membershipCard {
+    min-height: 155px;
+    grid-column: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logoTrack {
+    animation: none;
+  }
+
+  .button,
+  .participationGrid > a {
+    transition: none;
+  }
+}
