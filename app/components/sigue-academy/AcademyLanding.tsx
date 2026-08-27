@@ -39,6 +39,7 @@ const content = {
       '¿Te gustaría acceder a financiamiento a través de SIGUE Network?',
     ],
     questionsClosing: 'Si dijiste SÍ a una o más de estas preguntas, la certificación es para ti.',
+    questionsCta: 'DESCUBRE CÓMO COMENZAR',
     why: {
       eyebrow: 'CRECE CON PROPÓSITO',
       title: '¿Por qué certificarte con SIGUE?',
@@ -92,6 +93,7 @@ const content = {
       'Would you like to access funding through SIGUE Network?',
     ],
     questionsClosing: 'If you answered YES to one or more, SIGUE Certification may be the next step toward strengthening your organization.',
+    questionsCta: 'DISCOVER HOW TO GET STARTED',
     why: {
       eyebrow: 'GROW WITH PURPOSE',
       title: 'Why earn SIGUE Certification?',
@@ -141,7 +143,6 @@ export default function AcademyLanding({ locale }: { locale: Locale }) {
       <section className={styles.intro} aria-labelledby="academy-intro-title">
         <div className={styles.introImage}><Image src={images.intro} alt={c.intro.alt} fill unoptimized sizes="(max-width: 760px) 100vw, 45vw" /></div>
         <div className={styles.introBody}>
-          <p className={styles.eyebrow}>{c.intro.eyebrow}</p>
           <h2 id="academy-intro-title">{c.intro.title}</h2>
           <p>{c.intro.body}</p>
           <ContactLink locale={locale}>{c.intro.cta}</ContactLink>
@@ -157,17 +158,16 @@ export default function AcademyLanding({ locale }: { locale: Locale }) {
           ))}
         </div>
         <p className={styles.questionsClosing}>{c.questionsClosing}</p>
+        <ContactLink locale={locale}>{c.questionsCta}</ContactLink>
       </section>
 
       <section className={styles.why} aria-labelledby="academy-why-title">
-        <p className={styles.eyebrow}>{c.why.eyebrow}</p>
         <h2 id="academy-why-title">{c.why.title}</h2>
         <p>{c.why.body}</p>
         <ContactLink locale={locale}>{c.why.cta}</ContactLink>
       </section>
 
       <section className={styles.certified} aria-labelledby="academy-certified-title">
-        <p className={styles.eyebrow}>{c.certified.eyebrow}</p>
         <h2 id="academy-certified-title">{c.certified.title}</h2>
         <p>{c.certified.body}</p>
       </section>
@@ -177,7 +177,6 @@ export default function AcademyLanding({ locale }: { locale: Locale }) {
         <div className={styles.outcomeGrid}>
           {c.outcomes.map(([title, body], index) => (
             <article className={index === c.outcomes.length - 1 ? styles.outcomeWide : undefined} key={title}>
-              <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
               <h3>{title}</h3>
               <p>{body}</p>
             </article>
@@ -187,7 +186,7 @@ export default function AcademyLanding({ locale }: { locale: Locale }) {
       </section>
 
       <aside className={styles.events} aria-label={c.noEvents}>
-        <strong>{c.noEvents}</strong><p>{c.contact}</p><ContactLink locale={locale}>{c.why.cta}</ContactLink>
+        <strong>{c.noEvents}</strong>
       </aside>
 
       <SiteFooter2026 locale={locale} />

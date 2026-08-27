@@ -339,12 +339,12 @@
 }
 
 .hero::before {
-  background: rgb(255 255 255 / 78%);
+  background: transparent;
 }
 
 .heroPanel {
   display: grid;
-  width: min(810px, 72vw);
+  width: min(738px, 72vw);
   grid-template-columns: 105px 1fr;
   align-items: stretch;
   padding: 0;
@@ -352,6 +352,7 @@
   background: transparent;
   box-shadow: none;
   text-align: left;
+  transform: translateX(-36px);
 }
 
 .heroPanel .eyebrow {
@@ -371,9 +372,9 @@
   margin: 0;
   padding: 11px 16px;
   border: 4px solid #fff;
-  background: rgb(102 57 238 / 76%);
+  background: rgb(69 16 242 / 82%);
   color: #fff;
-  font-size: clamp(28px, 2.65vw, 38px);
+  font-size: clamp(26px, 2.25vw, 32px);
   letter-spacing: -.02em;
   line-height: 1.05;
 }
@@ -384,6 +385,7 @@
 
 .heroPanel .button {
   min-height: 42px;
+  min-width: 183px;
   grid-column: 2;
   justify-self: end;
   border: 0;
@@ -432,6 +434,14 @@
   font-size: clamp(31px, 3.1vw, 44px);
 }
 
+.questions > h2 {
+  color: #111;
+}
+
+.outcomes > h2 {
+  color: var(--academy-pink);
+}
+
 .questionGrid {
   gap: 38px 55px;
 }
@@ -459,7 +469,7 @@
 }
 
 .questionsClosing {
-  margin-top: 55px;
+  margin: 55px auto 22px;
   color: #171717;
   font-size: 17px;
 }
@@ -636,31 +646,38 @@
 
 @media (max-width: 760px) {
   .hero {
-    min-height: 590px;
+    min-height: 630px;
     padding: 45px 18px;
   }
 
   .heroPanel {
     display: grid;
-    width: 100%;
+    width: min(250px, calc(100vw - 36px));
     grid-template-columns: 1fr;
     padding: 0;
     border: 0;
     box-shadow: none;
+    transform: none;
   }
 
   .heroPanel .eyebrow {
     width: max-content;
-    padding: 12px 14px;
+    padding: 8px 10px;
+    font-size: 12px;
   }
 
   .hero h1 {
-    padding: 20px;
-    font-size: clamp(30px, 9vw, 43px);
+    padding: 7px 10px;
+    font-size: 15px;
+    line-height: 1.05;
   }
 
   .heroPanel .button {
+    min-width: 0;
+    min-height: 32px;
     grid-column: 1;
+    padding: 6px 13px;
+    font-size: 12px;
   }
 
   .intro {
