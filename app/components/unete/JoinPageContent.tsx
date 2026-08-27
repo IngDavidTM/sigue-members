@@ -6,7 +6,18 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import PageHero from '@/app/components/ui/PageHero';
-import Reveal from '@/app/components/ui/Reveal';
+
+function Reveal({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  variant?: string;
+  delay?: number;
+}) {
+  return <div className={className}>{children}</div>;
+}
 
 const volunteerImages = [
   '/images/join-volunteer-1.jpg',
@@ -96,24 +107,23 @@ export default function JoinPageContent() {
         }
         subtitle={t('hero.subtitle')}
         imageOverlayClassName="bg-white/20"
+        animate={false}
       />
 
-      <section className="relative bg-white pt-5 md:pt-12">
-        <div className="absolute left-0 top-12 hidden h-[480px] w-1/5 bg-[#c95ae4] md:block" />
-        <div className="relative mx-auto flex max-w-6xl items-end justify-end md:px-6">
-          <div className="grid w-full grid-cols-4 overflow-hidden md:w-[70%]">
+      <section className="relative bg-white pt-5 md:bg-[linear-gradient(to_right,#c95ae4_0_20%,#fff_20%_100%)] md:pt-12">
+        <div className="relative grid md:grid-cols-[37.5%_62.5%]">
+          <div className="hidden md:block" aria-hidden="true" />
+          <div className="grid w-full grid-cols-2 overflow-hidden sm:grid-cols-4">
             {volunteerImages.map((src, index) => (
-              <Reveal key={src} variant="fade" delay={index * 0.08}>
-                <div className="relative aspect-[0.93] sm:aspect-[0.78]">
+              <div key={src} className="relative aspect-[0.93] sm:aspect-[0.78]">
                   <Image
                     src={src}
                     alt={`${t('gallery.imageAlt')} ${index + 1}`}
                     fill
-                    sizes="(max-width: 640px) 50vw, 18vw"
+                    sizes="(max-width: 640px) 50vw, 16vw"
                     className="object-cover"
                   />
-                </div>
-              </Reveal>
+              </div>
             ))}
           </div>
         </div>
@@ -125,7 +135,7 @@ export default function JoinPageContent() {
             <span className="absolute right-4 top-14 h-12 w-8 bg-white md:right-8 md:top-28 md:h-28 md:w-16" />
           </div>
           <div className="flex items-center bg-[#7410f4] px-4 md:px-12">
-            <Reveal variant="slide-right">
+            <Reveal variant="fade-up">
               <h2 className="font-heading text-xl leading-none text-white md:text-4xl">
                 <strong className="block font-black">{t('gallery.title')}</strong>
                 <span className="font-light">{t('gallery.subtitle')}</span>
@@ -135,18 +145,20 @@ export default function JoinPageContent() {
         </div>
       </section>
 
-      <section className="bg-accent-light-purple md:px-6 md:py-16">
-        <div className="mx-auto grid max-w-5xl md:grid-cols-[260px_1fr] md:items-center md:gap-8">
-          <Reveal variant="slide-left" className="h-full">
-            <div className="flex min-h-[220px] flex-col items-end justify-center bg-primary px-8 py-10 text-right font-heading text-2xl leading-tight text-white md:min-h-0 md:px-7 md:py-8">
-              <strong className="block font-black">
-                {t('intro.titleStart')} {t('intro.titleBold')}
+      <section className="bg-accent-light-purple">
+        <div className="grid md:min-h-[210px] md:grid-cols-[25%_13%_62%] md:items-stretch">
+          <div className="hidden bg-white md:block" aria-hidden="true" />
+          <Reveal variant="fade-up" className="h-full">
+            <div className="flex h-full min-h-[220px] flex-col items-end justify-center bg-primary px-8 py-10 text-right font-heading text-2xl leading-tight text-white md:min-h-0 md:px-6 md:py-8 md:text-xl lg:px-7">
+              <strong className="block w-full font-black">
+                <span className="block">{t('intro.titleStart')}</span>
+                <span className="block">{t('intro.titleBold')}</span>
               </strong>
-              <span>{t('intro.titleEnd')}</span>
+              <span className="block w-full">{t('intro.titleEnd')}</span>
             </div>
           </Reveal>
-          <Reveal variant="fade-up" delay={0.1}>
-            <p className="px-5 py-8 font-sans text-lg leading-snug text-[#6221a5] md:px-0 md:py-0 md:text-xl">
+          <Reveal variant="fade-up" delay={0.1} className="flex items-center">
+            <p className="px-5 py-8 font-sans text-lg leading-snug text-[#6221a5] md:max-w-4xl md:px-12 md:py-10 md:text-xl lg:px-16">
               {t('intro.bodyStart')}
               <strong>{t('intro.bodyBold1')}</strong>
               {t('intro.bodyMid')}
@@ -158,17 +170,17 @@ export default function JoinPageContent() {
       </section>
 
       <section className="py-10 md:px-6 md:py-20">
-        <div className="mx-auto grid max-w-6xl gap-3 md:grid-cols-[320px_1fr] md:items-stretch md:gap-8">
-          <Reveal variant="slide-left" className="h-full">
+        <div className="mx-auto grid max-w-6xl gap-3 md:grid-cols-[360px_1fr] md:items-stretch md:gap-10">
+          <Reveal variant="fade-up" className="h-full">
             <div className="flex h-full min-h-[230px] items-center justify-center bg-[#c95ae4] px-8 py-10 text-center md:min-h-[260px]">
-              <h2 className="font-heading text-3xl font-black leading-[1.7] text-white md:text-4xl">
+              <h2 className="w-full font-heading text-3xl font-black leading-[1.7] text-white md:text-4xl">
                 {t('meaning.title')}
               </h2>
             </div>
           </Reveal>
           <div className="space-y-3 px-4 md:space-y-5 md:px-0">
             {meaningKeys.map((key, index) => (
-              <Reveal key={key} variant="slide-right" delay={index * 0.08}>
+              <Reveal key={key} variant="fade-up" delay={index * 0.08}>
                 <div className="flex min-h-[120px] items-center bg-[#e3e4ff] px-8 py-6 font-sans text-lg leading-snug text-[#622b92] md:min-h-[82px] md:px-12 md:py-5 md:text-xl">
                   {t(`meaning.items.${key}`)}
                 </div>
