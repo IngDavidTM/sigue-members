@@ -1,11 +1,23 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 import { getURL } from "@/lib/utils";
+
+async function getDestinationForUser(
+    supabase: Awaited<ReturnType<typeof createClient>>,
+    userId: string,
+) {
+    const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", userId)
+        .maybeSingle();
+
+    return profile?.role === "admin" ? "/admin" : "/dashboard";
+}
 
 export async function loginWithEmail(formData: FormData) {
     const supabase = await createClient();
@@ -24,14 +36,15 @@ export async function loginWithEmail(formData: FormData) {
 
     const data = { email, password };
 
-    const { error } = await supabase.auth.signInWithPassword(data);
+    const { data: authData, error } = await supabase.auth.signInWithPassword(data);
 
     if (error) {
         return { error: error.message };
     }
 
+    const destination = await getDestinationForUser(supabase, authData.user.id);
     revalidatePath("/", "layout");
-    redirect("/");
+    redirect(destination);
 }
 
 export async function loginWithGoogle() {

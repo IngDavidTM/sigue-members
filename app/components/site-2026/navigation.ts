@@ -66,6 +66,7 @@ export const siteNavigation: Record<SiteLocale, NavigationContent> = {
       {
         label: 'Ecosistema',
         wide: true,
+        topLink: { label: 'Conoce el ecosistema SIGUE', href: '/ecosistema' },
         children: [
           { label: 'SIGUE Academy™', description: 'Formación', href: '/sigue-academy', icon: 'academy', color: '#b41ba1' },
           { label: 'SIGUE Hub™', description: 'Comunidad y conexión', href: '/sigue-hub', icon: 'hub', color: '#5e17eb' },
@@ -125,6 +126,7 @@ export const siteNavigation: Record<SiteLocale, NavigationContent> = {
       {
         label: 'Ecosystem',
         wide: true,
+        topLink: { label: 'Explore the SIGUE ecosystem', href: '/ecosistema' },
         children: [
           { label: 'SIGUE Academy™', description: 'Training', href: '/sigue-academy', icon: 'academy', color: '#b41ba1' },
           { label: 'SIGUE Hub™', description: 'Community and connection', href: '/sigue-hub', icon: 'hub', color: '#5e17eb' },

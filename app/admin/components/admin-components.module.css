@@ -1,0 +1,174 @@
+.fieldLabel {
+  display: block;
+  margin-bottom: 7px;
+  color: #512076;
+  font-size: .82rem;
+  font-weight: 850;
+}
+
+.submitBar {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 22px;
+  padding: 14px 0;
+  border-top: 1px solid #e7def4;
+  background: rgba(247, 244, 252, .92);
+  backdrop-filter: blur(12px);
+}
+
+.submitBar button {
+  min-width: 180px;
+  min-height: 46px;
+  border: 0;
+  border-radius: 10px;
+  background: #f30b4f;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+}
+
+.submitBar button:disabled {
+  cursor: wait;
+  opacity: .65;
+}
+
+.error,
+.success {
+  margin: 18px 0 0;
+  padding: 12px 15px;
+  border-radius: 9px;
+  font-weight: 750;
+}
+
+.error { background: #ffe6ec; color: #a90035; }
+.success { background: #e5fbf0; color: #11623b; }
+
+.editorField,
+.mediaField {
+  min-width: 0;
+}
+
+.editorToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 7px;
+  border: 1px solid #d9cae7;
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  background: #f7f3fb;
+}
+
+.editorToolbar button {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #512076;
+  cursor: pointer;
+}
+
+.editorToolbar button:hover { background: #eadff3; }
+.editorToolbar svg { width: 17px; height: 17px; }
+
+.editor {
+  min-height: 260px;
+  border: 1px solid #d9cae7;
+  border-radius: 0 0 10px 10px;
+  background: #fff;
+}
+
+.editor :global(.tiptap) {
+  min-height: 260px;
+  padding: 16px;
+  outline: none;
+  color: #391153;
+  line-height: 1.65;
+}
+
+.editor :global(.tiptap p) { margin: 0 0 1em; }
+.editor :global(.tiptap h2) { margin: 1.2em 0 .5em; font-size: 1.55rem; }
+.editor :global(.tiptap h3) { margin: 1.1em 0 .45em; font-size: 1.25rem; }
+.editor :global(.tiptap ul) { list-style: disc; padding-left: 1.4rem; }
+.editor :global(.tiptap ol) { list-style: decimal; padding-left: 1.4rem; }
+.editor :global(.tiptap img) { max-width: 100%; height: auto; }
+.editor :global(.tiptap p.is-editor-empty:first-child::before) {
+  height: 0;
+  float: left;
+  color: #a990b7;
+  content: attr(data-placeholder);
+  pointer-events: none;
+}
+
+.mediaPreview {
+  position: relative;
+  width: min(100%, 520px);
+  aspect-ratio: 16 / 9;
+  margin-bottom: 10px;
+  overflow: hidden;
+  border: 1px solid #d9cae7;
+  border-radius: 11px;
+  background: #eee8f5;
+}
+
+.mediaPreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mediaPreview button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .92);
+  color: #a90035;
+  cursor: pointer;
+}
+
+.mediaPreview svg,
+.uploadButton svg { width: 18px; height: 18px; }
+
+.uploadButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 13px;
+  border: 1px solid #ccb9de;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+.uploadButton input { display: none; }
+.spinner { animation: spin 1s linear infinite; }
+.urlInput {
+  width: min(100%, 520px);
+  min-height: 40px;
+  display: block;
+  margin-top: 8px;
+  padding: 8px 11px;
+  border: 1px solid #d9cae7;
+  border-radius: 8px;
+  color: #391153;
+}
+
+.inlineError { display: block; margin-top: 6px; color: #a90035; }
+
+@keyframes spin { to { transform: rotate(360deg); } }

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import styles from './SiteFooter2026.module.css';
 
@@ -12,7 +13,7 @@ const content = {
     discoverLinks: [
       ['Inicio', ''],
       ['Conoce SIGUE', '/conoce-sigue'],
-      ['SIGUE Tracks', '/sigue-tracks'],
+      ['Ecosistema SIGUE', '/ecosistema'],
       ['Consulting', '/sigue-consulting'],
       ['SIGUE Hub', '/sigue-hub'],
     ],
@@ -31,7 +32,7 @@ const content = {
     discoverLinks: [
       ['Home', ''],
       ['About SIGUE', '/conoce-sigue'],
-      ['SIGUE Tracks', '/sigue-tracks'],
+      ['SIGUE Ecosystem', '/ecosistema'],
       ['Consulting', '/sigue-consulting'],
       ['SIGUE Hub', '/sigue-hub'],
     ],
@@ -51,7 +52,12 @@ export default function SiteFooter2026({ locale }: { locale: Locale }) {
     <footer className={styles.footer}>
       <div className={styles.footerGrid}>
         <div className={styles.footerAbout}>
-          <strong>SIGUE NETWORK</strong>
+          <div className={styles.brandRow}>
+            <Link href={`/${locale}`} aria-label={locale === 'es' ? 'Inicio de SIGUE Network' : 'SIGUE Network home'}>
+              <Image src="/images/home-2026/logo-transparent.png" alt="" width={56} height={68} />
+            </Link>
+            <strong>SIGUE NETWORK</strong>
+          </div>
           <p>{c.body}</p>
           <address>
             501(C)(3) SIN FINES DE LUCRO · EIN: 26-2010006<br />

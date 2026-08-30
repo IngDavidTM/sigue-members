@@ -17,6 +17,26 @@
   font-weight: 900;
 }
 
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brandRow a,
+.brandRow img {
+  display: block;
+}
+
+.brandRow img {
+  width: 50px;
+  height: auto;
+}
+
+.brandRow strong {
+  font-size: 1.35rem;
+}
+
 .footerAbout p {
   max-width: 390px;
   margin: 1.2rem 0 2rem;

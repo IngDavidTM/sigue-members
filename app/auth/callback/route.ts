@@ -7,14 +7,31 @@ export async function GET(request: Request) {
     const { searchParams, origin } = new URL(request.url);
     const code = searchParams.get("code");
     // If "next" is in param, use it as the redirect URL
-    const next = searchParams.get("next") ?? "/";
+    const requestedNext = searchParams.get("next");
 
     if (code) {
         const supabase = await createClient();
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
         if (!error) {
-            return NextResponse.redirect(`${getURL()}${next}`);
+            let destination = requestedNext;
+
+            const isSafeLocalPath =
+                destination?.startsWith("/") &&
+                !destination.startsWith("//") &&
+                !destination.includes("\\") &&
+                !destination.includes("://");
+
+            if (!isSafeLocalPath) {
+                const { data: profile } = await supabase
+                    .from("profiles")
+                    .select("role")
+                    .eq("id", data.user.id)
+                    .maybeSingle();
+                destination = profile?.role === "admin" ? "/admin" : "/dashboard";
+            }
+
+            return NextResponse.redirect(`${getURL()}${destination}`);
         }
     }
 
