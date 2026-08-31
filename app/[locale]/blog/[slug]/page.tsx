@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { CommentForm } from "@/app/components/content/CommentForm";
 import styles from "@/app/components/content/ContentPages.module.css";
@@ -41,6 +41,7 @@ export default async function BlogPostPage({ params }: Props) {
   const data = await getPublicBlogPost(locale, slug);
   if (!data) notFound();
   const { post, translation, series, tags, comments, recent, allSeries } = data;
+  if (translation.slug !== slug) redirect(`/${locale}/blog/${translation.slug}`);
   const url = absoluteUrl(`/${locale}/blog/${translation.slug}`);
   const structuredData = {
     "@context": "https://schema.org",

@@ -72,6 +72,7 @@
 
 .intro {
   display: grid;
+  width: 100%;
   max-width: 770px;
   margin: 0 auto 55px;
   justify-items: center;
@@ -90,6 +91,7 @@
 }
 
 .intro h2 {
+  width: 100%;
   margin: 0 0 13px;
   color: var(--tools-purple);
   font-family: var(--font-roboto), Arial, sans-serif;
@@ -97,9 +99,11 @@
   font-weight: 900;
   letter-spacing: -.025em;
   line-height: 1.12;
+  overflow-wrap: anywhere;
 }
 
 .intro p {
+  width: 100%;
   max-width: 650px;
   margin: 0;
   color: #5f5366;
@@ -140,6 +144,11 @@
   grid-template-columns: 42px minmax(0, 1fr) auto;
   align-items: center;
   gap: 18px;
+}
+
+.rowCopy h3 {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .index {
@@ -220,6 +229,7 @@
   }
 
   .row {
+    min-width: 0;
     align-items: flex-start;
     flex-direction: column;
     gap: 16px;
@@ -227,12 +237,14 @@
   }
 
   .rowCopy {
+    min-width: 0;
     width: 100%;
     grid-template-columns: 32px minmax(0, 1fr) auto;
     gap: 10px;
   }
 
   .downloadButton {
+    max-width: 100%;
     width: 100%;
   }
 }

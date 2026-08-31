@@ -28,7 +28,7 @@ const content = {
         question: '¿Cómo establecer tu estrategia FES, a la vez que incrementas tu FE?',
         body: 'En nuestros encuentros aprenderás a crear tu plan FES e identificar áreas clave para ser más financiable y encontrable, aumentando tu acceso a financiamiento y expandiendo tu impacto.',
         cta: 'Inscríbete aquí',
-        href: 'https://siguenetwork.org/eventos/',
+        href: '/eventos',
       },
       {
         title: 'Comunidad online para líderes de proyectos de impacto físico, emocional y espiritual',
@@ -60,7 +60,7 @@ const content = {
         question: 'How can you build your FES strategy while increasing your FE?',
         body: 'In our sessions, you will learn to create your FES plan and identify key areas for becoming more fundable and visible, increasing access to funding and expanding your impact.',
         cta: 'Register here',
-        href: 'https://siguenetwork.org/eventos/',
+        href: '/eventos',
       },
       {
         title: 'Online community for leaders of projects with physical, emotional, and spiritual impact',

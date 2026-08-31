@@ -29,12 +29,26 @@ function reportPublicQuery(error: unknown) {
   console.error("Public content query failed:", error);
 }
 
+function hasPublicContentConnection() {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  );
+}
+
 export async function getPublicBlogListing(locale: ContentLocale) {
+  if (!hasPublicContentConnection()) {
+    return { cards: [] as PublicBlogCard[], series: [] as BlogSeriesTranslationRow[] };
+  }
+
   try {
     const supabase = await createClient();
+    const now = new Date().toISOString();
     const { data: posts, error: postsError } = await supabase
       .from("blog_posts")
       .select("*")
+      .in("status", ["published", "scheduled"])
+      .lte("published_at", now)
       .order("published_at", { ascending: false });
     if (postsError) throw postsError;
     if (!posts.length) return { cards: [] as PublicBlogCard[], series: [] as BlogSeriesTranslationRow[] };
@@ -53,7 +67,11 @@ export async function getPublicBlogListing(locale: ContentLocale) {
       if (!translation) return [];
       return [{ post, translation, series: post.series_id ? series.get(post.series_id) ?? null : null }];
     });
-    return { cards, series: seriesResult.data };
+    const visibleSeriesIds = new Set(cards.flatMap((card) => (card.post.series_id ? [card.post.series_id] : [])));
+    return {
+      cards,
+      series: seriesResult.data.filter((item) => visibleSeriesIds.has(item.series_id)),
+    };
   } catch (error) {
     reportPublicQuery(error);
     return { cards: [] as PublicBlogCard[], series: [] as BlogSeriesTranslationRow[] };
@@ -61,21 +79,51 @@ export async function getPublicBlogListing(locale: ContentLocale) {
 }
 
 export async function getPublicBlogPost(locale: ContentLocale, slug: string) {
+  if (!hasPublicContentConnection()) return null;
+
   try {
     const supabase = await createClient();
-    const { data: translation, error: translationError } = await supabase
+    const translationResult = await supabase
       .from("blog_post_translations")
       .select("*")
       .eq("locale", locale)
       .eq("slug", slug)
       .maybeSingle();
-    if (translationError) throw translationError;
+    if (translationResult.error) throw translationResult.error;
+    let translation = translationResult.data;
+
+    // Language switches preserve the current pathname. If translated posts use
+    // different slugs, resolve the sibling translation instead of returning 404.
+    if (!translation) {
+      const { data: sourceTranslation, error: sourceTranslationError } = await supabase
+        .from("blog_post_translations")
+        .select("post_id")
+        .neq("locale", locale)
+        .eq("slug", slug)
+        .maybeSingle();
+      if (sourceTranslationError) throw sourceTranslationError;
+
+      if (sourceTranslation) {
+        const targetTranslationResult = await supabase
+          .from("blog_post_translations")
+          .select("*")
+          .eq("post_id", sourceTranslation.post_id)
+          .eq("locale", locale)
+          .maybeSingle();
+        if (targetTranslationResult.error) throw targetTranslationResult.error;
+        translation = targetTranslationResult.data;
+      }
+    }
+
     if (!translation) return null;
 
+    const now = new Date().toISOString();
     const { data: post, error: postError } = await supabase
       .from("blog_posts")
       .select("*")
       .eq("id", translation.post_id)
+      .in("status", ["published", "scheduled"])
+      .lte("published_at", now)
       .maybeSingle();
     if (postError) throw postError;
     if (!post) return null;
@@ -136,6 +184,8 @@ export async function getPublicBlogPost(locale: ContentLocale, slug: string) {
 }
 
 export async function getPublicEvents(locale: ContentLocale) {
+  if (!hasPublicContentConnection()) return [] as PublicEventCard[];
+
   try {
     const supabase = await createClient();
     const { data: events, error: eventsError } = await supabase
@@ -178,6 +228,8 @@ export async function getPublicEventGroups(locale: ContentLocale) {
 }
 
 export async function getPublicEvent(locale: ContentLocale, slug: string) {
+  if (!hasPublicContentConnection()) return null;
+
   try {
     const supabase = await createClient();
     const { data: translation, error } = await supabase
