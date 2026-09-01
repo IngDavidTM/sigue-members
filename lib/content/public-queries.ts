@@ -49,17 +49,20 @@ export async function getPublicBlogListing(locale: ContentLocale) {
       .select("*")
       .in("status", ["published", "scheduled"])
       .lte("published_at", now)
+      .order("is_featured", { ascending: false })
       .order("published_at", { ascending: false });
     if (postsError) throw postsError;
     if (!posts.length) return { cards: [] as PublicBlogCard[], series: [] as BlogSeriesTranslationRow[] };
 
     const ids = posts.map((post) => post.id);
-    const [translationsResult, seriesResult] = await Promise.all([
+    const [translationsResult, seriesResult, seriesOrderResult] = await Promise.all([
       supabase.from("blog_post_translations").select("*").eq("locale", locale).in("post_id", ids),
       supabase.from("blog_series_translations").select("*").eq("locale", locale),
+      supabase.from("blog_series").select("id,sort_order"),
     ]);
     if (translationsResult.error) throw translationsResult.error;
     if (seriesResult.error) throw seriesResult.error;
+    if (seriesOrderResult.error) throw seriesOrderResult.error;
     const translations = new Map(translationsResult.data.map((item) => [item.post_id, item]));
     const series = new Map(seriesResult.data.map((item) => [item.series_id, item]));
     const cards = posts.flatMap((post) => {
@@ -68,9 +71,12 @@ export async function getPublicBlogListing(locale: ContentLocale) {
       return [{ post, translation, series: post.series_id ? series.get(post.series_id) ?? null : null }];
     });
     const visibleSeriesIds = new Set(cards.flatMap((card) => (card.post.series_id ? [card.post.series_id] : [])));
+    const seriesOrder = new Map(seriesOrderResult.data.map((item) => [item.id, item.sort_order]));
     return {
       cards,
-      series: seriesResult.data.filter((item) => visibleSeriesIds.has(item.series_id)),
+      series: seriesResult.data
+        .filter((item) => visibleSeriesIds.has(item.series_id))
+        .sort((a, b) => (seriesOrder.get(a.series_id) ?? 0) - (seriesOrder.get(b.series_id) ?? 0)),
     };
   } catch (error) {
     reportPublicQuery(error);
@@ -183,6 +189,93 @@ export async function getPublicBlogPost(locale: ContentLocale, slug: string) {
   }
 }
 
+export async function getPublicBlogSeries(locale: ContentLocale, slug: string) {
+  if (!hasPublicContentConnection()) return null;
+  try {
+    const supabase = await createClient();
+    const initialTranslation = await supabase
+      .from("blog_series_translations").select("*").eq("locale", locale).eq("slug", slug).maybeSingle();
+    if (initialTranslation.error) throw initialTranslation.error;
+    let translation = initialTranslation.data;
+    if (!translation) {
+      const source = await supabase.from("blog_series_translations").select("series_id").neq("locale", locale).eq("slug", slug).maybeSingle();
+      if (source.error) throw source.error;
+      if (source.data) {
+        const target = await supabase.from("blog_series_translations").select("*").eq("series_id", source.data.series_id).eq("locale", locale).maybeSingle();
+        if (target.error) throw target.error;
+        translation = target.data;
+      }
+    }
+    if (!translation) return null;
+    const [seriesResult, alternatesResult, listing] = await Promise.all([
+      supabase.from("blog_series").select("*").eq("id", translation.series_id).maybeSingle(),
+      supabase.from("blog_series_translations").select("locale,slug").eq("series_id", translation.series_id),
+      getPublicBlogListing(locale),
+    ]);
+    if (seriesResult.error) throw seriesResult.error;
+    if (alternatesResult.error) throw alternatesResult.error;
+    if (!seriesResult.data) return null;
+    const children = await supabase.from("blog_series").select("id").eq("parent_id", seriesResult.data.id).order("sort_order");
+    if (children.error) throw children.error;
+    const childIds = children.data.map((item) => item.id);
+    const childTranslations = childIds.length
+      ? await supabase.from("blog_series_translations").select("*").eq("locale", locale).in("series_id", childIds)
+      : { data: [] as BlogSeriesTranslationRow[], error: null };
+    if (childTranslations.error) throw childTranslations.error;
+    let parent: BlogSeriesTranslationRow | null = null;
+    if (seriesResult.data.parent_id) {
+      const parentResult = await supabase.from("blog_series_translations").select("*").eq("locale", locale).eq("series_id", seriesResult.data.parent_id).maybeSingle();
+      if (parentResult.error) throw parentResult.error;
+      parent = parentResult.data;
+    }
+    const includedSeries = new Set([seriesResult.data.id, ...childIds]);
+    return {
+      series: seriesResult.data,
+      translation,
+      alternateTranslations: alternatesResult.data,
+      parent,
+      children: childTranslations.data.sort((a, b) => childIds.indexOf(a.series_id) - childIds.indexOf(b.series_id)),
+      cards: listing.cards.filter((card) => card.post.series_id && includedSeries.has(card.post.series_id)),
+    };
+  } catch (error) {
+    reportPublicQuery(error);
+    return null;
+  }
+}
+
+export async function getPublicBlogTag(locale: ContentLocale, slug: string) {
+  if (!hasPublicContentConnection()) return null;
+  try {
+    const supabase = await createClient();
+    const initialTranslation = await supabase
+      .from("blog_tag_translations").select("*").eq("locale", locale).eq("slug", slug).maybeSingle();
+    if (initialTranslation.error) throw initialTranslation.error;
+    let translation = initialTranslation.data;
+    if (!translation) {
+      const source = await supabase.from("blog_tag_translations").select("tag_id").neq("locale", locale).eq("slug", slug).maybeSingle();
+      if (source.error) throw source.error;
+      if (source.data) {
+        const target = await supabase.from("blog_tag_translations").select("*").eq("tag_id", source.data.tag_id).eq("locale", locale).maybeSingle();
+        if (target.error) throw target.error;
+        translation = target.data;
+      }
+    }
+    if (!translation) return null;
+    const [postTagsResult, alternateTranslationsResult, listing] = await Promise.all([
+      supabase.from("blog_post_tags").select("post_id").eq("tag_id", translation.tag_id),
+      supabase.from("blog_tag_translations").select("locale,slug").eq("tag_id", translation.tag_id),
+      getPublicBlogListing(locale),
+    ]);
+    if (postTagsResult.error) throw postTagsResult.error;
+    if (alternateTranslationsResult.error) throw alternateTranslationsResult.error;
+    const postIds = new Set(postTagsResult.data.map((item) => item.post_id));
+    return { translation, alternateTranslations: alternateTranslationsResult.data, cards: listing.cards.filter((card) => postIds.has(card.post.id)) };
+  } catch (error) {
+    reportPublicQuery(error);
+    return null;
+  }
+}
+
 export async function getPublicEvents(locale: ContentLocale) {
   if (!hasPublicContentConnection()) return [] as PublicEventCard[];
 
@@ -191,6 +284,7 @@ export async function getPublicEvents(locale: ContentLocale) {
     const { data: events, error: eventsError } = await supabase
       .from("events")
       .select("*")
+      .order("is_featured", { ascending: false })
       .order("starts_at", { ascending: true });
     if (eventsError) throw eventsError;
     if (!events.length) return [] as PublicEventCard[];

@@ -33,7 +33,7 @@ function EventCard({ item, locale }: { item: PublicEventCard; locale: "es" | "en
   return <article className={styles.eventCard}>
     <div className={styles.dateBadge}><span><strong>{new Intl.DateTimeFormat(locale, { day: "2-digit", timeZone: event.timezone }).format(date)}</strong>{new Intl.DateTimeFormat(locale, { month: "short", timeZone: event.timezone }).format(date)}</span></div>
     <Link className={styles.cardImage} href={`/${locale}/evento/${translation.slug}`}>{event.featured_image_url ? <img src={event.featured_image_url} alt={translation.image_alt || translation.title} /> : <span className={styles.imagePlaceholder}>SIGUE</span>}</Link>
-    <div className={styles.eventBody}><span className={styles.eyebrow}>{mode}</span><h3><Link href={`/${locale}/evento/${translation.slug}`}>{translation.title}</Link></h3><p>{new Intl.DateTimeFormat(locale, { dateStyle: "long", timeStyle: event.all_day ? undefined : "short", timeZone: event.timezone }).format(date)}</p><p>{venue ? `${venue.name}${venue.city ? ` · ${venue.city}` : ""}` : mode}</p></div>
+    <div className={styles.eventBody}><span className={styles.eyebrow}>{event.status === "cancelled" ? (locale === "es" ? "Cancelado" : "Cancelled") : mode}</span><h3><Link href={`/${locale}/evento/${translation.slug}`}>{translation.title}</Link></h3><p>{new Intl.DateTimeFormat(locale, { dateStyle: "long", timeStyle: event.all_day ? undefined : "short", timeZone: event.timezone }).format(date)}</p><p>{venue ? `${venue.name}${venue.city ? ` · ${venue.city}` : ""}` : mode}</p></div>
   </article>;
 }
 

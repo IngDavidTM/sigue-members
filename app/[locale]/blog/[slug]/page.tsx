@@ -58,19 +58,19 @@ export default async function BlogPostPage({ params }: Props) {
   };
   return <article className={styles.root}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
-    <header className={styles.articleHeader}><div className={styles.breadcrumbs}><Link href={`/${locale}`}>{es ? "Inicio" : "Home"}</Link> · <Link href={`/${locale}/blog`}>Blog</Link>{series ? ` · ${series.name}` : ""}</div><h1>{translation.title}</h1>{translation.excerpt ? <p>{translation.excerpt}</p> : null}</header>
+    <header className={styles.articleHeader}><div className={styles.breadcrumbs}><Link href={`/${locale}`}>{es ? "Inicio" : "Home"}</Link> · <Link href={`/${locale}/blog`}>Blog</Link>{series ? <> · <Link href={`/${locale}/category/${series.slug}`}>{series.name}</Link></> : null}</div><h1>{translation.title}</h1>{translation.excerpt ? <p>{translation.excerpt}</p> : null}</header>
     <div className={styles.articleLayout}>
       <main>
         <div className={styles.articleMeta}><span>{post.author_name}</span>{post.published_at ? <time dateTime={post.published_at}>{new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(new Date(post.published_at))}</time> : null}<span>{post.reading_time_minutes} {es ? "min de lectura" : "min read"}</span></div>
         {post.featured_image_url ? <img className={styles.featured} src={post.featured_image_url} alt={translation.image_alt || translation.title} /> : null}
         <div className={styles.richText} dangerouslySetInnerHTML={{ __html: translation.content_html }} />
-        {tags.length ? <div className={styles.tags}>{tags.map((tag) => <span key={tag.tag_id}>{tag.name}</span>)}</div> : null}
+        {tags.length ? <div className={styles.tags}>{tags.map((tag) => <Link href={`/${locale}/tag/${tag.slug}`} key={tag.tag_id}>{tag.name}</Link>)}</div> : null}
         <div className={styles.share}><strong>{es ? "Compartir:" : "Share:"}</strong><a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`} target="_blank" rel="noreferrer">LinkedIn</a><a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`} target="_blank" rel="noreferrer">Facebook</a><a href={`mailto:?subject=${encodeURIComponent(translation.title)}&body=${encodeURIComponent(url)}`}>Email</a></div>
         {post.allow_comments ? <section className={styles.comments}><h2>{es ? "Comentarios" : "Comments"}</h2>{comments.length ? <div className={styles.commentList}>{comments.map((comment) => <article className={styles.comment} key={comment.id}><strong>{comment.author_name}</strong><time dateTime={comment.created_at}>{new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(new Date(comment.created_at))}</time><p>{comment.content}</p></article>)}</div> : <p>{es ? "Sé la primera persona en comentar." : "Be the first to comment."}</p>}<h2>{es ? "Deja un comentario" : "Leave a comment"}</h2><CommentForm postId={post.id} slug={translation.slug} locale={locale} /></section> : null}
       </main>
       <aside className={styles.sidebar}>
         <section className={styles.sideBlock}><h2>{es ? "Publicaciones recientes" : "Recent posts"}</h2><ul>{recent.map((item) => <li key={item.post.id}><Link href={`/${locale}/blog/${item.translation.slug}`}>{item.translation.title}</Link></li>)}</ul></section>
-        <section className={styles.sideBlock}><h2>{es ? "Series" : "Series"}</h2><ul>{allSeries.map((item) => <li key={item.series_id}><Link href={`/${locale}/blog?serie=${item.slug}`}>{item.name}</Link></li>)}</ul></section>
+        <section className={styles.sideBlock}><h2>{es ? "Series" : "Series"}</h2><ul>{allSeries.map((item) => <li key={item.series_id}><Link href={`/${locale}/category/${item.slug}`}>{item.name}</Link></li>)}</ul></section>
         <section className={styles.sideBlock}><h2>SIGUE Network</h2><p>{es ? "Fortalecemos y conectamos a quienes sirven para multiplicar su impacto." : "We strengthen and connect those who serve to multiply their impact."}</p></section>
       </aside>
     </div>
