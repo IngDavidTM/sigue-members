@@ -278,45 +278,53 @@
 
 .assessment {
   display: grid;
-  min-height: 11rem;
-  grid-template-columns: 28% 14% 1fr;
+  grid-template-columns: 3fr 4fr;
   align-items: center;
-  gap: 0;
-  padding-right: clamp(1.5rem, 10vw, 10rem);
-  background: var(--tracks-lavender-light);
+  padding: 2.5rem 0;
+  background: #e2e3ff;
+}
+
+.assessmentVisual {
+  display: grid;
+  min-height: 10.5rem;
+  grid-template-columns: 3fr 1fr;
+  gap: clamp(2.25rem, 5.2vw, 4.7rem);
 }
 
 .assessmentBlock {
   display: block;
-  width: 90%;
-  height: 52%;
-  background: var(--tracks-lavender);
+  min-width: 0;
+  background: #cfc1ff;
 }
 
 .assessmentQuestion {
   display: flex;
-  width: 100%;
-  aspect-ratio: 1;
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
-  padding: 1rem;
+  min-width: 0;
+  padding: 1rem clamp(1rem, 2vw, 1.7rem);
   color: #fff;
   background: var(--tracks-violet);
-  font-size: 1.05rem;
-  line-height: 0.95;
+  font-size: clamp(.84rem, 1.1vw, 1rem);
+  font-weight: 300;
+  line-height: 1;
   text-align: right;
 }
 
 .assessmentQuestion strong {
-  font-size: 1.8rem;
-  font-weight: 900;
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  font-weight: 700;
 }
 
 .assessment > p {
-  padding-left: 2.2rem;
-  font-size: clamp(1.25rem, 2vw, 2rem);
-  line-height: 1.12;
+  width: min(63%, 44rem);
+  margin: 0 auto;
+  padding: 0;
+  color: var(--tracks-purple);
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  font-weight: 300;
+  line-height: 1.17;
 }
 
 .assessment > p strong {
@@ -380,8 +388,17 @@
   }
 
   .assessment {
-    grid-template-columns: minmax(6rem, 25%) minmax(7rem, 25%) 1fr;
-    padding-right: 1.5rem;
+    grid-template-columns: 3fr 4fr;
+  }
+
+  .assessmentVisual {
+    grid-template-columns: 6fr 5fr;
+    gap: 2rem;
+  }
+
+  .assessment > p {
+    width: min(72%, 34rem);
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
   }
 }
 
@@ -431,21 +448,26 @@
 
   .assessment {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
     padding: 2rem 1.25rem;
     text-align: center;
   }
 
-  .assessmentBlock {
-    display: none;
+  .assessmentVisual {
+    min-height: 0;
+    grid-template-columns: 1fr;
   }
 
   .assessmentQuestion {
-    width: 8rem;
+    width: min(9rem, 100%);
+    min-height: 9rem;
     margin: 0 auto 1.5rem;
+    align-items: center;
+    text-align: center;
   }
 
   .assessment > p {
-    padding-left: 0;
+    width: min(32rem, 100%);
   }
 }
 

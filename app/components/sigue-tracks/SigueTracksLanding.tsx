@@ -118,11 +118,14 @@ export default function SigueTracksLanding({ locale }: { locale: Locale }) {
       </section>
 
       <section className={styles.assessment} aria-labelledby="assessment-title">
-        <span className={styles.assessmentBlock} aria-hidden="true" />
-        <div className={styles.assessmentQuestion}>
-          <span>{locale === 'es' ? '¿No sabes por' : 'Not sure'}</span>
-          <strong>{locale === 'es' ? 'dónde' : 'where to'}</strong>
-          <span>{locale === 'es' ? 'empezar?' : 'start?'}</span>
+        <div className={styles.assessmentVisual} aria-hidden="true">
+          <span className={styles.assessmentBlock} />
+          <div className={styles.assessmentQuestion}>
+            <strong>{locale === 'es' ? '¿No' : 'Not sure'}</strong>
+            <span>{locale === 'es' ? 'sabes por' : 'where to'}</span>
+            <strong>{locale === 'es' ? 'dónde' : 'start'}</strong>
+            {locale === 'es' ? <strong>empezar?</strong> : null}
+          </div>
         </div>
         <p id="assessment-title">
           {locale === 'es' ? 'Realiza nuestra ' : 'Complete our '}

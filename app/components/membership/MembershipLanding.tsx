@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import SiteFooter2026 from '@/app/components/site-2026/SiteFooter2026';
 import {
   ArrowRight,
   BadgePercent,
   BookOpen,
-  CheckCircle2,
   Handshake,
   LifeBuoy,
   TrendingUp,
@@ -21,6 +21,11 @@ const prayerForm = 'https://docs.google.com/forms/d/e/1FAIpQLSdj0gs75NwmuRb0qQdS
 
 const memberLogoFiles = [1, 3, 4, 5, 6, 11, 12, 13, 14, 15, 16, 19, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31]
   .map((number) => `/images/cumbre-2026/member-logos/member-${String(number).padStart(2, '0')}.png`);
+
+const impactPartnerLogos = [
+  'https://siguenetwork.org/wp-content/uploads/2024/12/Mario-Blanco-Producciones-e1733528447281.jpg',
+  'https://siguenetwork.org/wp-content/uploads/2024/12/Logo-Sr-Lopez-Agencia-e1733528496179.jpg',
+] as const;
 
 const questions: readonly { question: LocalizedText; answer: LocalizedText }[] = [
   {
@@ -97,12 +102,14 @@ const copy = {
     ctaTitle: 'Únete a SIGUE Network y transforma comunidades',
     cta: 'QUIERO SER MIEMBRO',
     membersEyebrow: 'CONOCE A NUESTROS MIEMBROS',
-    membersTitle: 'Una red que transforma comunidades',
     membersBody: 'Nuestros miembros son líderes y organizaciones comprometidos con la transformación física, emocional y espiritual. Juntos compartimos recursos, aprendizajes y conexiones para multiplicar el impacto.',
+    partnersTitle: 'Únete al equipo de aliados que transforma comunidades',
+    partnersEyebrow: 'CONOCE A NUESTROS ALIADOS DE IMPACTO',
     benefitsTitle: '¿Qué beneficios obtienes al hacerte miembro?',
     benefitsSubtitle: 'Recursos, conexiones, acompañamiento y crecimiento',
-    contactLead: '¿Quieres conocer más detalles de los beneficios de SIGUE Network?',
-    contactCta: 'CONVERSEMOS',
+    contactLead: 'Si quieres conocer más sobre los beneficios de SIGUE Network, envíanos un mensaje',
+    contactCta: 'haciendo clic aquí.',
+    benefitsClosing: 'Transforma tu impacto. ¡Únete hoy a SIGUE Network!',
     movementTitle: 'Únete a SIGUE Network y sé parte de un movimiento de transformación integral.',
     movementBody: 'Si lideras una ONG, un proyecto social, formas parte de un equipo de acción social o eres una persona comprometida con transformar comunidades desde principios cristianos, este es tu lugar.',
     movementPrompt: 'Aquí unimos fuerzas para generar impacto integral',
@@ -125,12 +132,14 @@ const copy = {
     ctaTitle: 'Join SIGUE Network and transform communities',
     cta: 'BECOME A MEMBER',
     membersEyebrow: 'MEET OUR MEMBERS',
-    membersTitle: 'A network transforming communities',
     membersBody: 'Our members are leaders and organizations committed to physical, emotional, and spiritual transformation. Together, we share resources, learning, and connections to multiply impact.',
+    partnersTitle: 'Join the team of allies transforming communities',
+    partnersEyebrow: 'MEET OUR IMPACT PARTNERS',
     benefitsTitle: 'What benefits do you receive as a member?',
     benefitsSubtitle: 'Resources, connections, support, and growth',
-    contactLead: 'Would you like to learn more about SIGUE Network membership benefits?',
-    contactCta: 'LET’S TALK',
+    contactLead: 'If you want to learn more about the benefits of SIGUE Network, send us a message',
+    contactCta: 'by clicking here.',
+    benefitsClosing: 'Transform your impact. Join SIGUE Network today!',
     movementTitle: 'Join SIGUE Network and become part of a holistic-transformation movement.',
     movementBody: 'If you lead an NGO or social project, serve on a church social-action team, or simply feel committed to transforming communities through Christian principles, this is your place.',
     movementPrompt: 'Here, we join forces to create holistic impact',
@@ -169,7 +178,7 @@ export default function MembershipLanding({ locale }: { locale: Locale }) {
         <div className={styles.questionGrid}>
           {questions.map((item) => (
             <article key={item.question[0]}>
-              <h3><CheckCircle2 aria-hidden="true" />{localized(item.question, locale)}</h3>
+              <h3><span className={styles.checkIcon} aria-hidden="true">✅</span>{localized(item.question, locale)}</h3>
               <p><strong>{c.yes} →</strong> {localized(item.answer, locale)}</p>
             </article>
           ))}
@@ -182,8 +191,7 @@ export default function MembershipLanding({ locale }: { locale: Locale }) {
       </section>
 
       <section id="comunidad" className={styles.members} aria-labelledby="members-title">
-        <p className={styles.eyebrow}>{c.membersEyebrow}</p>
-        <h2 id="members-title">{c.membersTitle}</h2>
+        <h2 id="members-title">{c.membersEyebrow}</h2>
         <div className={styles.logoViewport}>
           <div className={styles.logoTrack}>
             {[...memberLogoFiles, ...memberLogoFiles].map((logo, index) => (
@@ -194,6 +202,15 @@ export default function MembershipLanding({ locale }: { locale: Locale }) {
           </div>
         </div>
         <p className={styles.membersBody}>{c.membersBody}</p>
+        <div className={styles.impactPartners}>
+          <h3>{c.partnersTitle}</h3>
+          <p>{c.partnersEyebrow}</p>
+          <div>
+            {impactPartnerLogos.map((logo, index) => (
+              <div key={logo}><Image src={logo} alt={`${c.partnersEyebrow} ${index + 1}`} fill unoptimized sizes="260px" /></div>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section id="beneficios" className={styles.benefits} aria-labelledby="benefits-title">
@@ -211,8 +228,8 @@ export default function MembershipLanding({ locale }: { locale: Locale }) {
             );
           })}
         </div>
-        <p className={styles.contactLead}>{c.contactLead}</p>
-        <Link className={styles.button} href={`/${locale}/contacto`}>{c.contactCta}</Link>
+        <p className={styles.contactLead}>{c.contactLead} <Link href={`/${locale}/contacto`}>{c.contactCta}</Link></p>
+        <p className={styles.benefitsClosing}>{c.benefitsClosing}</p>
       </section>
 
       <section className={styles.movement} aria-labelledby="movement-title">
@@ -238,6 +255,7 @@ export default function MembershipLanding({ locale }: { locale: Locale }) {
           </a>
         </div>
       </section>
+      <SiteFooter2026 locale={locale} />
     </div>
   );
 }

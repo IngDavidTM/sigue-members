@@ -1025,3 +1025,542 @@
     color: #fff;
   }
 }
+
+/* Refined from the live SIGUE Consulting composition (desktop and mobile). */
+.page {
+  font-family: var(--font-heebo), Heebo, Arial, sans-serif;
+}
+
+.page :is(h1, h2, h3) {
+  font-family: var(--font-roboto), Roboto, Arial, sans-serif;
+}
+
+.button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--font-heebo), Heebo, Arial, sans-serif;
+}
+
+.hero {
+  min-height: 800px;
+}
+
+.hero::after {
+  background: rgb(255 255 255 / 12%);
+}
+
+.heroPanel {
+  top: 37%;
+  right: calc(50% + 55px);
+  width: min(702px, 72vw);
+}
+
+.heroPanel > span {
+  width: 100px;
+  height: 100px;
+  flex-basis: 100px;
+  align-self: flex-start;
+  padding: 12px 8px;
+  background: #5638e8;
+  font-family: var(--font-heebo), Heebo, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: .95;
+  letter-spacing: .02em;
+}
+
+.heroPanel > span strong {
+  font-size: 16px;
+}
+
+.heroPanel > div {
+  min-height: 240px;
+  padding: 11px 14px 12px;
+  border-width: 4px;
+  background: rgb(239 20 82 / 80%);
+}
+
+.hero h1 {
+  max-width: 570px;
+  margin-bottom: 14px;
+  font-family: var(--font-heebo), Heebo, Arial, sans-serif;
+  font-size: clamp(30px, 2.8vw, 40px);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.heroPanel .button {
+  min-height: 40px;
+  padding: 8px 24px;
+  background: #5014e8;
+  font-size: 14px;
+}
+
+.introLead {
+  min-height: 408px;
+}
+
+.introImage {
+  min-height: 408px;
+}
+
+.introLead h2 {
+  padding: clamp(42px, 4.4vw, 64px);
+  font-family: var(--font-roboto), Roboto, Arial, sans-serif;
+  font-size: clamp(32px, 2.85vw, 42px);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.16;
+}
+
+.introBody {
+  min-height: 390px;
+}
+
+.mapImage {
+  min-height: 390px;
+}
+
+.introBody > p {
+  padding: clamp(35px, 3.6vw, 52px);
+  font-family: var(--font-roboto), Roboto, Arial, sans-serif;
+  font-size: clamp(19px, 1.55vw, 23px);
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+.benefits {
+  padding: 20px 20px 35px;
+}
+
+.benefits > h2 {
+  margin-bottom: 28px;
+  font-size: clamp(26px, 2.15vw, 30px);
+}
+
+.benefits > div {
+  max-width: 1140px;
+  margin-bottom: 40px;
+  gap: 30px;
+}
+
+.benefits article {
+  min-height: 168px;
+  padding: 20px 16px;
+}
+
+.benefits h3 {
+  margin-bottom: 12px;
+  font-family: var(--font-heebo), Heebo, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.benefits p {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.audience {
+  padding-bottom: 0;
+  background: #f9efff;
+}
+
+.audienceHero {
+  min-height: 320px;
+  grid-template-columns: 28% 27% 45%;
+}
+
+.audienceHero > span {
+  width: 25%;
+  height: 200px;
+}
+
+.audienceImage {
+  width: 200px;
+  height: 200px;
+}
+
+.audienceHero h2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px 50px;
+  font-family: var(--font-roboto), Roboto, Arial, sans-serif;
+  font-size: clamp(30px, 2.8vw, 40px);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+
+.audienceHero h2 strong {
+  font-family: var(--font-heebo), Heebo, Arial, sans-serif;
+  font-size: clamp(52px, 4.75vw, 70px);
+  font-weight: 800;
+  line-height: .94;
+}
+
+.audienceIntro {
+  max-width: none;
+  min-height: 190px;
+  margin: 25px 0 15px;
+  grid-template-columns: 5fr 4fr;
+  gap: 0;
+  padding: 0;
+  text-align: initial;
+}
+
+.audienceIntro > p {
+  display: flex;
+  max-width: none;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 28px clamp(42px, 8vw, 150px) 28px 28px;
+  background: #e2e4ff;
+  color: var(--consulting-purple);
+  font-family: var(--font-roboto), Roboto, Arial, sans-serif;
+  font-size: clamp(19px, 1.65vw, 24px);
+  font-weight: 400;
+  line-height: 1.33;
+  text-align: right;
+}
+
+.audienceIntro > div {
+  display: block;
+  padding: 0;
+  background: #ffddfe;
+}
+
+.audienceStatements {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  padding: 20px max(10vw, 50px);
+  background: #c9bdf8;
+}
+
+.audienceStatements p {
+  display: flex;
+  min-height: 148px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 22px 24px;
+  background: #fff;
+  color: var(--consulting-purple);
+  font-family: var(--font-roboto), Roboto, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.36;
+  text-align: center;
+}
+
+.profileHeading {
+  max-width: none;
+  margin: 20px 0 0;
+  padding: 10px 24px;
+  background: #e2e4ff;
+  color: #6817b7;
+  font-family: var(--font-heebo), Heebo, Arial, sans-serif;
+  font-size: clamp(24px, 2.1vw, 31px);
+  font-weight: 800;
+  line-height: 1.08;
+}
+
+.profiles {
+  max-width: none;
+  margin: 0;
+  gap: 40px;
+  padding: 40px max(10vw, 50px) 70px;
+  background: #f9efff;
+}
+
+.profiles article {
+  min-width: 0;
+  min-height: 188px;
+  padding: 28px 20px 18px;
+  background: #9984e1;
+}
+
+.profiles h3 {
+  min-height: auto;
+  margin-bottom: 8px;
+  font-family: var(--font-heebo), Heebo, Arial, sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.12;
+}
+
+.profiles p {
+  margin-bottom: 0;
+  font-family: var(--font-roboto), Roboto, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.profiles .button {
+  min-width: 214px;
+  margin-top: auto;
+  transform: translateY(38px);
+}
+
+.service {
+  padding: 110px 0 100px;
+}
+
+.service + .service {
+  padding-top: 110px;
+  border-top: 0;
+}
+
+.serviceIntro {
+  max-width: 1134px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+}
+
+.serviceImage,
+.serviceIntro > div:last-child {
+  min-height: 406px;
+}
+
+.serviceIntro > div:last-child {
+  padding: 8px 0;
+}
+
+.serviceIntro h2 {
+  margin-bottom: 38px;
+  color: #111;
+  font-family: var(--font-heebo), Heebo, Arial, sans-serif;
+  font-size: clamp(32px, 2.7vw, 39px);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: .98;
+}
+
+.serviceIntro h3 {
+  margin-bottom: 8px;
+  color: #171717;
+  font-family: var(--font-heebo), Heebo, Arial, sans-serif;
+  font-size: clamp(20px, 1.6vw, 24px);
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.serviceIntro p {
+  color: #171717;
+  font-family: var(--font-roboto), Roboto, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.32;
+}
+
+.accordions {
+  max-width: 1134px;
+  margin: 40px auto 38px;
+  gap: 16px 40px;
+}
+
+.accordions summary {
+  padding: 15px 48px 15px 16px;
+  font-family: var(--font-heebo), Heebo, Arial, sans-serif;
+  font-size: 20px;
+}
+
+.accordions details p {
+  font-family: var(--font-roboto), Roboto, Arial, sans-serif;
+  font-size: 17px;
+}
+
+.serviceClosing {
+  font-family: var(--font-heebo), Heebo, Arial, sans-serif;
+}
+
+@media (max-width: 900px) {
+  .heroPanel {
+    top: 36%;
+    right: 50%;
+    width: min(702px, 82vw);
+  }
+
+  .serviceIntro {
+    max-width: calc(100% - 64px);
+    gap: 34px;
+  }
+
+  .audienceStatements,
+  .profiles {
+    padding-right: 48px;
+    padding-left: 48px;
+  }
+
+  .profiles .button {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    min-height: 680px;
+  }
+
+  .heroPanel {
+    top: auto;
+    right: 18px;
+    bottom: 30px;
+    left: 18px;
+    width: auto;
+    transform: none;
+  }
+
+  .heroPanel > span {
+    width: 96px;
+    height: 80px;
+    flex-basis: 96px;
+    padding: 8px;
+  }
+
+  .heroPanel > div {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .hero h1 {
+    font-size: clamp(29px, 9vw, 40px);
+  }
+
+  .introLead,
+  .introBody,
+  .serviceIntro {
+    grid-template-columns: 1fr;
+  }
+
+  .introImage,
+  .mapImage {
+    min-height: 320px;
+  }
+
+  .introLead h2 {
+    padding: 42px 26px;
+    font-size: clamp(30px, 8vw, 38px);
+  }
+
+  .introBody > p {
+    padding: 42px 26px;
+    font-size: 19px;
+  }
+
+  .benefits > div,
+  .audienceStatements,
+  .profiles,
+  .accordions {
+    grid-template-columns: 1fr;
+  }
+
+  .audienceHero {
+    display: grid;
+    min-height: 0;
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .audienceHero > span {
+    top: 0;
+    bottom: auto;
+    width: 32%;
+    height: 86px;
+  }
+
+  .audienceImage {
+    grid-column: auto;
+    width: min(200px, 58vw);
+    height: min(200px, 58vw);
+    margin-top: 54px;
+  }
+
+  .audienceHero h2 {
+    padding: 36px 28px 50px;
+    font-size: 31px;
+  }
+
+  .audienceHero h2 strong {
+    font-size: 54px;
+  }
+
+  .audienceIntro {
+    display: block;
+    min-height: 0;
+    margin: 0;
+  }
+
+  .audienceIntro > p {
+    justify-content: center;
+    padding: 34px 26px;
+    font-size: 19px;
+    text-align: center;
+  }
+
+  .audienceIntro > div {
+    display: none;
+  }
+
+  .audienceStatements {
+    gap: 18px;
+    padding: 24px 22px;
+  }
+
+  .audienceStatements p {
+    min-height: 0;
+    padding: 24px 20px;
+  }
+
+  .profileHeading {
+    margin: 0;
+    padding: 24px 20px;
+  }
+
+  .profiles {
+    gap: 64px;
+    padding: 34px 22px 64px;
+  }
+
+  .profiles article {
+    min-height: 0;
+  }
+
+  .service {
+    padding: 68px 0 70px;
+  }
+
+  .service + .service {
+    padding-top: 68px;
+  }
+
+  .serviceIntro {
+    max-width: none;
+    gap: 0;
+  }
+
+  .serviceImage {
+    min-height: 300px;
+  }
+
+  .serviceIntro > div:last-child {
+    min-height: 0;
+    padding: 38px 26px;
+  }
+
+  .serviceIntro h2 {
+    margin-bottom: 24px;
+    font-size: 34px;
+  }
+
+  .accordions {
+    margin-top: 24px;
+    gap: 12px;
+    padding: 0 22px;
+  }
+}

@@ -9,9 +9,9 @@ const images = {
   founder: 'https://siguenetwork.org/wp-content/uploads/2025/04/Sandra-B-en-la-banca.jpg',
   map: 'https://siguenetwork.org/wp-content/uploads/2025/04/Mapa-Azul-y-amarilllo-para-editar-tamano.jpg',
   community: 'https://siguenetwork.org/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-12-at-6.19.57-PM.jpeg',
-  ngo: 'https://siguenetwork.org/wp-content/uploads/2024/11/unidades_accion_ongs_siguenetwork.jpg',
-  company: 'https://siguenetwork.org/wp-content/uploads/2024/11/unidades_accion_empresa_siguenetwork.jpg',
-  territory: 'https://siguenetwork.org/wp-content/uploads/2024/11/unidades_accion_asociaciones_cristianas_siguenetwork.jpg',
+  ngo: 'https://siguenetwork.org/wp-content/uploads/2024/11/siguenetwork_fes.jpg',
+  company: 'https://siguenetwork.org/wp-content/uploads/2024/10/transformacion_integral_rsei_siguenetwork.jpg',
+  territory: 'https://siguenetwork.org/wp-content/uploads/2024/10/siguenetwork_estrategias_territoriales.jpg',
 };
 
 const content = {
@@ -34,7 +34,8 @@ const content = {
       cta: 'Contáctanos hoy mismo para saber cómo podemos potenciar tu organización',
     },
     audience: {
-      title: '¿Para quién es SIGUE Consulting?',
+      titleBefore: '¿Para quién es',
+      titleAfter: 'Consulting?',
       body: 'Trabajamos con organizaciones que buscan fortalecer su impacto, mejorar su sostenibilidad y escalar la transformación en las comunidades que sirven.',
       statements: [
         'Si lideras una ONG o un proyecto social, te ayudamos a estructurar, financiar y fortalecer tu labor usando los cinco ejes del Método SIGUE™.',
@@ -121,7 +122,8 @@ const content = {
       cta: 'Contact us to discover how we can strengthen your organization',
     },
     audience: {
-      title: 'Who is SIGUE Consulting for?',
+      titleBefore: 'Who is',
+      titleAfter: 'Consulting for?',
       body: 'We work with organizations seeking to strengthen their impact, improve sustainability, and scale transformation in the communities they serve.',
       statements: [
         'If you lead an NGO or social project, we help you structure, fund, and strengthen your work through the five areas of the SIGUE Method™.',
@@ -194,9 +196,10 @@ export default function ConsultingLanding({ locale }: { locale: Locale }) {
         <div className={styles.audienceHero}>
           <span aria-hidden="true" />
           <div className={styles.audienceImage}><Image src={images.community} alt="" fill unoptimized sizes="30vw" /></div>
-          <h2 id="consulting-audience-title">{c.audience.title}</h2>
+          <h2 id="consulting-audience-title"><span>{c.audience.titleBefore}</span><strong>SIGUE</strong><span>{c.audience.titleAfter}</span></h2>
         </div>
-        <div className={styles.audienceIntro}><p>{c.audience.body}</p><div>{c.audience.statements.map((statement) => <p key={statement}>{statement}</p>)}</div></div>
+        <div className={styles.audienceIntro}><p>{c.audience.body}</p><div aria-hidden="true" /></div>
+        <div className={styles.audienceStatements}>{c.audience.statements.map((statement) => <p key={statement}>{statement}</p>)}</div>
         <h3 className={styles.profileHeading}>{c.audience.profileTitle}</h3>
         <div className={styles.profiles}>{c.audience.profiles.map(([title, body, cta, href]) => <article key={href}><h3>{title}</h3><p>{body}</p><a className={styles.button} href={href}>{cta}</a></article>)}</div>
       </section>

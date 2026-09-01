@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import SiteFooter2026 from '@/app/components/site-2026/SiteFooter2026';
 import styles from './HubLanding.module.css';
 
 type Locale = 'es' | 'en';
@@ -49,7 +50,7 @@ const content = {
         title: 'Herramientas y guías: recursos descargables',
         question: '¿Buscas recursos para fortalecer y hacer más efectivo tu proyecto u organización?',
         body: 'Accede a recursos y herramientas que apoyan proyectos sociales, ONGs, emprendimientos sociales y equipos de acción social de iglesias a transformar comunidades de manera integral. Encuentra guías prácticas e innovadoras que te ayudan a fortalecer tu capacidad de servicio y ampliar tu impacto.',
-        cta: 'Descárgalos aquí', path: '/recursos', image: images.resources,
+        cta: 'Descárgalos aquí', path: '/herramientas-y-guias', image: images.resources,
         alt: 'Herramientas digitales y guías descargables',
       },
       {
@@ -102,7 +103,7 @@ const content = {
         title: 'Tools and guides: downloadable resources',
         question: 'Are you looking for resources to strengthen your project or organization and make it more effective?',
         body: 'Access resources and tools that support social projects, NGOs, social enterprises, and church social-action teams as they transform communities holistically. Find practical, innovative guides that help strengthen your capacity to serve and expand your impact.',
-        cta: 'Download them here', path: '/recursos', image: images.resources,
+        cta: 'Download them here', path: '/herramientas-y-guias', image: images.resources,
         alt: 'Digital tools and downloadable guides',
       },
       {
@@ -135,12 +136,7 @@ export default function HubLanding({ locale }: { locale: Locale }) {
           <div>
             <h1 id="hub-title">{c.hero.title}</h1>
             <p>{c.hero.body}</p>
-            <a
-              className={styles.button}
-              href="https://siguenetwork.org/transparencia-que-abre-puertas/"
-            >
-              {c.hero.cta}
-            </a>
+            <Link className={styles.button} href={`/${locale}/blog`}>{c.hero.cta}</Link>
           </div>
         </div>
       </section>
@@ -166,6 +162,7 @@ export default function HubLanding({ locale }: { locale: Locale }) {
           </section>
         ))}
       </div>
+      <SiteFooter2026 locale={locale} />
     </div>
   );
 }
