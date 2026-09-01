@@ -2,6 +2,8 @@ import "server-only";
 
 import sanitizeHtml from "sanitize-html";
 
+import { isAllowedImageUrl } from "./admin-validation";
+
 export function slugify(value: string) {
   return value
     .normalize("NFD")
@@ -57,6 +59,21 @@ export function sanitizeRichText(value: string) {
       img: sanitizeHtml.simpleTransform("img", { loading: "lazy" }),
     },
   });
+}
+
+export function validateSanitizedRichText(value: string, label: string) {
+  const sanitized = sanitizeRichText(value);
+  const plainText = sanitizeHtml(sanitized, { allowedTags: [], allowedAttributes: {} })
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!plainText) return { error: `${label} debe contener texto legible.`, html: sanitized };
+
+  const imageSources = [...sanitized.matchAll(/<img\b[^>]*\bsrc=(?:"([^"]+)"|'([^']+)')[^>]*>/gi)]
+    .map((match) => match[1] || match[2]);
+  if (imageSources.some((source) => !isAllowedImageUrl(source))) {
+    return { error: `${label} contiene una imagen que no es AVIF o WebP.`, html: sanitized };
+  }
+  return { html: sanitized };
 }
 
 export function getReadingTimeMinutes(html: string) {

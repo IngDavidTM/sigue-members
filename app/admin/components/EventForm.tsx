@@ -6,6 +6,7 @@ import contentStyles from "../content.module.css";
 import { ActionForm } from "./ActionForm";
 import { MediaField } from "./MediaField";
 import { RichTextEditor } from "./RichTextEditor";
+import { SeoAssistant } from "./SeoAssistant";
 
 type Props = { event?: EventRow; translations?: EventTranslationRow[]; venues: EventVenueRow[]; virtualUrl?: string | null; organizerEmail?: string | null };
 
@@ -25,18 +26,19 @@ function LocaleFields({ locale, translation }: { locale: "es" | "en"; translatio
       <summary>SEO y datos para buscadores</summary>
       <div>
         <div className={contentStyles.fields2}>
-          <label className={contentStyles.field}><span>Título SEO</span><input name={`seoTitle${suffix}`} defaultValue={translation?.seo_title ?? ""} maxLength={70} /></label>
-          <label className={contentStyles.field}><span>Frase clave</span><input name={`focusKeyphrase${suffix}`} defaultValue={translation?.focus_keyphrase ?? ""} /></label>
+          <label className={contentStyles.field}><span>Título SEO (máx. 60)</span><input name={`seoTitle${suffix}`} defaultValue={translation?.seo_title ?? ""} maxLength={60} /></label>
+          <label className={contentStyles.field}><span>Frase clave</span><input name={`focusKeyphrase${suffix}`} defaultValue={translation?.focus_keyphrase ?? ""} maxLength={100} /></label>
         </div>
-        <label className={contentStyles.field}><span>Descripción SEO</span><textarea name={`seoDescription${suffix}`} defaultValue={translation?.seo_description ?? ""} maxLength={180} /></label>
+        <label className={contentStyles.field}><span>Descripción SEO (máx. 160)</span><textarea name={`seoDescription${suffix}`} defaultValue={translation?.seo_description ?? ""} maxLength={160} /></label>
         <label className={contentStyles.field}><span>URL canónica</span><input type="url" name={`canonicalUrl${suffix}`} defaultValue={translation?.canonical_url ?? ""} /></label>
         <div className={contentStyles.fields2}>
-          <label className={contentStyles.field}><span>Título para redes</span><input name={`ogTitle${suffix}`} defaultValue={translation?.og_title ?? ""} /></label>
-          <label className={contentStyles.field}><span>Imagen para redes</span><input type="url" name={`ogImageUrl${suffix}`} defaultValue={translation?.og_image_url ?? ""} /></label>
+          <label className={contentStyles.field}><span>Título para redes</span><input name={`ogTitle${suffix}`} maxLength={60} defaultValue={translation?.og_title ?? ""} /></label>
+          <label className={contentStyles.field}><span>Imagen para redes (.avif/.webp)</span><input type="url" name={`ogImageUrl${suffix}`} defaultValue={translation?.og_image_url ?? ""} /></label>
         </div>
-        <label className={contentStyles.field}><span>Descripción para redes</span><textarea name={`ogDescription${suffix}`} defaultValue={translation?.og_description ?? ""} /></label>
+        <label className={contentStyles.field}><span>Descripción para redes</span><textarea name={`ogDescription${suffix}`} maxLength={200} defaultValue={translation?.og_description ?? ""} /></label>
         <label className={contentStyles.checkbox}><input type="checkbox" name={`noindex${suffix}`} defaultChecked={translation?.noindex} /> No indexar esta versión</label>
         <label className={contentStyles.checkbox}><input type="checkbox" name={`nofollow${suffix}`} defaultChecked={translation?.nofollow} /> No seguir enlaces</label>
+        <SeoAssistant suffix={suffix} />
       </div>
     </details>
   </section>;
@@ -63,6 +65,7 @@ export function EventForm({ event, translations = [], venues, virtualUrl, organi
           <label className={contentStyles.field}><span>Zona horaria</span><select name="timezone" defaultValue={timezone}>{timezones.map((zone) => <option key={zone} value={zone}>{zone}</option>)}</select></label>
           <label className={contentStyles.field}><span>Comienza *</span><input type="datetime-local" name="startsAt" required defaultValue={isoToZonedInput(event?.starts_at ?? null, timezone)} /></label>
           <label className={contentStyles.field}><span>Termina *</span><input type="datetime-local" name="endsAt" required defaultValue={isoToZonedInput(event?.ends_at ?? null, timezone)} /></label>
+          <label className={contentStyles.field}><span>Fecha de publicación</span><input type="datetime-local" name="publishedAt" defaultValue={isoToZonedInput(event?.published_at ?? null, timezone)} /></label>
           <label className={contentStyles.checkbox}><input type="checkbox" name="allDay" defaultChecked={event?.all_day} /> Evento de todo el día</label>
           <label className={contentStyles.checkbox}><input type="checkbox" name="isFeatured" defaultChecked={event?.is_featured} /> Destacar evento</label>
         </div>

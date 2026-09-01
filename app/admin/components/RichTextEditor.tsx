@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 
 import styles from "./admin-components.module.css";
+import { isAllowedImageUrl } from "@/lib/content/admin-validation";
 
 type Props = {
   name: string;
@@ -30,6 +31,7 @@ type Props = {
 
 export function RichTextEditor({ name, initialContent = "", label, placeholder }: Props) {
   const [html, setHtml] = useState(initialContent ?? "");
+  const [editorError, setEditorError] = useState("");
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
@@ -40,7 +42,10 @@ export function RichTextEditor({ name, initialContent = "", label, placeholder }
       Placeholder.configure({ placeholder: placeholder ?? "Escribe el contenido…" }),
     ],
     content: initialContent ?? "",
-    onUpdate: ({ editor: currentEditor }) => setHtml(currentEditor.getHTML()),
+    onUpdate: ({ editor: currentEditor }) => {
+      setHtml(currentEditor.getHTML());
+      window.requestAnimationFrame(() => window.dispatchEvent(new Event("admin-content-change")));
+    },
   });
 
   const setLink = () => {
@@ -57,8 +62,14 @@ export function RichTextEditor({ name, initialContent = "", label, placeholder }
 
   const setImage = () => {
     if (!editor) return;
-    const url = window.prompt("URL pública de la imagen", "https://");
-    if (url?.trim()) editor.chain().focus().setImage({ src: url.trim() }).run();
+    const url = window.prompt("URL pública .avif o .webp de la imagen", "https://");
+    if (!url?.trim()) return;
+    if (!isAllowedImageUrl(url.trim())) {
+      setEditorError("La imagen insertada debe usar una URL pública que termine en .avif o .webp.");
+      return;
+    }
+    setEditorError("");
+    editor.chain().focus().setImage({ src: url.trim() }).run();
   };
 
   return (
@@ -79,6 +90,7 @@ export function RichTextEditor({ name, initialContent = "", label, placeholder }
       </div>
       <EditorContent editor={editor} className={styles.editor} />
       <input type="hidden" name={name} value={html} />
+      {editorError ? <small className={styles.inlineError} role="alert">{editorError}</small> : null}
     </div>
   );
 }

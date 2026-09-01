@@ -13,16 +13,17 @@ export async function moderateComment(formData: FormData) {
       id: z.uuid(),
       status: z.enum(["pending", "approved", "spam", "rejected"]),
     })
-    .parse({ id: formData.get("id"), status: formData.get("status") });
+    .safeParse({ id: formData.get("id"), status: formData.get("status") });
+  if (!parsed.success) return;
   const supabase = await createClient();
   const { error } = await supabase
     .from("blog_comments")
     .update({
-      status: parsed.status,
+      status: parsed.data.status,
       moderated_by: admin.id,
       moderated_at: new Date().toISOString(),
     })
-    .eq("id", parsed.id);
+    .eq("id", parsed.data.id);
   if (error) throw new Error(error.message);
   revalidatePath("/admin/comentarios");
   revalidatePath("/es/blog", "layout");

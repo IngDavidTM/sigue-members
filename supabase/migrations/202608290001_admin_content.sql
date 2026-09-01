@@ -457,7 +457,7 @@ on public.event_venues for select to anon, authenticated
 using (exists (
   select 1 from public.events
   where events.venue_id = event_venues.id
-    and events.status = 'published'
+    and events.status in ('published', 'cancelled')
     and events.published_at <= now()
 ));
 create policy "Admins manage event venues"
@@ -465,7 +465,7 @@ on public.event_venues for all to authenticated
 using (public.is_admin()) with check (public.is_admin());
 create policy "Public reads published events"
 on public.events for select to anon, authenticated
-using (status = 'published' and published_at <= now());
+using (status in ('published', 'cancelled') and published_at <= now());
 create policy "Admins manage events"
 on public.events for all to authenticated
 using (public.is_admin()) with check (public.is_admin());
@@ -477,7 +477,7 @@ on public.event_translations for select to anon, authenticated
 using (exists (
   select 1 from public.events
   where events.id = event_translations.event_id
-    and events.status = 'published'
+    and events.status in ('published', 'cancelled')
     and events.published_at <= now()
 ));
 create policy "Admins manage event translations"
@@ -504,7 +504,7 @@ values (
   'content-media',
   true,
   8388608,
-  array['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/gif']
+  array['image/webp', 'image/avif']
 )
 on conflict (id) do update set
   public = excluded.public,

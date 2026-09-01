@@ -37,15 +37,15 @@ export default async function AdminSeriesPage() {
           <label className={styles.field}><span>Nombre español *</span><input name="nameEs" required defaultValue={es?.name ?? ""} /></label>
           <label className={styles.field}><span>Slug español</span><input name="slugEs" defaultValue={es?.slug ?? ""} /></label>
           <label className={styles.field}><span>Descripción</span><textarea name="descriptionEs" defaultValue={es?.description ?? ""} /></label>
-          <label className={styles.field}><span>Título SEO</span><input name="seoTitleEs" defaultValue={es?.seo_title ?? ""} /></label>
-          <label className={styles.field}><span>Descripción SEO</span><textarea name="seoDescriptionEs" defaultValue={es?.seo_description ?? ""} /></label>
+          <label className={styles.field}><span>Título SEO</span><input name="seoTitleEs" maxLength={60} defaultValue={es?.seo_title ?? ""} /></label>
+          <label className={styles.field}><span>Descripción SEO</span><textarea name="seoDescriptionEs" maxLength={160} defaultValue={es?.seo_description ?? ""} /></label>
         </div>
         <div className={styles.fields}>
           <label className={styles.field}><span>English name *</span><input name="nameEn" required defaultValue={en?.name ?? ""} /></label>
           <label className={styles.field}><span>English slug</span><input name="slugEn" defaultValue={en?.slug ?? ""} /></label>
           <label className={styles.field}><span>Description</span><textarea name="descriptionEn" defaultValue={en?.description ?? ""} /></label>
-          <label className={styles.field}><span>SEO title</span><input name="seoTitleEn" defaultValue={en?.seo_title ?? ""} /></label>
-          <label className={styles.field}><span>SEO description</span><textarea name="seoDescriptionEn" defaultValue={en?.seo_description ?? ""} /></label>
+          <label className={styles.field}><span>SEO title</span><input name="seoTitleEn" maxLength={60} defaultValue={en?.seo_title ?? ""} /></label>
+          <label className={styles.field}><span>SEO description</span><textarea name="seoDescriptionEn" maxLength={160} defaultValue={en?.seo_description ?? ""} /></label>
         </div>
       </div>
     </>;

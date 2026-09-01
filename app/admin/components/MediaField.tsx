@@ -3,7 +3,12 @@
 import { useState } from "react";
 import { ImagePlus, LoaderCircle, X } from "lucide-react";
 
-import { createClient } from "@/lib/supabase/client";
+import {
+  hasValidMediaSignature,
+  isAllowedImageUrl,
+  isAllowedMediaFile,
+  MAX_MEDIA_BYTES,
+} from "@/lib/content/admin-validation";
 
 import styles from "./admin-components.module.css";
 
@@ -20,32 +25,31 @@ export function MediaField({ name, label, initialValue = "" }: Props) {
 
   const upload = async (file: File) => {
     setError("");
-    if (!file.type.startsWith("image/")) {
-      setError("Selecciona una imagen JPG, PNG, WebP o GIF.");
+    if (!isAllowedMediaFile(file)) {
+      setError(`Solo se permiten imágenes .avif o .webp de hasta ${MAX_MEDIA_BYTES / 1024 / 1024} MB.`);
       return;
     }
-    if (file.size > 8 * 1024 * 1024) {
-      setError("La imagen supera el máximo de 8 MB.");
-      return;
-    }
-
-    setUploading(true);
-    const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
-    const path = `content/${new Date().getFullYear()}/${crypto.randomUUID()}.${extension}`;
-    const supabase = createClient();
-    const { error: uploadError } = await supabase.storage
-      .from("content-media")
-      .upload(path, file, { cacheControl: "31536000", upsert: false });
-
-    if (uploadError) {
-      setError(uploadError.message);
+    try {
+      if (!(await hasValidMediaSignature(file))) {
+        setError("El contenido del archivo no coincide con una imagen AVIF o WebP válida.");
+        return;
+      }
+      setUploading(true);
+      const extension = file.name.split(".").pop()?.toLowerCase() || "webp";
+      const payload = new FormData();
+      payload.set("file", file, `${crypto.randomUUID()}.${extension}`);
+      const response = await fetch("/api/admin/media", { method: "POST", body: payload });
+      const result = await response.json() as { url?: string; error?: string };
+      if (!response.ok || !result.url) {
+        setError(result.error || "No se pudo subir la imagen.");
+        return;
+      }
+      setUrl(result.url);
+    } catch {
+      setError("No se pudo leer o subir la imagen. Revisa tu conexión e inténtalo de nuevo.");
+    } finally {
       setUploading(false);
-      return;
     }
-
-    const { data } = supabase.storage.from("content-media").getPublicUrl(path);
-    setUrl(data.publicUrl);
-    setUploading(false);
   };
 
   return (
@@ -63,7 +67,7 @@ export function MediaField({ name, label, initialValue = "" }: Props) {
         {uploading ? "Subiendo…" : "Subir imagen"}
         <input
           type="file"
-          accept="image/jpeg,image/png,image/webp,image/gif"
+          accept=".avif,.webp,image/avif,image/webp"
           disabled={uploading}
           onChange={(event) => {
             const file = event.target.files?.[0];
@@ -73,12 +77,17 @@ export function MediaField({ name, label, initialValue = "" }: Props) {
       </label>
       <input
         className={styles.urlInput}
-        type="url"
+        type="text"
         value={url}
-        onChange={(event) => setUrl(event.target.value)}
-        placeholder="O pega una URL pública"
+        onChange={(event) => {
+          const next = event.target.value.trim();
+          setUrl(next);
+          setError(next && !isAllowedImageUrl(next) ? "La URL debe ser pública y terminar en .avif o .webp." : "");
+        }}
+        placeholder="O pega una URL pública .avif o .webp"
       />
       <input type="hidden" name={name} value={url} />
+      <small>Formatos permitidos: AVIF y WebP. Máximo 8 MB.</small>
       {error ? <small className={styles.inlineError}>{error}</small> : null}
     </div>
   );

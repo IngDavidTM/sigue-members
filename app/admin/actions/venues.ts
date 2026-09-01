@@ -1,10 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { z } from "zod";
-
 import { requireAdmin } from "@/lib/auth/authorization";
-import { optionalString } from "@/lib/content/admin-utils";
+import { adminDatabaseError, formString, venueFormSchema, zodFieldErrors } from "@/lib/content/admin-validation";
 import { createClient } from "@/lib/supabase/server";
 
 import type { AdminActionState } from "./types";
@@ -14,38 +12,27 @@ export async function saveVenue(
   formData: FormData,
 ): Promise<AdminActionState> {
   const admin = await requireAdmin();
-  const parsed = z
-    .object({
-      id: z.union([z.uuid(), z.literal("")]),
-      name: z.string().trim().min(2),
-      latitude: z.union([z.coerce.number().min(-90).max(90), z.literal("")]),
-      longitude: z.union([z.coerce.number().min(-180).max(180), z.literal("")]),
-    })
-    .safeParse({
-      id: String(formData.get("id") || ""),
-      name: formData.get("name"),
-      latitude: String(formData.get("latitude") || ""),
-      longitude: String(formData.get("longitude") || ""),
-    });
-  if (!parsed.success) return { error: parsed.error.issues[0]?.message };
+  const names = ["id", "name", "country", "addressLine1", "addressLine2", "city", "region", "postalCode", "mapUrl", "latitude", "longitude"];
+  const parsed = venueFormSchema.safeParse(Object.fromEntries(names.map((name) => [name, formString(formData, name)])));
+  if (!parsed.success) return { error: "No se guardó la sede.", fieldErrors: zodFieldErrors(parsed.error) };
 
   const venue = {
     name: parsed.data.name,
-    address_line_1: optionalString(formData.get("addressLine1")),
-    address_line_2: optionalString(formData.get("addressLine2")),
-    city: optionalString(formData.get("city")),
-    region: optionalString(formData.get("region")),
-    country: optionalString(formData.get("country")),
-    postal_code: optionalString(formData.get("postalCode")),
-    latitude: parsed.data.latitude === "" ? null : parsed.data.latitude,
-    longitude: parsed.data.longitude === "" ? null : parsed.data.longitude,
-    map_url: optionalString(formData.get("mapUrl")),
+    address_line_1: parsed.data.addressLine1 ?? null,
+    address_line_2: parsed.data.addressLine2 ?? null,
+    city: parsed.data.city ?? null,
+    region: parsed.data.region ?? null,
+    country: parsed.data.country ?? null,
+    postal_code: parsed.data.postalCode ?? null,
+    latitude: parsed.data.latitude ?? null,
+    longitude: parsed.data.longitude ?? null,
+    map_url: parsed.data.mapUrl ?? null,
   };
   const supabase = await createClient();
   const { error } = parsed.data.id
     ? await supabase.from("event_venues").update(venue).eq("id", parsed.data.id)
     : await supabase.from("event_venues").insert({ ...venue, created_by: admin.id });
-  if (error) return { error: error.message };
+  if (error) return { error: adminDatabaseError(error, "la sede") };
   revalidatePath("/admin/sedes");
   return { success: "Sede guardada correctamente." };
 }
