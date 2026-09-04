@@ -92,14 +92,14 @@ export default function ConoceLanding({ locale }: { locale: ConoceLocale }) {
           >
             <source src="/videos/conoce-sigue-2026.mp4" type="video/mp4" />
           </video>
-          <Reveal className={styles.heroPanel} variant="slide-right" amount={0.2}>
+          <div className={styles.heroPanel}>
             <h1 id="conoce-hero-title">
               <strong>{c.hero.title[0]}</strong>
               <span>{c.hero.title[1]}</span>
               <strong>{c.hero.title[2]}</strong>
               <span>{c.hero.title[3]}</span>
             </h1>
-          </Reveal>
+          </div>
           <Link className={`${styles.actionLink} ${styles.heroCta}`} href="#urgencia">
             {c.hero.cta}
           </Link>

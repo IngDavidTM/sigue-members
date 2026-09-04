@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local design source files and working notes
+/AGENTS.md
+/CLAUDE.md
+/PÁGINA CONOCE- WEBSITE SIGUE NETWORK 2026.mp4
+/PÁGINA CONOCE- WEBSITE SIGUE NETWORK 2026/
+/PÁGINA ECOSISTEMA SIGUE-WEBSITE SIGUE NETWORK 2026/
+/SIGUE Network — Navegación/

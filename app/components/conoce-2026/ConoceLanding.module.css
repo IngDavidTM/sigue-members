@@ -1680,7 +1680,7 @@
 
   .hero {
     min-height: 0;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1;
   }
 
   .heroVideo {
@@ -1688,15 +1688,21 @@
   }
 
   .heroPanel {
-    top: 13%;
-    left: 50%;
-    width: 46%;
-    height: 67%;
-    padding: clamp(0.8rem, 4vw, 1.6rem);
+    top: 7%;
+    left: 11.5%;
+    width: 74.6%;
+    height: auto;
+    aspect-ratio: 1;
+    padding-block: clamp(2rem, 4.7vw, 2.3rem);
+    padding-inline: clamp(3.3rem, 7.7vw, 3.7rem);
+    border-width: 20px;
+    box-shadow:
+      inset 0 0 0 15px #fff,
+      inset 0 0 0 23px rgb(37 19 50 / 72%);
   }
 
   .heroPanel h1 {
-    font-size: clamp(2rem, 8.8vw, 4rem);
+    font-size: clamp(4rem, calc(3.25rem + 4vw), 5rem);
   }
 
   .heroEnglish .heroPanel h1 {
@@ -1704,11 +1710,11 @@
   }
 
   .heroCta {
-    top: 82.5%;
-    left: 57%;
-    width: 27%;
-    min-height: 11%;
-    font-size: 0.7rem;
+    top: 85%;
+    left: 24.7%;
+    width: 47.4%;
+    min-height: 11.5%;
+    font-size: clamp(0.72rem, 2vw, 1rem);
   }
 
   .statsGrid,
@@ -1914,13 +1920,15 @@
   }
 
   .heroPanel {
-    left: 48%;
-    width: 49%;
-    padding: 0.8rem;
+    top: 1.7%;
+    left: 3.4%;
+    width: 83.7%;
+    padding-block: 1rem;
+    padding-inline: clamp(1rem, 3.4vw, 1.25rem);
   }
 
   .heroPanel h1 {
-    font-size: clamp(1.65rem, 9vw, 2.6rem);
+    font-size: clamp(3.75rem, calc(3.1rem + 4vw), 4.5rem);
   }
 
   .heroEnglish .heroPanel h1 {
@@ -1928,11 +1936,12 @@
   }
 
   .heroCta {
-    left: 56%;
-    width: 25%;
-    min-height: 11%;
-    padding: 0.3rem 0.45rem;
-    font-size: 0.54rem;
+    top: 88.5%;
+    left: 17%;
+    width: 66%;
+    min-height: 9.5%;
+    padding: 0.4rem 0.65rem;
+    font-size: 0.68rem;
     line-height: 1.05;
   }
 
