@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, BriefcaseBusiness, GraduationCap, HeartHandshake } from 'lucide-react';
+import { ArrowRight, BriefcaseBusiness, GraduationCap, HeartHandshake, Instagram, Linkedin } from 'lucide-react';
 import Reveal from '@/app/components/ui/Reveal';
-import SiteHeader2026 from '@/app/components/site-2026/SiteHeader2026';
 import { absoluteUrl } from '@/lib/site-url';
 import { conoceContent, type ConoceLocale } from './content';
 import styles from './ConoceLanding.module.css';
@@ -73,12 +72,26 @@ export default function ConoceLanding({ locale }: { locale: ConoceLocale }) {
     <div data-conoce-2026 className={styles.page}>
       <a className={styles.skipLink} href="#contenido-conoce">{c.skip}</a>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
-      <SiteHeader2026 locale={locale} localePath="/conoce-sigue" />
 
       <div id="contenido-conoce">
-        <section id="inicio" className={styles.hero} aria-labelledby="conoce-hero-title">
-          <Image src="/images/conoce-2026/hero.webp" alt={c.hero.imageAlt} fill priority sizes="100vw" />
-          <div className={styles.heroShade} aria-hidden="true" />
+        <section
+          id="inicio"
+          className={`${styles.hero} ${locale === 'en' ? styles.heroEnglish : ''}`}
+          aria-labelledby="conoce-hero-title"
+        >
+          <video
+            className={styles.heroVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            poster="/images/conoce-2026/hero-video-poster.webp"
+            aria-hidden="true"
+            tabIndex={-1}
+          >
+            <source src="/videos/conoce-sigue-2026.mp4" type="video/mp4" />
+          </video>
           <Reveal className={styles.heroPanel} variant="slide-right" amount={0.2}>
             <h1 id="conoce-hero-title">
               <strong>{c.hero.title[0]}</strong>
@@ -86,8 +99,10 @@ export default function ConoceLanding({ locale }: { locale: ConoceLocale }) {
               <strong>{c.hero.title[2]}</strong>
               <span>{c.hero.title[3]}</span>
             </h1>
-            <ActionLink locale={locale} href="#urgencia">{c.hero.cta}</ActionLink>
           </Reveal>
+          <Link className={`${styles.actionLink} ${styles.heroCta}`} href="#urgencia">
+            {c.hero.cta}
+          </Link>
         </section>
 
         <section id="urgencia" className={styles.urgency} aria-labelledby="urgency-title">
@@ -299,15 +314,21 @@ export default function ConoceLanding({ locale }: { locale: ConoceLocale }) {
         </section>
 
         <section id="sandra-prieto" className={styles.founder} aria-labelledby="founder-title">
-          <div className={styles.founderImage}>
-            <Image src="/images/conoce-2026/founder-sandra-prieto.webp" alt={c.founder.imageAlt} fill sizes="(max-width: 800px) 100vw, 43vw" />
-            <strong>{c.founder.role}</strong>
+          <div className={styles.founderVisual}>
+            <div className={styles.founderMark} aria-hidden="true"><span /></div>
+            <div className={styles.founderImage}>
+              <Image src="/images/conoce-2026/founder-sandra-prieto.webp" alt={c.founder.imageAlt} fill sizes="(max-width: 800px) 100vw, 43vw" />
+              <strong>{c.founder.role}</strong>
+            </div>
           </div>
           <div className={styles.founderCopy}>
             <h2 id="founder-title">{c.founder.title} <em>{c.founder.name}</em></h2>
             <blockquote>{c.founder.quote}</blockquote>
             {c.founder.sections.map(([title, body]) => <div key={title}><h3>{title}</h3><p>{body}</p></div>)}
+          </div>
+          <div className={styles.founderFooter}>
             <ActionLink locale={locale} href="https://sandraprieto.org">{c.founder.cta}</ActionLink>
+            <div className={styles.founderSocials} aria-hidden="true"><Linkedin /><Instagram /></div>
           </div>
         </section>
 
@@ -367,14 +388,6 @@ export default function ConoceLanding({ locale }: { locale: ConoceLocale }) {
         </section>
       </div>
 
-      <footer className={styles.footer}>
-        <div className={styles.footerGrid}>
-          <div><h2>SIGUE NETWORK</h2><p>{c.footer.body}</p><small>501(C)(3) · EIN: 26-2010006<br />3913 GRIESE LANE, GROVETOWN, GA 30813<br /><a href="mailto:info@siguenetwork.org">INFO@SIGUENETWORK.ORG</a></small></div>
-          <nav aria-label={c.footer.discover}><strong>{c.footer.discover}</strong><Link href={`/${locale}`}>{locale === 'es' ? 'Inicio' : 'Home'}</Link><Link href={`/${locale}/conoce-sigue`}>{locale === 'es' ? 'Conoce SIGUE' : 'About SIGUE'}</Link><Link href={`/${locale}/sigue-tracks`}>SIGUE Tracks</Link><Link href={`/${locale}/sigue-consulting`}>Consulting</Link><Link href={`/${locale}/sigue-hub`}>SIGUE Hub</Link></nav>
-          <nav aria-label={c.footer.participate}><strong>{c.footer.participate}</strong><Link href={`/${locale}/miembros-sigue`}>{locale === 'es' ? 'Únete' : 'Join'}</Link><Link href={`/${locale}/contacto`}>{locale === 'es' ? 'Contáctanos' : 'Contact us'}</Link><Link href={`/${locale}/donacion`}>{locale === 'es' ? 'Donación' : 'Donate'}</Link><Link href={`/${locale}/unete`}>{locale === 'es' ? 'Voluntariado' : 'Volunteer'}</Link></nav>
-        </div>
-        <div className={styles.footerBottom}><p>{c.footer.rights}</p><nav aria-label="Social media"><a href="https://www.instagram.com/siguenetwork/" target="_blank" rel="noreferrer">INSTAGRAM</a><a href="https://www.facebook.com/people/SIGUE-Network/61566310019607/" target="_blank" rel="noreferrer">FACEBOOK</a><a href="https://www.linkedin.com/company/sigue-network/" target="_blank" rel="noreferrer">LINKEDIN</a><a href="https://www.youtube.com/@SIGUENetwork" target="_blank" rel="noreferrer">YOUTUBE</a></nav></div>
-      </footer>
     </div>
   );
 }

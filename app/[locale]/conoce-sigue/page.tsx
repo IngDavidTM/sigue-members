@@ -13,6 +13,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     ? 'Discover how SIGUE Network strengthens and connects Christian organizations so they can grow sustainably and multiply their impact across Latin America.'
     : 'Conoce cómo SIGUE Network potencia y conecta organizaciones cristianas para que crezcan de forma sostenible y multipliquen su impacto en Latinoamérica.';
   const canonical = absoluteUrl(`/${locale}/conoce-sigue`);
+  const socialImage = isEnglish
+    ? '/images/conoce-2026/hero.webp'
+    : '/images/conoce-2026/hero-video-poster.webp';
 
   return {
     title,
@@ -33,9 +36,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       title,
       description,
       images: [{
-        url: absoluteUrl('/images/conoce-2026/hero.webp'),
-        width: 1280,
-        height: 720,
+        url: absoluteUrl(socialImage),
+        width: 1366,
+        height: 638,
         alt: isEnglish ? 'SIGUE Network community' : 'Comunidad SIGUE Network',
       }],
     },
@@ -43,7 +46,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: 'summary_large_image',
       title,
       description,
-      images: [absoluteUrl('/images/conoce-2026/hero.webp')],
+      images: [absoluteUrl(socialImage)],
     },
   };
 }
