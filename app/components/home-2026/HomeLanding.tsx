@@ -12,8 +12,6 @@ import {
   Store,
 } from 'lucide-react';
 import Reveal from '@/app/components/ui/Reveal';
-import SiteHeader2026 from '@/app/components/site-2026/SiteHeader2026';
-import SiteFooter2026 from '@/app/components/site-2026/SiteFooter2026';
 import { absoluteUrl } from '@/lib/site-url';
 import styles from './HomeLanding.module.css';
 
@@ -382,7 +380,7 @@ function PrimaryLink({ locale, href, children }: { locale: Locale; href: string;
   );
 }
 
-export default function HomeLanding({ locale, preview = false }: { locale: Locale; preview?: boolean }) {
+export default function HomeLanding({ locale }: { locale: Locale; preview?: boolean }) {
   const c = content[locale];
   const organizationJsonLd = {
     '@context': 'https://schema.org',
@@ -411,13 +409,6 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
     <div data-home-2026 id="inicio" className={styles.page}>
       <a className={styles.skipLink} href="#contenido-principal">{c.skip}</a>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
-
-      <SiteHeader2026
-        locale={locale}
-        onHomePage
-        previewHome={preview}
-        localePath={preview ? '/inicio-2026' : ''}
-      />
 
       <main id="contenido-principal">
         <section className={styles.hero} aria-labelledby="home-hero-title">
@@ -639,7 +630,6 @@ export default function HomeLanding({ locale, preview = false }: { locale: Local
         </section>
       </main>
 
-      <SiteFooter2026 locale={locale} />
     </div>
   );
 }

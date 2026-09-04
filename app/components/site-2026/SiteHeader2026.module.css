@@ -296,7 +296,7 @@ a.menuEntry:focus-visible {
   }
 
   .headerInner {
-    width: min(100% - 2rem, 900px);
+    width: min(calc(100% - 2rem), 900px);
     padding: 0;
   }
 

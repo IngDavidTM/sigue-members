@@ -8,13 +8,15 @@ export default function Header() {
   const locale = useLocale() === 'en' ? 'en' : 'es';
   const pathname = usePathname() as string;
   const localePath = pathname === '/' ? '' : pathname;
+  const previewHome = pathname === '/inicio-2026';
 
   return (
-    <div data-site-header className="contents">
+    <div data-site-header className="sticky top-0 z-[200]">
       <SiteHeader2026
         locale={locale}
         localePath={localePath}
-        onHomePage={pathname === '/'}
+        onHomePage={pathname === '/' || previewHome}
+        previewHome={previewHome}
       />
     </div>
   );

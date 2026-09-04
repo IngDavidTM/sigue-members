@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import SiteFooter2026 from '@/app/components/site-2026/SiteFooter2026';
 import styles from './ConsultingLanding.module.css';
 
 type Locale = 'es' | 'en';
@@ -222,7 +221,6 @@ export default function ConsultingLanding({ locale }: { locale: Locale }) {
         <h2>{c.newsletter[0]}</h2><p>{c.newsletter[1]}</p>
         <form action={`/${locale}/contacto`} method="get"><label className={styles.srOnly} htmlFor={`consulting-email-${locale}`}>{c.newsletter[2]}</label><input id={`consulting-email-${locale}`} name="email" type="email" placeholder={c.newsletter[2]} required /><button type="submit">{c.newsletter[3]}</button></form>
       </section>
-      <SiteFooter2026 locale={locale} />
     </div>
   );
 }

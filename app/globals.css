@@ -60,17 +60,6 @@ body:has([data-conoce-2026]) {
   background: #fff;
 }
 
-body:has([data-cumbre-page]) [data-site-footer],
-body:has([data-home-2026]) [data-site-header],
-body:has([data-home-2026]) [data-site-footer],
-body:has([data-conoce-2026]) [data-site-header],
-body:has([data-conoce-2026]) [data-site-footer],
-body:has([data-sigue-tracks-page]) [data-site-footer],
-body:has([data-consulting-page]) [data-site-footer],
-body:has([data-academy-page]) [data-site-footer] {
-  display: none;
-}
-
 a { text-decoration: none; }
 
 ul {

@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import SiteFooter2026 from '@/app/components/site-2026/SiteFooter2026';
 import styles from './HubLanding.module.css';
 
 type Locale = 'es' | 'en';
@@ -162,7 +161,6 @@ export default function HubLanding({ locale }: { locale: Locale }) {
           </section>
         ))}
       </div>
-      <SiteFooter2026 locale={locale} />
     </div>
   );
 }

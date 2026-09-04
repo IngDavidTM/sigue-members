@@ -8,6 +8,10 @@
   display: none;
 }
 
+.menuOpenIcon {
+  display: block;
+}
+
 .mobileMenu[open] .menuOpenIcon {
   display: none;
 }
@@ -30,7 +34,9 @@
     height: 46px;
     place-items: center;
     border-radius: 0.55rem;
+    border: 1px solid #e8e0f0;
     color: #501f76;
+    background: #f8f6ff;
     cursor: pointer;
     list-style: none;
     transition: background-color 160ms ease;

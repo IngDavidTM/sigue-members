@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import SiteFooter2026 from '@/app/components/site-2026/SiteFooter2026';
 import styles from './AcademyLanding.module.css';
 
 type Locale = 'es' | 'en';
@@ -189,7 +188,6 @@ export default function AcademyLanding({ locale }: { locale: Locale }) {
         <strong>{c.noEvents}</strong>
       </aside>
 
-      <SiteFooter2026 locale={locale} />
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import SiteFooter2026 from '@/app/components/site-2026/SiteFooter2026';
 import {
   ArrowRight,
   BadgePercent,
@@ -23,8 +22,8 @@ const memberLogoFiles = [1, 3, 4, 5, 6, 11, 12, 13, 14, 15, 16, 19, 21, 23, 24, 
   .map((number) => `/images/cumbre-2026/member-logos/member-${String(number).padStart(2, '0')}.png`);
 
 const impactPartnerLogos = [
-  'https://siguenetwork.org/wp-content/uploads/2024/12/Mario-Blanco-Producciones-e1733528447281.jpg',
   'https://siguenetwork.org/wp-content/uploads/2024/12/Logo-Sr-Lopez-Agencia-e1733528496179.jpg',
+  'https://siguenetwork.org/wp-content/uploads/2024/12/Mario-Blanco-Producciones-e1733528447281.jpg',
 ] as const;
 
 const questions: readonly { question: LocalizedText; answer: LocalizedText }[] = [
@@ -101,10 +100,13 @@ const copy = {
     ctaLead: 'Si dijiste SÍ a alguna de las preguntas anteriores, entonces',
     ctaTitle: 'Únete a SIGUE Network y transforma comunidades',
     cta: 'QUIERO SER MIEMBRO',
+    membersTitle: 'Únete a SIGUE Network y transforma comunidades',
     membersEyebrow: 'CONOCE A NUESTROS MIEMBROS',
     membersBody: 'Nuestros miembros son líderes y organizaciones comprometidos con la transformación física, emocional y espiritual. Juntos compartimos recursos, aprendizajes y conexiones para multiplicar el impacto.',
     partnersTitle: 'Únete al equipo de aliados que transforma comunidades',
     partnersEyebrow: 'CONOCE A NUESTROS ALIADOS DE IMPACTO',
+    partnersBody: 'Nuestros aliados de impacto son líderes comprometidos con la transformación física, emocional y espiritual.',
+    partnersPrompt: '¿Eres tú uno de ellos?',
     benefitsTitle: '¿Qué beneficios obtienes al hacerte miembro?',
     benefitsSubtitle: 'Recursos, conexiones, acompañamiento y crecimiento',
     contactLead: 'Si quieres conocer más sobre los beneficios de SIGUE Network, envíanos un mensaje',
@@ -131,10 +133,13 @@ const copy = {
     ctaLead: 'If you answered YES to any of the questions above, then',
     ctaTitle: 'Join SIGUE Network and transform communities',
     cta: 'BECOME A MEMBER',
+    membersTitle: 'Join SIGUE Network and transform communities',
     membersEyebrow: 'MEET OUR MEMBERS',
     membersBody: 'Our members are leaders and organizations committed to physical, emotional, and spiritual transformation. Together, we share resources, learning, and connections to multiply impact.',
     partnersTitle: 'Join the team of allies transforming communities',
     partnersEyebrow: 'MEET OUR IMPACT PARTNERS',
+    partnersBody: 'Our impact partners are leaders committed to physical, emotional, and spiritual transformation.',
+    partnersPrompt: 'Are you one of them?',
     benefitsTitle: 'What benefits do you receive as a member?',
     benefitsSubtitle: 'Resources, connections, support, and growth',
     contactLead: 'If you want to learn more about the benefits of SIGUE Network, send us a message',
@@ -191,7 +196,8 @@ export default function MembershipLanding({ locale }: { locale: Locale }) {
       </section>
 
       <section id="comunidad" className={styles.members} aria-labelledby="members-title">
-        <h2 id="members-title">{c.membersEyebrow}</h2>
+        <h2 id="members-title">{c.membersTitle}</h2>
+        <p className={styles.membersEyebrow}>{c.membersEyebrow}</p>
         <div className={styles.logoViewport}>
           <div className={styles.logoTrack}>
             {[...memberLogoFiles, ...memberLogoFiles].map((logo, index) => (
@@ -210,6 +216,9 @@ export default function MembershipLanding({ locale }: { locale: Locale }) {
               <div key={logo}><Image src={logo} alt={`${c.partnersEyebrow} ${index + 1}`} fill unoptimized sizes="260px" /></div>
             ))}
           </div>
+          <p className={styles.partnersBody}>
+            {c.partnersBody} <strong>{c.partnersPrompt}</strong>
+          </p>
         </div>
       </section>
 
@@ -255,7 +264,6 @@ export default function MembershipLanding({ locale }: { locale: Locale }) {
           </a>
         </div>
       </section>
-      <SiteFooter2026 locale={locale} />
     </div>
   );
 }

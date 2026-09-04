@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import SiteFooter2026 from '@/app/components/site-2026/SiteFooter2026';
 import styles from './SigueTracksLanding.module.css';
 
 type Locale = 'es' | 'en';
@@ -134,7 +133,6 @@ export default function SigueTracksLanding({ locale }: { locale: Locale }) {
         </p>
       </section>
       <div className={styles.assessmentAction}><AssessmentLink locale={locale} compact /></div>
-      <SiteFooter2026 locale={locale} />
     </div>
   );
 }
