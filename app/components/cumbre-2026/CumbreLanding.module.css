@@ -1293,13 +1293,6 @@
   color: var(--cumbre-purple);
 }
 
-.exchangeRateMeta a {
-  color: inherit;
-  font-weight: 800;
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
-}
-
 .lodgingSection {
   padding: clamp(2rem, 5vw, 5rem) 0 clamp(7rem, 11vw, 11rem);
 }

@@ -1,84 +1,30 @@
-'use client';
-
-import { useEffect, useMemo, useState } from 'react';
-import { tariffs } from './registration';
 import styles from './CumbreLanding.module.css';
 
-const FALLBACK_COP_PER_USD = 3000;
-
-type ExchangeRateResponse = {
-  copPerUsd?: number;
-  updatedAt?: string;
-  fallback?: boolean;
-};
+const usdPrices = {
+  general: { pass: 200, lodging: 267 },
+  early: { pass: 163, lodging: 230 },
+  member: { pass: 150, lodging: 217 },
+} as const;
 
 export default function UsdEquivalents({ locale }: { locale: 'es' | 'en' }) {
-  const [rate, setRate] = useState(FALLBACK_COP_PER_USD);
-  const [updatedAt, setUpdatedAt] = useState<string>();
-  const [usingFallback, setUsingFallback] = useState(true);
   const english = locale === 'en';
   const text = (spanish: string, englishText: string) => (english ? englishText : spanish);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    fetch('/api/exchange-rate', { signal: controller.signal })
-      .then((response) => (response.ok ? response.json() : Promise.reject(new Error('Rate unavailable'))))
-      .then((data: ExchangeRateResponse) => {
-        if (!Number.isFinite(data.copPerUsd) || !data.copPerUsd || data.copPerUsd <= 0) return;
-        setRate(data.copPerUsd);
-        setUpdatedAt(data.updatedAt);
-        setUsingFallback(Boolean(data.fallback));
-      })
-      .catch(() => undefined);
-
-    return () => controller.abort();
-  }, []);
-
-  const usd = useMemo(
-    () =>
-      new Intl.NumberFormat(english ? 'en-US' : 'es-CO', {
-        style: 'currency',
-        currency: 'USD',
-        maximumFractionDigits: 0,
-      }),
-    [english]
-  );
-  const cop = useMemo(
-    () => new Intl.NumberFormat(english ? 'en-US' : 'es-CO', { maximumFractionDigits: 0 }),
-    [english]
-  );
-  const equivalent = (amount: number) => usd.format(amount / rate);
-  const asOf = updatedAt
-    ? new Intl.DateTimeFormat(english ? 'en-US' : 'es-CO', {
-        dateStyle: 'medium',
-        timeZone: 'UTC',
-      }).format(new Date(updatedAt))
-    : null;
+  const usd = (amount: number) => `US$${amount}`;
+  const lodging = text('con hospedaje', 'with lodging');
+  const passOnly = text('sin hospedaje', 'without lodging');
 
   return (
-    <p className={styles.exchangeNote} aria-live="polite">
-      {text('Equivalentes aproximados en USD', 'Approximate USD equivalents')} —
-      {' '}{text('General', 'General')}: {equivalent(tariffs.general.pass)} / {equivalent(tariffs.general.lodging)} ·
-      {' '}Early Bird: {equivalent(tariffs.early.pass)} / {equivalent(tariffs.early.lodging)} ·
-      {' '}{text('Miembro', 'Member')}: {equivalent(tariffs.member.pass)} / {equivalent(tariffs.member.lodging)}.
+    <p className={styles.exchangeNote}>
+      <strong>{text('Valores fijos en USD', 'Fixed USD prices')}</strong> —
+      {' '}{text('General', 'General')}: {usd(usdPrices.general.pass)} {passOnly} / {usd(usdPrices.general.lodging)} {lodging} ·
+      {' '}Early Bird: {usd(usdPrices.early.pass)} {passOnly} / {usd(usdPrices.early.lodging)} {lodging} ·
+      {' '}{text('Miembro', 'Member')}: {usd(usdPrices.member.pass)} {passOnly} / {usd(usdPrices.member.lodging)} {lodging}.
       <span className={styles.exchangeRateMeta}>
         {' '}
-        {usingFallback
-          ? text(
-              `Tasa de referencia: COP ${cop.format(rate)} = US$1.`,
-              `Reference rate: COP ${cop.format(rate)} = US$1.`
-            )
-          : text(
-              `Tasa informativa actual: COP ${cop.format(rate)} = US$1${asOf ? ` (${asOf})` : ''}.`,
-              `Current indicative rate: COP ${cop.format(rate)} = US$1${asOf ? ` (${asOf})` : ''}.`
-            )}
-        {' '}
-        {text('El cobro se confirma en COP.', 'Charges are confirmed in COP.')}
-        {' '}
-        <a href="https://www.exchangerate-api.com/" target="_blank" rel="noreferrer">
-          ExchangeRate-API
-        </a>
+        {text(
+          'Estos valores corresponden a las seis opciones de inscripción.',
+          'These prices correspond to the six registration options.'
+        )}
       </span>
     </p>
   );
