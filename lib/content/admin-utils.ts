@@ -1,8 +1,6 @@
-import "server-only";
-
 import sanitizeHtml from "sanitize-html";
 
-import { isAllowedImageUrl } from "./admin-validation";
+import { isAllowedImageUrl } from "./admin-validation.ts";
 
 export function slugify(value: string) {
   return value
@@ -52,6 +50,8 @@ export function sanitizeRichText(value: string) {
       td: ["colspan", "rowspan"],
     },
     allowedSchemes: ["http", "https", "mailto", "tel"],
+    allowedSchemesByTag: { img: ["http", "https"] },
+    allowProtocolRelative: false,
     transformTags: {
       a: sanitizeHtml.simpleTransform("a", {
         rel: "noopener noreferrer",
@@ -61,13 +61,17 @@ export function sanitizeRichText(value: string) {
   });
 }
 
-export function validateSanitizedRichText(value: string, label: string) {
+export function validateSanitizedRichText(value: string, label: string, optional = false) {
   const sanitized = sanitizeRichText(value);
   const plainText = sanitizeHtml(sanitized, { allowedTags: [], allowedAttributes: {} })
     .replace(/\s+/g, " ")
     .trim();
+  if (optional && !plainText && !sanitized.includes("<img")) return { html: "" };
   if (!plainText) return { error: `${label} debe contener texto legible.`, html: sanitized };
 
+  if (/<img\b(?![^>]*\bsrc=)[^>]*>/i.test(sanitized)) {
+    return { error: `${label} contiene una imagen sin una URL válida.`, html: sanitized };
+  }
   const imageSources = [...sanitized.matchAll(/<img\b[^>]*\bsrc=(?:"([^"]+)"|'([^']+)')[^>]*>/gi)]
     .map((match) => match[1] || match[2]);
   if (imageSources.some((source) => !isAllowedImageUrl(source))) {
@@ -98,6 +102,10 @@ export function zonedInputToIso(value: string, timeZone: string) {
 
   const [, year, month, day, hour, minute] = match;
   const desiredUtc = Date.UTC(+year, +month - 1, +day, +hour, +minute);
+  if (+year < 1000 || +month < 1 || +month > 12 || +day < 1 || +hour > 23 || +minute > 59
+    || new Date(desiredUtc).getUTCDate() !== +day) {
+    throw new Error("La fecha y hora no existen en el calendario.");
+  }
   let candidate = desiredUtc;
 
   for (let pass = 0; pass < 2; pass += 1) {
@@ -122,7 +130,11 @@ export function zonedInputToIso(value: string, timeZone: string) {
     candidate += desiredUtc - representedUtc;
   }
 
-  return new Date(candidate).toISOString();
+  const result = new Date(candidate).toISOString();
+  if (isoToZonedInput(result, timeZone) !== value) {
+    throw new Error("La hora no existe en la zona horaria seleccionada por el cambio de horario.");
+  }
+  return result;
 }
 
 export function isoToZonedInput(value: string | null, timeZone: string) {

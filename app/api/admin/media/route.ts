@@ -1,10 +1,16 @@
+import sharp from "sharp";
 import { NextResponse } from "next/server";
 
 import { getAuthenticatedProfile } from "@/lib/auth/authorization";
-import { hasValidMediaSignature, isAllowedMediaFile } from "@/lib/content/admin-validation";
+import { hasValidMediaSignature, isAllowedMediaFile, MAX_MEDIA_BYTES } from "@/lib/content/admin-validation";
 import { createClient } from "@/lib/supabase/server";
 
+export const runtime = "nodejs";
+
 export async function POST(request: Request) {
+  if (Number(request.headers.get("content-length")) > MAX_MEDIA_BYTES + 65536) {
+    return NextResponse.json({ error: "La imagen supera el tamaño máximo de 8 MB." }, { status: 413 });
+  }
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     return NextResponse.json({ error: "El servicio de archivos no está configurado." }, { status: 503 });
   }
@@ -32,12 +38,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Solo se permiten archivos AVIF o WebP válidos de hasta 8 MB." }, { status: 400 });
   }
 
-  const extension = file.type === "image/avif" ? "avif" : "webp";
-  const path = `content/${new Date().getUTCFullYear()}/${crypto.randomUUID()}.${extension}`;
+  let image: Buffer;
+  try {
+    image = await sharp(Buffer.from(await file.arrayBuffer()), { limitInputPixels: 40_000_000, failOn: "warning" })
+      .rotate().resize({ width: 2400, height: 2400, fit: "inside", withoutEnlargement: true })
+      .webp({ quality: 85 }).toBuffer();
+  } catch {
+    return NextResponse.json({ error: "La imagen está dañada o supera los 40 megapíxeles. Exporta una versión más pequeña." }, { status: 400 });
+  }
+  const path = `content/${new Date().getUTCFullYear()}/${crypto.randomUUID()}.webp`;
   const supabase = await createClient();
-  const { error } = await supabase.storage.from("content-media").upload(path, file, {
+  const { error } = await supabase.storage.from("content-media").upload(path, image, {
     cacheControl: "31536000",
-    contentType: file.type,
+    contentType: "image/webp",
     upsert: false,
   });
   if (error) {

@@ -1,94 +1,59 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { ImagePlus, LoaderCircle, X } from "lucide-react";
-
-import {
-  hasValidMediaSignature,
-  isAllowedImageUrl,
-  isAllowedMediaFile,
-  MAX_MEDIA_BYTES,
-} from "@/lib/content/admin-validation";
-
+import { isAllowedImageUrl } from "@/lib/content/admin-validation";
+import { MEDIA_ACCEPT, uploadContentImage } from "@/lib/content/media-upload";
+import { useFormActivity } from "./FormActivity";
 import styles from "./admin-components.module.css";
 
 type Props = {
   name: string;
   label: string;
   initialValue?: string | null;
+  onChange?: (url: string) => void;
 };
 
-export function MediaField({ name, label, initialValue = "" }: Props) {
+export function MediaField({ name, label, initialValue = "", onChange }: Props) {
   const [url, setUrl] = useState(initialValue ?? "");
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
-
+  const id = useId();
+  const activity = useFormActivity();
+  const change = (next: string) => {
+    setUrl(next);
+    onChange?.(next);
+    activity.markChanged();
+    setError(next && !isAllowedImageUrl(next) ? "La URL debe ser pública y terminar en .avif o .webp." : "");
+  };
   const upload = async (file: File) => {
     setError("");
-    if (!isAllowedMediaFile(file)) {
-      setError(`Solo se permiten imágenes .avif o .webp de hasta ${MAX_MEDIA_BYTES / 1024 / 1024} MB.`);
-      return;
-    }
-    try {
-      if (!(await hasValidMediaSignature(file))) {
-        setError("El contenido del archivo no coincide con una imagen AVIF o WebP válida.");
-        return;
-      }
-      setUploading(true);
-      const extension = file.name.split(".").pop()?.toLowerCase() || "webp";
-      const payload = new FormData();
-      payload.set("file", file, `${crypto.randomUUID()}.${extension}`);
-      const response = await fetch("/api/admin/media", { method: "POST", body: payload });
-      const result = await response.json() as { url?: string; error?: string };
-      if (!response.ok || !result.url) {
-        setError(result.error || "No se pudo subir la imagen.");
-        return;
-      }
-      setUrl(result.url);
-    } catch {
-      setError("No se pudo leer o subir la imagen. Revisa tu conexión e inténtalo de nuevo.");
-    } finally {
-      setUploading(false);
-    }
+    setUploading(true);
+    activity.setUploading(id, true);
+    try { change(await uploadContentImage(file)); }
+    catch (cause) { setError(cause instanceof Error ? cause.message : "No se pudo subir la imagen."); }
+    finally { setUploading(false); activity.setUploading(id, false); }
   };
-
-  return (
-    <div className={styles.mediaField}>
-      <span className={styles.fieldLabel}>{label}</span>
-      {url ? (
-        <div className={styles.mediaPreview}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={url} alt="Vista previa" />
-          <button type="button" onClick={() => setUrl("")} aria-label="Quitar imagen"><X /></button>
-        </div>
-      ) : null}
-      <label className={styles.uploadButton}>
-        {uploading ? <LoaderCircle className={styles.spinner} /> : <ImagePlus />}
-        {uploading ? "Subiendo…" : "Subir imagen"}
-        <input
-          type="file"
-          accept=".avif,.webp,image/avif,image/webp"
-          disabled={uploading}
-          onChange={(event) => {
-            const file = event.target.files?.[0];
-            if (file) void upload(file);
-          }}
-        />
-      </label>
-      <input
-        className={styles.urlInput}
-        type="text"
-        value={url}
-        onChange={(event) => {
-          const next = event.target.value.trim();
-          setUrl(next);
-          setError(next && !isAllowedImageUrl(next) ? "La URL debe ser pública y terminar en .avif o .webp." : "");
-        }}
-        placeholder="O pega una URL pública .avif o .webp"
-      />
-      <input type="hidden" name={name} value={url} />
-      <small>Formatos permitidos: AVIF y WebP. Máximo 8 MB.</small>
-      {error ? <small className={styles.inlineError}>{error}</small> : null}
-    </div>
-  );
+  return <div className={styles.mediaField}>
+    <label className={styles.fieldLabel} htmlFor={id}>{label}</label>
+    {url && isAllowedImageUrl(url) ? <div className={styles.mediaPreview}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img key={url} src={url} alt="Vista previa" onError={() => setError("No se pudo cargar la imagen. Comprueba que la URL sea pública o vuelve a subirla.")} />
+      <button type="button" disabled={activity.busy} onClick={() => change("")} aria-label="Quitar imagen"><X /></button>
+    </div> : null}
+    <label className={styles.uploadButton}>
+      {uploading ? <LoaderCircle className={styles.spinner} /> : <ImagePlus />}
+      {uploading ? "Preparando y subiendo…" : "Subir imagen"}
+      <input type="file" accept={MEDIA_ACCEPT} disabled={activity.busy || uploading} onChange={(event) => {
+        const file = event.target.files?.[0];
+        event.target.value = "";
+        if (file) void upload(file);
+      }} />
+    </label>
+    <input id={id} className={styles.urlInput} type="url" value={url} disabled={activity.busy || uploading}
+      onChange={(event) => change(event.target.value.trim())} placeholder="O pega una URL pública .avif o .webp" />
+    <input type="hidden" name={name} value={url} />
+    <small>JPG, PNG, AVIF o WebP, hasta 8 MB. JPG y PNG se optimizan a WebP automáticamente.</small>
+    {error ? <small className={styles.inlineError} role="alert">{error}</small> : null}
+  </div>;
 }

@@ -7,8 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:admin": "node --test tests/admin-validation.test.ts",
-    "admin:grant": "node scripts/grant-admin.mjs"
+    "test:admin": "node --test tests/admin-validation.test.ts tests/content-utils.test.ts",
+    "admin:grant": "node scripts/grant-admin.mjs",
+    "test:admin:ui": "node tests/admin-ui.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.9.0",
@@ -16,25 +17,28 @@
     "@tiptap/extension-image": "^3.30.5",
     "@tiptap/extension-link": "^3.30.5",
     "@tiptap/extension-placeholder": "^3.30.5",
+    "@tiptap/extension-table": "3.30.5",
     "@tiptap/react": "^3.30.5",
     "@tiptap/starter-kit": "^3.30.5",
     "@types/sanitize-html": "^2.16.1",
     "framer-motion": "^12.39.0",
     "lucide-react": "^0.577.0",
-    "next": "16.3.1",
+    "next": "16.3.5",
     "next-intl": "^4.9.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "sanitize-html": "^2.17.7",
+    "sharp": "0.35.4",
     "zod": "^4.5.4"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.1",
+    "eslint-config-next": "16.3.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

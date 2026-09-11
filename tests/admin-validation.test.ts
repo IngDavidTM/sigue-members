@@ -66,6 +66,8 @@ test("evento valida modalidad, fechas auxiliares, precio, cupo y contacto", () =
   assert.equal(eventFormSchema.safeParse({ ...base, organizerEmail: "correo roto" }).success, false);
   assert.equal(eventFormSchema.safeParse({ ...base, capacity: "1.5" }).success, false);
   assert.equal(eventFormSchema.safeParse({ ...base, isFree: false, priceAmount: "" }).success, false);
+  assert.equal(eventFormSchema.safeParse({ ...base, isFree: false, priceAmount: "0" }).success, false);
+  assert.equal(eventFormSchema.safeParse({ ...base, isFree: true, priceAmount: "0" }).success, true);
 });
 
 test("series, etiquetas y sedes aplican reglas de dominio", () => {

@@ -4,6 +4,8 @@ import { createClient } from "@supabase/supabase-js";
 import { absoluteUrl } from "@/lib/site-url";
 import type { Database } from "@/types/supabase";
 
+export const revalidate = 300;
+
 const staticRoutes = [
   { path: "", priority: 1 },
   { path: "/cumbre-sigue-2026", priority: 1 },
@@ -36,9 +38,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
     const [postsResult, postTranslationsResult, eventsResult, eventTranslationsResult, seriesResult, tagResult] =
       await Promise.all([
-        supabase.from("blog_posts").select("id,updated_at"),
+        supabase.from("blog_posts").select("id,updated_at").in("status", ["published", "scheduled"]).lte("published_at", new Date().toISOString()),
         supabase.from("blog_post_translations").select("post_id,locale,slug,noindex"),
-        supabase.from("events").select("id,updated_at"),
+        supabase.from("events").select("id,updated_at").in("status", ["published", "cancelled"]).lte("published_at", new Date().toISOString()),
         supabase.from("event_translations").select("event_id,locale,slug,noindex"),
         supabase.from("blog_series_translations").select("series_id,locale,slug"),
         supabase.from("blog_tag_translations").select("tag_id,locale,slug"),
@@ -53,12 +55,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const postDates = new Map(postsResult.data.map((post) => [post.id, post.updated_at]));
     const postLanguages = new Map<string, Record<string, string>>();
-    postTranslationsResult.data.filter((translation) => !translation.noindex).forEach((translation) => {
+    postTranslationsResult.data.filter((translation) => !translation.noindex && postDates.has(translation.post_id)).forEach((translation) => {
       const translations = postLanguages.get(translation.post_id) ?? {};
       translations[translation.locale] = absoluteUrl(`/${translation.locale}/blog/${translation.slug}`);
       postLanguages.set(translation.post_id, translations);
     });
-    postTranslationsResult.data.filter((translation) => !translation.noindex).forEach((translation) => {
+    postTranslationsResult.data.filter((translation) => !translation.noindex && postDates.has(translation.post_id)).forEach((translation) => {
       const languages = postLanguages.get(translation.post_id) ?? {};
       routes.push({
         url: absoluteUrl(`/${translation.locale}/blog/${translation.slug}`),
@@ -71,12 +73,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const eventDates = new Map(eventsResult.data.map((event) => [event.id, event.updated_at]));
     const eventLanguages = new Map<string, Record<string, string>>();
-    eventTranslationsResult.data.filter((translation) => !translation.noindex).forEach((translation) => {
+    eventTranslationsResult.data.filter((translation) => !translation.noindex && eventDates.has(translation.event_id)).forEach((translation) => {
       const translations = eventLanguages.get(translation.event_id) ?? {};
       translations[translation.locale] = absoluteUrl(`/${translation.locale}/evento/${translation.slug}`);
       eventLanguages.set(translation.event_id, translations);
     });
-    eventTranslationsResult.data.filter((translation) => !translation.noindex).forEach((translation) => {
+    eventTranslationsResult.data.filter((translation) => !translation.noindex && eventDates.has(translation.event_id)).forEach((translation) => {
       const languages = eventLanguages.get(translation.event_id) ?? {};
       routes.push({
         url: absoluteUrl(`/${translation.locale}/evento/${translation.slug}`),

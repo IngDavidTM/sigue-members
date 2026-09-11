@@ -364,6 +364,14 @@ export interface Database {
       };
     };
     Functions: {
+      save_blog_content: {
+        Args: { p_id: string | null; p_record: Json; p_translations: Json; p_expected_updated_at: string | null; p_tag_ids: string[] };
+        Returns: string;
+      };
+      save_event_content: {
+        Args: { p_id: string | null; p_record: Json; p_translations: Json; p_expected_updated_at: string | null; p_access: Json };
+        Returns: string;
+      };
       is_admin: {
         Args: Record<PropertyKey, never>;
         Returns: boolean;

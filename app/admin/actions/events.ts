@@ -101,8 +101,8 @@ export async function saveEvent(
 
   const contentEs = validateSanitizedRichText(values.contentEs, "La descripción en español");
   const contentEn = validateSanitizedRichText(values.contentEn, "La descripción en inglés");
-  const agendaEs = values.agendaEs ? validateSanitizedRichText(values.agendaEs, "La agenda en español") : { html: "" };
-  const agendaEn = values.agendaEn ? validateSanitizedRichText(values.agendaEn, "La agenda en inglés") : { html: "" };
+  const agendaEs = values.agendaEs ? validateSanitizedRichText(values.agendaEs, "La agenda en español", true) : { html: "" };
+  const agendaEn = values.agendaEn ? validateSanitizedRichText(values.agendaEn, "La agenda en inglés", true) : { html: "" };
   const richErrors = {
     ...(contentEs.error ? { contentEs: [contentEs.error] } : {}),
     ...(contentEn.error ? { contentEn: [contentEn.error] } : {}),
@@ -125,7 +125,6 @@ export async function saveEvent(
   if (slugEsResult.error || slugEnResult.error) return { error: "No se pudo comprobar la disponibilidad de los slugs." };
   if (slugEsResult.data && slugEsResult.data.event_id !== values.id) return { error: "No se guardó el evento.", fieldErrors: { slugEs: ["Este slug ya pertenece a otro evento en español."] } };
   if (slugEnResult.data && slugEnResult.data.event_id !== values.id) return { error: "No se guardó el evento.", fieldErrors: { slugEn: ["Este slug ya pertenece a otro evento en inglés."] } };
-  const existingPublishedAt = values.existingPublishedAt || null;
   const eventData = {
     status: values.status,
     attendance_mode: values.attendanceMode,
@@ -144,59 +143,29 @@ export async function saveEvent(
     featured_image_url: values.featuredImageUrl ?? null,
     is_featured: formChecked(formData, "isFeatured"),
     organizer_name: values.organizerName ?? null,
-    published_at:
-      ["published", "cancelled"].includes(values.status)
-        ? requestedPublishedAt
-          ? requestedPublishedAt
-          : existingPublishedAt || new Date().toISOString()
-        : requestedPublishedAt
-          ? requestedPublishedAt
-          : existingPublishedAt,
+    published_at: requestedPublishedAt,
     updated_by: admin.id,
   };
-
-  let eventId = values.id ?? "";
-  let created = false;
-  if (eventId) {
-    const { error } = await supabase.from("events").update(eventData).eq("id", eventId);
-    if (error) return { error: adminDatabaseError(error, "el evento") };
-  } else {
-    const { data, error } = await supabase
-      .from("events")
-      .insert({ ...eventData, created_by: admin.id })
-      .select("id")
-      .single();
-    if (error) return { error: adminDatabaseError(error, "el evento") };
-    eventId = data.id;
-    created = true;
-  }
 
   const translations = [
     { ...translationFromValues({ ...values, slugEs }, "es", contentEs.html, agendaEs.html || null), noindex: formChecked(formData, "noindexEs"), nofollow: formChecked(formData, "nofollowEs") },
     { ...translationFromValues({ ...values, slugEn }, "en", contentEn.html, agendaEn.html || null), noindex: formChecked(formData, "noindexEn"), nofollow: formChecked(formData, "nofollowEn") },
-  ].map((translation) => ({ ...translation, event_id: eventId }));
-  const { error: translationError } = await supabase
-    .from("event_translations")
-    .upsert(translations, { onConflict: "event_id,locale" });
-  if (translationError) {
-    if (created) await supabase.from("events").delete().eq("id", eventId);
-    return { error: adminDatabaseError(translationError, "la traducción del evento") };
+  ];
+  const expected = formString(formData, "expectedUpdatedAt");
+  if (values.id && !z.iso.datetime({ offset: true }).safeParse(expected).success) {
+    return { error: "Recarga la página antes de guardar; falta la versión del contenido." };
   }
-
-  const { error: accessError } = await supabase.from("event_private_access").upsert(
-    {
-      event_id: eventId,
-      virtual_url: values.virtualUrl ?? null,
-      organizer_email: values.organizerEmail ?? null,
-    },
-    { onConflict: "event_id" },
-  );
-  if (accessError) {
-    if (created) await supabase.from("events").delete().eq("id", eventId);
-    return { error: adminDatabaseError(accessError, "los datos privados del evento") };
-  }
+  const { data: eventId, error: saveError } = await supabase.rpc("save_event_content", {
+    p_id: values.id ?? null,
+    p_record: eventData,
+    p_translations: translations,
+    p_expected_updated_at: expected || null,
+    p_access: { virtual_url: values.virtualUrl ?? null, organizer_email: values.organizerEmail ?? null },
+  });
+  if (saveError || !eventId) return { error: adminDatabaseError(saveError ?? {}, "el evento") };
 
   revalidatePath("/admin/eventos");
+  revalidatePath("/[locale]/evento/[slug]", "page");
   revalidatePath("/es/eventos");
   revalidatePath("/en/eventos");
   revalidatePath("/sitemap.xml");
@@ -212,6 +181,7 @@ export async function archiveEvent(formData: FormData) {
   const { error } = await supabase.from("events").update({ status: "archived" }).eq("id", id);
   if (error) throw new Error(error.message);
   revalidatePath("/admin/eventos");
+  revalidatePath("/[locale]/evento/[slug]", "page");
   revalidatePath("/es/eventos");
   revalidatePath("/en/eventos");
   revalidatePath("/sitemap.xml");

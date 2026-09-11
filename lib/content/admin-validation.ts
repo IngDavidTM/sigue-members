@@ -103,8 +103,8 @@ export const blogFormSchema = z.object({
   schemaTypeEn: z.enum(["Article", "BlogPosting", "NewsArticle"]),
   tagIds: z.array(z.uuid("Una etiqueta seleccionada no es válida.")).max(30, "Selecciona como máximo 30 etiquetas."),
 }).superRefine((value, context) => {
-  if (["published", "scheduled"].includes(value.status) && !value.publishedAt) {
-    context.addIssue({ code: "custom", path: ["publishedAt"], message: "La fecha de publicación es obligatoria para publicar o programar." });
+  if (value.status === "scheduled" && !value.publishedAt) {
+    context.addIssue({ code: "custom", path: ["publishedAt"], message: "La fecha de publicación es obligatoria para programar." });
   }
   if (value.featuredImageUrl && (!value.imageAltEs || !value.imageAltEn)) {
     if (!value.imageAltEs) context.addIssue({ code: "custom", path: ["imageAltEs"], message: "Describe la imagen destacada en español para accesibilidad y SEO." });
@@ -126,7 +126,7 @@ export const eventFormSchema = z.object({
   virtualUrl: optionalUrl("El enlace virtual"),
   registrationUrl: optionalUrl("El enlace de inscripción"),
   capacity: optionalNumber(z.number().int("El cupo debe ser un número entero.").min(1, "El cupo debe ser mayor que cero.").max(1_000_000, "El cupo es demasiado alto.")),
-  priceAmount: optionalNumber(z.number().finite("El precio debe ser un número válido.").min(0.01, "Un evento pago debe tener un precio mayor que cero.").max(1_000_000_000, "El precio es demasiado alto.")),
+  priceAmount: optionalNumber(z.number().finite("El precio debe ser un número válido.").min(0, "El precio no puede ser negativo.").max(1_000_000_000, "El precio es demasiado alto.")),
   currency: z.string().trim().toUpperCase().regex(/^[A-Z]{3}$/, "La moneda debe ser un código ISO de 3 letras, por ejemplo COP o USD."),
   organizerName: optionalText(120, "El nombre del organizador"),
   organizerEmail: z.preprocess(emptyToUndefined, z.email("El correo del organizador no es válido.").max(254).optional()),
@@ -172,8 +172,8 @@ export const eventFormSchema = z.object({
   if (value.showVirtualUrl && value.attendanceMode === "in_person") {
     context.addIssue({ code: "custom", path: ["showVirtualUrl"], message: "Un evento exclusivamente presencial no puede publicar un enlace virtual." });
   }
-  if (!value.isFree && value.priceAmount === undefined) {
-    context.addIssue({ code: "custom", path: ["priceAmount"], message: "Indica el precio del evento." });
+  if (!value.isFree && (value.priceAmount === undefined || value.priceAmount <= 0)) {
+    context.addIssue({ code: "custom", path: ["priceAmount"], message: "Indica un precio mayor que cero para el evento pago." });
   }
   if (value.featuredImageUrl && (!value.imageAltEs || !value.imageAltEn)) {
     if (!value.imageAltEs) context.addIssue({ code: "custom", path: ["imageAltEs"], message: "Describe la imagen en español." });
@@ -243,6 +243,9 @@ export function formChecked(formData: FormData, name: string) {
 }
 
 export function adminDatabaseError(error: { code?: string; message?: string }, entity: string) {
+  if (error.code === "40001") return "Otra persona modificó este contenido. Copia tus cambios y recarga la página antes de volver a guardar.";
+  if (error.code === "P0002") return "El contenido ya no existe. Recarga el listado antes de continuar.";
+  if (error.code === "PGRST202") return "Falta aplicar la migración de guardado del admin en Supabase. Contacta al administrador del sitio.";
   if (error.code === "23505") return `Ya existe ${entity} con ese código o slug en el idioma seleccionado.`;
   if (error.code === "23503") return `No se puede guardar ${entity} porque una relación seleccionada ya no existe.`;
   if (error.code === "23514" || error.code === "22P02") return `Los datos de ${entity} no cumplen las reglas de formato o consistencia.`;
