@@ -14,6 +14,65 @@ const memberLogoFiles = [1, 3, 4, 5, 6, 11, 12, 13, 14, 15, 16, 19, 21, 23, 24, 
 export type CumbreLocale = 'es' | 'en';
 type LocalizedText = readonly [spanish: string, english: string];
 
+const guests: {
+  name: string;
+  image: string;
+  role: LocalizedText;
+  organization?: string;
+  initiatives?: string[];
+  country: LocalizedText;
+  flag: string;
+}[] = [
+  {
+    name: 'Mike y Lorena Bunster',
+    image: 'mike-lorena',
+    role: ['Fundadores', 'Founders'],
+    initiatives: ['Alas de Refugio', 'Expansión de Amor', 'Colegio de Luz'],
+    country: ['Chile', 'Chile'],
+    flag: 'cl',
+  },
+  {
+    name: 'Sandra B. Prieto',
+    image: 'sandra-prieto',
+    role: ['Fundadora y CEO', 'Founder and CEO'],
+    organization: 'SIGUE Network',
+    country: ['Estados Unidos', 'United States'],
+    flag: 'us',
+  },
+  {
+    name: 'Jorge H. Mejía',
+    image: 'jorge-mejia',
+    role: ['Director Sigue Fellows', 'Sigue Fellows Director'],
+    organization: 'SIGUE Network',
+    country: ['Colombia', 'Colombia'],
+    flag: 'co',
+  },
+  {
+    name: 'Jack Benjamin',
+    image: 'jack-benjamin',
+    role: ['Fundador', 'Founder'],
+    organization: 'Global Enterprise Network (GEN)',
+    country: ['Estados Unidos', 'United States'],
+    flag: 'us',
+  },
+  {
+    name: 'Marcela Erazo',
+    image: 'marcela-erazo',
+    role: ['Gerente General', 'General Manager'],
+    organization: 'Génesis Ingeniería y Medio Ambiente SAS',
+    country: ['Colombia', 'Colombia'],
+    flag: 'co',
+  },
+  {
+    name: 'Mark Petersen',
+    image: 'mark-petersen',
+    role: ['Fundador y CEO', 'Founder and CEO'],
+    organization: 'Stronger Philanthropy',
+    country: ['Canadá', 'Canada'],
+    flag: 'ca',
+  },
+];
+
 const experienceItems: LocalizedText[] = [
   ['Conversaciones inspiradoras', 'Inspiring conversations'],
   ['Mesas de escucha', 'Listening tables'],
@@ -575,54 +634,36 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                 'Voices with a heart for service and experience in integral community impact across several countries, here to worship, teach, learn, and inspire. More guests coming soon.'
               )}
             </p>
-            <div className={styles.speakersGrid}>
-              <article>
-                <div className={styles.speakerImage}>
-                  <Image
-                    src={`${asset}/mike-lorena.webp`}
-                    alt="Mike y Lorena Bunster"
-                    fill
-                    className={styles.containImage}
-                    sizes="(max-width: 600px) 86vw, 360px"
-                    unoptimized
-                  />
-                </div>
-                <h3>{text('Pastores Mike y Lorena Bunster', 'Pastors Mike and Lorena Bunster')}</h3>
-                <p className={styles.speakerRole}>
-                  {text(
-                    'Fundadores y líderes de iniciativas de impacto social',
-                    'Founders and leaders of social impact initiatives'
-                  )}
-                </p>
-                <p className={styles.speakerInitiatives}>
-                  <span>· Alas de Refugio</span>
-                  <span>· Expansión de Amor</span>
-                  <span>· Colegio de Luz</span>
-                </p>
-                <p className={styles.speakerCountry}>Chile</p>
-              </article>
-              <article>
-                <div className={styles.speakerImage}>
-                  <Image
-                    src={`${asset}/sandra-prieto.webp`}
-                    alt="Sandra B. Prieto"
-                    fill
-                    className={styles.containImage}
-                    sizes="(max-width: 600px) 86vw, 360px"
-                    unoptimized
-                  />
-                </div>
-                <h3>Sandra B. Prieto</h3>
-                <p className={styles.speakerRole}>{text('Fundadora', 'Founder')}</p>
-                <p className={styles.speakerOrganization}>SIGUE Network</p>
-                <p className={styles.speakerCountry}>{text('Estados Unidos', 'United States')}</p>
-              </article>
-              <article className={styles.speakerSoon}>
-                <span className={styles.speakerSoonMark} aria-hidden="true" />
-                <h3>{text('Próximamente', 'Coming soon')}</h3>
-                <p className={styles.speakerSoonLead}>{text('Más invitados', 'More guests')}</p>
-                <p>{text('Iremos anunciando', 'We will announce them soon')}</p>
-              </article>
+            <div className={styles.speakersPanel}>
+              <div className={styles.speakersGrid}>
+                {guests.map((guest) => (
+                  <article key={guest.image}>
+                    <Image
+                      src={`${asset}/guest-${guest.image}.webp`}
+                      alt={guest.name}
+                      width={250}
+                      height={240}
+                      className={styles.speakerImage}
+                      sizes="250px"
+                    />
+                    <h3>{guest.name}</h3>
+                    <p className={styles.speakerRole}>{localized(guest.role)}</p>
+                    {guest.initiatives && (
+                      <ul className={styles.speakerInitiatives}>
+                        {guest.initiatives.map((initiative) => <li key={initiative}>· {initiative}</li>)}
+                      </ul>
+                    )}
+                    {guest.organization && <p className={styles.speakerOrganization}>{guest.organization}</p>}
+                    <Image
+                      src={`${asset}/flag-${guest.flag}.svg`}
+                      alt={localized(guest.country)}
+                      width={68}
+                      height={46}
+                      className={styles.speakerFlag}
+                    />
+                  </article>
+                ))}
+              </div>
             </div>
           </section>
 
