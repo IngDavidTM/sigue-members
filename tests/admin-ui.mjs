@@ -49,7 +49,7 @@ export default function Page() {
   </main>;
 }
 `);
-  server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'dev', '--port', String(port)], { env: { ...process.env, SIGUE_TEST_DIST_DIR: '.next-admin-qa', NEXT_PUBLIC_SUPABASE_URL: fixture.url, NEXT_PUBLIC_SUPABASE_ANON_KEY: 'local-test-key', NEXT_PUBLIC_SITE_URL: 'https://example.org', CRON_SECRET: 'qa-cron-secret' }, stdio: ['ignore', 'pipe', 'pipe'] });
+  server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'dev', '--port', String(port)], { env: { ...process.env, SIGUE_TEST_DIST_DIR: '.next-admin-qa', NEXT_PUBLIC_SUPABASE_URL: fixture.url, NEXT_PUBLIC_SUPABASE_ANON_KEY: 'local-test-key', SUPABASE_SERVICE_ROLE_KEY: 'local-test-service-key', FORM_RATE_LIMIT_SECRET: 'local-test-rate-limit-key', NEXT_PUBLIC_SITE_URL: 'https://example.org', CRON_SECRET: 'qa-cron-secret' }, stdio: ['ignore', 'pipe', 'pipe'] });
   let log = '';
   server.stdout.on('data', (chunk) => { log += chunk; });
   server.stderr.on('data', (chunk) => { log += chunk; });
