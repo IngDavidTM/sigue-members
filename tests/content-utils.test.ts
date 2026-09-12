@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import sharp from "sharp";
+import { optimizeContentImage } from "../lib/content/process-image.ts";
 import { sanitizeRichText, validateSanitizedRichText, zonedInputToIso, isoToZonedInput } from "../lib/content/admin-utils.ts";
 
 test("la agenda opcional permite vaciar el editor; el cuerpo exige texto", () => {
@@ -30,4 +32,24 @@ test("convierte zonas horarias y rechaza fechas imposibles y saltos de DST", () 
     assert.throws(() => zonedInputToIso(invalid, "UTC"));
   assert.throws(() => zonedInputToIso("2026-03-08T02:30", "America/New_York"));
   assert.throws(() => zonedInputToIso("2026-01-01T10:00", "Invalid/Zone"));
+});
+
+
+test("el servidor decodifica, optimiza y mantiene las proporciones de la imagen", async () => {
+  const input = await sharp({ create: { width: 3000, height: 1500, channels: 4, background: { r: 81, g: 32, b: 123, alpha: 0.5 } } }).webp().toBuffer();
+  const output = await optimizeContentImage(new File([input], "foto.webp", { type: "image/webp" }));
+  const metadata = await sharp(output).metadata();
+  assert.equal(metadata.format, "webp");
+  assert.equal(metadata.width, 2400);
+  assert.equal(metadata.height, 1200);
+  assert.equal(metadata.hasAlpha, true);
+  assert.equal(metadata.exif, undefined);
+  const small = await sharp({ create: { width: 100, height: 50, channels: 3, background: "white" } }).webp().toBuffer();
+  const smallResult = await sharp(await optimizeContentImage(new File([small], "small.webp"))).metadata();
+  assert.equal(smallResult.width, 100);
+});
+
+test("el servidor rechaza un archivo truncado aunque su cabecera diga WebP", async () => {
+  const forged = new File(["RIFF\x00\x00\x00\x00WEBP"], "forged.webp", { type: "image/webp" });
+  await assert.rejects(() => optimizeContentImage(forged));
 });

@@ -1,8 +1,8 @@
-import sharp from "sharp";
 import { NextResponse } from "next/server";
 
 import { getAuthenticatedProfile } from "@/lib/auth/authorization";
 import { hasValidMediaSignature, isAllowedMediaFile, MAX_MEDIA_BYTES } from "@/lib/content/admin-validation";
+import { optimizeContentImage } from "@/lib/content/process-image";
 import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
@@ -40,9 +40,7 @@ export async function POST(request: Request) {
 
   let image: Buffer;
   try {
-    image = await sharp(Buffer.from(await file.arrayBuffer()), { limitInputPixels: 40_000_000, failOn: "warning" })
-      .rotate().resize({ width: 2400, height: 2400, fit: "inside", withoutEnlargement: true })
-      .webp({ quality: 85 }).toBuffer();
+    image = await optimizeContentImage(file);
   } catch {
     return NextResponse.json({ error: "La imagen está dañada o supera los 40 megapíxeles. Exporta una versión más pequeña." }, { status: 400 });
   }
