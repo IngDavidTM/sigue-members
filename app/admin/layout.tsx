@@ -3,12 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   CalendarDays,
+  ClipboardList,
   FileText,
   FolderTree,
   Gauge,
   LogOut,
   MapPin,
   MessageSquareText,
+  Inbox,
   Tags,
 } from "lucide-react";
 
@@ -30,6 +32,8 @@ const navigation = [
   { href: "/admin/comentarios", label: "Comentarios", icon: MessageSquareText },
   { href: "/admin/eventos", label: "Eventos", icon: CalendarDays },
   { href: "/admin/sedes", label: "Sedes", icon: MapPin },
+  { href: "/admin/formularios", label: "Formularios", icon: ClipboardList },
+  { href: "/admin/respuestas", label: "Respuestas", icon: Inbox },
 ];
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {

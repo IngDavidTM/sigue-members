@@ -100,6 +100,9 @@
 .status[data-status="rejected"],
 .status[data-status="cancelled"] { background: #f3e1e6; color: #87344c; }
 .status[data-status="spam"] { background: #ffe2e2; color: #9c2020; }
+.status[data-status="sent"] { background: #dcf7e9; color: #14643d; }
+.status[data-status="pending"] { background: #fff0c9; color: #795600; }
+.status[data-status="failed"] { background: #ffe2e2; color: #9c2020; }
 
 .empty {
   padding: 60px 25px;

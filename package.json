@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:admin": "node --test tests/admin-validation.test.ts tests/content-utils.test.ts",
+    "test:admin": "node --test tests/admin-validation.test.ts tests/content-utils.test.ts tests/forms.test.ts",
     "admin:grant": "node scripts/grant-admin.mjs",
     "test:admin:ui": "node tests/admin-ui.mjs"
   },

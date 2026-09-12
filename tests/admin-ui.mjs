@@ -22,12 +22,20 @@ import { ActionForm } from '@/app/admin/components/ActionForm';
 import { RichTextEditor } from '@/app/admin/components/RichTextEditor';
 import { MediaField } from '@/app/admin/components/MediaField';
 import { SeoAssistant } from '@/app/admin/components/SeoAssistant';
+import DynamicForm from '@/app/components/forms/DynamicForm';
 import type { AdminActionState } from '@/app/admin/actions/types';
+import type { DynamicFormFieldRow, DynamicFormRow } from '@/types/supabase';
 export default function Page() {
   async function save(_state: AdminActionState, _form: FormData): Promise<AdminActionState> {
     'use server';
     return { error: 'Validación de prueba', fieldErrors: { seoTitleEs: ['Revisa el título SEO'] } };
   }
+  const form = { id: '33333333-3333-4333-8333-333333333333', slug: 'qa-contacto', name: 'Contacto QA', status: 'published', title_es: 'Conversemos', title_en: 'Let’s talk', description_es: 'Formulario configurable', description_en: 'Configurable form', submit_label_es: 'Enviar mensaje', submit_label_en: 'Send message', success_message_es: 'Mensaje recibido.', success_message_en: 'Message received.', notification_emails: [], notification_subject: null, reply_to_field_key: 'correo', created_at: new Date().toISOString(), updated_at: new Date().toISOString(), created_by: null, updated_by: null } as DynamicFormRow;
+  const fields = [
+    { id: 'field-name', form_id: form.id, field_key: 'nombre', field_type: 'short_text', label_es: 'Nombre completo', label_en: 'Full name', placeholder_es: 'Tu nombre', placeholder_en: 'Your name', help_text_es: null, help_text_en: null, required: true, options: [], validation: { max_length: 120 }, conditional_logic: null, sort_order: 10, width: 50, created_at: form.created_at, updated_at: form.updated_at },
+    { id: 'field-email', form_id: form.id, field_key: 'correo', field_type: 'email', label_es: 'Correo electrónico', label_en: 'Email address', placeholder_es: null, placeholder_en: null, help_text_es: null, help_text_en: null, required: true, options: [], validation: { max_length: 254 }, conditional_logic: null, sort_order: 20, width: 50, created_at: form.created_at, updated_at: form.updated_at },
+    { id: 'field-topic', form_id: form.id, field_key: 'asunto', field_type: 'select', label_es: 'Asunto', label_en: 'Topic', placeholder_es: null, placeholder_en: null, help_text_es: null, help_text_en: null, required: true, options: [{ value: 'alianzas', label_es: 'Alianzas', label_en: 'Partnerships' }], validation: {}, conditional_logic: null, sort_order: 30, width: 100, created_at: form.created_at, updated_at: form.updated_at },
+  ] as DynamicFormFieldRow[];
   return <main style={{maxWidth:900, margin:'40px auto', padding:20}}>
     <ActionForm action={save}>
       <label>Título<input name="titleEs" defaultValue="Original" /></label>
@@ -37,6 +45,7 @@ export default function Page() {
       <MediaField name="featuredImageUrl" label="Portada" />
       <details><summary>SEO</summary><label>Título SEO<input name="seoTitleEs" defaultValue="" /></label><label>Descripción SEO<textarea name="seoDescriptionEs" /></label><SeoAssistant suffix="Es" /></details>
     </ActionForm>
+    <div style={{marginTop:60}}><DynamicForm form={form} fields={fields} locale="es" sourcePath="/es/content-editor-qa" /></div>
   </main>;
 }
 `);
@@ -98,6 +107,13 @@ export default function Page() {
     await page.setViewportSize({ width, height: 900 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   }
+  await page.getByRole('textbox', { name: 'Nombre completo' }).fill('Sandra');
+  await page.getByRole('textbox', { name: 'Correo electrónico' }).fill('sandra@example.org');
+  await page.getByRole('combobox', { name: 'Asunto' }).selectOption('alianzas');
+  await page.getByRole('button', { name: 'Enviar mensaje' }).click();
+  await page.getByText('Mensaje recibido.', { exact: true }).waitFor();
+  assert.ok(fixture.requests.some((url) => url.pathname === '/rest/v1/rpc/submit_dynamic_form'));
+  console.log('Dynamic form: configured fields, public Server Action, RPC submission and success state passed.');
   for (const [segment, slug] of [['blog', 'articulo-prueba'], ['evento', 'evento-prueba']]) {
     await page.goto(`${origin}/es/${segment}/${slug}`);
     assert.equal(await page.title(), 'Título SEO configurado');

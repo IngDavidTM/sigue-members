@@ -12,6 +12,12 @@ export type CommentStatus = 'pending' | 'approved' | 'spam' | 'rejected';
 export type EventStatus = 'draft' | 'published' | 'cancelled' | 'archived';
 export type EventAttendanceMode = 'in_person' | 'virtual' | 'hybrid';
 export type ContentLocale = 'es' | 'en';
+export type DynamicFormStatus = 'draft' | 'published' | 'archived';
+export type DynamicFormFieldType =
+  | 'short_text' | 'long_text' | 'email' | 'phone' | 'number' | 'date' | 'url'
+  | 'select' | 'multiselect' | 'radio' | 'checkbox' | 'consent';
+export type DynamicFormSubmissionStatus = 'new' | 'read' | 'archived' | 'spam';
+export type DynamicFormNotificationStatus = 'pending' | 'sent' | 'failed';
 
 type TableDefinition<Row, Insert, Update = Partial<Insert>> = {
   Row: Row;
@@ -196,6 +202,89 @@ export type EventTranslationRow = {
   nofollow: boolean;
 };
 
+export type DynamicFormRow = {
+  id: string;
+  slug: string;
+  name: string;
+  status: DynamicFormStatus;
+  title_es: string;
+  title_en: string;
+  description_es: string | null;
+  description_en: string | null;
+  submit_label_es: string;
+  submit_label_en: string;
+  success_message_es: string;
+  success_message_en: string;
+  notification_emails: string[];
+  notification_subject: string | null;
+  reply_to_field_key: string | null;
+  created_by: string | null;
+  updated_by: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type DynamicFormFieldRow = {
+  id: string;
+  form_id: string;
+  field_key: string;
+  field_type: DynamicFormFieldType;
+  label_es: string;
+  label_en: string;
+  placeholder_es: string | null;
+  placeholder_en: string | null;
+  help_text_es: string | null;
+  help_text_en: string | null;
+  required: boolean;
+  options: Json;
+  validation: Json;
+  conditional_logic: Json | null;
+  sort_order: number;
+  width: 25 | 50 | 75 | 100;
+  created_at: string;
+  updated_at: string;
+};
+
+export type DynamicFormSubmissionRow = {
+  id: string;
+  form_id: string;
+  locale: ContentLocale;
+  status: DynamicFormSubmissionStatus;
+  answers: Json;
+  source_path: string | null;
+  admin_notes: string | null;
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  created_at: string;
+};
+
+export type LegacyContentSourceRow = {
+  id: string;
+  source_system: string;
+  source_kind: 'blog' | 'event' | 'media';
+  source_id: string;
+  source_url: string;
+  target_table: 'blog_posts' | 'events' | 'storage.objects';
+  target_id: string;
+  checksum: string;
+  source_payload: Json | null;
+  imported_at: string;
+};
+
+export type DynamicFormNotificationRow = {
+  id: string;
+  submission_id: string;
+  recipients: string[];
+  subject: string;
+  status: DynamicFormNotificationStatus;
+  attempts: number;
+  provider_id: string | null;
+  last_error: string | null;
+  attempted_at: string | null;
+  sent_at: string | null;
+  created_at: string;
+};
+
 export interface Database {
   public: {
     Tables: {
@@ -352,6 +441,84 @@ export interface Database {
         noindex?: boolean;
         nofollow?: boolean;
       }>;
+      dynamic_forms: TableDefinition<DynamicFormRow, {
+        id?: string;
+        slug: string;
+        name: string;
+        status?: DynamicFormStatus;
+        title_es: string;
+        title_en: string;
+        description_es?: string | null;
+        description_en?: string | null;
+        submit_label_es?: string;
+        submit_label_en?: string;
+        success_message_es?: string;
+        success_message_en?: string;
+        notification_emails?: string[];
+        notification_subject?: string | null;
+        reply_to_field_key?: string | null;
+        created_by?: string | null;
+        updated_by?: string | null;
+        created_at?: string;
+        updated_at?: string;
+      }>;
+      dynamic_form_fields: TableDefinition<DynamicFormFieldRow, {
+        id?: string;
+        form_id: string;
+        field_key: string;
+        field_type: DynamicFormFieldType;
+        label_es: string;
+        label_en: string;
+        placeholder_es?: string | null;
+        placeholder_en?: string | null;
+        help_text_es?: string | null;
+        help_text_en?: string | null;
+        required?: boolean;
+        options?: Json;
+        validation?: Json;
+        conditional_logic?: Json | null;
+        sort_order?: number;
+        width?: 25 | 50 | 75 | 100;
+        created_at?: string;
+        updated_at?: string;
+      }>;
+      dynamic_form_submissions: TableDefinition<DynamicFormSubmissionRow, {
+        id?: string;
+        form_id: string;
+        locale: ContentLocale;
+        status?: DynamicFormSubmissionStatus;
+        answers: Json;
+        source_path?: string | null;
+        admin_notes?: string | null;
+        reviewed_by?: string | null;
+        reviewed_at?: string | null;
+        created_at?: string;
+      }>;
+      legacy_content_sources: TableDefinition<LegacyContentSourceRow, {
+        id?: string;
+        source_system?: string;
+        source_kind: 'blog' | 'event' | 'media';
+        source_id: string;
+        source_url: string;
+        target_table: 'blog_posts' | 'events' | 'storage.objects';
+        target_id: string;
+        checksum: string;
+        source_payload?: Json | null;
+        imported_at?: string;
+      }>;
+      dynamic_form_notifications: TableDefinition<DynamicFormNotificationRow, {
+        id?: string;
+        submission_id: string;
+        recipients: string[];
+        subject: string;
+        status?: DynamicFormNotificationStatus;
+        attempts?: number;
+        provider_id?: string | null;
+        last_error?: string | null;
+        attempted_at?: string | null;
+        sent_at?: string | null;
+        created_at?: string;
+      }>;
     };
     Views: {
       approved_blog_comments: {
@@ -386,6 +553,14 @@ export interface Database {
           p_author_website: string | null;
           p_content: string;
         };
+        Returns: string;
+      };
+      submit_dynamic_form: {
+        Args: { p_slug: string; p_locale: string; p_answers: Json; p_source_path?: string | null };
+        Returns: string;
+      };
+      save_dynamic_form: {
+        Args: { p_id: string | null; p_record: Json; p_fields: Json; p_expected_updated_at: string | null };
         Returns: string;
       };
     };
