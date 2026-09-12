@@ -12,6 +12,7 @@ import sharp from "sharp";
 const ROOT = process.cwd();
 const WP_ORIGIN = "https://siguenetwork.org";
 const APPLY = process.argv.includes("--apply");
+const IMPORT_VERSION = 2;
 const REPORT_DIR = path.join(ROOT, ".migration-reports");
 const redirectsPath = path.join(ROOT, "data", "wordpress-legacy-redirects.json");
 
@@ -153,9 +154,17 @@ function imageUrls(html) {
 }
 async function main() {
   await loadEnv();
-  const [posts, categories, wpEvents, edgeEvents] = await Promise.all([fetchWpCollection("posts"), fetchWpCollection("categories"), discoverWpManagerEvents(), discoverEdgeEvents()]);
+  const [posts, categories, tags, comments, wpEvents, edgeEvents] = await Promise.all([
+    fetchWpCollection("posts"), fetchWpCollection("categories"), fetchWpCollection("tags"),
+    fetchWpCollection("comments?status=approve"), discoverWpManagerEvents(), discoverEdgeEvents(),
+  ]);
   const events = [...wpEvents, ...edgeEvents];
-  const report = { mode: APPLY ? "apply" : "inventory", startedAt: new Date().toISOString(), source: { blogs: posts.length, categories: categories.length, events: events.length }, images: { discovered: 0, uploaded: 0, reused: 0 }, blogs: { created: 0, updated: 0, skipped: 0, failed: 0 }, events: { created: 0, updated: 0, skipped: 0, failed: 0 }, errors: [] };
+  const postIds = new Set(posts.map((post) => post.id));
+  const usedTagIds = new Set(posts.flatMap((post) => post.tags ?? []));
+  const usedTags = tags.filter((tag) => usedTagIds.has(tag.id));
+  const relevantComments = comments.filter((comment) => postIds.has(comment.post));
+  const counters = () => ({ created: 0, updated: 0, skipped: 0, failed: 0 });
+  const report = { mode: APPLY ? "apply" : "inventory", startedAt: new Date().toISOString(), source: { blogs: posts.length, categories: categories.length, tags: usedTags.length, comments: relevantComments.length, events: events.length }, images: { discovered: 0, uploaded: 0, reused: 0 }, blogs: counters(), tags: counters(), comments: counters(), events: counters(), errors: [] };
   const redirects = {};
   posts.forEach((post) => { redirects[new URL(post.link).pathname.replace(/\/$/, "")] = `/es/blog/${post.slug}`; });
   events.forEach((event) => { redirects[new URL(event.sourceUrl).pathname.replace(/\/$/, "")] = `/es/evento/${slugFromUrl(event.sourceUrl)}`; });
@@ -209,25 +218,97 @@ async function main() {
   }
   for (const category of categories) if (category.parent && categoryIds.has(category.parent)) await supabase.from("blog_series").update({ parent_id: categoryIds.get(category.parent) }).eq("id", categoryIds.get(category.id));
 
+  const tagIds = new Map();
+  for (const tag of usedTags) {
+    try {
+      const sourceChecksum = hash({ version: IMPORT_VERSION, id: tag.id, name: tag.name, slug: tag.slug, description: tag.description });
+      const mapping = await supabase.from("legacy_content_sources").select("target_id,checksum").eq("source_kind", "tag").eq("source_id", String(tag.id)).maybeSingle();
+      if (mapping.error) throw new Error(mapping.error.message);
+      const existingCode = await supabase.from("blog_tags").select("id").eq("code", `wp-${tag.slug}`.slice(0, 80)).maybeSingle();
+      if (existingCode.error) throw new Error(existingCode.error.message);
+      const existingSlug = await supabase.from("blog_tag_translations").select("tag_id").eq("locale", "es").eq("slug", tag.slug).maybeSingle();
+      if (existingSlug.error) throw new Error(existingSlug.error.message);
+      const targetId = mapping.data?.target_id || existingCode.data?.id || existingSlug.data?.tag_id;
+      const baseRecord = { code: `wp-${tag.slug}`.slice(0, 80) };
+      const base = targetId
+        ? await supabase.from("blog_tags").upsert({ id: targetId, ...baseRecord }).select("id").single()
+        : await supabase.from("blog_tags").insert(baseRecord).select("id").single();
+      if (base.error) throw new Error(base.error.message);
+      const name = decode(tag.name).slice(0, 80);
+      const translated = await supabase.from("blog_tag_translations").upsert([
+        { tag_id: base.data.id, locale: "es", name, slug: tag.slug.slice(0, 100) },
+        { tag_id: base.data.id, locale: "en", name, slug: tag.slug.slice(0, 100) },
+      ], { onConflict: "tag_id,locale" });
+      if (translated.error) throw new Error(translated.error.message);
+      const mapped = await supabase.from("legacy_content_sources").upsert({ source_kind: "tag", source_id: String(tag.id), source_url: tag.link || `${WP_ORIGIN}/tag/${tag.slug}/`, target_table: "blog_tags", target_id: base.data.id, checksum: sourceChecksum, source_payload: { count: tag.count } }, { onConflict: "source_system,source_kind,source_id" });
+      if (mapped.error) throw new Error(mapped.error.message);
+      tagIds.set(tag.id, base.data.id);
+      report.tags[mapping.data?.checksum === sourceChecksum ? "skipped" : mapping.data ? "updated" : "created"]++;
+    } catch (error) { report.tags.failed++; report.errors.push({ kind: "tag", source: tag.link, message: error.message }); }
+  }
+
   const postSeoPages = await concurrent(posts, 5, async (post) => { try { return await fetchText(post.link); } catch (error) { report.errors.push({ kind: "blog-seo", source: post.link, message: error.message }); return ""; } });
   const postUrlMap = new Map(posts.map((post) => [post.link, `/es/blog/${post.slug}`]));
+  const postTargetIds = new Map();
   await concurrent(posts, 3, async (post, index) => {
     try {
-      const sourceChecksum = hash(post); const mapping = await supabase.from("legacy_content_sources").select("target_id,checksum").eq("source_kind", "blog").eq("source_id", String(post.id)).maybeSingle(); if (mapping.error) throw new Error(mapping.error.message);
-      if (mapping.data?.checksum === sourceChecksum) { report.blogs.skipped++; return; }
+      const sourceChecksum = hash({ version: IMPORT_VERSION, post }); const mapping = await supabase.from("legacy_content_sources").select("target_id,checksum").eq("source_kind", "blog").eq("source_id", String(post.id)).maybeSingle(); if (mapping.error) throw new Error(mapping.error.message);
+      if (mapping.data?.checksum === sourceChecksum) { postTargetIds.set(post.id, mapping.data.target_id); report.blogs.skipped++; return; }
       const wasExisting = Boolean(mapping.data); const htmlPage = postSeoPages[index]; const featuredSource = post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ?? meta(htmlPage, "og:image"); const featured = await migrateImage(featuredSource, "blogs", post.id);
       let content = await rewriteImages(post.content?.rendered ?? "", "blogs", post.id); for (const [oldUrl, target] of postUrlMap) content = content.split(oldUrl).join(target); content = safeRichText(content);
       const deepestCategory = [...(post.categories ?? [])].reverse().find((id) => categoryIds.has(id));
       const postRecord = { id: mapping.data?.target_id, series_id: deepestCategory ? categoryIds.get(deepestCategory) : null, status: "published", featured_image_url: featured, author_name: post._embedded?.author?.[0]?.name || "SIGUE Network", is_featured: false, allow_comments: post.comment_status === "open", reading_time_minutes: readingTime(content), published_at: post.date_gmt ? `${post.date_gmt}Z` : post.date, created_at: post.date_gmt ? `${post.date_gmt}Z` : post.date, updated_at: post.modified_gmt ? `${post.modified_gmt}Z` : post.modified };
       if (!postRecord.id) delete postRecord.id;
       const saved = await supabase.from("blog_posts").upsert(postRecord).select("id").single(); if (saved.error) throw new Error(saved.error.message);
+      postTargetIds.set(post.id, saved.data.id);
       const title = decode(post.title?.rendered).slice(0, 160); const seoTitle = (meta(htmlPage, "og:title") || pageTitle(htmlPage) || title).slice(0, 60); const seoDescription = (meta(htmlPage, "description") || excerptFromHtml(post.excerpt?.rendered || content)).slice(0, 160); const newCanonical = `${WP_ORIGIN}/es/blog/${post.slug}`;
       const translations = ["es", "en"].map((locale) => ({ post_id: saved.data.id, locale, title, slug: post.slug.slice(0, 180), excerpt: (decode(post.excerpt?.rendered) || excerptFromHtml(content)).slice(0, 500), content_html: content, image_alt: (post._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || title).slice(0, 180), seo_title: seoTitle, seo_description: seoDescription, canonical_url: locale === "es" ? newCanonical : `${WP_ORIGIN}/en/blog/${post.slug}`, og_title: (meta(htmlPage, "og:title") || seoTitle).slice(0, 60), og_description: (meta(htmlPage, "og:description") || seoDescription).slice(0, 200), og_image_url: featured, noindex: locale === "en", nofollow: false, schema_type: "BlogPosting" }));
       const translated = await supabase.from("blog_post_translations").upsert(translations, { onConflict: "post_id,locale" }); if (translated.error) throw new Error(translated.error.message);
+      const importedTagIds = [...tagIds.values()];
+      if (importedTagIds.length) {
+        const cleared = await supabase.from("blog_post_tags").delete().eq("post_id", saved.data.id).in("tag_id", importedTagIds);
+        if (cleared.error) throw new Error(cleared.error.message);
+      }
+      const assignedTags = [...new Set((post.tags ?? []).map((tagId) => tagIds.get(tagId)).filter(Boolean))];
+      if (assignedTags.length) {
+        const assigned = await supabase.from("blog_post_tags").insert(assignedTags.map((tagId) => ({ post_id: saved.data.id, tag_id: tagId })));
+        if (assigned.error) throw new Error(assigned.error.message);
+      }
       const mapped = await supabase.from("legacy_content_sources").upsert({ source_kind: "blog", source_id: String(post.id), source_url: post.link, target_table: "blog_posts", target_id: saved.data.id, checksum: sourceChecksum, source_payload: { modified: post.modified, canonical: canonical(htmlPage), categories: post.categories } }, { onConflict: "source_system,source_kind,source_id" }); if (mapped.error) throw new Error(mapped.error.message);
       report.blogs[wasExisting ? "updated" : "created"]++;
     } catch (error) { report.blogs.failed++; report.errors.push({ kind: "blog", source: post.link, message: error.message }); }
   });
+
+  const commentTargetIds = new Map();
+  for (const comment of relevantComments.sort((a, b) => Number(Boolean(a.parent)) - Number(Boolean(b.parent)))) {
+    try {
+      const targetPostId = postTargetIds.get(comment.post);
+      if (!targetPostId) throw new Error(`Imported post ${comment.post} was not found`);
+      const sourceChecksum = hash({ version: IMPORT_VERSION, comment });
+      const mapping = await supabase.from("legacy_content_sources").select("target_id,checksum").eq("source_kind", "comment").eq("source_id", String(comment.id)).maybeSingle();
+      if (mapping.error) throw new Error(mapping.error.message);
+      if (mapping.data?.checksum === sourceChecksum) { commentTargetIds.set(comment.id, mapping.data.target_id); report.comments.skipped++; continue; }
+      const content = decode(comment.content?.rendered).slice(0, 4000);
+      if (content.length < 2) throw new Error("Comment content is empty");
+      const record = {
+        id: mapping.data?.target_id, post_id: targetPostId,
+        parent_id: comment.parent ? commentTargetIds.get(comment.parent) ?? null : null,
+        locale: "es", author_name: (decode(comment.author_name) || "Usuario de WordPress").slice(0, 100),
+        author_email: `wordpress-comment-${comment.id}@invalid.local`,
+        author_website: comment.author_url || null, content, status: "approved",
+        created_at: comment.date_gmt ? `${comment.date_gmt}Z` : comment.date,
+        updated_at: comment.date_gmt ? `${comment.date_gmt}Z` : comment.date,
+      };
+      if (!record.id) delete record.id;
+      const saved = await supabase.from("blog_comments").upsert(record).select("id").single();
+      if (saved.error) throw new Error(saved.error.message);
+      commentTargetIds.set(comment.id, saved.data.id);
+      const sourceUrl = `${comment.link || `${WP_ORIGIN}/?p=${comment.post}`}#comment-${comment.id}`;
+      const mapped = await supabase.from("legacy_content_sources").upsert({ source_kind: "comment", source_id: String(comment.id), source_url: sourceUrl, target_table: "blog_comments", target_id: saved.data.id, checksum: sourceChecksum, source_payload: { post_id: comment.post, parent_id: comment.parent || null } }, { onConflict: "source_system,source_kind,source_id" });
+      if (mapped.error) throw new Error(mapped.error.message);
+      report.comments[mapping.data ? "updated" : "created"]++;
+    } catch (error) { report.comments.failed++; report.errors.push({ kind: "comment", source: comment.link, message: error.message }); }
+  }
 
   await concurrent(events, 3, async (event) => {
     try {
@@ -254,8 +335,8 @@ async function main() {
 async function finish(report, posts, events) {
   report.finishedAt = new Date().toISOString(); report.inventory = { blogSlugs: posts.map((post) => post.slug), events: events.map((event) => ({ title: event.title, url: event.sourceUrl, startsAt: event.startsAt })) };
   await mkdir(REPORT_DIR, { recursive: true }); const filename = path.join(REPORT_DIR, `wordpress-${new Date().toISOString().replaceAll(":", "-")}.json`); await writeFile(filename, `${JSON.stringify(report, null, 2)}\n`);
-  console.log(JSON.stringify({ report: path.relative(ROOT, filename), redirects: path.relative(ROOT, redirectsPath), source: report.source, images: report.images, migratedBlogs: report.blogs, migratedEvents: report.events, errors: report.errors.length }, null, 2));
-  if (report.errors.length || report.blogs.failed || report.events.failed) process.exitCode = 1;
+  console.log(JSON.stringify({ report: path.relative(ROOT, filename), redirects: path.relative(ROOT, redirectsPath), source: report.source, images: report.images, migratedBlogs: report.blogs, migratedTags: report.tags, migratedComments: report.comments, migratedEvents: report.events, errors: report.errors.length }, null, 2));
+  if (report.errors.length || report.blogs.failed || report.tags.failed || report.comments.failed || report.events.failed) process.exitCode = 1;
 }
 
 main().catch((error) => { console.error(error); process.exitCode = 1; });

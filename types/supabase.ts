@@ -261,10 +261,10 @@ export type DynamicFormSubmissionRow = {
 export type LegacyContentSourceRow = {
   id: string;
   source_system: string;
-  source_kind: 'blog' | 'event' | 'media';
+  source_kind: 'blog' | 'event' | 'media' | 'tag' | 'comment';
   source_id: string;
   source_url: string;
-  target_table: 'blog_posts' | 'events' | 'storage.objects';
+  target_table: 'blog_posts' | 'events' | 'storage.objects' | 'blog_tags' | 'blog_comments';
   target_id: string;
   checksum: string;
   source_payload: Json | null;
@@ -504,10 +504,10 @@ export interface Database {
       legacy_content_sources: TableDefinition<LegacyContentSourceRow, {
         id?: string;
         source_system?: string;
-        source_kind: 'blog' | 'event' | 'media';
+        source_kind: 'blog' | 'event' | 'media' | 'tag' | 'comment';
         source_id: string;
         source_url: string;
-        target_table: 'blog_posts' | 'events' | 'storage.objects';
+        target_table: 'blog_posts' | 'events' | 'storage.objects' | 'blog_tags' | 'blog_comments';
         target_id: string;
         checksum: string;
         source_payload?: Json | null;
