@@ -62,10 +62,12 @@ export default async function BlogPostPage({ params }: Props) {
     <div className={styles.articleLayout}>
       <main>
         <div className={styles.articleMeta}><span>{post.author_name}</span>{post.published_at ? <time dateTime={post.published_at}>{new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(new Date(post.published_at))}</time> : null}<span>{post.reading_time_minutes} {es ? "min de lectura" : "min read"}</span></div>
-        {post.featured_image_url ? <img className={styles.featured} src={post.featured_image_url} alt={translation.image_alt || translation.title} /> : null}
+        {post.featured_image_url ? ( <img className={styles.featured} src={post.featured_image_url} alt={translation.image_alt || translation.title} /> ) : (
+  <div className={styles.imagePlaceholder}>SIGUE</div>
+)}
         <div className={styles.richText} dangerouslySetInnerHTML={{ __html: translation.content_html }} />
         {tags.length ? <div className={styles.tags}>{tags.map((tag) => <Link href={`/${locale}/tag/${tag.slug}`} key={tag.tag_id}>{tag.name}</Link>)}</div> : null}
-        <div className={styles.share}><strong>{es ? "Compartir:" : "Share:"}</strong><a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`} target="_blank" rel="noreferrer">LinkedIn</a><a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`} target="_blank" rel="noreferrer">Facebook</a><a href={`mailto:?subject=${encodeURIComponent(translation.title)}&body=${encodeURIComponent(url)}`}>Email</a></div>
+        <div className={styles.share}><strong>{es ? "Compartir:" : "Share:"}</strong><a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`} target="_blank" rel="noopener noreferrer">LinkedIn</a><a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`} target="_blank" rel="noopener noreferrer">Facebook</a><a href={`mailto:?subject=${encodeURIComponent(translation.title)}&body=${encodeURIComponent(url)}`}>Email</a></div>
         {post.allow_comments ? <section className={styles.comments}><h2>{es ? "Comentarios" : "Comments"}</h2>{comments.length ? <div className={styles.commentList}>{comments.map((comment) => <article className={styles.comment} key={comment.id}><strong>{comment.author_name}</strong><time dateTime={comment.created_at}>{new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(new Date(comment.created_at))}</time><p>{comment.content}</p></article>)}</div> : <p>{es ? "Sé la primera persona en comentar." : "Be the first to comment."}</p>}<h2>{es ? "Deja un comentario" : "Leave a comment"}</h2><CommentForm postId={post.id} slug={translation.slug} locale={locale} /></section> : null}
       </main>
       <aside className={styles.sidebar}>

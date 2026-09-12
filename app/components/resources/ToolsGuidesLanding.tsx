@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import styles from './ToolsGuidesLanding.module.css';
+import Link from 'next/link';
 
 type Locale = 'es' | 'en';
 
@@ -89,7 +90,7 @@ export default function ToolsGuidesLanding({ locale }: { locale: Locale }) {
             <h1>{c.title}</h1>
           </div>
           <p aria-label={locale === 'es' ? 'Ruta de navegación' : 'Breadcrumb'}>
-            <a href={`/${locale}`}>SIGUE Network</a>
+            <Link href={`/${locale}`}>SIGUE Network</Link>
             <span aria-hidden="true">/</span>
             {c.breadcrumb}
           </p>
