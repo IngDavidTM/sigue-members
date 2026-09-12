@@ -1,7 +1,8 @@
-export default function MyCalendarPage() {
+export default async function MyCalendarPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
     <main>
-      <h1>Calendario</h1>
+      <h1>{locale === "en" ? "My calendar" : "Mi calendario"}</h1>
     </main>
   );
 }

@@ -1,7 +1,8 @@
-export default function OrganizerDashboardPage() {
+export default async function OrganizerDashboardPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
     <main>
-      <h1>Organizer Dashboard</h1>
+      <h1>{locale === "en" ? "Organizer dashboard" : "Panel de organizadores"}</h1>
     </main>
   );
 }

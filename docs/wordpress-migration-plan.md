@@ -40,7 +40,7 @@ Termina cuando los conteos de origen y destino coinciden y una segunda ejecució
 - Conservar slugs y fechas originales.
 - Importar título SEO, descripción, canonical, Open Graph y robots desde el HTML público de Rank Math.
 - Crear redirecciones permanentes de las URLs históricas a las rutas localizadas nuevas.
-- Mantener las traducciones inglesas importadas con `noindex` hasta que tengan traducción editorial real.
+- Publicar traducciones inglesas completas y permitir su revisión posterior desde el admin.
 - Validar sitemap, canonical, alternates y datos estructurados.
 
 Termina sin URLs históricas públicas que respondan 404 y sin imágenes que apunten al hosting de WordPress.
@@ -69,6 +69,18 @@ WordPress y su base MySQL se pueden retirar después de conservar un respaldo fi
 
 - **Fase 1 completada:** las migraciones `202609110003` a `202609120002` están aplicadas en Supabase. El formulario bilingüe `contacto` quedó publicado con cinco preguntas. Los envíos válidos, el rechazo de valores estructurados inválidos, el límite de frecuencia y el guardado administrativo atómico se comprobaron dentro de transacciones revertidas. El RPC de escritura ya no es ejecutable por clientes anónimos.
 - **Fase 2 completada:** se importaron 46 blogs, 12 etiquetas utilizadas, un comentario aprobado, 11 eventos de WP Event Manager y 3 eventos `edge-event`. El importador consulta individualmente los eventos caducados para conservar su descripción aunque WordPress la oculte en la página pública. Las 49 imágenes únicas se copiaron a `content-media` en AVIF o WebP. Una segunda ejecución omitió todo por checksum sin crear duplicados.
-- **Fase 3 completada en código y datos:** los HTML importados ya no apuntan a `wp-content`; se conservaron metadatos SEO, slugs y fechas. Las 60 URLs antiguas tienen redirecciones 308. Las copias inglesas importadas permanecen con `noindex` hasta su traducción editorial.
+- **Fase 3 completada en código y datos:** los HTML importados ya no apuntan a `wp-content`; se conservaron metadatos SEO, slugs y fechas. Las 60 URLs antiguas tienen redirecciones 308. Los blogs, eventos, series y etiquetas tienen versiones inglesas diferenciadas, slugs propios y metadatos indexables.
 - **Fase 4 completada:** el panel permite crear y editar formularios, consultar respuestas, anotar su seguimiento, exportar CSV y reintentar avisos por correo.
 - **Fase 5 pendiente de operación:** falta configurar las variables públicas y de correo en el proveedor de despliegue, hacer la importación incremental final después de congelar WordPress y cambiar el DNS cuando se apruebe la nueva web.
+
+## Mantenimiento de traducciones importadas
+
+WordPress solo contiene los artículos y eventos originales en español. El
+importador actualiza exclusivamente esa versión para evitar que una copia en
+español aparezca bajo `/en` o sobrescriba el trabajo posterior del equipo.
+
+El paquete inicial inglés está en `data/imported-content-en.json`. Se puede
+revisar con `npm run content:english` y aplicar con
+`npm run content:english:apply`. La operación guarda un respaldo, reemplaza
+únicamente filas inglesas que todavía son idénticas al español y conserva las
+traducciones ya editadas desde el admin.

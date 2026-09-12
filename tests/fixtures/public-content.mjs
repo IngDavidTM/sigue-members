@@ -10,6 +10,18 @@ export async function startPublicContentFixture(siteOrigin) {
     og_title: 'Título social configurado', og_description: 'Descripción social configurada', og_image_url: `${siteOrigin}/qa-photo.webp`,
     canonical_url: 'https://example.org/canonical', noindex: false, nofollow: true, schema_type: 'BlogPosting',
   };
+  const englishTranslation = {
+    ...translation,
+    title: 'English test content',
+    excerpt: 'English test summary',
+    content_html: `<p>Public content in English</p><img src="${siteOrigin}/qa-photo.webp" alt="Image inside the text">`,
+    image_alt: 'Featured image',
+    seo_title: 'Configured English SEO title',
+    seo_description: 'Configured English SEO description',
+    og_title: 'Configured English social title',
+    og_description: 'Configured English social description',
+    canonical_url: 'https://example.org/en/canonical',
+  };
   const post = { id: 'post', status: 'published', published_at: past, updated_at: past, created_at: past, author_name: 'Autor', reading_time_minutes: 2, featured_image_url: `${siteOrigin}/qa-photo.webp`, is_featured: false, allow_comments: false, series_id: null };
   const event = { id: 'event', status: 'published', attendance_mode: 'virtual', published_at: past, starts_at: future, ends_at: '2090-01-01T14:00:00.000Z', updated_at: past, timezone: 'America/Bogota', all_day: false, venue_id: null, organizer_name: 'SIGUE Network', registration_url: 'https://example.org/register', registration_deadline: null, is_free: true, currency: 'USD', capacity: null, show_virtual_url: false, featured_image_url: `${siteOrigin}/qa-photo.webp` };
   const dynamicForm = {
@@ -27,13 +39,13 @@ export async function startPublicContentFixture(siteOrigin) {
     blog_posts: [post, { ...post, id: 'draft-post', status: 'draft' }],
     blog_post_translations: [
       { ...translation, post_id: 'post', locale: 'es', slug: 'articulo-prueba' },
-      { ...translation, post_id: 'post', locale: 'en', slug: 'test-article', noindex: true },
+      { ...englishTranslation, post_id: 'post', locale: 'en', slug: 'test-article', noindex: true },
       { ...translation, post_id: 'draft-post', locale: 'es', slug: 'borrador' },
     ],
     events: [event, { ...event, id: 'past-event', starts_at: past, ends_at: past }, { ...event, id: 'draft-event', status: 'draft' }, { ...event, id: 'future-event', published_at: future }],
     event_translations: [
       { ...translation, event_id: 'event', locale: 'es', slug: 'evento-prueba', agenda_html: '<p>Agenda pública</p>' },
-      { ...translation, event_id: 'event', locale: 'en', slug: 'test-event', noindex: true },
+      { ...englishTranslation, event_id: 'event', locale: 'en', slug: 'test-event', agenda_html: '<p>Public agenda</p>', noindex: true },
       { ...translation, event_id: 'draft-event', locale: 'es', slug: 'evento-borrador' },
       { ...translation, event_id: 'future-event', locale: 'es', slug: 'evento-futuro' },
       { ...translation, event_id: 'past-event', locale: 'es', slug: 'evento-pasado' },

@@ -135,6 +135,10 @@ export default function Page() {
     assert.ok(schema.some((item) => item['@type'] === (segment === 'blog' ? 'BlogPosting' : 'Event')));
     await page.goto(`${origin}/en/${segment}/${slug}`);
     assert.match(page.url(), segment === 'blog' ? /test-article$/ : /test-event$/);
+    assert.equal(await page.title(), 'Configured English SEO title');
+    assert.equal(await page.getByRole('heading', { level: 1 }).innerText(), 'English test content');
+    assert.equal(await page.locator('meta[name=description]').getAttribute('content'), 'Configured English SEO description');
+    assert.match(await page.locator('[class*="richText"]').first().innerText(), /Public content in English/);
     assert.match(await page.locator('meta[name=robots]').getAttribute('content'), /noindex/);
   }
   await page.goto(`${origin}/es/evento/evento-pasado`);

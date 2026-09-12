@@ -12,7 +12,7 @@ import sharp from "sharp";
 const ROOT = process.cwd();
 const WP_ORIGIN = "https://siguenetwork.org";
 const APPLY = process.argv.includes("--apply");
-const IMPORT_VERSION = 2;
+const IMPORT_VERSION = 3;
 const REPORT_DIR = path.join(ROOT, ".migration-reports");
 const redirectsPath = path.join(ROOT, "data", "wordpress-legacy-redirects.json");
 
@@ -214,7 +214,7 @@ async function main() {
   const categoryIds = new Map();
   for (const category of categories) {
     const code = `wp-${category.slug}`.slice(0, 80); const base = await supabase.from("blog_series").upsert({ code, sort_order: category.id }, { onConflict: "code" }).select("id").single(); if (base.error) throw new Error(base.error.message); categoryIds.set(category.id, base.data.id);
-    const translated = await supabase.from("blog_series_translations").upsert([{ series_id: base.data.id, locale: "es", name: decode(category.name), slug: category.slug, description: decode(category.description) || null }, { series_id: base.data.id, locale: "en", name: decode(category.name), slug: category.slug, description: decode(category.description) || null }], { onConflict: "series_id,locale" }); if (translated.error) throw new Error(translated.error.message);
+    const translated = await supabase.from("blog_series_translations").upsert({ series_id: base.data.id, locale: "es", name: decode(category.name), slug: category.slug, description: decode(category.description) || null }, { onConflict: "series_id,locale" }); if (translated.error) throw new Error(translated.error.message);
   }
   for (const category of categories) if (category.parent && categoryIds.has(category.parent)) await supabase.from("blog_series").update({ parent_id: categoryIds.get(category.parent) }).eq("id", categoryIds.get(category.id));
 
@@ -235,10 +235,10 @@ async function main() {
         : await supabase.from("blog_tags").insert(baseRecord).select("id").single();
       if (base.error) throw new Error(base.error.message);
       const name = decode(tag.name).slice(0, 80);
-      const translated = await supabase.from("blog_tag_translations").upsert([
+      const translated = await supabase.from("blog_tag_translations").upsert(
         { tag_id: base.data.id, locale: "es", name, slug: tag.slug.slice(0, 100) },
-        { tag_id: base.data.id, locale: "en", name, slug: tag.slug.slice(0, 100) },
-      ], { onConflict: "tag_id,locale" });
+        { onConflict: "tag_id,locale" },
+      );
       if (translated.error) throw new Error(translated.error.message);
       const mapped = await supabase.from("legacy_content_sources").upsert({ source_kind: "tag", source_id: String(tag.id), source_url: tag.link || `${WP_ORIGIN}/tag/${tag.slug}/`, target_table: "blog_tags", target_id: base.data.id, checksum: sourceChecksum, source_payload: { count: tag.count } }, { onConflict: "source_system,source_kind,source_id" });
       if (mapped.error) throw new Error(mapped.error.message);
@@ -262,8 +262,11 @@ async function main() {
       const saved = await supabase.from("blog_posts").upsert(postRecord).select("id").single(); if (saved.error) throw new Error(saved.error.message);
       postTargetIds.set(post.id, saved.data.id);
       const title = decode(post.title?.rendered).slice(0, 160); const seoTitle = (meta(htmlPage, "og:title") || pageTitle(htmlPage) || title).slice(0, 60); const seoDescription = (meta(htmlPage, "description") || excerptFromHtml(post.excerpt?.rendered || content)).slice(0, 160); const newCanonical = `${WP_ORIGIN}/es/blog/${post.slug}`;
-      const translations = ["es", "en"].map((locale) => ({ post_id: saved.data.id, locale, title, slug: post.slug.slice(0, 180), excerpt: (decode(post.excerpt?.rendered) || excerptFromHtml(content)).slice(0, 500), content_html: content, image_alt: (post._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || title).slice(0, 180), seo_title: seoTitle, seo_description: seoDescription, canonical_url: locale === "es" ? newCanonical : `${WP_ORIGIN}/en/blog/${post.slug}`, og_title: (meta(htmlPage, "og:title") || seoTitle).slice(0, 60), og_description: (meta(htmlPage, "og:description") || seoDescription).slice(0, 200), og_image_url: featured, noindex: locale === "en", nofollow: false, schema_type: "BlogPosting" }));
-      const translated = await supabase.from("blog_post_translations").upsert(translations, { onConflict: "post_id,locale" }); if (translated.error) throw new Error(translated.error.message);
+      // WordPress contains Spanish source material only. Never manufacture an
+      // English row from it: that would expose Spanish copy under /en and could
+      // overwrite a translation maintained later from the admin.
+      const translation = { post_id: saved.data.id, locale: "es", title, slug: post.slug.slice(0, 180), excerpt: (decode(post.excerpt?.rendered) || excerptFromHtml(content)).slice(0, 500), content_html: content, image_alt: (post._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || title).slice(0, 180), seo_title: seoTitle, seo_description: seoDescription, canonical_url: newCanonical, og_title: (meta(htmlPage, "og:title") || seoTitle).slice(0, 60), og_description: (meta(htmlPage, "og:description") || seoDescription).slice(0, 200), og_image_url: featured, noindex: false, nofollow: false, schema_type: "BlogPosting" };
+      const translated = await supabase.from("blog_post_translations").upsert(translation, { onConflict: "post_id,locale" }); if (translated.error) throw new Error(translated.error.message);
       const importedTagIds = [...tagIds.values()];
       if (importedTagIds.length) {
         const cleared = await supabase.from("blog_post_tags").delete().eq("post_id", saved.data.id).in("tag_id", importedTagIds);
@@ -322,8 +325,8 @@ async function main() {
       if (event.publishedAt) eventRecord.created_at = event.publishedAt;
       if (!eventRecord.id) delete eventRecord.id;
       const saved = await supabase.from("events").upsert(eventRecord).select("id").single(); if (saved.error) throw new Error(saved.error.message);
-      const title = event.title.slice(0, 160); const seoTitle = (meta(htmlPage, "og:title") || title).slice(0, 60); const seoDescription = (meta(htmlPage, "description") || excerptFromHtml(content)).slice(0, 160); const translations = ["es", "en"].map((locale) => ({ event_id: saved.data.id, locale, title, slug: slug.slice(0, 180), excerpt: seoDescription.slice(0, 500), content_html: content, image_alt: title.slice(0, 180), seo_title: seoTitle, seo_description: seoDescription, canonical_url: `${WP_ORIGIN}/${locale}/evento/${slug}`, og_title: (meta(htmlPage, "og:title") || seoTitle).slice(0, 60), og_description: (meta(htmlPage, "og:description") || seoDescription).slice(0, 200), og_image_url: featured, noindex: locale === "en", nofollow: false }));
-      const translated = await supabase.from("event_translations").upsert(translations, { onConflict: "event_id,locale" }); if (translated.error) throw new Error(translated.error.message);
+      const title = event.title.slice(0, 160); const seoTitle = (meta(htmlPage, "og:title") || title).slice(0, 60); const seoDescription = (meta(htmlPage, "description") || excerptFromHtml(content)).slice(0, 160); const translation = { event_id: saved.data.id, locale: "es", title, slug: slug.slice(0, 180), excerpt: seoDescription.slice(0, 500), content_html: content, image_alt: title.slice(0, 180), seo_title: seoTitle, seo_description: seoDescription, canonical_url: `${WP_ORIGIN}/es/evento/${slug}`, og_title: (meta(htmlPage, "og:title") || seoTitle).slice(0, 60), og_description: (meta(htmlPage, "og:description") || seoDescription).slice(0, 200), og_image_url: featured, noindex: false, nofollow: false };
+      const translated = await supabase.from("event_translations").upsert(translation, { onConflict: "event_id,locale" }); if (translated.error) throw new Error(translated.error.message);
       const access = await supabase.from("event_private_access").upsert({ event_id: saved.data.id }); if (access.error) throw new Error(access.error.message);
       const mapped = await supabase.from("legacy_content_sources").upsert({ source_kind: "event", source_id: `${event.sourceType}:${event.sourceId}`, source_url: event.sourceUrl, target_table: "events", target_id: saved.data.id, checksum: sourceChecksum, source_payload: { source_type: event.sourceType, location: event.location } }, { onConflict: "source_system,source_kind,source_id" }); if (mapped.error) throw new Error(mapped.error.message);
       report.events[wasExisting ? "updated" : "created"]++;

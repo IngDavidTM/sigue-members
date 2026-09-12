@@ -15,6 +15,8 @@
     "admin:grant": "node scripts/grant-admin.mjs",
     "migrate:wordpress": "node scripts/migrate-wordpress-content.mjs",
     "migrate:wordpress:apply": "node scripts/migrate-wordpress-content.mjs --apply",
+    "content:english": "node scripts/apply-english-content.mjs",
+    "content:english:apply": "node scripts/apply-english-content.mjs --apply",
     "test:admin:ui": "node tests/admin-ui.mjs"
   },
   "dependencies": {

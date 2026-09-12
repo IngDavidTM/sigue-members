@@ -23,6 +23,8 @@ npm run lint
 npm run build
 npm run migrate:wordpress       # Inventario sin escrituras
 npm run migrate:wordpress:apply # Importación idempotente a Supabase
+npm run content:english         # Revisa las traducciones importadas pendientes
+npm run content:english:apply   # Aplica inglés sin pisar cambios editoriales
 ```
 
 ## Base de datos y despliegue

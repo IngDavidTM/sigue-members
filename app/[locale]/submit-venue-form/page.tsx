@@ -1,7 +1,8 @@
-export default function SubmitVenueFormPage() {
+export default async function SubmitVenueFormPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
     <main>
-      <h1>Submit Venue Form</h1>
+      <h1>{locale === "en" ? "Submit a venue" : "Registrar un lugar"}</h1>
     </main>
   );
 }

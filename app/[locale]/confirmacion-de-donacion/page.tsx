@@ -1,7 +1,8 @@
-export default function ConfirmacionDeDonacionPage() {
+export default async function ConfirmacionDeDonacionPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
     <main>
-      <h1>Confirmación de Donación</h1>
+      <h1>{locale === "en" ? "Donation confirmation" : "Confirmación de donación"}</h1>
     </main>
   );
 }

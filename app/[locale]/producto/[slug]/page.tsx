@@ -1,13 +1,13 @@
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export default async function ProductoPage({ params }: Props) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
 
   return (
     <main>
-      <h1>Producto: {slug}</h1>
+      <h1>{locale === "en" ? "Product" : "Producto"}: {slug}</h1>
     </main>
   );
 }
