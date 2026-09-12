@@ -255,9 +255,9 @@
 .benefitGrid svg {
   width: 43px;
   height: 43px;
-  margin-bottom: 18px;
   color: var(--pink);
   stroke-width: 2.4;
+  line-height: 1.15;
 }
 
 .benefitGrid h3 {
@@ -474,8 +474,8 @@
 
   .heroPanel {
     position: absolute;
-    top: 38%;
-    left: max(24px, calc((100vw - 884px) / 2));
+    top: 35%;
+    left: max(24px, calc((100vw - 745px) / 2));
     width: min(734px, calc(100% - 48px));
     min-height: 0;
     margin: 0;
@@ -488,10 +488,10 @@
   .heroPanel > span {
     width: 132px;
     height: 100px;
-    padding: 14px 12px;
+    padding: 10px 8px;
     background: rgb(255 255 255 / 82%);
     color: var(--pink);
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1;
   }
 
@@ -506,35 +506,35 @@
 
   .hero h1 {
     max-width: 555px;
-    margin: 0 0 3px;
-    font-size: 28px;
+    margin: 0 0 10px;
+    font-size: 22px;
     letter-spacing: .01em;
     line-height: .82;
   }
 
   .hero p {
     max-width: 560px;
-    margin: 0;
-    font-size: 16px;
+    margin: 10px 0 0;
+    font-size: 17px;
     line-height: 1;
   }
 
   .heroPanel .button {
     position: absolute;
-    top: 98px;
-    right: 26px;
+    top: 100px;
+    right: 0;
     min-width: 170px;
     min-height: 40px;
     padding: 5px 25px;
     border: 0;
-    border-radius: 0;
+    border-radius: 5px;
     box-shadow: none;
     font-size: 20px;
   }
 }
 
 .questions {
-  padding: 105px max(28px, calc((100vw - 1155px) / 2)) 60px;
+  padding: 80px max(28px, calc((100vw - 1275px) / 2)) 60px;
 }
 
 .questions > h2 {
@@ -549,7 +549,7 @@
 
 .questionGrid {
   margin-top: 40px;
-  gap: 76px 54px;
+  gap: 76px 40px;
 }
 
 .questionGrid h3 {
@@ -562,11 +562,11 @@
 
 .checkIcon {
   font-size: 17px;
-  line-height: 1.45;
+  line-height: 1.8;
 }
 
 .questionGrid p {
-  padding-left: 0;
+  padding-left: 3px;
   font-size: 18px;
   line-height: 1.5;
 }
@@ -721,9 +721,11 @@
 }
 
 .benefitGrid svg {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 12px;
+  width: 43px;
+  height: 43px;
+  margin: 0 auto 18px;
+  color: var(--pink);
+  stroke-width: 2.4;
 }
 
 .benefitGrid h3 {
@@ -935,3 +937,49 @@
     min-height: 190px;
   }
 }
+
+.benefitGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.benefitGrid article {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.benefitGrid svg {
+  display: block;
+  flex: 0 0 auto;
+  margin: 0 auto 12px;
+}
+
+.benefitGrid h3 {
+  width: 100%;
+}
+
+.benefitGrid p {
+  width: 100%;
+  margin-top: 0;
+}
+
+@media (max-width: 960px) {
+  .benefitGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .benefitGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .benefitGrid article {
+    min-height: 0;
+  }
+}
+
