@@ -9,6 +9,8 @@
     "lint": "eslint",
     "test:admin": "node --test tests/admin-validation.test.ts tests/content-utils.test.ts tests/forms.test.ts",
     "admin:grant": "node scripts/grant-admin.mjs",
+    "migrate:wordpress": "node scripts/migrate-wordpress-content.mjs",
+    "migrate:wordpress:apply": "node scripts/migrate-wordpress-content.mjs --apply",
     "test:admin:ui": "node tests/admin-ui.mjs"
   },
   "dependencies": {

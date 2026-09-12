@@ -6,6 +6,9 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 const nextConfig: NextConfig = {
   // Isolate browser-test builds from a developer's running server.
   distDir: process.env.SIGUE_TEST_DIST_DIR || ".next",
+  // Proxy handles WordPress URLs with and without their historical trailing slash
+  // so migrations resolve in a single permanent redirect.
+  skipTrailingSlashRedirect: true,
   experimental: { serverActions: { bodySizeLimit: "4mb" } },
   images: {
     remotePatterns: [
