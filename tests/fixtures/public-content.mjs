@@ -39,7 +39,7 @@ export async function startPublicContentFixture(siteOrigin) {
       { ...translation, event_id: 'past-event', locale: 'es', slug: 'evento-pasado' },
     ],
     dynamic_forms: [dynamicForm], dynamic_form_fields: dynamicFields,
-    dynamic_form_notifications: [], dynamic_form_submissions: [],
+    dynamic_form_notifications: [], dynamic_form_submissions: [], dynamic_form_submission_attempts: [],
     blog_series: [], blog_series_translations: [], blog_post_tags: [], approved_blog_comments: [], blog_tags: [], blog_tag_translations: [], event_venues: [], public_event_access: [],
   };
   const requests = [];
@@ -52,7 +52,7 @@ export async function startPublicContentFixture(siteOrigin) {
       request.on('data', (chunk) => { body += chunk; });
       request.on('end', () => {
         const payload = JSON.parse(body);
-        if (payload.p_slug !== dynamicForm.slug || payload.p_answers?.nombre !== 'Sandra') {
+        if (payload.p_slug !== dynamicForm.slug || payload.p_answers?.nombre !== 'Sandra' || !/^[a-f0-9]{64}$/.test(payload.p_request_fingerprint)) {
           response.writeHead(422, { 'content-type': 'application/json' }).end(JSON.stringify({ message: 'Invalid QA submission' }));
           return;
         }

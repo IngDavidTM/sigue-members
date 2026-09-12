@@ -13,16 +13,19 @@ export async function deliverFormNotification(submissionId: string) {
     supabase.from("dynamic_form_notifications").select("*").eq("submission_id", submissionId).maybeSingle(),
     supabase.from("dynamic_form_submissions").select("*").eq("id", submissionId).maybeSingle(),
   ]);
-  if (notification.error || submission.error || !notification.data || !submission.data || notification.data.status === "sent") return;
+  if (notification.error || submission.error || !notification.data || !submission.data || notification.data.status === "sent") return "skipped" as const;
   const [form, fields] = await Promise.all([
     supabase.from("dynamic_forms").select("*").eq("id", submission.data.form_id).maybeSingle(),
     supabase.from("dynamic_form_fields").select("*").eq("form_id", submission.data.form_id).order("sort_order"),
   ]);
-  if (form.error || fields.error || !form.data) return;
+  if (form.error || fields.error || !form.data) {
+    await supabase.from("dynamic_form_notifications").update({ status: "failed", attempts: notification.data.attempts + 1, last_error: "No se pudo cargar la configuración del formulario", attempted_at: new Date().toISOString() }).eq("id", notification.data.id);
+    return "failed" as const;
+  }
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    await supabase.from("dynamic_form_notifications").update({ last_error: "RESEND_API_KEY no configurada" }).eq("id", notification.data.id);
-    return;
+    await supabase.from("dynamic_form_notifications").update({ status: "failed", attempts: notification.data.attempts + 1, last_error: "RESEND_API_KEY no configurada", attempted_at: new Date().toISOString() }).eq("id", notification.data.id);
+    return "failed" as const;
   }
   const answers = submission.data.answers && !Array.isArray(submission.data.answers) && typeof submission.data.answers === "object" ? submission.data.answers : {};
   const lines = fields.data.map((field) => {
@@ -46,7 +49,9 @@ export async function deliverFormNotification(submissionId: string) {
     const result = await response.json();
     if (!response.ok) throw new Error(typeof result?.message === "string" ? result.message : `Resend HTTP ${response.status}`);
     await supabase.from("dynamic_form_notifications").update({ status: "sent", attempts: notification.data.attempts + 1, provider_id: result.id ?? null, last_error: null, attempted_at: attemptedAt, sent_at: attemptedAt }).eq("id", notification.data.id);
+    return "sent" as const;
   } catch (error) {
     await supabase.from("dynamic_form_notifications").update({ status: "failed", attempts: notification.data.attempts + 1, last_error: error instanceof Error ? error.message.slice(0, 1000) : "Error de envío", attempted_at: attemptedAt }).eq("id", notification.data.id);
+    return "failed" as const;
   }
 }

@@ -285,6 +285,13 @@ export type DynamicFormNotificationRow = {
   created_at: string;
 };
 
+export type DynamicFormSubmissionAttemptRow = {
+  id: number;
+  form_id: string;
+  request_fingerprint: string;
+  created_at: string;
+};
+
 export interface Database {
   public: {
     Tables: {
@@ -519,6 +526,12 @@ export interface Database {
         sent_at?: string | null;
         created_at?: string;
       }>;
+      dynamic_form_submission_attempts: TableDefinition<DynamicFormSubmissionAttemptRow, {
+        id?: number;
+        form_id: string;
+        request_fingerprint: string;
+        created_at?: string;
+      }>;
     };
     Views: {
       approved_blog_comments: {
@@ -556,7 +569,7 @@ export interface Database {
         Returns: string;
       };
       submit_dynamic_form: {
-        Args: { p_slug: string; p_locale: string; p_answers: Json; p_source_path?: string | null };
+        Args: { p_slug: string; p_locale: string; p_answers: Json; p_source_path: string | null; p_request_fingerprint: string };
         Returns: string;
       };
       save_dynamic_form: {

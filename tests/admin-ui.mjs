@@ -49,7 +49,7 @@ export default function Page() {
   </main>;
 }
 `);
-  server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'dev', '--port', String(port)], { env: { ...process.env, SIGUE_TEST_DIST_DIR: '.next-admin-qa', NEXT_PUBLIC_SUPABASE_URL: fixture.url, NEXT_PUBLIC_SUPABASE_ANON_KEY: 'local-test-key', NEXT_PUBLIC_SITE_URL: 'https://example.org' }, stdio: ['ignore', 'pipe', 'pipe'] });
+  server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'dev', '--port', String(port)], { env: { ...process.env, SIGUE_TEST_DIST_DIR: '.next-admin-qa', NEXT_PUBLIC_SUPABASE_URL: fixture.url, NEXT_PUBLIC_SUPABASE_ANON_KEY: 'local-test-key', NEXT_PUBLIC_SITE_URL: 'https://example.org', CRON_SECRET: 'qa-cron-secret' }, stdio: ['ignore', 'pipe', 'pipe'] });
   let log = '';
   server.stdout.on('data', (chunk) => { log += chunk; });
   server.stderr.on('data', (chunk) => { log += chunk; });
@@ -84,6 +84,7 @@ export default function Page() {
   await page.getByRole('group', { name: 'Configurar imagen' }).getByPlaceholder('Describe lo que se ve en la imagen').fill('Equipo en el encuentro');
   const insert = page.getByRole('button', { name: 'Insertar imagen', exact: true });
   await insert.click();
+  await page.waitForFunction(() => document.querySelector('input[name="contentEs"]')?.value.includes('alt="Equipo en el encuentro"'));
   assert.match(await page.locator('input[name="contentEs"]').inputValue(), /alt="Equipo en el encuentro"/);
   const inline = page.getByRole('textbox', { name: 'Contenido', exact: true }).locator('img');
   await inline.click();
@@ -93,7 +94,9 @@ export default function Page() {
   assert.match(await page.locator('input[name="contentEs"]').inputValue(), /alt="Descripción actualizada"/);
   const agenda = page.getByRole('textbox', { name: 'Agenda opcional', exact: true });
   await agenda.fill('Borrar esta agenda');
-  await agenda.fill('');
+  await agenda.press('Control+A');
+  await agenda.press('Backspace');
+  await page.waitForFunction(() => document.querySelector('input[name="agendaEs"]')?.value === '');
   assert.equal(await page.locator('input[name="agendaEs"]').inputValue(), '');
   await page.getByRole('button', { name: 'Guardar cambios', exact: true }).click();
   await page.getByText('Validación de prueba', { exact: true }).waitFor();
@@ -114,6 +117,12 @@ export default function Page() {
   await page.getByText('Mensaje recibido.', { exact: true }).waitFor();
   assert.ok(fixture.requests.some((url) => url.pathname === '/rest/v1/rpc/submit_dynamic_form'));
   console.log('Dynamic form: configured fields, public Server Action, RPC submission and success state passed.');
+  assert.equal((await fetch(`${origin}/api/cron/form-notifications`)).status, 401);
+  const cron = await fetch(`${origin}/api/cron/form-notifications`, { headers: { authorization: 'Bearer qa-cron-secret' } });
+  const cronResult = await cron.json();
+  assert.equal(cron.status, 200, JSON.stringify(cronResult));
+  assert.deepEqual(cronResult, { processed: 0, sent: 0, failed: 0 });
+  console.log('Notification cron: authentication, queue access and cleanup passed.');
   for (const [segment, slug] of [['blog', 'articulo-prueba'], ['evento', 'evento-prueba']]) {
     await page.goto(`${origin}/es/${segment}/${slug}`);
     assert.equal(await page.title(), 'Título SEO configurado');

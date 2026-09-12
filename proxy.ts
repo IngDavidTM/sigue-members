@@ -52,7 +52,12 @@ export async function proxy(request: NextRequest) {
         return NextResponse.redirect(target, 308);
     }
 
-    if (pathname === "/robots.txt" || pathname === "/sitemap.xml" || pathname === "/api/exchange-rate") {
+    if (
+        pathname === "/robots.txt" ||
+        pathname === "/sitemap.xml" ||
+        pathname === "/api/exchange-rate" ||
+        pathname === "/api/cron/form-notifications"
+    ) {
         return NextResponse.next();
     }
 

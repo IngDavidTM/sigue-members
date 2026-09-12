@@ -165,7 +165,7 @@ export async function retryDynamicFormNotification(formData: FormData) {
   const id = z.uuid().safeParse(formData.get("submissionId"));
   if (!id.success) return;
   const supabase = await createClient();
-  await supabase.from("dynamic_form_notifications").update({ status: "pending", last_error: null }).eq("submission_id", id.data);
+  await supabase.from("dynamic_form_notifications").update({ status: "pending", attempts: 0, last_error: null }).eq("submission_id", id.data);
   await deliverFormNotification(id.data);
   revalidatePath(`/admin/respuestas/${id.data}`);
 }

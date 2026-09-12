@@ -1,6 +1,9 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createHmac } from "node:crypto";
+import { headers } from "next/headers";
+
+import { createAdminClient } from "@/lib/supabase/admin";
 import { deliverFormNotification } from "@/lib/forms/notifications";
 import type { Json } from "@/types/supabase";
 
@@ -18,7 +21,16 @@ export async function submitDynamicForm(
   if (String(formData.get("website") ?? "")) return { success: true };
   if (locale !== "es" && locale !== "en") return { message: "Invalid language." };
 
-  const supabase = await createClient();
+  const fingerprintSecret = process.env.FORM_RATE_LIMIT_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!fingerprintSecret) return { message: locale === "es" ? "El formulario no está disponible temporalmente." : "The form is temporarily unavailable." };
+  const requestHeaders = await headers();
+  const forwardedFor = requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const address = forwardedFor || requestHeaders.get("x-real-ip") || "unknown";
+  const userAgent = requestHeaders.get("user-agent") || "unknown";
+  const requestFingerprint = createHmac("sha256", fingerprintSecret)
+    .update(`${address.slice(0, 128)}\n${userAgent.slice(0, 256)}`)
+    .digest("hex");
+  const supabase = createAdminClient();
   const formResult = await supabase
     .from("dynamic_forms")
     .select("id,success_message_es,success_message_en")
@@ -58,9 +70,13 @@ export async function submitDynamicForm(
     p_locale: locale,
     p_answers: answers,
     p_source_path: String(formData.get("sourcePath") ?? "").slice(0, 500) || null,
+    p_request_fingerprint: requestFingerprint,
   });
   if (error) {
     console.error("Dynamic form submission failed:", error.code, error.message);
+    if (error.message.includes("Rate limit exceeded")) {
+      return { message: locale === "es" ? "Recibimos varios envíos. Espera unos minutos antes de intentar nuevamente." : "We received several submissions. Wait a few minutes before trying again." };
+    }
     return { message: locale === "es" ? "Revisa los campos e intenta nuevamente." : "Check the fields and try again." };
   }
   if (submissionId) {

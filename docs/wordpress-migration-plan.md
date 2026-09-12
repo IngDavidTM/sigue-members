@@ -66,7 +66,7 @@ WordPress y su base MySQL se pueden retirar después de conservar un respaldo fi
 
 ## Estado al 12 de septiembre de 2026
 
-- **Fase 1 completada:** las migraciones `202609110003` a `202609120001` están aplicadas en Supabase. El formulario bilingüe `contacto` quedó publicado con cinco preguntas. Los envíos anónimos válidos, el rechazo de valores estructurados inválidos y el guardado administrativo atómico se comprobaron dentro de transacciones revertidas.
+- **Fase 1 completada:** las migraciones `202609110003` a `202609120002` están aplicadas en Supabase. El formulario bilingüe `contacto` quedó publicado con cinco preguntas. Los envíos válidos, el rechazo de valores estructurados inválidos, el límite de frecuencia y el guardado administrativo atómico se comprobaron dentro de transacciones revertidas. El RPC de escritura ya no es ejecutable por clientes anónimos.
 - **Fase 2 completada:** se importaron 46 blogs, 11 eventos de WP Event Manager y 3 eventos `edge-event`. El importador consulta individualmente los eventos caducados para conservar su descripción aunque WordPress la oculte en la página pública. Las 49 imágenes únicas se copiaron a `content-media` en AVIF o WebP. Una segunda ejecución omitió los 60 contenidos sin crear duplicados.
 - **Fase 3 completada en código y datos:** los HTML importados ya no apuntan a `wp-content`; se conservaron metadatos SEO, slugs y fechas. Las 60 URLs antiguas tienen redirecciones 308. Las copias inglesas importadas permanecen con `noindex` hasta su traducción editorial.
 - **Fase 4 completada:** el panel permite crear y editar formularios, consultar respuestas, anotar su seguimiento, exportar CSV y reintentar avisos por correo.
