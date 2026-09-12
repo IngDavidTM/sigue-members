@@ -8,7 +8,7 @@ const PROPOSITO_IMAGE = '/images/MotivationSection2.jpg';
 const VISION_IMAGE = '/images/MotivationSection3.jpg';
 const MISION_IMAGE = '/images/MotivationSection4.jpg';
 const ALCANCE_IMAGE = '/images/MotivationSection5.jpg';
-const BOTTOM_IMAGE = '/images/MotivationSection6.jpg';
+const BOTTOM_IMAGE = '/images/MotivationSection6.png';
 
 type CardKey = 'proposito' | 'vision' | 'mision' | 'alcance';
 

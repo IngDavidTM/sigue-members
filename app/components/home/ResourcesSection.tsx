@@ -133,21 +133,21 @@ export default function ResourcesSection() {
     {
       titleKey: 'resources.tools.title',
       descriptionKey: 'resources.tools.description',
-      image: '/images/ResourcesSection2.png',
+      image: '/images/ResourcesSection2.avif',
       imageAlt: t('resources.tools.imageAlt'),
       href: '/recursos/herramientas',
     },
     {
       titleKey: 'resources.blog.title',
       descriptionKey: 'resources.blog.description',
-      image: '/images/ResourcesSection3.png',
+      image: '/images/ResourcesSection3.avif',
       imageAlt: t('resources.blog.imageAlt'),
       href: '/blog',
     },
     {
       titleKey: 'resources.video.title',
       descriptionKey: 'resources.video.description',
-      image: '/images/ResourcesSection4.png',
+      image: '/images/ResourcesSection4.avif',
       imageAlt: t('resources.video.imageAlt'),
       href: '/recursos/videos',
     },
@@ -161,7 +161,7 @@ export default function ResourcesSection() {
       >
         <div className="relative w-full md:w-[58%] overflow-hidden min-h-[140px] md:min-h-full">
           <img
-            src="/images/ResourcesSection1.png"
+            src="/images/ResourcesSection1.avif"
             alt={t('resources.hero.imageAlt')}
             className="absolute inset-0 w-full h-full object-cover object-top"
           />

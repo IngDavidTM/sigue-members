@@ -804,7 +804,7 @@ export default function EventsCalendar() {
                 }}
               >
                 <Image
-                  src="/images/events.png"
+                  src="/images/events.avif"
                   alt="Concierto"
                   fill
                   style={{ objectFit: 'cover' }}
@@ -840,7 +840,7 @@ export default function EventsCalendar() {
               }}
             >
               <img
-                src="/images/events.png"
+                src="/images/events.avif"
                 alt="Fondo concierto"
                 style={{
                   position: 'absolute',
@@ -943,7 +943,7 @@ export default function EventsCalendar() {
 
             <div className="relative flex-1 min-w-0">
               <img
-                src="/images/events.png"
+                src="/images/events.avif"
                 alt="Fondo concierto"
                 style={{
                   width: '100%',

@@ -42,7 +42,7 @@ export default async function EventsPage({ params }: Props) {
   const locale = requested === "en" ? "en" : "es";
   const es = locale === "es";
   const { upcoming, past } = await getPublicEventGroups(locale);
-  const heroStyle = { "--hero-image": "url(/images/events.png)" } as CSSProperties;
+  const heroStyle = { "--hero-image": "url(/images/events.avif)" } as CSSProperties;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
