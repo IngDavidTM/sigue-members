@@ -138,6 +138,12 @@
   line-height: 1.25;
 }
 
+@media (min-width: 701px) {
+  .questionGrid h3 {
+    min-height: 2.5em;
+  }
+}
+
 .questionGrid h3 svg {
   width: 20px;
   color: #45b447;
