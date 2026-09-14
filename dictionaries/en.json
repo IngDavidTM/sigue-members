@@ -449,9 +449,7 @@
   "joinPage": {
     "hero": {
       "badge": "JOIN US",
-      "line1": "Be part of the change:",
-      "line2": "Get involved with",
-      "line3": "SIGUE Network",
+      "line1": "Be part of the change: Get involved with SIGUE Network",
       "subtitle": "Discover the different ways you can join us:",
       "imageAlt": "Team gathered together around a table"
     },

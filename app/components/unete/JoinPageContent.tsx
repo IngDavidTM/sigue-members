@@ -99,11 +99,7 @@ export default function JoinPageContent({ interestFormAvailable = false }: { int
         imageAlt={t('hero.imageAlt')}
         badge={t('hero.badge')}
         title={
-          <>
-            <span className="block">{t('hero.line1')}</span>
-            <span className="block">{t('hero.line2')}</span>
-            <span className="block">{t('hero.line3')}</span>
-          </>
+          <span className="block">{t('hero.line1')}</span>
         }
         subtitle={t('hero.subtitle')}
         imageOverlayClassName="bg-white/20"
@@ -149,7 +145,7 @@ export default function JoinPageContent({ interestFormAvailable = false }: { int
         <div className="grid md:min-h-[210px] md:grid-cols-[25%_13%_62%] md:items-stretch">
           <div className="hidden bg-white md:block" aria-hidden="true" />
           <Reveal variant="fade-up" className="h-full">
-            <div className="flex h-full min-h-[220px] flex-col items-end justify-center bg-primary px-8 py-10 text-right font-heading text-2xl leading-tight text-white md:min-h-0 md:px-6 md:py-8 md:text-xl lg:px-7">
+            <div className="flex h-full min-h-[220px] flex-col items-end justify-center bg-primary px-8 py-10 text-center font-heading text-2xl leading-tight text-white md:min-h-0 md:px-6 md:py-8 md:text-2xl lg:px-7">
               <strong className="block w-full font-black">
                 <span className="block">{t('intro.titleStart')}</span>
                 <span className="block">{t('intro.titleBold')}</span>
@@ -208,7 +204,7 @@ export default function JoinPageContent({ interestFormAvailable = false }: { int
               delay={(index % 3) * 0.08}
               className={index === areas.length - 1 ? 'lg:col-start-2' : ''}
             >
-              <article className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-5">
+              <article className="flex flex-col items-center gap-2 text-center sm:flex-row sm:items-center sm:gap-5 sm:text-left">
                 <div className="relative aspect-square w-[164px] shrink-0 sm:w-[120px] md:w-[142px]">
                   <Image src={area.image} alt="" fill sizes="142px" className="object-contain" />
                 </div>
@@ -233,29 +229,61 @@ export default function JoinPageContent({ interestFormAvailable = false }: { int
 
         <div className="mx-auto max-w-6xl px-6 py-14 md:py-16">
           <div className="hidden lg:block">
-            <div className="grid grid-cols-5">
-              {processKeys.map((key, index) => (
-                <Reveal key={key} variant={index % 2 === 0 ? 'fade-down' : 'fade-up'}>
-                  <p
-                    className={`min-h-[74px] px-2 text-center font-heading text-lg leading-tight text-[#63219d] ${
-                      index % 2 === 0 ? '' : 'pt-8'
-                    }`}
-                  >
-                    {t(`process.steps.${key}`)}
-                  </p>
+            <div className="relative">
+              <div className="grid grid-cols-5 gap-x-1">
+                <div className="col-start-1 translate-x-0">
+                  <Reveal variant="fade-down">
+                    <p className="mx-auto w-[100%] max-w-[290px] text-center font-heading text-[1.35rem] leading-[1.3] text-[#63219d]">
+                      {t(`process.steps.${processKeys[0]}`)}
+                    </p>
+                  </Reveal>
+                </div>
+                <div className="col-start-3 translate-x-0">
+                  <Reveal variant="fade-down">
+                    <p className="mx-auto w-[100%] max-w-[290px] text-center font-heading text-[1.35rem] leading-[1.3] text-[#63219d]">
+                      {t(`process.steps.${processKeys[2]}`)}
+                    </p>
+                  </Reveal>
+                </div>
+                <div className="col-start-5 translate-x-0">
+                  <Reveal variant="fade-down">
+                    <p className="mx-auto w-[100%] max-w-[290px] text-center font-heading text-[1.35rem] leading-[1.3] text-[#63219d]">
+                      {t(`process.steps.${processKeys[4]}`)}
+                    </p>
+                  </Reveal>
+                </div>
+              </div>
+
+              <div className="mt-3">
+                <Reveal variant="scale">
+                  <Image
+                    src="/images/join-process.png"
+                    alt={t('process.imageAlt')}
+                    width={1024}
+                    height={195}
+                    sizes="(max-width: 1200px) 90vw, 1152px"
+                    className="h-auto w-full"
+                  />
                 </Reveal>
-              ))}
+              </div>
+
+              <div className="mt-3 grid grid-cols-5 gap-x-1">
+                <div className="col-start-2 translate-x-0">
+                  <Reveal variant="fade-up">
+                    <p className="mx-auto w-[100%] max-w-[290px] text-center font-heading text-[1.35rem] leading-[1.3] text-[#63219d]">
+                      {t(`process.steps.${processKeys[1]}`)}
+                    </p>
+                  </Reveal>
+                </div>
+                <div className="col-start-4 translate-x-0">
+                  <Reveal variant="fade-up">
+                    <p className="mx-auto w-[100%] max-w-[290px] text-center font-heading text-[1.35rem] leading-[1.3] text-[#63219d]">
+                      {t(`process.steps.${processKeys[3]}`)}
+                    </p>
+                  </Reveal>
+                </div>
+              </div>
             </div>
-            <Reveal variant="scale">
-              <Image
-                src="/images/join-process.png"
-                alt={t('process.imageAlt')}
-                width={1024}
-                height={195}
-                sizes="(max-width: 1200px) 90vw, 1152px"
-                className="h-auto w-full"
-              />
-            </Reveal>
           </div>
 
           <ol className="relative space-y-5 before:absolute before:bottom-6 before:left-5 before:top-6 before:w-1 before:bg-[#c95ae4] lg:hidden">
@@ -307,10 +335,10 @@ export default function JoinPageContent({ interestFormAvailable = false }: { int
                 href={interestFormUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 inline-flex min-w-[190px] flex-col items-center bg-primary px-6 py-4 font-heading text-lg font-black leading-none text-white transition-transform duration-300 hover:-translate-y-1 hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
+                className="mt-8 inline-flex min-w-[190px] flex-col items-center rounded-md bg-primary px-6 py-4 font-heading text-lg font-black leading-none text-white transition-transform duration-300 hover:-translate-y-1 hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
               >
                 <span>{t('ready.buttonLine1')}</span>
-                <span className="text-sm">{t('ready.buttonLine2')}</span>
+                <span>{t('ready.buttonLine2')}</span>
               </a>
               {interestFormAvailable ? <p className="mt-5 text-base text-primary">
                 <Link className="font-bold underline underline-offset-4" href="#voluntariado-interes">
@@ -326,7 +354,7 @@ export default function JoinPageContent({ interestFormAvailable = false }: { int
         <div className="mx-auto grid max-w-6xl gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {supportItems.map((item, index) => {
             const card = (
-              <article className="group relative min-h-[245px] bg-white px-7 py-8 shadow-[0_8px_25px_rgba(0,0,0,0.03)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_14px_35px_rgba(82,32,120,0.12)]">
+              <article className="group relative flex h-[270px] flex-col justify-center bg-white px-7 py-8 shadow-[0_8px_25px_rgba(0,0,0,0.03)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_14px_35px_rgba(82,32,120,0.12)]">
                 <h2 className="max-w-[260px] font-heading text-3xl font-black leading-tight text-[#222]">
                   {t(`support.cards.${item.key}.title`)}
                 </h2>
