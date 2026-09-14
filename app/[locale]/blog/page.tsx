@@ -64,8 +64,8 @@ export default async function BlogPage({ params, searchParams }: Props) {
   return <div className={styles.root}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
     <section className={`${styles.hero} ${styles.blogHero}`} style={heroStyle} aria-labelledby="blog-title"><div className={styles.blogHeroComposition}><h1 id="blog-title">Blog</h1><p>{es ? "Encuentra información práctica, enfocada en organizaciones y proyectos sociales de transformación integral FES (física, emocional y espiritual)." : "Find practical information for organizations and social projects focused on holistic FES transformation (physical, emotional, and spiritual)."}</p></div></section>
-    <div className={styles.container}>
-      {listing.series.length ? <nav className={styles.filterBar} aria-label={es ? "Explorar por serie" : "Browse by series"}><Link data-active={!selectedSeries} aria-current={!selectedSeries ? "page" : undefined} href={`/${locale}/blog`}>{es ? "Todo" : "All"}</Link>{listing.series.map((series) => <Link key={series.series_id} href={`/${locale}/category/${series.slug}`}>{series.name}</Link>)}</nav> : null}
+    <div className={styles.container}>{listing.series.length ? (<nav className={styles.filterBar}aria-label={es ? "Explorar por serie" : "Browse by series"}><Link data-active={!selectedSeries}aria-current={!selectedSeries ? "page" : undefined}href={`/${locale}/blog`}>{es ? "Todo" : "All"}</Link>
+    {listing.series.map((series) => {const isActive = selectedSeries?.series_id === series.series_id; return (<Link key={series.series_id} data-active={isActive} aria-current={isActive ? "page" : undefined} href={`/${locale}/blog?serie=${encodeURIComponent(series.slug)}`}>{series.name}</Link>);})}</nav>) : null}
       {cards.length ? <div className={styles.cardGrid}>{cards.map(({ post, translation, series }) => <article className={styles.postCard} key={post.id}>
         <Link className={styles.cardImage} href={`/${locale}/blog/${translation.slug}`}>{post.featured_image_url ? <img src={post.featured_image_url} alt={translation.image_alt || translation.title} /> : <span className={styles.imagePlaceholder}>SIGUE</span>}</Link>
         <div className={styles.cardMeta}><time dateTime={post.published_at ?? undefined}>{post.published_at ? new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(new Date(post.published_at)) : ""}</time>{series ? <span>{series.name}</span> : null}</div>
@@ -73,7 +73,8 @@ export default async function BlogPage({ params, searchParams }: Props) {
         {translation.excerpt ? <p>{translation.excerpt}</p> : null}
         <Link className={styles.readMore} href={`/${locale}/blog/${translation.slug}`}>{es ? "Leer artículo" : "Read article"} →</Link>
       </article>)}</div> : <div className={styles.empty}><h2>{es ? "Próximamente" : "Coming soon"}</h2><p>{es ? "Estamos preparando nuevos contenidos para ti." : "We are preparing new content for you."}</p></div>}
-      {totalPages > 1 ? <nav className={styles.pagination} aria-label="Paginación">{Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => <Link key={page} data-active={page === currentPage} href={`/${locale}/blog?page=${page}${query.serie ? `&serie=${query.serie}` : ""}`}>{page}</Link>)}</nav> : null}
+      {totalPages > 1 ? (<nav className={styles.pagination} aria-label={es ? "Paginación" : "Pagination"}> {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => {const isActive = page === currentPage;
+      return (<Link key={page} data-active={isActive} aria-current={isActive ? "page" : undefined} href={`/${locale}/blog?page=${page}${ query.serie? `&serie=${encodeURIComponent(query.serie)}`: ""}`}>{page}</Link>);},)}</nav>) : null}
     </div>
   </div>;
 }
