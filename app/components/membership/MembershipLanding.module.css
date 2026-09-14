@@ -187,21 +187,55 @@
 }
 
 .logoViewport {
+  min-width: 0;
   overflow: hidden;
-  margin: 52px 0 40px;
-  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.logoCarousel {
+  display: grid;
+  margin: 52px auto 40px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  max-width: 1220px;
+  gap: 16px;
+  padding: 0 28px;
+}
+
+.carouselButton {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 2px solid var(--purple);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--purple);
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, transform .2s ease;
+}
+
+.carouselButton:hover,
+.carouselButton:focus-visible {
+  background: var(--purple);
+  color: #fff;
+  transform: scale(1.06);
+}
+
+.carouselButton svg {
+  width: 22px;
+  height: 22px;
 }
 
 .logoTrack {
   display: flex;
   width: max-content;
   gap: 20px;
-  animation: logo-scroll 58s linear infinite;
+  animation: logo-scroll 64s linear infinite;
+  will-change: transform;
 }
 
-.logoViewport:hover .logoTrack,
-.logoViewport:focus-within .logoTrack {
-  animation-play-state: paused;
+.logoTrackBackward {
+  animation-direction: reverse;
 }
 
 .logoCard {
@@ -360,10 +394,6 @@
   color: #fff;
 }
 
-@keyframes logo-scroll {
-  to { transform: translateX(calc(-50% - 10px)); }
-}
-
 @media (max-width: 960px) {
   .questionGrid,
   .participationGrid {
@@ -455,11 +485,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .logoTrack {
-    animation: none;
-  }
-
   .button,
+  .carouselButton,
   .participationGrid > a {
     transition: none;
   }
@@ -617,7 +644,6 @@
 
 .logoViewport {
   max-width: 1140px;
-  margin: 48px auto 42px;
 }
 
 .logoTrack {
@@ -635,6 +661,28 @@
 
 .logoCard img {
   padding: 12px;
+}
+
+@keyframes logo-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 15px)); }
+}
+
+@media (max-width: 700px) {
+  .logoCarousel {
+    gap: 8px;
+    padding: 0 12px;
+  }
+
+  .carouselButton {
+    width: 38px;
+    height: 38px;
+  }
+
+  .logoCard {
+    width: min(72vw, 255px);
+    height: 150px;
+  }
 }
 
 .membersBody {
