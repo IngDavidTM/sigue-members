@@ -202,3 +202,12 @@
   .blogHero .blogHeroComposition p { min-width: 0; padding: 8px 10px; font-size: 14px; line-height: .95; overflow-wrap: normal; word-break: normal; }
   .postCard { padding: 12px 0; }
 }
+
+.articleLayout main { min-width: 0; }
+.richText { overflow-wrap: anywhere; }
+.richText img { display: block; margin: 1.5rem auto; }
+.richText figure { margin: 1.5rem 0; }
+.richText figcaption { text-align: center; font-size: .9rem; }
+.richText pre { overflow-x: auto; padding: 1rem; background: #f7f3fb; }
+.richText table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
+.richText td, .richText th { border: 1px solid #d9cae7; padding: .7rem; }

@@ -70,7 +70,7 @@ function LocaleFields({ locale, translation }: { locale: "es" | "en"; translatio
           <label className={contentStyles.field}><span>URL canónica</span><input type="url" name={`canonicalUrl${suffix}`} defaultValue={translation?.canonical_url ?? ""} /></label>
           <div className={contentStyles.fields2}>
             <label className={contentStyles.field}><span>Título para redes</span><input name={`ogTitle${suffix}`} maxLength={60} defaultValue={translation?.og_title ?? ""} /></label>
-            <label className={contentStyles.field}><span>Imagen para redes (.avif/.webp)</span><input type="url" name={`ogImageUrl${suffix}`} defaultValue={translation?.og_image_url ?? ""} /></label>
+            <MediaField name={`ogImageUrl${suffix}`} label="Imagen para redes (opcional)" initialValue={translation?.og_image_url} />
           </div>
           <label className={contentStyles.field}><span>Descripción para redes</span><textarea name={`ogDescription${suffix}`} maxLength={200} defaultValue={translation?.og_description ?? ""} /></label>
           <label className={contentStyles.field}>
@@ -97,6 +97,7 @@ export function BlogForm({ post, translations = [], series, tags, selectedTagIds
   return (
     <ActionForm action={saveBlogPost} className={contentStyles.form} submitLabel={post ? "Actualizar blog" : "Crear blog"}>
       <input type="hidden" name="id" value={post?.id ?? ""} />
+      <input type="hidden" name="expectedUpdatedAt" value={post?.updated_at ?? ""} />
       <div className={contentStyles.mainColumn}>
         <LocaleFields locale="es" translation={es} />
         <LocaleFields locale="en" translation={en} />
@@ -105,9 +106,9 @@ export function BlogForm({ post, translations = [], series, tags, selectedTagIds
         <section className={contentStyles.card}>
           <h3>Publicación</h3>
           <div className={contentStyles.fields}>
-            <label className={contentStyles.field}><span>Estado</span><select name="status" defaultValue={post?.status ?? "draft"}><option value="draft">Borrador</option><option value="scheduled">Programado</option><option value="published">Publicado</option><option value="archived">Archivado</option></select></label>
+            <label className={contentStyles.field}><span>Estado</span><select name="status" defaultValue={post?.status === "scheduled" && post.published_at && new Date(post.published_at) <= new Date() ? "published" : post?.status ?? "draft"}><option value="draft">Borrador</option><option value="scheduled">Programado</option><option value="published">Publicado</option><option value="archived">Archivado</option></select></label>
             <label className={contentStyles.field}><span>Autor visible</span><input name="authorName" defaultValue={post?.author_name ?? "SIGUE Network"} /></label>
-            <label className={contentStyles.field}><span>Fecha de publicación</span><input type="datetime-local" name="publishedAt" defaultValue={publicationValue} /></label>
+            <label className={contentStyles.field}><span>Fecha de publicación (vacía = ahora al publicar)</span><input type="datetime-local" name="publishedAt" defaultValue={publicationValue} /></label>
             <label className={contentStyles.field}><span>Zona horaria</span><select name="publicationTimezone" defaultValue={publicationTimezone}><option value="America/Bogota">America/Bogota</option><option value="America/Guayaquil">America/Guayaquil</option><option value="America/New_York">America/New_York</option><option value="UTC">UTC</option></select></label>
             <label className={contentStyles.checkbox}><input type="checkbox" name="isFeatured" defaultChecked={post?.is_featured} /> Destacar en portada</label>
             <label className={contentStyles.checkbox}><input type="checkbox" name="allowComments" defaultChecked={post?.allow_comments ?? true} /> Permitir comentarios</label>

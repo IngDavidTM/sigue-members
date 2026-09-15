@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CalendarPlus, FilePlus2, FolderPlus, MessageSquareText } from "lucide-react";
+import { CalendarPlus, ClipboardPlus, FilePlus2, FolderPlus, MessageSquareText } from "lucide-react";
 
 import { requireAdmin } from "@/lib/auth/authorization";
 import { createClient } from "@/lib/supabase/server";
@@ -12,7 +12,7 @@ async function getAdminStats() {
   await requireAdmin();
   const supabase = await createClient();
 
-  const [posts, events, comments, series] = await Promise.all([
+  const [posts, events, comments, series, responses] = await Promise.all([
     supabase.from("blog_posts").select("id", { count: "exact", head: true }),
     supabase.from("events").select("id", { count: "exact", head: true }),
     supabase
@@ -20,6 +20,7 @@ async function getAdminStats() {
       .select("id", { count: "exact", head: true })
       .eq("status", "pending"),
     supabase.from("blog_series").select("id", { count: "exact", head: true }),
+    supabase.from("dynamic_form_submissions").select("id", { count: "exact", head: true }).eq("status", "new"),
   ]);
 
   return {
@@ -27,6 +28,7 @@ async function getAdminStats() {
     events: events.count ?? 0,
     pendingComments: comments.count ?? 0,
     series: series.count ?? 0,
+    newResponses: responses.count ?? 0,
   };
 }
 
@@ -48,6 +50,7 @@ export default async function AdminPage() {
         <article><span>Eventos</span><strong>{stats.events}</strong></article>
         <article><span>Series</span><strong>{stats.series}</strong></article>
         <article><span>Comentarios pendientes</span><strong>{stats.pendingComments}</strong></article>
+        <article><span>Respuestas nuevas</span><strong>{stats.newResponses}</strong></article>
       </section>
 
       <section className={styles.actions}>
@@ -57,6 +60,7 @@ export default async function AdminPage() {
           <Link href="/admin/eventos/nuevo"><CalendarPlus /> Crear evento</Link>
           <Link href="/admin/series"><FolderPlus /> Organizar series</Link>
           <Link href="/admin/comentarios"><MessageSquareText /> Moderar comentarios</Link>
+          <Link href="/admin/formularios/nuevo"><ClipboardPlus /> Crear formulario</Link>
         </div>
       </section>
 

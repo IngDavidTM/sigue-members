@@ -94,7 +94,7 @@ export async function saveBlogPost(
 
   let publishedAt: string | null = null;
   try {
-    publishedAt = values.publishedAt ? zonedInputToIso(values.publishedAt, values.publicationTimezone) : null;
+    publishedAt = values.publishedAt ? zonedInputToIso(values.publishedAt, values.publicationTimezone) : values.status === "published" ? new Date().toISOString() : null;
   } catch {
     return { error: "No se guardó el blog.", fieldErrors: { publishedAt: ["La fecha de publicación no tiene un formato válido."] } };
   }
@@ -128,58 +128,30 @@ export async function saveBlogPost(
     author_name: values.authorName,
     is_featured: formChecked(formData, "isFeatured"),
     allow_comments: formChecked(formData, "allowComments"),
-    reading_time_minutes: getReadingTimeMinutes(values.contentEs),
+    reading_time_minutes: getReadingTimeMinutes(sanitizedEs.html),
     published_at: publishedAt,
     updated_by: admin.id,
   };
 
-  let postId = values.id ?? "";
-  let created = false;
-  if (postId) {
-    const { error } = await supabase.from("blog_posts").update(postData).eq("id", postId);
-    if (error) return { error: adminDatabaseError(error, "el blog") };
-  } else {
-    const { data, error } = await supabase
-      .from("blog_posts")
-      .insert({ ...postData, created_by: admin.id })
-      .select("id")
-      .single();
-    if (error) return { error: adminDatabaseError(error, "el blog") };
-    postId = data.id;
-    created = true;
-  }
-
   const translations = [
     { ...translationFromValues({ ...values, slugEs }, "es", sanitizedEs.html), noindex: formChecked(formData, "noindexEs"), nofollow: formChecked(formData, "nofollowEs") },
     { ...translationFromValues({ ...values, slugEn }, "en", sanitizedEn.html), noindex: formChecked(formData, "noindexEn"), nofollow: formChecked(formData, "nofollowEn") },
-  ].map((translation) => ({ ...translation, post_id: postId }));
-  const { error: translationsError } = await supabase
-    .from("blog_post_translations")
-    .upsert(translations, { onConflict: "post_id,locale" });
-  if (translationsError) {
-    if (created) await supabase.from("blog_posts").delete().eq("id", postId);
-    return { error: adminDatabaseError(translationsError, "la traducción del blog") };
+  ];
+  const expected = formString(formData, "expectedUpdatedAt");
+  if (values.id && !z.iso.datetime({ offset: true }).safeParse(expected).success) {
+    return { error: "Recarga la página antes de guardar; falta la versión del contenido." };
   }
-
-  const { error: clearTagsError } = await supabase
-    .from("blog_post_tags")
-    .delete()
-    .eq("post_id", postId);
-  if (clearTagsError) {
-    if (created) await supabase.from("blog_posts").delete().eq("id", postId);
-    return { error: adminDatabaseError(clearTagsError, "las etiquetas del blog") };
-  }
-  if (values.tagIds.length) {
-    const { error: tagsError } = await supabase
-      .from("blog_post_tags")
-      .insert(values.tagIds.map((tagId) => ({ post_id: postId, tag_id: tagId })));
-    if (tagsError) {
-      if (created) await supabase.from("blog_posts").delete().eq("id", postId);
-      return { error: adminDatabaseError(tagsError, "las etiquetas del blog") };
-    }
-  }
+  const { data: postId, error: saveError } = await supabase.rpc("save_blog_content", {
+    p_id: values.id ?? null,
+    p_record: postData,
+    p_translations: translations,
+    p_expected_updated_at: expected || null,
+    p_tag_ids: values.tagIds,
+  });
+  if (saveError || !postId) return { error: adminDatabaseError(saveError ?? {}, "el blog") };
 
   revalidatePath("/admin/blogs");
+  revalidatePath("/[locale]/blog/[slug]", "page");
   revalidatePath("/es/blog");
   revalidatePath("/en/blog");
   revalidatePath("/es/category", "layout");
@@ -199,10 +171,12 @@ export async function archiveBlogPost(formData: FormData) {
   const { error } = await supabase.from("blog_posts").update({ status: "archived" }).eq("id", id);
   if (error) throw new Error(error.message);
   revalidatePath("/admin/blogs");
+  revalidatePath("/[locale]/blog/[slug]", "page");
   revalidatePath("/es/blog");
   revalidatePath("/en/blog");
   revalidatePath("/es/category", "layout");
   revalidatePath("/en/category", "layout");
   revalidatePath("/es/tag", "layout");
   revalidatePath("/en/tag", "layout");
+  revalidatePath("/sitemap.xml");
 }

@@ -73,8 +73,10 @@ export default async function BlogPage({ params, searchParams }: Props) {
         {translation.excerpt ? <p>{translation.excerpt}</p> : null}
         <Link className={styles.readMore} href={`/${locale}/blog/${translation.slug}`}>{es ? "Leer artículo" : "Read article"} →</Link>
       </article>)}</div> : <div className={styles.empty}><h2>{es ? "Próximamente" : "Coming soon"}</h2><p>{es ? "Estamos preparando nuevos contenidos para ti." : "We are preparing new content for you."}</p></div>}
-      {totalPages > 1 ? (<nav className={styles.pagination} aria-label={es ? "Paginación" : "Pagination"}> {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => {const isActive = page === currentPage;
-      return (<Link key={page} data-active={isActive} aria-current={isActive ? "page" : undefined} href={`/${locale}/blog?page=${page}${ query.serie? `&serie=${encodeURIComponent(query.serie)}`: ""}`}>{page}</Link>);},)}</nav>) : null}
+      {totalPages > 1 ? (<nav className={styles.pagination} aria-label={es ? "Paginación" : "Pagination"}>{Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => {
+        const isActive = page === currentPage;
+        return <Link key={page} data-active={isActive} aria-current={isActive ? "page" : undefined} href={`/${locale}/blog?page=${page}${query.serie ? `&serie=${encodeURIComponent(query.serie)}` : ""}`}>{page}</Link>;
+      })}</nav>) : null}
     </div>
   </div>;
 }

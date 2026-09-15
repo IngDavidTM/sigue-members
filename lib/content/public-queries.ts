@@ -1,5 +1,7 @@
 import "server-only";
 
+import { cache } from "react";
+
 import { createClient } from "@/lib/supabase/server";
 import type {
   ApprovedBlogCommentRow,
@@ -36,7 +38,7 @@ function hasPublicContentConnection() {
   );
 }
 
-export async function getPublicBlogListing(locale: ContentLocale) {
+export const getPublicBlogListing = cache(async function getPublicBlogListing(locale: ContentLocale) {
   if (!hasPublicContentConnection()) {
     return { cards: [] as PublicBlogCard[], series: [] as BlogSeriesTranslationRow[] };
   }
@@ -82,9 +84,9 @@ export async function getPublicBlogListing(locale: ContentLocale) {
     reportPublicQuery(error);
     return { cards: [] as PublicBlogCard[], series: [] as BlogSeriesTranslationRow[] };
   }
-}
+});
 
-export async function getPublicBlogPost(locale: ContentLocale, slug: string) {
+export const getPublicBlogPost = cache(async function getPublicBlogPost(locale: ContentLocale, slug: string) {
   if (!hasPublicContentConnection()) return null;
 
   try {
@@ -187,7 +189,7 @@ export async function getPublicBlogPost(locale: ContentLocale, slug: string) {
     reportPublicQuery(error);
     return null;
   }
-}
+});
 
 export async function getPublicBlogSeries(locale: ContentLocale, slug: string) {
   if (!hasPublicContentConnection()) return null;
@@ -276,7 +278,7 @@ export async function getPublicBlogTag(locale: ContentLocale, slug: string) {
   }
 }
 
-export async function getPublicEvents(locale: ContentLocale) {
+export const getPublicEvents = cache(async function getPublicEvents(locale: ContentLocale) {
   if (!hasPublicContentConnection()) return [] as PublicEventCard[];
 
   try {
@@ -284,6 +286,8 @@ export async function getPublicEvents(locale: ContentLocale) {
     const { data: events, error: eventsError } = await supabase
       .from("events")
       .select("*")
+      .in("status", ["published", "cancelled"])
+      .lte("published_at", new Date().toISOString())
       .order("is_featured", { ascending: false })
       .order("starts_at", { ascending: true });
     if (eventsError) throw eventsError;
@@ -310,7 +314,7 @@ export async function getPublicEvents(locale: ContentLocale) {
     reportPublicQuery(error);
     return [] as PublicEventCard[];
   }
-}
+});
 
 export async function getPublicEventGroups(locale: ContentLocale) {
   const events = await getPublicEvents(locale);
@@ -321,22 +325,36 @@ export async function getPublicEventGroups(locale: ContentLocale) {
   };
 }
 
-export async function getPublicEvent(locale: ContentLocale, slug: string) {
+export const getPublicEvent = cache(async function getPublicEvent(locale: ContentLocale, slug: string) {
   if (!hasPublicContentConnection()) return null;
 
   try {
     const supabase = await createClient();
-    const { data: translation, error } = await supabase
+    const { data: initialTranslation, error } = await supabase
       .from("event_translations")
       .select("*")
       .eq("locale", locale)
       .eq("slug", slug)
       .maybeSingle();
     if (error) throw error;
+    let translation = initialTranslation;
+    if (!translation) {
+      const source = await supabase.from("event_translations").select("event_id")
+        .neq("locale", locale).eq("slug", slug).maybeSingle();
+      if (source.error) throw source.error;
+      if (source.data) {
+        const target = await supabase.from("event_translations").select("*")
+          .eq("locale", locale).eq("event_id", source.data.event_id).maybeSingle();
+        if (target.error) throw target.error;
+        translation = target.data;
+      }
+    }
     if (!translation) return null;
     const { data: event, error: eventError } = await supabase
       .from("events")
       .select("*")
+      .in("status", ["published", "cancelled"])
+      .lte("published_at", new Date().toISOString())
       .eq("id", translation.event_id)
       .maybeSingle();
     if (eventError) throw eventError;
@@ -363,11 +381,12 @@ export async function getPublicEvent(locale: ContentLocale, slug: string) {
       translation,
       venue,
       virtualUrl: accessResult.data?.virtual_url ?? null,
+      currentTime: Date.now(),
       alternateTranslations: alternateTranslationsResult.data,
-      upcoming: allEvents.filter((item) => item.event.id !== event.id).slice(0, 4),
+      upcoming: allEvents.filter((item) => item.event.id !== event.id && item.event.status !== "cancelled" && new Date(item.event.ends_at).getTime() >= Date.now()).slice(0, 4),
     };
   } catch (error) {
     reportPublicQuery(error);
     return null;
   }
-}
+});

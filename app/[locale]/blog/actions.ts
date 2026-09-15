@@ -11,16 +11,18 @@ export async function submitComment(
   _previous: CommentActionState,
   formData: FormData,
 ): Promise<CommentActionState> {
-  if (String(formData.get("company") || "")) return { success: "Comentario recibido." };
+  const locale = formData.get("locale") === "en" ? "en" : "es";
+  const es = locale === "es";
+  if (String(formData.get("company") || "")) return { success: es ? "Comentario recibido." : "Comment received." };
   const parsed = z.object({
-    postId: z.uuid(),
-    slug: z.string().min(1),
-    locale: z.enum(["es", "en"]),
-    authorName: z.string().trim().min(2).max(100),
-    authorEmail: z.email().trim().toLowerCase(),
-    authorWebsite: z.union([z.url(), z.literal("")]),
-    content: z.string().trim().min(2).max(4000),
-    parentId: z.union([z.uuid(), z.literal("")]),
+    postId: z.uuid(es ? "La publicación no es válida." : "The post is invalid."),
+    slug: z.string().min(1, es ? "La publicación no es válida." : "The post is invalid."),
+    locale: z.enum(["es", "en"], es ? "El idioma no es válido." : "The language is invalid."),
+    authorName: z.string().trim().min(2, es ? "Escribe tu nombre." : "Enter your name.").max(100, es ? "El nombre es demasiado largo." : "The name is too long."),
+    authorEmail: z.email(es ? "Escribe un correo válido." : "Enter a valid email address.").trim().toLowerCase(),
+    authorWebsite: z.union([z.url(es ? "Escribe una URL válida." : "Enter a valid URL."), z.literal("")]),
+    content: z.string().trim().min(2, es ? "Escribe tu comentario." : "Enter your comment.").max(4000, es ? "El comentario es demasiado largo." : "The comment is too long."),
+    parentId: z.union([z.uuid(es ? "La respuesta no es válida." : "The reply is invalid."), z.literal("")]),
   }).safeParse({
     postId: formData.get("postId"),
     slug: formData.get("slug"),
@@ -31,7 +33,7 @@ export async function submitComment(
     content: formData.get("content"),
     parentId: String(formData.get("parentId") || ""),
   });
-  if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Revisa los datos." };
+  if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? (es ? "Revisa los datos." : "Check the information.") };
 
   const supabase = await createClient();
   const { error } = await supabase.rpc("submit_blog_comment", {
@@ -45,8 +47,8 @@ export async function submitComment(
   });
   if (error) {
     const rateLimited = error.message.toLowerCase().includes("rate limit");
-    return { error: rateLimited ? (parsed.data.locale === "es" ? "Espera unos minutos antes de comentar de nuevo." : "Please wait a few minutes before commenting again.") : error.message };
+    return { error: rateLimited ? (es ? "Espera unos minutos antes de comentar de nuevo." : "Please wait a few minutes before commenting again.") : (es ? "No se pudo enviar el comentario. Intenta nuevamente." : "The comment could not be submitted. Please try again.") };
   }
   revalidatePath(`/${parsed.data.locale}/blog/${parsed.data.slug}`);
-  return { success: parsed.data.locale === "es" ? "Tu comentario quedó pendiente de moderación." : "Your comment is awaiting moderation." };
+  return { success: es ? "Tu comentario quedó pendiente de moderación." : "Your comment is awaiting moderation." };
 }

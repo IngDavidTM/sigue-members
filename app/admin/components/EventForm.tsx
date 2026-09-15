@@ -33,7 +33,7 @@ function LocaleFields({ locale, translation }: { locale: "es" | "en"; translatio
         <label className={contentStyles.field}><span>URL canónica</span><input type="url" name={`canonicalUrl${suffix}`} defaultValue={translation?.canonical_url ?? ""} /></label>
         <div className={contentStyles.fields2}>
           <label className={contentStyles.field}><span>Título para redes</span><input name={`ogTitle${suffix}`} maxLength={60} defaultValue={translation?.og_title ?? ""} /></label>
-          <label className={contentStyles.field}><span>Imagen para redes (.avif/.webp)</span><input type="url" name={`ogImageUrl${suffix}`} defaultValue={translation?.og_image_url ?? ""} /></label>
+          <MediaField name={`ogImageUrl${suffix}`} label="Imagen para redes (opcional)" initialValue={translation?.og_image_url} />
         </div>
         <label className={contentStyles.field}><span>Descripción para redes</span><textarea name={`ogDescription${suffix}`} maxLength={200} defaultValue={translation?.og_description ?? ""} /></label>
         <label className={contentStyles.checkbox}><input type="checkbox" name={`noindex${suffix}`} defaultChecked={translation?.noindex} /> No indexar esta versión</label>
@@ -52,6 +52,7 @@ export function EventForm({ event, translations = [], venues, virtualUrl, organi
   const en = translations.find((item) => item.locale === "en");
   return <ActionForm action={saveEvent} className={contentStyles.form} submitLabel={event ? "Actualizar evento" : "Crear evento"}>
     <input type="hidden" name="id" value={event?.id ?? ""} />
+      <input type="hidden" name="expectedUpdatedAt" value={event?.updated_at ?? ""} />
     <input type="hidden" name="existingPublishedAt" value={event?.published_at ?? ""} />
     <div className={contentStyles.mainColumn}>
       <LocaleFields locale="es" translation={es} />

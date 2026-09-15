@@ -189,3 +189,18 @@
 .seoAssistant li[data-ok="true"]::before { color: #15804c; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
+
+.editorToolbar button[aria-pressed='true'] { background: #512076; color: #fff; }
+.editorToolbar button:disabled { opacity: .45; cursor: wait; }
+.editor :global(.tiptap img.ProseMirror-selectednode) { outline: 3px solid #f30b4f; outline-offset: 3px; }
+.editor :global(.tiptap table) { border-collapse: collapse; width: 100%; }
+.editor :global(.tiptap td), .editor :global(.tiptap th) { padding: 8px; border: 1px solid #d9cae7; }
+.imagePanel { display: grid; gap: 14px; padding: 18px; background: #faf8fc; border: 1px solid #d9cae7; }
+.imageActions { display: flex; flex-wrap: wrap; gap: 10px; }
+.imageActions button { padding: 8px 14px; border: 1px solid #ccb9de; border-radius: 8px; cursor: pointer; }
+.imageActions button:first-child { background: #512076; color: #fff; }
+.submitBar { align-items: center; gap: 16px; }
+.submitBar span { color: #512076; font-size: .85rem; }
+.uploadButton:focus-within { outline: 2px solid #512076; outline-offset: 2px; }
+.uploadButton input { display: block; position: absolute; width: 1px; height: 1px; opacity: 0; }
+.editor :global(.tiptap), .searchPreview { overflow-wrap: anywhere; }

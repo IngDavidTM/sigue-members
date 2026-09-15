@@ -817,7 +817,7 @@
 }
 
 .speakersSection {
-  padding: clamp(7rem, 11vw, 11rem) 0;
+  padding: clamp(5rem, 10vw, 8.5rem) 0 0;
 }
 
 .centeredLead {
@@ -826,87 +826,99 @@
   text-align: center;
 }
 
+.speakersSection .centeredLead {
+  max-width: 720px;
+  margin-bottom: 2rem;
+  color: var(--cumbre-purple);
+  font-size: clamp(1.1rem, 1.6vw, 1.375rem);
+  line-height: 1.5;
+  text-align: left;
+}
+
+.speakersSection h2 {
+  font-size: clamp(2.25rem, 4vw, 3rem);
+}
+
+.speakersPanel {
+  padding: 2rem 0 7rem;
+  background: #fff3fa;
+}
+
 .speakersGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.2rem, 3vw, 3rem);
-  width: min(1050px, calc(100% - 3rem));
+  gap: 4rem 3rem;
+  width: min(1100px, calc(100% - 3rem));
   margin: 0 auto;
+  color: var(--cumbre-purple);
 }
 
 .speakersGrid article {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  min-height: 470px;
-  padding: 1.2rem;
-  border: 4px solid var(--cumbre-border);
-  border-radius: 1.4rem;
-  background: var(--cumbre-lilac);
+  align-items: center;
   text-align: center;
 }
 
 .speakerImage {
-  position: relative;
-  flex: 0 0 340px;
-  height: 340px;
+  display: block;
+  width: 250px;
+  height: auto;
+  aspect-ratio: 25 / 24;
+  object-fit: contain;
 }
 
 .speakersGrid h3 {
-  margin: 0.9rem 0 0;
+  margin: 0.65rem 0 0;
   font-size: 1.45rem;
-  line-height: 1.05;
+  font-weight: 800;
+  line-height: 1.1;
 }
 
 .speakersGrid p {
-  margin: 0.25rem 0 0;
-  line-height: 1.15;
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.1;
 }
 
 .speakerRole {
-  font-weight: 800;
+  font-weight: 400;
 }
 
 .speakerInitiatives {
-  display: grid;
-  gap: 0.08rem;
-  margin-top: 0.4rem !important;
-  font-family: var(--font-roboto), 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: Georgia, serif;
+  font-size: 1.15rem;
   font-style: italic;
   font-weight: 700;
+  line-height: 1.1;
 }
 
-.speakerOrganization,
-.speakerCountry {
-  font-family: var(--font-roboto), 'Roboto', sans-serif;
-  font-style: italic;
+.speakerOrganization {
+  max-width: 240px;
   font-weight: 800;
 }
 
-.speakerCountry {
-  margin-top: 0.65rem !important;
+.speakersGrid article:nth-child(4) .speakerOrganization,
+.speakersGrid article:nth-child(5) .speakerOrganization {
+  margin-top: 1.2rem;
 }
 
-.speakerSoon {
-  justify-content: center !important;
-  align-items: center;
-  border-style: dashed !important;
+.speakerFlag {
+  order: 2;
+  width: 68px;
+  height: 46px;
+  object-fit: contain;
+  margin-top: auto;
+  padding-top: 0;
 }
 
-.speakerSoonMark {
-  display: block;
-  width: 104px;
-  height: 104px;
-  margin-bottom: 1.25rem;
-  border: 2px dashed var(--cumbre-ink);
-  border-radius: 50%;
-  background: #c5c0d7;
-}
-
-.speakerSoonLead {
-  margin-top: 2.4rem !important;
-  font-size: 1.2rem;
-  font-weight: 900;
+.speakersGrid article::after {
+  content: '';
+  order: 1;
+  height: 2rem;
 }
 
 .agendaSection {
@@ -2534,15 +2546,15 @@
     display: none;
   }
 
-  .speakersGrid,
   .agendaGrid,
   .pricingGrid {
     grid-template-columns: 1fr;
     max-width: 540px;
   }
 
-  .speakersGrid article {
-    min-height: 520px;
+  .speakersGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem 1.5rem;
   }
 
   .pricingGrid article:hover,
@@ -2588,6 +2600,14 @@
 }
 
 @media (max-width: 600px) {
+  .speakersGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .speakersPanel {
+    padding-bottom: 4rem;
+  }
+
   .headerInner,
   .heroInner,
   .contentGrid,

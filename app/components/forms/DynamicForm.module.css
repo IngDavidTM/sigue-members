@@ -1,0 +1,25 @@
+.shell { width: min(900px, 100%); padding: clamp(22px, 4vw, 40px); border: 1px solid #e4d9ed; border-radius: 18px; background: #fff; box-shadow: 0 18px 50px rgb(64 22 90 / 8%); }
+.shell header { margin-bottom: 24px; }
+.shell h2 { margin: 0; color: #512076; font-family: var(--font-heading); font-size: clamp(1.7rem, 4vw, 2.5rem); }
+.shell header p { max-width: 680px; margin: 8px 0 0; color: #725b82; line-height: 1.6; }
+.form { display: grid; gap: 20px; }
+.grid { display: flex; flex-wrap: wrap; gap: 18px 16px; }
+.field { flex: 1 1 calc(var(--field-width) - 16px); min-width: min(100%, 240px); display: grid; align-content: start; gap: 7px; }
+.field > label:first-child { color: #512076; font-size: .84rem; font-weight: 850; }
+.field > label span, .choices legend span, .check b { color: #f30b4f; }
+.field input:not([type="checkbox"]):not([type="radio"]), .field textarea, .field select { width: 100%; min-height: 48px; padding: 11px 13px; border: 1px solid #d8cae4; border-radius: 9px; background: #fff; color: #351248; font: inherit; }
+.field textarea { resize: vertical; }
+.field input:focus, .field textarea:focus, .field select:focus { border-color: #7d32aa; outline: 3px solid rgb(125 50 170 / 13%); }
+.field small { color: #846d92; line-height: 1.4; }
+.choices { display: grid; gap: 8px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.choices legend { margin-bottom: 7px; color: #512076; font-size: .84rem; font-weight: 850; }
+.choices label, .check { display: flex; align-items: flex-start; gap: 8px; color: #513561; }
+.choices input, .check input { width: 18px; height: 18px; accent-color: #f30b4f; }
+.form > button { justify-self: start; min-height: 48px; padding: 11px 23px; border: 0; border-radius: 9px; background: #f30b4f; color: #fff; cursor: pointer; font: inherit; font-weight: 900; }
+.form > button:disabled { cursor: wait; opacity: .65; }
+.error { margin: 0; color: #a51743; font-weight: 750; }
+.success { width: min(900px, 100%); padding: 28px; border: 1px solid #b8e5cc; border-radius: 15px; background: #effbf4; color: #185c39; }
+.success strong { font-size: 1.2rem; }
+.success p { margin: 7px 0 0; }
+.honeypot { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 640px) { .field { flex-basis: 100%; } .shell { border-radius: 12px; } }

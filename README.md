@@ -1,34 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SIGUE Network
 
-## Getting Started
+Sitio público y panel de administración de SIGUE Network. El proyecto usa Next.js 16, Supabase, contenido bilingüe y un sistema configurable de formularios.
 
-First, run the development server:
+## Desarrollo local
 
-```bash
+Requiere Node.js 20.9 o posterior. Instala dependencias y copia la configuración de ejemplo:
+
+```sh
+npm ci
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Completa las variables públicas de Supabase para navegar el sitio y las variables de servidor para las operaciones administrativas. No uses `SUPABASE_SERVICE_ROLE_KEY` como clave pública.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Comandos
 
-## Learn More
+```sh
+npm run test:admin       # Validación, sanitización, formularios e imágenes
+npm run test:admin:ui    # Editor y páginas reales en Chromium con datos aislados
+npm run lint
+npm run build
+npm run migrate:wordpress       # Inventario sin escrituras
+npm run migrate:wordpress:apply # Importación idempotente a Supabase
+npm run content:english         # Revisa las traducciones importadas pendientes
+npm run content:english:apply   # Aplica inglés sin pisar cambios editoriales
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Base de datos y despliegue
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Aplica en orden los archivos de `supabase/migrations` antes de desplegar una versión que dependa de ellos. El procedimiento, variables, correo, cron y verificaciones están documentados en [docs/admin-content-production.md](docs/admin-content-production.md). El estado de la migración desde WordPress está en [docs/wordpress-migration-plan.md](docs/wordpress-migration-plan.md).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+El panel vive bajo `/admin`. Los blogs, eventos, taxonomías, formularios, respuestas y comentarios se administran allí; Supabase conserva el contenido y los medios optimizados.

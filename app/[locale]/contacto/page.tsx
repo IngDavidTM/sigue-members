@@ -1,10 +1,15 @@
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import PageHero from '@/app/components/ui/PageHero';
 import Reveal from '@/app/components/ui/Reveal';
 import SocialLinks from '@/app/components/ui/SocialLinks';
+import DynamicForm from '@/app/components/forms/DynamicForm';
+import { getPublishedDynamicForm } from '@/lib/forms/public';
 
-export default function ContactoPage() {
-  const t = useTranslations('contactPage');
+export default async function ContactoPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: rawLocale } = await params;
+  const locale = rawLocale === 'en' ? 'en' : 'es';
+  const t = await getTranslations('contactPage');
+  const contactForm = await getPublishedDynamicForm('contacto');
 
   return (
     <main className="overflow-x-hidden">
@@ -39,6 +44,7 @@ export default function ContactoPage() {
           </div>
 
           <SocialLinks className="mt-14" />
+          {contactForm ? <div className="mt-14"><DynamicForm {...contactForm} locale={locale} sourcePath={`/${locale}/contacto`} /></div> : null}
         </Reveal>
       </section>
     </main>
