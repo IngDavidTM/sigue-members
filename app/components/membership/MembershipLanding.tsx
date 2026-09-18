@@ -5,14 +5,11 @@ import Link from 'next/link';
 import {
   ArrowRight,
   BadgePercent,
-  ChevronLeft,
-  ChevronRight,
   BookOpen,
   Handshake,
   LifeBuoy,
   TrendingUp,
 } from 'lucide-react';
-import { useState } from 'react';
 import styles from './MembershipLanding.module.css';
 
 type Locale = 'es' | 'en';
@@ -168,7 +165,6 @@ function localized(text: LocalizedText, locale: Locale) {
 
 export default function MembershipLanding({ locale, interestFormAvailable = false }: { locale: Locale; interestFormAvailable?: boolean }) {
   const c = copy[locale];
-  const [logoDirection, setLogoDirection] = useState<'forward' | 'backward'>('forward');
 
   return (
     <div className={styles.page} data-membership-page>
@@ -210,31 +206,15 @@ export default function MembershipLanding({ locale, interestFormAvailable = fals
         <div
           className={styles.logoCarousel}
         >
-          <button
-            className={styles.carouselButton}
-            type="button"
-            aria-label={locale === 'es' ? 'Ver logos anteriores' : 'Show previous logos'}
-            onClick={() => setLogoDirection('backward')}
-          >
-            <ChevronLeft aria-hidden="true" />
-          </button>
           <div className={styles.logoViewport}>
-          <div className={`${styles.logoTrack} ${logoDirection === 'backward' ? styles.logoTrackBackward : ''}`}>
-            {[...memberLogoFiles, ...memberLogoFiles].map((logo, index) => (
-              <div className={styles.logoCard} data-logo-card key={`${logo}-${index}`} aria-hidden={index >= memberLogoFiles.length}>
-                <Image src={logo} alt={index < memberLogoFiles.length ? `SIGUE Network member ${index + 1}` : ''} fill sizes="180px" />
-              </div>
-            ))}
+            <div className={styles.logoTrack}>
+              {[...memberLogoFiles, ...memberLogoFiles].map((logo, index) => (
+                <div className={styles.logoCard} data-logo-card key={`${logo}-${index}`} aria-hidden={index >= memberLogoFiles.length}>
+                  <Image src={logo} alt={index < memberLogoFiles.length ? `SIGUE Network member ${index + 1}` : ''} fill sizes="180px" />
+                </div>
+              ))}
+            </div>
           </div>
-          </div>
-          <button
-            className={styles.carouselButton}
-            type="button"
-            aria-label={locale === 'es' ? 'Ver logos siguientes' : 'Show next logos'}
-            onClick={() => setLogoDirection('forward')}
-          >
-            <ChevronRight aria-hidden="true" />
-          </button>
         </div>
         <p className={styles.membersBody}>{c.membersBody}</p>
         <div className={styles.impactPartners}>

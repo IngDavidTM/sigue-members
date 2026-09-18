@@ -200,48 +200,22 @@
 .logoCarousel {
   display: grid;
   margin: 52px auto 40px;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
   max-width: 1220px;
-  gap: 16px;
   padding: 0 28px;
-}
-
-.carouselButton {
-  display: grid;
-  width: 44px;
-  height: 44px;
-  place-items: center;
-  border: 2px solid var(--purple);
-  border-radius: 50%;
-  background: #fff;
-  color: var(--purple);
-  cursor: pointer;
-  transition: background-color .2s ease, color .2s ease, transform .2s ease;
-}
-
-.carouselButton:hover,
-.carouselButton:focus-visible {
-  background: var(--purple);
-  color: #fff;
-  transform: scale(1.06);
-}
-
-.carouselButton svg {
-  width: 22px;
-  height: 22px;
 }
 
 .logoTrack {
   display: flex;
   width: max-content;
   gap: 20px;
-  animation: logo-scroll 64s linear infinite;
+  animation: logo-scroll 84s linear infinite;
   will-change: transform;
 }
 
-.logoTrackBackward {
-  animation-direction: reverse;
+.logoViewport:hover .logoTrack {
+  animation-play-state: paused;
 }
 
 .logoCard {
@@ -492,7 +466,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .button,
-  .carouselButton,
   .participationGrid > a {
     transition: none;
   }
@@ -676,13 +649,7 @@
 
 @media (max-width: 700px) {
   .logoCarousel {
-    gap: 8px;
     padding: 0 12px;
-  }
-
-  .carouselButton {
-    width: 38px;
-    height: 38px;
   }
 
   .logoCard {
@@ -1036,4 +1003,3 @@
     min-height: 0;
   }
 }
-
