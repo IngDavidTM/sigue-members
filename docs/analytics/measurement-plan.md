@@ -30,16 +30,16 @@ Forma de comprobarla: manera de verificar que la interacción existe en el sitio
 
 | Nombre estable | Página/componente | Acción del usuario | Objetivo de negocio | Datos permitidos | Fuente necesaria | Forma de comprobarla | 
 |---|---|---|---|---|---|---|    
-| blog_click | inicio-Blog/HomeLanding.tsx | Clic en Blog | Medir interés en contenido | Ruta,idioma, fecha/hora | GA4/GTM | Comprobar el enlace hacia /es/blog |
+| blog_click | Navegación global | Clic en Blog | Medir interés en contenido | Ruta,idioma, fecha/hora | GA4/GTM | Comprobar el enlace al Blog en la navegación global |
 | membership_click | inicio→Miembros/HomeLanding.tsx | Clic en membresía | Medir interés en la membresía | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace hacia /es/miembros-sigue |
 | events_click | inicio→Eventos/HomeLanding.tsx | Clic en Eventos | Medir interés en eventos |  Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace existente a eventos |
-| cumbre_registration_click | Cumbre/RegistrationForm.tsx | Clic en inscribirme | Medir el inicio del recorrido de inscripción | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el botón y el acceso a #inscripcion |
+| cumbre_registration_click | Cumbre/CumbreLanding.tsx / RegistrationControls.tsx | Clic en inscribirme | Medir el inicio del recorrido de inscripción | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el botón y el acceso a #inscripcion |
 | cumbre_zeffy_click | Cumbre/RegistrationForm.tsx | Clic en Pagar con tarjeta en Zeffy | Medir la salida hacia el proveedor externo | Ruta, idioma, fecha/hora, destino | GA4/GTM | Comprobar el enlace hacia Zeffy |
-| cumbre_transfer_calculator_use | Cumbre / RegistrationForm.tsx | Usar la calculadora de transferencia | Medir interés en la alternativa de transferencia | Ruta, idioma, fecha/hora | GA4/GTM | Verificar la calculadora en RegistrationForm.tsx |
+| cumbre_transfer_calculator_use | Cumbre / RegistrationForm.tsx | Primera modificación manual de tarifa u hospedaje | Medir interés en la alternativa de transferencia | Ruta, idioma, fecha/hora | GA4/GTM | Verificar la calculadora en RegistrationForm.tsx |
 | cumbre_conversion_confirmed | Cumbre-Zeffy | Completar el pago o inscripción | Medir conversiones externas reales | Fecha/hora y datos no personales autorizados | Zeffy o conciliación externa | Requiere confirmación o exportación de la fuente externa |
-| donation_zeffy_view | Donación / DonationEmbed.tsx | Visualizar el formulario de Zeffy | Medir el inicio del recorrido de donación | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el iframe de Zeffy |
+| donation_zeffy_embed_rendered | Donación / DonationEmbed.tsx | Renderizar el embed de Zeffy en la página | Identificar las páginas donde se carga el formulario de donación de Zeffy | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar que el embed de Zeffy se renderiza en la página |
 | donation_conversion_confirmed | Donación-Zeffy | Completar una donación | Medir donaciones confirmadas | Fecha/hora y datos no personales autorizados | Zeffy o conciliación externa |Requiere confirmación o exportación de Zeffy |
-| form_submit_confirmed | Formulario público/DynamicForm.tsx | Enviar correctamente el formulario | Contabilizar formularios confirmados | Ruta, idioma, tipo de formulario, fecha/hora | Analítica futura/fuente del formulario | Comprobar state.success en DynamicForm.tsx |
+| form_submit_confirmed | Formulario público/DynamicForm.tsx | Enviar correctamente el formulario | Contabilizar formularios confirmados | Ruta, idioma, tipo de formulario, fecha/hora | Analítica futura/fuente del formulario | Verificar un submissionId válido generado después de la persistencia; excluir el honeypot |
 
 ## 5. Embudos de conversión
 Embudo de Cumbre
@@ -167,4 +167,20 @@ Para estos eventos se requiere información confirmada por Zeffy o una fuente ex
 Estado actual
 
 Actualmente el repositorio no contiene un colector de analítica que permita obtener estos indicadores con datos históricos reales. Por tanto, esta prioridad corresponde a una propuesta de implementación futura y no implica que los eventos estén actualmente registrados.
+
+## 9. Gobernanza y privacidad de los datos
+
+Antes de implementar cualquier medición, se debe definir la gobernanza de los datos utilizados en analítica.
+
+Consentimiento: se debe determinar cuándo se requiere consentimiento del usuario para el uso de herramientas de analítica y respetar las políticas de privacidad aplicables.
+
+Retención: se debe establecer durante cuánto tiempo se conservarán los datos de analítica y las exportaciones utilizadas para los indicadores.
+
+Responsables de acceso: se deben definir los roles o responsables autorizados para consultar, administrar y utilizar los datos.
+
+Datos permitidos en GA4/GTM: solo deben enviarse datos necesarios para la medición, evitando nombres, correos electrónicos, teléfonos, respuestas de formularios, datos bancarios u otros datos personales.
+
+Exportaciones de Zeffy: cualquier información obtenida mediante exportaciones de Zeffy debe utilizarse únicamente con autorización y bajo las reglas de acceso, retención y privacidad definidas por la organización.
+
+Criterio general: ningún evento debe diseñarse de forma que permita identificar directamente a una persona. Las conversiones externas deben basarse únicamente en información confirmada por la fuente autorizada correspondiente.
 
