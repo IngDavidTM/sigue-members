@@ -1,4 +1,4 @@
-datatime,locale,path,event_name,source,example_id
+datetime,locale,path,event_name,source,example_id
 2026-09-28 10:30,es,/es/blog,blog_click,website,EVT001
 2026-09-28 10:45,es,/es/miembros-sigue,membership_click,website,EVT002
 2026-09-28 11:00,en,/en/blog,blog_click,website,EVT003
