@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Reveal from '../ui/Reveal';
 import RegistrationForm from './RegistrationForm';
 import { RegistrationCta, RegistrationProvider } from './RegistrationControls';
-import { tariffs } from './registration';
+import { dayPass, tariffs } from './registration';
 import UsdEquivalents from './UsdEquivalents';
 import styles from './CumbreLanding.module.css';
 
@@ -795,7 +795,7 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
               <p className={styles.eyebrow}>{text('Tarifas', 'Rates')}</p>
               <h2>{text('Elige tu tarifa', 'Choose your rate')}</h2>
               <p>{text('Escoge la opción que mejor se ajuste a ti.', 'Choose the option that works best for you.')}</p>
-              <strong>{text('Todas incluyen la experiencia completa de la Cumbre.', 'Every option includes the full Summit experience.')}</strong>
+              <strong>{text('Pases completos y una opción para asistir solo un día.', 'Full Summit passes and a one-day option.')}</strong>
             </div>
             <div className={styles.pricingGrid}>
               {pricing.map((price) => (
@@ -810,12 +810,26 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                   <strong>
                     {text('Con hospedaje:', 'With lodging:')} COP ${formatCop(price.lodging)}
                   </strong>
-                  <RegistrationCta tariff={price.id} withLodging={false}>
+                  <RegistrationCta passType="full" tariff={price.id} withLodging={false}>
                     {text('Elegir', 'Choose')} {localized(price.name).replace(text('Tarifa ', ' Rate'), '')}
                   </RegistrationCta>
                 </article>
               ))}
             </div>
+            <article className={styles.dayPassCard}>
+              <div>
+                <p>{text('¿Solo puedes asistir un día?', 'Can you attend for just one day?')}</p>
+                <h3>{text('Pase por día', 'Day Pass')}</h3>
+                <span>{text('Elige el 27 (tarde), 28 o 29 de octubre. Sin hospedaje.', 'Choose October 27 (afternoon), 28, or 29. Lodging not included.')}</span>
+              </div>
+              <div className={styles.dayPassPrice}>
+                <strong>COP ${formatCop(dayPass.cop)}</strong>
+                <span>{text('por persona y día · US$66 en Zeffy', 'per person, per day · US$66 on Zeffy')}</span>
+                <RegistrationCta passType="day" withLodging={false}>
+                  {text('Elegir pase diario', 'Choose Day Pass')}
+                </RegistrationCta>
+              </div>
+            </article>
             <UsdEquivalents locale={locale} />
           </section>
 
@@ -840,7 +854,7 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                   <li>{text('Todo lo incluido en el Pase Cumbre', 'Everything included in the Summit Pass')}</li>
                 </ul>
                 <strong>{text('Cupos de hospedaje limitados.', 'Limited lodging availability.')}</strong>
-                <RegistrationCta className={styles.primaryButton} withLodging>
+                <RegistrationCta className={styles.primaryButton} passType="full" withLodging>
                   {text('Quiero mi cupo con hospedaje', 'I want a spot with lodging')}
                 </RegistrationCta>
               </div>
@@ -863,7 +877,7 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
               <span>{text('Miembro Activo SIGUE', 'Active SIGUE Member')}</span>
             </div>
             <p>{text('Con hospedaje: COP $652.000', 'With lodging: COP $652,000')}</p>
-            <RegistrationCta className={styles.lightButton} tariff="member" withLodging={false}>
+            <RegistrationCta className={styles.lightButton} passType="full" tariff="member" withLodging={false}>
               {text('Soy miembro SIGUE — Inscribirme', 'I am a SIGUE member — Register')}
             </RegistrationCta>
           </section>
