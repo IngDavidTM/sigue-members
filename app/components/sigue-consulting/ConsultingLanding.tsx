@@ -23,23 +23,23 @@ const content = {
     },
     intro: {
       title: 'Diagnóstico, diseño e implementación de estrategias para generar impacto integral, sostenible y escalable en comunidades.',
-      body: 'En SIGUE Consulting ofrecemos asesoría estratégica personalizada para que ONGs, proyectos sociales y empresas potencien su impacto. Nuestro enfoque integra estrategias innovadoras, sostenibilidad financiera y alianzas clave para generar una transformación duradera en lo físico, emocional y espiritual.',
+      body: 'En SIGUE Consulting, ofrecemos asesoría estratégica personalizada para que ONGs, proyectos sociales y empresas puedan potenciar su impacto en las comunidades que sirven. Nuestro enfoque integral abarca estrategias innovadoras, sostenibilidad financiera y alianzas clave para generar una transformación duradera en lo físico, emocional y espiritual.',
       benefitsTitle: 'Beneficios clave',
       benefits: [
-        ['Estrategias personalizadas', 'Diseñamos planes adaptados para optimizar operaciones, alcance, visibilidad e impacto.'],
-        ['Alianzas estratégicas', 'Facilitamos conexiones con aliados que amplifican tu misión, recursos e impacto.'],
-        ['Sostenibilidad y escala', 'Implementamos modelos de gestión para asegurar sostenibilidad y crecimiento.'],
+        ['Estrategias personalizadas', 'Diseñamos planes adaptados a tu organización para optimizar sus operaciones, alcance, visibilidad e impacto.'],
+        ['Alianzas estratégicas', 'Facilitamos conexiones con aliados clave que amplifican tu misión, recursos e impacto de los proyectos.'],
+        ['Sostenibilidad y escala', 'Implementamos modelos de gestión y estrategias para asegurar sostenibilidad y crecimiento de proyectos.'],
       ],
-      cta: 'Contáctanos hoy mismo para saber cómo podemos potenciar tu organización',
+      cta: 'Contáctanos hoy mismo para saber cómo SIGUE Consulting puede potenciar tu organización',
     },
     audience: {
       titleBefore: '¿Para quién es',
       titleAfter: 'Consulting?',
-      body: 'Trabajamos con organizaciones que buscan fortalecer su impacto, mejorar su sostenibilidad y escalar la transformación en las comunidades que sirven.',
+      body: 'En SIGUE Consulting, trabajamos con organizaciones que buscan fortalecer su impacto, mejorar su sostenibilidad y escalar su transformación en las comunidades que sirven.',
       statements: [
-        'Si lideras una ONG o un proyecto social, te ayudamos a estructurar, financiar y fortalecer tu labor usando los cinco ejes del Método SIGUE™.',
+        'Si lideras una ONG o un proyecto social, te ayudamos a estructurar, financiar y fortalecer tu labor usando los cinco ejes de nuestro Método SIGUE™.',
         'Si lideras una empresa, te guiamos en la creación de estrategias de RSE integral y sostenible con el Método de los Cinco Sentidos™.',
-        'Si representas una asociación cristiana con incidencia territorial, te ayudamos a optimizar recursos y ampliar tu impacto comunitario.',
+        'Si representas una asociación cristiana con incidencia territorial, te brindamos estrategias para optimizar recursos y ampliar tu impacto en la comunidad.',
       ],
       profileTitle: 'Elige tu perfil y descubre cómo potenciar tu impacto:',
       profiles: [
@@ -69,7 +69,7 @@ const content = {
       {
         id: 'empresas',
         title: 'EMPRESAS',
-        subtitle: 'Estrategias de Responsabilidad Social Empresarial Integral (RSEI) que logran impacto FES',
+        subtitle: 'Diagnóstico, diseño e implementación de estrategias de Responsabilidad Social Empresarial Integral (RSEI) que logran impacto FES',
         body: 'Potenciamos y conectamos tu empresa con el Método de los Cinco Sentidos™, alineando propósito, acción y resultados.',
         image: images.company,
         alt: 'Equipo empresarial diseñando una estrategia',
@@ -84,7 +84,7 @@ const content = {
       {
         id: 'asociaciones',
         title: 'ASOCIACIONES CRISTIANAS CON ENFOQUE TERRITORIAL',
-        subtitle: 'Estrategias para el impacto FES de territorios',
+        subtitle: 'Diagnóstico, diseño e implementación de estrategias para el impacto FES de territorios',
         body: 'Potenciamos y conectamos tu asociación para maximizar su impacto y optimizar recursos mediante estrategias territoriales avanzadas.',
         image: images.territory,
         alt: 'Comunidad observando su territorio',
