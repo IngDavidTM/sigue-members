@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Reveal from '../ui/Reveal';
 import RegistrationForm from './RegistrationForm';
+import LeadCaptureSection from '../forms/LeadCaptureSection';
+import type { PublishedDynamicForm } from '@/types/supabase';
 import { RegistrationCta, RegistrationProvider } from './RegistrationControls';
 import { dayPass, tariffs } from './registration';
 import UsdEquivalents from './UsdEquivalents';
@@ -319,7 +321,7 @@ function SectionHeading({
   );
 }
 
-export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale }) {
+export default function CumbreLanding({ locale = 'es', partnershipForm }: { locale?: CumbreLocale; partnershipForm?: PublishedDynamicForm | null }) {
   const text = (spanish: string, english: string) => (locale === 'en' ? english : spanish);
   const localized = ([spanish, english]: LocalizedText) => text(spanish, english);
   const formatCop = (amount: number) => new Intl.NumberFormat(locale === 'en' ? 'en-US' : 'es-CO').format(amount);
@@ -917,6 +919,8 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
             </div>
             <RegistrationForm locale={locale} />
           </section>
+
+          {partnershipForm ? <LeadCaptureSection id="alianzas-cumbre" form={partnershipForm} locale={locale} sourcePath={`/${locale}/cumbre-sigue-2026`} /> : null}
 
           <section className={styles.venueSection} id="ubicacion">
             <div className={styles.venueHeading}>

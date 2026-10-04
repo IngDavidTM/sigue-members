@@ -121,6 +121,23 @@ export default function Page() {
   await page.getByText('Mensaje recibido.', { exact: true }).waitFor();
   assert.ok(fixture.requests.some((url) => url.pathname === '/rest/v1/rpc/submit_dynamic_form'));
   console.log('Dynamic form: configured fields, public Server Action, RPC submission and success state passed.');
+  await page.goto(`${origin}/es`);
+  const newsletter = page.locator('#conectate');
+  await newsletter.getByRole('textbox', { name: 'Correo electrónico' }).fill('lead@example.org');
+  await newsletter.getByRole('checkbox', { name: 'Acepto que me contacten' }).check();
+  await newsletter.getByRole('button', { name: 'Quiero recibir novedades' }).click();
+  await newsletter.getByText('Interés recibido.', { exact: true }).waitFor();
+  assert.equal(fixture.submissions.at(-1).p_source_path, '/es');
+  for (const [path, selector] of [
+    ['/es/sigue-consulting', '[class*="newsletterCapture"]'],
+    ['/es/unete', '#voluntariado-interes'],
+    ['/es/miembros-sigue', '#membresia-interes'],
+    ['/es/cumbre-sigue-2026', '#alianzas-cumbre'],
+  ]) {
+    await page.goto(`${origin}${path}`);
+    await page.locator(selector).getByRole('textbox', { name: 'Correo electrónico' }).waitFor();
+  }
+  console.log('Lead capture: newsletter submission and all four page placements passed.');
   assert.equal((await fetch(`${origin}/api/cron/form-notifications`)).status, 401);
   const cron = await fetch(`${origin}/api/cron/form-notifications`, { headers: { authorization: 'Bearer qa-cron-secret' } });
   const cronResult = await cron.json();

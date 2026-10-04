@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import CumbreLanding from '@/app/components/cumbre-2026/CumbreLanding';
+import { getPublishedDynamicForm } from '@/lib/forms/public';
 import { absoluteUrl, getSiteUrl } from '@/lib/site-url';
 
 type CumbreLocale = 'es' | 'en';
@@ -300,12 +301,13 @@ export default async function CumbreSigue2026Page({ params }: PageProps) {
   }
 
   const locale = requestedLocale as CumbreLocale;
+  const partnershipForm = await getPublishedDynamicForm('cumbre-alianzas');
   const structuredData = JSON.stringify(getStructuredData(locale)).replace(/</g, '\\u003c');
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
-      <CumbreLanding locale={locale} />
+      <CumbreLanding locale={locale} partnershipForm={partnershipForm} />
     </>
   );
 }

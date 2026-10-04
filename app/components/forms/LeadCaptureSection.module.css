@@ -1,0 +1,7 @@
+.section {
+  display: grid;
+  justify-items: center;
+  padding: clamp(48px, 8vw, 100px) 20px;
+  background: #fbf5fd;
+  scroll-margin-top: 80px;
+}

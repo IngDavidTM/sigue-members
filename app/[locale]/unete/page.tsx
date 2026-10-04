@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import JoinPageContent from '@/app/components/unete/JoinPageContent';
+import LeadCaptureSection from '@/app/components/forms/LeadCaptureSection';
+import { getPublishedDynamicForm } from '@/lib/forms/public';
 import { absoluteUrl } from '@/lib/site-url';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -43,6 +45,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function UnetePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: requestedLocale } = await params;
   const locale = requestedLocale === 'en' ? 'en' : 'es';
+  const interestForm = await getPublishedDynamicForm('voluntariado-interes');
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -58,7 +61,8 @@ export default async function UnetePage({ params }: { params: Promise<{ locale: 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-      <JoinPageContent />
+      <JoinPageContent interestFormAvailable={Boolean(interestForm)} />
+      {interestForm ? <LeadCaptureSection id="voluntariado-interes" form={interestForm} locale={locale} sourcePath={`/${locale}/unete`} /> : null}
     </>
   );
 }
