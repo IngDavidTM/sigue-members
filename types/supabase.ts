@@ -224,6 +224,11 @@ export type DynamicFormRow = {
   updated_at: string;
 };
 
+export type PublishedDynamicForm = {
+  form: DynamicFormRow;
+  fields: DynamicFormFieldRow[];
+};
+
 export type DynamicFormFieldRow = {
   id: string;
   form_id: string;

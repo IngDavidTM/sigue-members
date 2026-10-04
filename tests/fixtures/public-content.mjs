@@ -35,6 +35,22 @@ export async function startPublicContentFixture(siteOrigin) {
     { id: 'field-email', form_id: dynamicForm.id, field_key: 'correo', field_type: 'email', label_es: 'Correo electrónico', label_en: 'Email address', placeholder_es: null, placeholder_en: null, help_text_es: null, help_text_en: null, required: true, options: [], validation: { max_length: 254 }, conditional_logic: null, sort_order: 20, width: 50, created_at: past, updated_at: past },
     { id: 'field-topic', form_id: dynamicForm.id, field_key: 'asunto', field_type: 'select', label_es: 'Asunto', label_en: 'Topic', placeholder_es: null, placeholder_en: null, help_text_es: null, help_text_en: null, required: true, options: [{ value: 'alianzas', label_es: 'Alianzas', label_en: 'Partnerships' }], validation: {}, conditional_logic: null, sort_order: 30, width: 100, created_at: past, updated_at: past },
   ];
+  const leadForms = ['novedades', 'voluntariado-interes', 'membresia-interes', 'cumbre-alianzas'].map((slug, index) => ({
+    ...dynamicForm,
+    id: `55555555-5555-4555-8555-55555555555${index}`,
+    slug,
+    name: slug,
+    title_es: `Formulario ${slug}`,
+    title_en: `Form ${slug}`,
+    submit_label_es: 'Quiero recibir novedades',
+    submit_label_en: 'Send me updates',
+    success_message_es: 'Interés recibido.',
+    success_message_en: 'Interest received.',
+  }));
+  const leadFields = leadForms.flatMap((form) => [
+    { ...dynamicFields[1], id: `${form.slug}-correo`, form_id: form.id, sort_order: 10 },
+    { ...dynamicFields[1], id: `${form.slug}-consentimiento`, form_id: form.id, field_key: 'consentimiento', field_type: 'consent', label_es: 'Acepto que me contacten', label_en: 'I agree to be contacted', validation: {}, sort_order: 20 },
+  ]);
   const tables = {
     blog_posts: [post, { ...post, id: 'draft-post', status: 'draft' }],
     blog_post_translations: [
@@ -50,11 +66,12 @@ export async function startPublicContentFixture(siteOrigin) {
       { ...translation, event_id: 'future-event', locale: 'es', slug: 'evento-futuro' },
       { ...translation, event_id: 'past-event', locale: 'es', slug: 'evento-pasado' },
     ],
-    dynamic_forms: [dynamicForm], dynamic_form_fields: dynamicFields,
+    dynamic_forms: [dynamicForm, ...leadForms], dynamic_form_fields: [...dynamicFields, ...leadFields],
     dynamic_form_notifications: [], dynamic_form_submissions: [], dynamic_form_submission_attempts: [],
     blog_series: [], blog_series_translations: [], blog_post_tags: [], approved_blog_comments: [], blog_tags: [], blog_tag_translations: [], event_venues: [], public_event_access: [],
   };
   const requests = [];
+  const submissions = [];
   const server = createServer((request, response) => {
     const url = new URL(request.url, 'http://localhost');
     requests.push(url);
@@ -64,10 +81,13 @@ export async function startPublicContentFixture(siteOrigin) {
       request.on('data', (chunk) => { body += chunk; });
       request.on('end', () => {
         const payload = JSON.parse(body);
-        if (payload.p_slug !== dynamicForm.slug || payload.p_answers?.nombre !== 'Sandra' || !/^[a-f0-9]{64}$/.test(payload.p_request_fingerprint)) {
+        const validQa = payload.p_slug === dynamicForm.slug && payload.p_answers?.nombre === 'Sandra';
+        const validNewsletter = payload.p_slug === 'novedades' && payload.p_answers?.correo === 'lead@example.org' && payload.p_answers?.consentimiento === true;
+        if ((!validQa && !validNewsletter) || !/^[a-f0-9]{64}$/.test(payload.p_request_fingerprint)) {
           response.writeHead(422, { 'content-type': 'application/json' }).end(JSON.stringify({ message: 'Invalid QA submission' }));
           return;
         }
+        submissions.push(payload);
         response.writeHead(200, { 'content-type': 'application/json' }).end(JSON.stringify('44444444-4444-4444-8444-444444444444'));
       });
       return;
@@ -85,5 +105,5 @@ export async function startPublicContentFixture(siteOrigin) {
     response.writeHead(200, { 'content-type': 'application/json' }).end(JSON.stringify(rows));
   });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
-  return { server, requests, url: `http://127.0.0.1:${server.address().port}` };
+  return { server, requests, submissions, url: `http://127.0.0.1:${server.address().port}` };
 }

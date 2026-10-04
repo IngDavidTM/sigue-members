@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import DynamicForm from '@/app/components/forms/DynamicForm';
+import type { PublishedDynamicForm } from '@/types/supabase';
 import styles from './ConsultingLanding.module.css';
 
 type Locale = 'es' | 'en';
@@ -162,7 +164,7 @@ function ContactButton({ locale, children }: { locale: Locale; children: React.R
   return <Link className={styles.button} href={`/${locale}/contacto`}>{children}</Link>;
 }
 
-export default function ConsultingLanding({ locale }: { locale: Locale }) {
+export default function ConsultingLanding({ locale, newsletterForm }: { locale: Locale; newsletterForm: PublishedDynamicForm | null }) {
   const c = content[locale];
 
   return (
@@ -219,7 +221,13 @@ export default function ConsultingLanding({ locale }: { locale: Locale }) {
 
       <section className={styles.newsletter}>
         <h2>{c.newsletter[0]}</h2><p>{c.newsletter[1]}</p>
-        <form action={`/${locale}/contacto`} method="get"><label className={styles.srOnly} htmlFor={`consulting-email-${locale}`}>{c.newsletter[2]}</label><input id={`consulting-email-${locale}`} name="email" type="email" placeholder={c.newsletter[2]} required /><button type="submit">{c.newsletter[3]}</button></form>
+        {newsletterForm ? (
+          <div className={styles.newsletterCapture}>
+            <DynamicForm {...newsletterForm} locale={locale} sourcePath={`/${locale}/sigue-consulting`} compact />
+          </div>
+        ) : (
+          <form action={`/${locale}/contacto`} method="get"><label className={styles.srOnly} htmlFor={`consulting-email-${locale}`}>{c.newsletter[2]}</label><input id={`consulting-email-${locale}`} name="email" type="email" placeholder={c.newsletter[2]} required /><button type="submit">{c.newsletter[3]}</button></form>
+        )}
       </section>
     </div>
   );

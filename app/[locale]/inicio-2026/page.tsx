@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import HomeLanding from '@/app/components/home-2026/HomeLanding';
+import { getPublishedDynamicForm } from '@/lib/forms/public';
 import { absoluteUrl } from '@/lib/site-url';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -21,5 +22,6 @@ export default async function HomePreview({ params }: { params: Promise<{ locale
   const { locale: requestedLocale } = await params;
   const locale = requestedLocale === 'en' ? 'en' : 'es';
 
-  return <HomeLanding locale={locale} preview />;
+  const newsletterForm = await getPublishedDynamicForm('novedades');
+  return <HomeLanding locale={locale} newsletterForm={newsletterForm} preview />;
 }
