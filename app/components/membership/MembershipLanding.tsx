@@ -161,7 +161,7 @@ function localized(text: LocalizedText, locale: Locale) {
   return text[locale === 'es' ? 0 : 1];
 }
 
-export default function MembershipLanding({ locale }: { locale: Locale }) {
+export default function MembershipLanding({ locale, interestFormAvailable = false }: { locale: Locale; interestFormAvailable?: boolean }) {
   const c = copy[locale];
 
   return (
@@ -192,6 +192,9 @@ export default function MembershipLanding({ locale }: { locale: Locale }) {
           <p>{c.ctaLead}</p>
           <h2>{c.ctaTitle}</h2>
           <a className={styles.button} href={membershipForm} target="_blank" rel="noreferrer">{c.cta}</a>
+          {interestFormAvailable ? <p>
+            <a href="#membresia-interes">{locale === 'es' ? '¿Tienes preguntas? Déjanos tus datos y te contactamos.' : 'Have questions? Leave your details and we will contact you.'}</a>
+          </p> : null}
         </div>
       </section>
 

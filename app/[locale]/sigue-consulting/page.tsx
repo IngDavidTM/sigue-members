@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ConsultingLanding from '@/app/components/sigue-consulting/ConsultingLanding';
+import { getPublishedDynamicForm } from '@/lib/forms/public';
 import { absoluteUrl } from '@/lib/site-url';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -44,5 +45,6 @@ export default async function SigueConsultingPage({ params }: { params: Promise<
   const { locale: requestedLocale } = await params;
   const locale = requestedLocale === 'en' ? 'en' : 'es';
 
-  return <ConsultingLanding locale={locale} />;
+  const newsletterForm = await getPublishedDynamicForm('novedades');
+  return <ConsultingLanding locale={locale} newsletterForm={newsletterForm} />;
 }

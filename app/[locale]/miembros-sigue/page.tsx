@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import MembershipLanding from '@/app/components/membership/MembershipLanding';
+import LeadCaptureSection from '@/app/components/forms/LeadCaptureSection';
+import { getPublishedDynamicForm } from '@/lib/forms/public';
 import { absoluteUrl } from '@/lib/site-url';
 
 const heroImage = 'https://siguenetwork.org/wp-content/uploads/2024/11/banner_siguenetwork_mebresia.jpg';
@@ -40,6 +42,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function MiembrosSiguePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: requestedLocale } = await params;
   const locale = requestedLocale === 'en' ? 'en' : 'es';
+  const interestForm = await getPublishedDynamicForm('membresia-interes');
   const canonical = absoluteUrl(`/${locale}/miembros-sigue`);
   const structuredData = {
     '@context': 'https://schema.org',
@@ -52,7 +55,8 @@ export default async function MiembrosSiguePage({ params }: { params: Promise<{ 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-      <MembershipLanding locale={locale} />
+      <MembershipLanding locale={locale} interestFormAvailable={Boolean(interestForm)} />
+      {interestForm ? <LeadCaptureSection id="membresia-interes" form={interestForm} locale={locale} sourcePath={`/${locale}/miembros-sigue`} /> : null}
     </>
   );
 }

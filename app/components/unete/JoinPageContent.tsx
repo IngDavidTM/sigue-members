@@ -87,7 +87,7 @@ function SectionBand({
   );
 }
 
-export default function JoinPageContent() {
+export default function JoinPageContent({ interestFormAvailable = false }: { interestFormAvailable?: boolean }) {
   const t = useTranslations('joinPage');
   const locale = useLocale() === 'en' ? 'en' : 'es';
   const [openFaq, setOpenFaq] = useState<string | null>(null);
@@ -312,6 +312,11 @@ export default function JoinPageContent() {
                 <span>{t('ready.buttonLine1')}</span>
                 <span className="text-sm">{t('ready.buttonLine2')}</span>
               </a>
+              {interestFormAvailable ? <p className="mt-5 text-base text-primary">
+                <Link className="font-bold underline underline-offset-4" href="#voluntariado-interes">
+                  {locale === 'es' ? '¿Quieres saber más antes de postularte? Déjanos tus datos.' : 'Want to learn more before applying? Leave us your details.'}
+                </Link>
+              </p> : null}
             </div>
           </Reveal>
         </div>

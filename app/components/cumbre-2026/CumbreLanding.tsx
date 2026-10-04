@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Reveal from '../ui/Reveal';
 import RegistrationForm from './RegistrationForm';
+import LeadCaptureSection from '../forms/LeadCaptureSection';
+import type { PublishedDynamicForm } from '@/types/supabase';
 import { RegistrationCta, RegistrationProvider } from './RegistrationControls';
 import { dayPass, tariffs } from './registration';
 import UsdEquivalents from './UsdEquivalents';
@@ -18,7 +20,7 @@ const guests: {
   name: string;
   image: string;
   role: LocalizedText;
-  organization?: string;
+  organization?: string | LocalizedText;
   initiatives?: string[];
   country: LocalizedText;
   flag: string;
@@ -27,7 +29,7 @@ const guests: {
     name: 'Mike y Lorena Bunster',
     image: 'mike-lorena',
     role: ['Fundadores', 'Founders'],
-    initiatives: ['Alas de Refugio', 'Expansión de Amor', 'Colegio de Luz'],
+    initiatives: ['Alas de Refugio'],
     country: ['Chile', 'Chile'],
     flag: 'cl',
   },
@@ -70,6 +72,25 @@ const guests: {
     organization: 'Stronger Philanthropy',
     country: ['Canadá', 'Canada'],
     flag: 'ca',
+  },
+  {
+    name: 'Henry M Pabón',
+    image: 'henry-pabon',
+    role: ['Pastor de niños y adolescentes', 'Children and youth pastor'],
+    organization: [
+      'Director del programa de Apoyo Social Iglesia El Lugar de Su Presencia',
+      'Director of the Social Support Program at El Lugar de Su Presencia Church',
+    ],
+    country: ['Colombia', 'Colombia'],
+    flag: 'co',
+  },
+  {
+    name: 'Eker Machado Ariza',
+    image: 'eker-machado',
+    role: ['Secretario General y Director Jurídico', 'Secretary General and Legal Director'],
+    organization: 'Fundación Santo Domingo',
+    country: ['Colombia', 'Colombia'],
+    flag: 'co',
   },
 ];
 
@@ -300,7 +321,7 @@ function SectionHeading({
   );
 }
 
-export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale }) {
+export default function CumbreLanding({ locale = 'es', partnershipForm }: { locale?: CumbreLocale; partnershipForm?: PublishedDynamicForm | null }) {
   const text = (spanish: string, english: string) => (locale === 'en' ? english : spanish);
   const localized = ([spanish, english]: LocalizedText) => text(spanish, english);
   const formatCop = (amount: number) => new Intl.NumberFormat(locale === 'en' ? 'en-US' : 'es-CO').format(amount);
@@ -653,7 +674,11 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
                         {guest.initiatives.map((initiative) => <li key={initiative}>· {initiative}</li>)}
                       </ul>
                     )}
-                    {guest.organization && <p className={styles.speakerOrganization}>{guest.organization}</p>}
+                    {guest.organization && (
+                      <p className={styles.speakerOrganization}>
+                        {typeof guest.organization === 'string' ? guest.organization : localized(guest.organization)}
+                      </p>
+                    )}
                     <Image
                       src={`${asset}/flag-${guest.flag}.svg`}
                       alt={localized(guest.country)}
@@ -894,6 +919,8 @@ export default function CumbreLanding({ locale = 'es' }: { locale?: CumbreLocale
             </div>
             <RegistrationForm locale={locale} />
           </section>
+
+          {partnershipForm ? <LeadCaptureSection id="alianzas-cumbre" form={partnershipForm} locale={locale} sourcePath={`/${locale}/cumbre-sigue-2026`} /> : null}
 
           <section className={styles.venueSection} id="ubicacion">
             <div className={styles.venueHeading}>

@@ -36,6 +36,12 @@ const formSchema = z.object({
 
 function value(formData: FormData, name: string) { return String(formData.get(name) ?? ""); }
 
+function revalidateEmbeddedForms() {
+  for (const path of ["/[locale]", "/[locale]/inicio-2026", "/[locale]/sigue-consulting", "/[locale]/unete", "/[locale]/miembros-sigue", "/[locale]/cumbre-sigue-2026", "/[locale]/contacto"]) {
+    revalidatePath(path, "page");
+  }
+}
+
 export async function saveDynamicForm(_state: AdminActionState, formData: FormData): Promise<AdminActionState> {
   const admin = await requireAdmin();
   const parsed = formSchema.safeParse(Object.fromEntries([
@@ -86,7 +92,7 @@ export async function saveDynamicForm(_state: AdminActionState, formData: FormDa
   }
   revalidatePath("/admin/formularios");
   revalidatePath("/[locale]/formularios/[slug]", "page");
-  revalidatePath("/[locale]/contacto", "page");
+  revalidateEmbeddedForms();
   redirect(`/admin/formularios/${savedId}?saved=1`);
 }
 
@@ -98,6 +104,8 @@ export async function archiveDynamicForm(formData: FormData) {
   const { error } = await supabase.from("dynamic_forms").update({ status: "archived" }).eq("id", id.data);
   if (error) throw new Error(error.message);
   revalidatePath("/admin/formularios");
+  revalidatePath("/[locale]/formularios/[slug]", "page");
+  revalidateEmbeddedForms();
 }
 
 export async function duplicateDynamicForm(formData: FormData) {
