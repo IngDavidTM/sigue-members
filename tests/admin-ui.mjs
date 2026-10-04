@@ -11,7 +11,11 @@ const route = new URL('../app/[locale]/content-editor-qa/', import.meta.url);
 const port = Number(process.env.ADMIN_TEST_PORT || 3197);
 const origin = `http://localhost:${port}`;
 const originalTsconfig = await readFile(new URL('../tsconfig.json', import.meta.url));
-const originalNextEnv = await readFile(new URL('../next-env.d.ts', import.meta.url));
+const nextEnvPath = new URL('../next-env.d.ts', import.meta.url);
+const originalNextEnv = await readFile(nextEnvPath).catch((error) => {
+  if (error.code === 'ENOENT') return null;
+  throw error;
+});
 let server;
 let browser;
 const fixture = await startPublicContentFixture(origin);
@@ -164,5 +168,9 @@ export default function Page() {
   await rm(route, { recursive: true, force: true });
   await rm(new URL('../.next-admin-qa/', import.meta.url), { recursive: true, force: true });
   await writeFile(new URL('../tsconfig.json', import.meta.url), originalTsconfig);
-  await writeFile(new URL('../next-env.d.ts', import.meta.url), originalNextEnv);
+  if (originalNextEnv === null) {
+    await rm(nextEnvPath, { force: true });
+  } else {
+    await writeFile(nextEnvPath, originalNextEnv);
+  }
 }
