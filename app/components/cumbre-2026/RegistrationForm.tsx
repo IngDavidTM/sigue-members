@@ -1,14 +1,16 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { useRegistration } from './RegistrationControls';
-import { money, tariffs, type Tariff } from './registration';
+import { dayPass, money, summitDays, tariffs, type Tariff } from './registration';
 import styles from './CumbreLanding.module.css';
 
 const zeffyCampaignUrl = 'https://www.zeffy.com/en-US/ticketing/2nd-conference-sigue-network';
 
 export default function RegistrationForm({ locale = 'es' }: { locale?: 'es' | 'en' }) {
-  const { tariff, setTariff, withLodging, setWithLodging } = useRegistration();
+  const { passType, setPassType, tariff, setTariff, withLodging, setWithLodging } = useRegistration();
+  const [selectedDay, setSelectedDay] = useState<(typeof summitDays)[number]['value']>('27');
   const english = locale === 'en';
   const text = (spanish: string, englishText: string) => (english ? englishText : spanish);
   const tariffLabel = (key: Tariff) => {
@@ -16,7 +18,7 @@ export default function RegistrationForm({ locale = 'es' }: { locale?: 'es' | 'e
     if (key === 'member') return text('Miembro Activo SIGUE', 'Active SIGUE Member');
     return 'Early Bird';
   };
-  const transferTotal = withLodging ? tariffs[tariff].lodging : tariffs[tariff].pass;
+  const transferTotal = passType === 'day' ? dayPass.cop : withLodging ? tariffs[tariff].lodging : tariffs[tariff].pass;
 
   return (
     <div className={styles.registrationForm}>
@@ -42,7 +44,7 @@ export default function RegistrationForm({ locale = 'es' }: { locale?: 'es' | 'e
             )}
           </p>
           <ul className={styles.paymentFeatures}>
-            <li>{text('Elige una de las seis opciones de pase y hospedaje.', 'Choose from the six Summit pass and lodging options.')}</li>
+            <li>{text('Elige un pase completo o el pase diario de US$66 y selecciona tu día.', 'Choose a full Summit pass or the US$66 Day Pass and select your day.')}</li>
             <li>{text('Completa tus datos y el pago seguro en Zeffy.', 'Enter your information and complete secure payment through Zeffy.')}</li>
             <li>{text('Recibe la confirmación por correo.', 'Receive confirmation by email.')}</li>
           </ul>
@@ -63,23 +65,42 @@ export default function RegistrationForm({ locale = 'es' }: { locale?: 'es' | 'e
 
           <section className={styles.transferCalculator} aria-labelledby="transfer-calculator-title">
             <h5 id="transfer-calculator-title">{text('Calcula cuánto debes transferir', 'Calculate how much to transfer')}</h5>
-            <div className={styles.calculatorControls}>
-              <label>
-                {text('Tarifa', 'Rate')}
-                <select value={tariff} onChange={(event) => setTariff(event.target.value as Tariff)}>
-                  {(Object.keys(tariffs) as Tariff[]).map((key) => (
-                    <option key={key} value={key}>{tariffLabel(key)}</option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                {text('Hospedaje', 'Lodging')}
-                <select value={withLodging ? 'yes' : 'no'} onChange={(event) => setWithLodging(event.target.value === 'yes')}>
-                  <option value="no">{text('Sin hospedaje', 'Without lodging')}</option>
-                  <option value="yes">{text('Con hospedaje', 'With lodging')}</option>
-                </select>
-              </label>
+            <div className={styles.calculatorPassType}>
+              <label htmlFor="summit-pass-type">{text('Tipo de pase', 'Pass type')}</label>
+              <select id="summit-pass-type" value={passType} onChange={(event) => setPassType(event.target.value as 'full' | 'day')}>
+                <option value="full">{text('Cumbre completa · 3 días', 'Full Summit · 3 days')}</option>
+                <option value="day">{text('Un solo día · COP $199.000', 'One day · COP $199,000')}</option>
+              </select>
             </div>
+            <div className={styles.calculatorControls}>
+              {passType === 'day' ? (
+                <label>
+                  {text('Día de asistencia', 'Attendance day')}
+                  <select value={selectedDay} onChange={(event) => setSelectedDay(event.target.value as typeof selectedDay)}>
+                    {summitDays.map((day) => <option key={day.value} value={day.value}>{day[locale]}</option>)}
+                  </select>
+                </label>
+              ) : (
+                <>
+                  <label>
+                    {text('Tarifa', 'Rate')}
+                    <select value={tariff} onChange={(event) => setTariff(event.target.value as Tariff)}>
+                      {(Object.keys(tariffs) as Tariff[]).map((key) => (
+                        <option key={key} value={key}>{tariffLabel(key)}</option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    {text('Hospedaje', 'Lodging')}
+                    <select value={withLodging ? 'yes' : 'no'} onChange={(event) => setWithLodging(event.target.value === 'yes')}>
+                      <option value="no">{text('Sin hospedaje', 'Without lodging')}</option>
+                      <option value="yes">{text('Con hospedaje', 'With lodging')}</option>
+                    </select>
+                  </label>
+                </>
+              )}
+            </div>
+            {passType === 'day' ? <p className={styles.dayPassHint}>{text('El pase diario no incluye hospedaje. Indica el mismo día al registrar tu pago.', 'The Day Pass does not include lodging. Include the selected day when submitting your payment details.')}</p> : null}
             <div className={styles.transferTotal} aria-live="polite">
               <span>{text('Total exacto a transferir', 'Exact amount to transfer')}</span>
               <strong>{money[locale].format(transferTotal)}</strong>
@@ -124,6 +145,7 @@ export default function RegistrationForm({ locale = 'es' }: { locale?: 'es' | 'e
           <p className={styles.breReceipt}>
             {text('Después del pago, envía el comprobante, tu nombre completo y tus datos de facturación a ', 'After payment, send the receipt, your full name, and billing details to ')}
             <a href="mailto:info@siguenetwork.org">info@siguenetwork.org</a>.{' '}
+            {passType === 'day' ? text('Indica también el día de asistencia seleccionado.', 'Also include your selected attendance day.') + ' ' : null}
             {text('Tu cupo y factura se confirman una vez verificado el pago.', 'Your place and invoice are confirmed once payment is verified.')}
           </p>
         </article>

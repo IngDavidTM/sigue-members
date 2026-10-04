@@ -1281,6 +1281,50 @@
   color: #fff !important;
 }
 
+.dayPassCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  width: min(1120px, calc(100% - 3rem));
+  margin: 0 auto 1.5rem;
+  padding: 2rem;
+  border: 3px solid var(--cumbre-border);
+  border-radius: 1.25rem;
+  background: var(--cumbre-lilac);
+}
+
+.dayPassCard p {
+  margin: 0 0 0.4rem;
+  color: var(--cumbre-pink);
+  font-weight: 900;
+}
+
+.dayPassCard h3 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+}
+
+.dayPassPrice {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 250px;
+  text-align: center;
+}
+
+.dayPassPrice strong {
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+}
+
+.dayPassPrice a {
+  margin-top: 0.5rem;
+  padding: 0.8rem 1rem;
+  border-radius: 0.9rem;
+  background: var(--cumbre-pink);
+  color: #fff;
+  font-weight: 900;
+}
+
 .benefit {
   position: absolute;
   top: 1rem;
@@ -1579,7 +1623,14 @@
   margin-top: 1rem;
 }
 
-.calculatorControls label {
+.calculatorPassType {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.calculatorControls label,
+.calculatorPassType label {
   display: grid;
   gap: 0.4rem;
   color: var(--cumbre-purple);
@@ -1589,7 +1640,8 @@
   text-transform: uppercase;
 }
 
-.calculatorControls select {
+.calculatorControls select,
+.calculatorPassType select {
   width: 100%;
   min-height: 48px;
   padding: 0.65rem 2.25rem 0.65rem 0.75rem;
@@ -1602,9 +1654,15 @@
   text-transform: none;
 }
 
-.calculatorControls select:focus-visible {
+.calculatorControls select:focus-visible,
+.calculatorPassType select:focus-visible {
   border-color: var(--cumbre-pink);
   outline: 3px solid rgb(239 21 82 / 18%);
+}
+
+.dayPassHint {
+  margin: 0.75rem 0 0;
+  font-size: 0.88rem;
 }
 
 .transferTotal {
@@ -2550,6 +2608,16 @@
   .pricingGrid {
     grid-template-columns: 1fr;
     max-width: 540px;
+  }
+
+  .dayPassCard {
+    max-width: 540px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dayPassPrice {
+    min-width: 0;
   }
 
   .speakersGrid {

@@ -4,6 +4,8 @@ import { createContext, MouseEvent, ReactNode, useContext, useRef, useState } fr
 import type { Tariff } from './registration';
 
 type RegistrationContextValue = {
+  passType: 'full' | 'day';
+  setPassType: (passType: 'full' | 'day') => void;
   tariff: Tariff;
   setTariff: (tariff: Tariff) => void;
   withLodging: boolean;
@@ -13,11 +15,12 @@ type RegistrationContextValue = {
 const RegistrationContext = createContext<RegistrationContextValue | null>(null);
 
 export function RegistrationProvider({ children }: { children: ReactNode }) {
+  const [passType, setPassType] = useState<'full' | 'day'>('full');
   const [tariff, setTariff] = useState<Tariff>('early');
   const [withLodging, setWithLodging] = useState(false);
 
   return (
-    <RegistrationContext.Provider value={{ tariff, setTariff, withLodging, setWithLodging }}>
+    <RegistrationContext.Provider value={{ passType, setPassType, tariff, setTariff, withLodging, setWithLodging }}>
       {children}
     </RegistrationContext.Provider>
   );
@@ -36,17 +39,20 @@ export function useRegistration() {
 export function RegistrationCta({
   children,
   className,
+  passType,
   tariff,
   withLodging,
 }: {
   children: ReactNode;
   className?: string;
+  passType?: 'full' | 'day';
   tariff?: Tariff;
   withLodging?: boolean;
 }) {
   const registration = useRegistration();
 
   const handleClick = () => {
+    if (passType) registration.setPassType(passType);
     if (tariff) registration.setTariff(tariff);
     if (withLodging !== undefined) registration.setWithLodging(withLodging);
   };

@@ -1,4 +1,5 @@
 import styles from './CumbreLanding.module.css';
+import { dayPass } from './registration';
 
 const usdPrices = {
   general: { pass: 200, lodging: 267 },
@@ -18,12 +19,13 @@ export default function UsdEquivalents({ locale }: { locale: 'es' | 'en' }) {
       <strong>{text('Valores fijos en USD', 'Fixed USD prices')}</strong> —
       {' '}{text('General', 'General')}: {usd(usdPrices.general.pass)} {passOnly} / {usd(usdPrices.general.lodging)} {lodging} ·
       {' '}Early Bird: {usd(usdPrices.early.pass)} {passOnly} / {usd(usdPrices.early.lodging)} {lodging} ·
-      {' '}{text('Miembro', 'Member')}: {usd(usdPrices.member.pass)} {passOnly} / {usd(usdPrices.member.lodging)} {lodging}.
+      {' '}{text('Miembro', 'Member')}: {usd(usdPrices.member.pass)} {passOnly} / {usd(usdPrices.member.lodging)} {lodging} ·
+      {' '}{text('Pase diario', 'Day Pass')}: {usd(dayPass.usd)} {passOnly}.
       <span className={styles.exchangeRateMeta}>
         {' '}
         {text(
-          'Estos valores corresponden a las seis opciones de inscripción.',
-          'These prices correspond to the six registration options.'
+          'Estos valores corresponden a las opciones de inscripción en Zeffy.',
+          'These prices correspond to the registration options on Zeffy.'
         )}
       </span>
     </p>
