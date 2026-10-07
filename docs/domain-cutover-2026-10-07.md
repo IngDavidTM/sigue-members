@@ -17,9 +17,12 @@ los recursos y los formularios nuevos.
 Las variantes antiguas con prefijo `/es/` o `/en/` de esas rutas se redirigen
 permanentemente a su única URL WordPress sin prefijo.
 
-El Worker también deja las imágenes en `/wp-content/*` en GoDaddy: todavía hay
-imágenes institucionales referenciadas por la app. Por ello **no se debe cancelar
-el hosting de GoDaddy ni WordPress** hasta trasladar esas funciones y medios.
+El Worker deja `/wp-content/*` en GoDaddy para preservar los enlaces antiguos.
+Las 29 imágenes y documentos que la app referenciaba directamente ya se sirven
+desde `/legacy-media/*` en Vercel. La biblioteca de WordPress conserva 639
+archivos en total; antes de apagar el hosting hay que decidir qué enlaces
+antiguos deben mantenerse. **No se debe cancelar el hosting de GoDaddy ni
+WordPress** mientras el Worker siga enviando productos y otras rutas allí.
 La zona DNS contiene MX, SPF, DKIM y DMARC de Google; el cambio del registro
 web no modifica esos registros.
 
@@ -57,9 +60,33 @@ web no modifica esos registros.
 4. Comprobar `/es`, `/en`, `/sitemap.xml`, `/robots.txt`, `/recursos`, `/blog`,
    una redirección de blog, `/producto/reed-fan/`, `/event-organizers/`,
    `/wp-admin/`, `/wp-content/` y `www` con HTTP, títulos y canonical correctos.
-5. Solicitar el rastreo de `/sitemap.xml` en Search Console y vigilar 404,
-   formularios, pagos y logs de Cloudflare/Vercel. Los correos automáticos de
-   formularios requieren configurar el proveedor de email y el cron.
+5. Vigilar `/sitemap.xml` en Search Console, 404, formularios, pagos y logs de
+   Cloudflare/Vercel. Los correos automáticos de formularios requieren
+   configurar el proveedor de email y el cron.
+
+El 7 de octubre se confirmó que Sandra Prieto ya tiene una propiedad de prefijo
+`https://siguenetwork.org/` en Search Console. Se envió `/sitemap.xml` y se
+solicitó indexar `/es`. La prueba en vivo de Google pudo acceder a ambos; el
+informe del sitemap aún mostraba `Couldn't fetch` inmediatamente después del
+envío. `/wp-sitemap.xml` permanece registrado mientras se resuelve el retiro
+de WordPress. La indexación histórica (83 páginas indexadas y 97 no indexadas)
+tenía fecha de actualización del 3 de octubre, anterior a este cambio.
+
+## Evaluación para reducir GoDaddy
+
+GoDaddy puede continuar como registrador del dominio aunque el hosting de
+WordPress se retire. El plan contratado, su consumo de almacenamiento y precio
+de renovación no se pudieron leer: la cuenta de GoDaddy requiere inicio de
+sesión y bloqueó el navegador automatizado. No recomendar una rebaja concreta
+sin esos datos; cambiar de plan podría modificar la IP de origen.
+
+WooCommerce muestra cero pedidos. Sus 12 productos son entradas del tema de
+2016; los listados de organizadores y sedes tienen cero registros. En Search
+Console, del 5 de julio al 4 de octubre, cinco URL de productos tuvieron cero
+clics y 11 impresiones; cinco rutas de organizadores, sedes y paneles tuvieron
+cero clics y 16 impresiones. Antes de eliminar estas rutas, confirmar si SIGUE
+piensa usarlas y decidir redirecciones o sustitutos. Migrar o preservar los
+medios restantes y probar todas las rutas críticas antes de retirar el hosting.
 
 Si alguna ruta crítica falla, quitar la ruta Worker `siguenetwork.org/*` en
 Cloudflare. El registro A raíz seguirá sirviendo WordPress. No cambiar MX al
