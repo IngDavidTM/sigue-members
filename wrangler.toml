@@ -1,0 +1,4 @@
+name = "sigue-wordpress-bridge"
+main = "workers/legacy-wordpress.js"
+compatibility_date = "2026-10-07"
+routes = [{ pattern = "siguenetwork.org/*", zone_name = "siguenetwork.org" }]

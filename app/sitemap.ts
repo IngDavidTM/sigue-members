@@ -8,6 +8,15 @@ export const revalidate = 300;
 
 const staticRoutes = [
   { path: "", priority: 1 },
+  { path: "/conoce-sigue", priority: 0.9 },
+  { path: "/sigue-tracks", priority: 0.9 },
+  { path: "/sigue-consulting", priority: 0.9 },
+  { path: "/sigue-hub", priority: 0.9 },
+  { path: "/sigue-academy", priority: 0.9 },
+  { path: "/miembros-sigue", priority: 0.9 },
+  { path: "/unete", priority: 0.8 },
+  { path: "/contacto", priority: 0.8 },
+  { path: "/donacion", priority: 0.8 },
   { path: "/cumbre-sigue-2026", priority: 1 },
   { path: "/ecosistema", priority: 0.9 },
   { path: "/blog", priority: 0.9 },

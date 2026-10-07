@@ -5,8 +5,6 @@ import styles from './SigueTracksLanding.module.css';
 
 type Locale = 'es' | 'en';
 
-const ASSESSMENT_URL = 'https://siguenetwork.org/sigue-tracks/';
-
 const trackLinks = ['/sigue-consulting', '/sigue-academy', '/sigue-hub'] as const;
 const trackImages = [
   '/images/sigueTracksCard1.png',
@@ -16,15 +14,13 @@ const trackImages = [
 
 function AssessmentLink({ locale, compact = false }: { locale: Locale; compact?: boolean }) {
   return (
-    <a
+    <Link
       className={`${styles.actionButton} ${compact ? styles.actionButtonCompact : ''}`}
-      href={ASSESSMENT_URL}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={`/${locale}/contacto?motivo=autoevaluacion`}
     >
-      <strong>{locale === 'es' ? 'COMIENZA TU' : 'START YOUR'}</strong>
-      <span>{locale === 'es' ? 'AUTOEVALUACIÓN' : 'SELF-ASSESSMENT'}</span>
-    </a>
+      <strong>{locale === 'es' ? 'SOLICITA TU' : 'REQUEST AN'}</strong>
+      <span>{locale === 'es' ? 'AUTOEVALUACIÓN' : 'ASSESSMENT'}</span>
+    </Link>
   );
 }
 

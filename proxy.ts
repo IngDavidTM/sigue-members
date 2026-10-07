@@ -13,9 +13,29 @@ const migratedStaticPaths: Record<string, string> = {
     "/contacto": "/es/contacto",
 };
 
+// These WordPress features still have no functional replacement in Next.js.
+// Keep a single public URL for each one while the old origin remains active.
+const wordpressPages = new Set([
+    "confirmacion-de-donacion",
+    "event-organizers",
+    "event-venues",
+    "my-calendar",
+    "organizer-dashboard",
+    "submit-organizer-form",
+    "submit-venue-form",
+    "venue-dashboard",
+]);
+
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const normalizedPath = pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
+    const localizedWordpressPath = normalizedPath.match(/^\/(?:es|en)\/([^/]+)(?:\/(.*))?$/);
+    if (request.nextUrl.hostname === "siguenetwork.org" && localizedWordpressPath && (wordpressPages.has(localizedWordpressPath[1]) || localizedWordpressPath[1] === "producto")) {
+        const target = new URL(`/${localizedWordpressPath[1]}${localizedWordpressPath[2] ? `/${localizedWordpressPath[2]}` : ""}/`, request.url);
+        target.search = request.nextUrl.search;
+        return NextResponse.redirect(target, 308);
+    }
+
     const legacyTarget = (legacyRedirects as Record<string, string>)[normalizedPath] ?? migratedStaticPaths[normalizedPath];
 
     if (legacyTarget) {

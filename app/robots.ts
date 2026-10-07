@@ -14,9 +14,14 @@ export default function robots(): MetadataRoute.Robots {
         '/login',
         '/register',
         '/reset-password',
+        '/wp-admin/',
+        '/wp-login.php',
+        '/wp-content/uploads/wc-logs/',
+        '/wp-content/uploads/woocommerce_transient_files/',
+        '/wp-content/uploads/woocommerce_uploads/',
       ],
     },
-    sitemap: absoluteUrl('/sitemap.xml'),
+    sitemap: [absoluteUrl('/sitemap.xml'), absoluteUrl('/product-sitemap.xml')],
     host: getSiteUrl(),
   };
 }
