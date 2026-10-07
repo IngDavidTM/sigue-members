@@ -13,7 +13,7 @@ import styles from './MembershipLanding.module.css';
 type Locale = 'es' | 'en';
 type LocalizedText = readonly [spanish: string, english: string];
 
-const heroImage = 'https://siguenetwork.org/wp-content/uploads/2024/11/banner_siguenetwork_mebresia.jpg';
+const heroImage = '/legacy-media/2024/11/banner_siguenetwork_mebresia.jpg';
 const membershipForm = 'https://docs.google.com/forms/d/e/1FAIpQLSf22j0OHyaerFaAWZisk0QEmiT1wGJEXD_KZx2izujeFPRUtg/viewform';
 const volunteerForm = 'https://docs.google.com/forms/d/1JYUumNnWCHKOCYZGvCZX-tko3UowVio2nHweL41Us2o/viewform?edit_requested=true';
 const prayerForm = 'https://docs.google.com/forms/d/e/1FAIpQLSdj0gs75NwmuRb0qQdSrdZ4Y2SwQRdroBd5XxS7QtN960SR7w/viewform';
@@ -22,8 +22,8 @@ const memberLogoFiles = [1, 3, 4, 5, 6, 11, 12, 13, 14, 15, 16, 19, 21, 23, 24, 
   .map((number) => `/images/cumbre-2026/member-logos/member-${String(number).padStart(2, '0')}.png`);
 
 const impactPartnerLogos = [
-  'https://siguenetwork.org/wp-content/uploads/2024/12/Logo-Sr-Lopez-Agencia-e1733528496179.jpg',
-  'https://siguenetwork.org/wp-content/uploads/2024/12/Mario-Blanco-Producciones-e1733528447281.jpg',
+  '/legacy-media/2024/12/Logo-Sr-Lopez-Agencia-e1733528496179.jpg',
+  '/legacy-media/2024/12/Mario-Blanco-Producciones-e1733528447281.jpg',
 ] as const;
 
 const questions: readonly { question: LocalizedText; answer: LocalizedText }[] = [

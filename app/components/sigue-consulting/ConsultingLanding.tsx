@@ -7,12 +7,12 @@ import styles from './ConsultingLanding.module.css';
 type Locale = 'es' | 'en';
 
 const images = {
-  founder: 'https://siguenetwork.org/wp-content/uploads/2025/04/Sandra-B-en-la-banca.jpg',
-  map: 'https://siguenetwork.org/wp-content/uploads/2025/04/Mapa-Azul-y-amarilllo-para-editar-tamano.jpg',
-  community: 'https://siguenetwork.org/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-12-at-6.19.57-PM.jpeg',
-  ngo: 'https://siguenetwork.org/wp-content/uploads/2024/11/siguenetwork_fes.jpg',
-  company: 'https://siguenetwork.org/wp-content/uploads/2024/10/transformacion_integral_rsei_siguenetwork.jpg',
-  territory: 'https://siguenetwork.org/wp-content/uploads/2024/10/siguenetwork_estrategias_territoriales.jpg',
+  founder: '/legacy-media/2025/04/Sandra-B-en-la-banca.jpg',
+  map: '/legacy-media/2025/04/Mapa-Azul-y-amarilllo-para-editar-tamano.jpg',
+  community: '/legacy-media/2025/02/WhatsApp-Image-2025-02-12-at-6.19.57-PM.jpeg',
+  ngo: '/legacy-media/2024/11/siguenetwork_fes.jpg',
+  company: '/legacy-media/2024/10/transformacion_integral_rsei_siguenetwork.jpg',
+  territory: '/legacy-media/2024/10/siguenetwork_estrategias_territoriales.jpg',
 };
 
 const content = {

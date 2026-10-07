@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import HubLanding from '@/app/components/sigue-hub/HubLanding';
 import { absoluteUrl } from '@/lib/site-url';
 
-const heroImage = 'https://siguenetwork.org/wp-content/uploads/2024/11/sigue_hub_banner.jpg';
+const heroImage = '/legacy-media/2024/11/sigue_hub_banner.jpg';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import ResourcesLanding from '@/app/components/resources/ResourcesLanding';
 import { absoluteUrl } from '@/lib/site-url';
 
-const heroImage = 'https://siguenetwork.org/wp-content/uploads/2024/11/recursos_sigue_network_banner.jpg';
+const heroImage = '/legacy-media/2024/11/recursos_sigue_network_banner.jpg';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;

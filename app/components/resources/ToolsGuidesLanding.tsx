@@ -4,55 +4,55 @@ import Link from 'next/link';
 
 type Locale = 'es' | 'en';
 
-const DOWNLOAD_ICON = 'https://siguenetwork.org/wp-content/uploads/2025/02/download-347.png';
+const DOWNLOAD_ICON = '/legacy-media/2025/02/download-347.png';
 
 const downloads = [
   {
     es: 'Herramienta Mayo',
     en: 'May tool',
-    href: 'https://siguenetwork.org/wp-content/uploads/2026/04/MAYO.docx',
+    href: '/legacy-media/2026/04/MAYO.docx',
     type: 'DOCX',
   },
   {
     es: 'Herramienta Abril',
     en: 'April tool',
-    href: 'https://siguenetwork.org/wp-content/uploads/2026/04/ABRIL.docx',
+    href: '/legacy-media/2026/04/ABRIL.docx',
     type: 'DOCX',
   },
   {
     es: 'Herramienta Marzo',
     en: 'March tool',
-    href: 'https://siguenetwork.org/wp-content/uploads/2026/04/MARZO.docx',
+    href: '/legacy-media/2026/04/MARZO.docx',
     type: 'DOCX',
   },
   {
     es: 'Herramienta Febrero',
     en: 'February tool',
-    href: 'https://siguenetwork.org/wp-content/uploads/2026/04/FEBRERO.docx',
+    href: '/legacy-media/2026/04/FEBRERO.docx',
     type: 'DOCX',
   },
   {
     es: 'Herramienta Enero',
     en: 'January tool',
-    href: 'https://siguenetwork.org/wp-content/uploads/2026/04/ENERO-.docx',
+    href: '/legacy-media/2026/04/ENERO-.docx',
     type: 'DOCX',
   },
   {
     es: 'Hoja de chequeo para evaluar los desafíos de FE de mi proyecto social o entidad sin ánimo de lucro',
     en: 'Checklist to assess the FE challenges of my social project or nonprofit organization',
-    href: 'https://siguenetwork.org/wp-content/uploads/2024/11/Hoja-de-chequeo-para-evaluar-los-desafios-de-FE-de-mi-fundacion-ONG-o-proyecto-social.docx',
+    href: '/legacy-media/2024/11/Hoja-de-chequeo-para-evaluar-los-desafios-de-FE-de-mi-fundacion-ONG-o-proyecto-social.docx',
     type: 'DOCX',
   },
   {
     es: 'Hoja de trabajo para establecer una estrategia de transformación integral de comunidades',
     en: 'Worksheet for developing a comprehensive community-transformation strategy',
-    href: 'https://siguenetwork.org/wp-content/uploads/2025/02/Plantilla-para-elaborar-estrategia-de-transformacion-FES-SIGUE-Network-2025.pdf',
+    href: '/legacy-media/2025/02/Plantilla-para-elaborar-estrategia-de-transformacion-FES-SIGUE-Network-2025.pdf',
     type: 'PDF',
   },
   {
     es: 'Política de tratamiento de datos personales',
     en: 'Personal data processing policy',
-    href: 'https://siguenetwork.org/wp-content/uploads/2025/05/Herramienta_-politica-de-tratamiento-de-datos-personales.pdf',
+    href: '/legacy-media/2025/05/Herramienta_-politica-de-tratamiento-de-datos-personales.pdf',
     type: 'PDF',
   },
 ] as const;

@@ -4,7 +4,7 @@ import LeadCaptureSection from '@/app/components/forms/LeadCaptureSection';
 import { getPublishedDynamicForm } from '@/lib/forms/public';
 import { absoluteUrl } from '@/lib/site-url';
 
-const heroImage = 'https://siguenetwork.org/wp-content/uploads/2024/11/banner_siguenetwork_mebresia.jpg';
+const heroImage = '/legacy-media/2024/11/banner_siguenetwork_mebresia.jpg';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;

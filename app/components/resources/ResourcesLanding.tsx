@@ -4,7 +4,7 @@ import styles from './ResourcesLanding.module.css';
 
 type Locale = 'es' | 'en';
 
-const HERO_IMAGE = 'https://siguenetwork.org/wp-content/uploads/2024/11/recursos_sigue_network_banner.jpg';
+const HERO_IMAGE = '/legacy-media/2024/11/recursos_sigue_network_banner.jpg';
 
 const content = {
   es: {

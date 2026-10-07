@@ -5,8 +5,8 @@ import styles from './AcademyLanding.module.css';
 type Locale = 'es' | 'en';
 
 const images = {
-  hero: 'https://siguenetwork.org/wp-content/uploads/2024/11/sigue_academy_siguenetwork.png',
-  intro: 'https://siguenetwork.org/wp-content/uploads/2024/10/miembros_siguenetwork_header-1024x682.jpg',
+  hero: '/legacy-media/2024/11/sigue_academy_siguenetwork.png',
+  intro: '/legacy-media/2024/10/miembros_siguenetwork_header-1024x682.jpg',
 };
 
 const content = {

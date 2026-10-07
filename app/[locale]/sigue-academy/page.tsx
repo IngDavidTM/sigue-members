@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       title,
       description,
       images: [{
-        url: 'https://siguenetwork.org/wp-content/uploads/2024/11/sigue_academy_siguenetwork.png',
+        url: '/legacy-media/2024/11/sigue_academy_siguenetwork.png',
         width: 1600,
         height: 900,
         alt: isEnglish ? 'SIGUE Academy certification' : 'Certificación SIGUE Academy',

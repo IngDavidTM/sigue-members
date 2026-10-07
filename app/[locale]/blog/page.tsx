@@ -45,7 +45,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
   const currentPage = Math.min(totalPages, Math.max(1, Number(query.page) || 1));
   const cards = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize);
   const heroStyle = {
-    "--hero-image": "url(https://siguenetwork.org/wp-content/uploads/2024/11/blog_siguenetwork_header.jpg)",
+    "--hero-image": "url(/legacy-media/2024/11/blog_siguenetwork_header.jpg)",
   } as CSSProperties;
   const jsonLd = {
     "@context": "https://schema.org",

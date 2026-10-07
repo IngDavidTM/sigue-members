@@ -5,13 +5,13 @@ import styles from './HubLanding.module.css';
 type Locale = 'es' | 'en';
 
 const images = {
-  hero: 'https://siguenetwork.org/wp-content/uploads/2024/11/sigue_hub_banner.jpg',
-  events: 'https://siguenetwork.org/wp-content/uploads/2024/11/eventos_siguehub_siguenetwork.jpg',
-  membership: 'https://siguenetwork.org/wp-content/uploads/2024/11/membresia_siguehub_siguenetwork.jpg',
-  academy: 'https://siguenetwork.org/wp-content/uploads/2024/11/sigueacademy_siguehub_siguenetwork.jpg',
-  resources: 'https://siguenetwork.org/wp-content/uploads/2024/11/recursos_siguehub_siguenetwork.jpg',
-  blog: 'https://siguenetwork.org/wp-content/uploads/2024/11/blog_siguehub_siguenetwork.jpg',
-  impact: 'https://siguenetwork.org/wp-content/uploads/2024/11/transformacion_siguehub_siguenetwork.jpg',
+  hero: '/legacy-media/2024/11/sigue_hub_banner.jpg',
+  events: '/legacy-media/2024/11/eventos_siguehub_siguenetwork.jpg',
+  membership: '/legacy-media/2024/11/membresia_siguehub_siguenetwork.jpg',
+  academy: '/legacy-media/2024/11/sigueacademy_siguehub_siguenetwork.jpg',
+  resources: '/legacy-media/2024/11/recursos_siguehub_siguenetwork.jpg',
+  blog: '/legacy-media/2024/11/blog_siguehub_siguenetwork.jpg',
+  impact: '/legacy-media/2024/11/transformacion_siguehub_siguenetwork.jpg',
 } as const;
 
 const content = {
