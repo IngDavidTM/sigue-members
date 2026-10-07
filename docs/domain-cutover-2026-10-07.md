@@ -85,9 +85,14 @@ La comprobación pública de DNS matiza este inventario: `sandraprieto.org`
 apunta a `162.241.203.121`, con servidores de nombres HostGator, no al
 origen GoDaddy de SIGUE (`107.180.26.71`); `sp-act.education` no resuelve
 actualmente. Las copias de ambos sitios en cPanel podrían ser antiguas o de
-reserva. Confirmar con sus responsables que no reciben tráfico, procesos ni
-correos necesarios antes de retirar el hosting una vez que SIGUE deje de
-depender de WordPress.
+reserva. La portada de Sandra en el origen GoDaddy tiene una modificación
+distinta de la portada pública y el certificado del origen está vencido;
+son más indicios de una copia antigua. El usuario indicó que Sandra es el
+único sitio adicional que necesita conservar, pero SIGUE **sí depende hoy** de
+WordPress para `/producto/*`, administración, medios antiguos y las demás
+rutas indicadas arriba. Confirmar que las copias de Sandra y SP-ACT no
+ejecutan procesos ni sirven correos necesarios antes de retirar el hosting
+cuando SIGUE ya no dependa de WordPress.
 
 El 7 de octubre de 2026 el panel mostró 2,91 GB de disco, 99.750 de 250.000
 archivos, 494,69 MB de bases de datos y una copia automática reciente de
@@ -99,7 +104,10 @@ impuestos o prorrateos. Los límites publicados por GoDaddy para Deluxe son
 disco y archivos actual cabe, pero hay que comprobar el rendimiento de los
 tres sitios y disponer de una copia restaurable antes de rebajar. El cambio
 podría afectar al origen web y a su IP; verificar el registro A de Cloudflare
-y las tres webs inmediatamente después.
+y las tres webs inmediatamente después. La confirmación de GoDaddy indica que
+la reducción sería **inmediata** pero el nuevo precio se cobraría recién en
+la renovación del 27 de octubre; GoDaddy recomienda hacerla cerca de esa
+fecha. Se cerró la confirmación sin aplicar el cambio el 7 de octubre.
 
 Hay además una suscripción separada de **Respaldo de sitio web Essential de
 5GB**, a **$3,99/mes**, también con fecha del 27 de octubre. En el panel de
