@@ -40,17 +40,20 @@ web no modifica esos registros.
 
 ## Operación y verificación
 
-1. Mantener en Vercel `siguenetwork.org` en Production, `www.siguenetwork.org`
-   y `app.siguenetwork.org` como redirecciones 308 al dominio raíz, y
-   `NEXT_PUBLIC_SITE_URL` apuntando al raíz.
+1. Mantener `NEXT_PUBLIC_SITE_URL` apuntando a `https://siguenetwork.org`.
+   `app.siguenetwork.org` redirige con 308 al dominio raíz desde Vercel;
+   `www.siguenetwork.org` redirige con 301 al raíz desde WordPress. Los
+   dominios raíz y `www` pueden figurar como `Invalid Configuration` en Vercel
+   porque el DNS raíz sigue en GoDaddy y el Worker conecta la app mediante
+   `sigue-members.vercel.app`.
 2. Publicar la rama probada en `main`; esperar a que el despliegue de Vercel esté
    Ready. El repo contiene `wrangler.toml` y la fuente del Worker actualmente
    publicado en Cloudflare.
 3. Mantener el registro A raíz en `107.180.26.71`, con proxy naranja, y activar
    la ruta Worker `siguenetwork.org/*`. El Worker usa la conexión TLS del
    dominio de producción de Vercel para servir las páginas nuevas bajo el raíz.
-   Vercel puede mostrar `Invalid Configuration` para el dominio raíz agregado
-   directamente al proyecto; la URL pública funciona por el Worker.
+   La URL pública funciona por el Worker aunque el dominio raíz no tenga una
+   conexión DNS directa con Vercel.
 4. Comprobar `/es`, `/en`, `/sitemap.xml`, `/robots.txt`, `/recursos`, `/blog`,
    una redirección de blog, `/producto/reed-fan/`, `/event-organizers/`,
    `/wp-admin/`, `/wp-content/` y `www` con HTTP, títulos y canonical correctos.
