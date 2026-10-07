@@ -48,7 +48,22 @@ function shouldRouteToWordPress(url) {
 const handler = {
   async fetch(request) {
     const url = new URL(request.url);
-    if (url.hostname !== 'siguenetwork.org' || shouldRouteToWordPress(url)) {
+    if (url.hostname !== 'siguenetwork.org') {
+      return new Response('Not found', { status: 404 });
+    }
+
+    const localizedPath = url.pathname.match(/^\/(?:es|en)\/(.+)$/);
+    if (localizedPath) {
+      const wordpressUrl = new URL(`/${localizedPath[1]}`, url);
+      if (shouldRouteToWordPress(wordpressUrl)) {
+        if (!wordpressUrl.pathname.endsWith('/') && !wordpressUrl.pathname.startsWith('/wp-')) {
+          wordpressUrl.pathname += '/';
+        }
+        return Response.redirect(wordpressUrl.toString(), 308);
+      }
+    }
+
+    if (shouldRouteToWordPress(url)) {
       return fetch(request);
     }
 

@@ -14,6 +14,9 @@ los recursos y los formularios nuevos.
 | Next.js | `/`, `/es/*`, `/en/*`, `/blog`, `/eventos`, `/contacto`, `/recursos`, `/herramientas-y-guias`, páginas institucionales y las 60 redirecciones históricas de artículos/eventos |
 | WordPress | `/producto/*` (12 productos), `/event-organizers/*`, `/event-venues/*`, `/my-calendar/*`, `/organizer-dashboard/*`, `/venue-dashboard/*`, `/submit-organizer-form/*`, `/submit-venue-form/*`, `/confirmacion-de-donacion/*`, rutas de carrito/checkout/cuenta, `/wp-*`, `/wp-json/*` y sitemaps antiguos de Rank Math |
 
+Las variantes antiguas con prefijo `/es/` o `/en/` de esas rutas se redirigen
+permanentemente a su única URL WordPress sin prefijo.
+
 El Worker también deja las imágenes en `/wp-content/*` en GoDaddy: todavía hay
 imágenes institucionales referenciadas por la app. Por ello **no se debe cancelar
 el hosting de GoDaddy ni WordPress** hasta trasladar esas funciones y medios.
