@@ -170,9 +170,7 @@ const content = {
       intro: 'Participa en nuestros webinars, talleres y cumbres diseñados para potenciar tu misión.',
       cta: 'Ver todos los eventos',
       cards: [
-        ['Julio', '23', 'Webinar: Medición de Impacto', 'Aprende a evidenciar la transformación que tu organización genera.', 'Webinar gratuito', '/eventos'],
-        ['Julio', '25', 'Taller: Gobernanza para ONGs', 'Estructura tu junta directiva y fortalece la sostenibilidad de tu organización.', 'Taller virtual', '/eventos'],
-        ['Octubre 2026', '', '2ª Cumbre SIGUE 2026', 'El encuentro anual de líderes comprometidos con la transformación integral.', 'Evento presencial', '/cumbre-sigue-2026'],
+        ['Octubre', '27–29', '2ª Cumbre SIGUE 2026', 'El encuentro anual de líderes comprometidos con la transformación integral, en Bogotá.', 'Conoce la Cumbre', '/cumbre-sigue-2026'],
       ],
     },
     newsletter: {
@@ -305,9 +303,7 @@ const content = {
       intro: 'Join our webinars, workshops, and summits designed to advance your mission.',
       cta: 'View all events',
       cards: [
-        ['July', '23', 'Webinar: Impact Measurement', 'Learn how to demonstrate the transformation your organization creates.', 'Free webinar', '/eventos'],
-        ['July', '25', 'Workshop: Governance for NGOs', 'Structure your board and strengthen your organization’s sustainability.', 'Virtual workshop', '/eventos'],
-        ['October 2026', '', '2nd SIGUE Summit 2026', 'The annual gathering of leaders committed to holistic transformation.', 'In-person event', '/cumbre-sigue-2026'],
+        ['October', '27–29', '2nd SIGUE Summit 2026', 'The annual gathering of leaders committed to holistic transformation, in Bogotá.', 'Explore the Summit', '/cumbre-sigue-2026'],
       ],
     },
     newsletter: {

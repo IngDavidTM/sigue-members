@@ -1112,8 +1112,9 @@
 
 .eventsRail {
   width: min(920px, 100%);
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: minmax(0, 340px);
   gap: 4rem;
+  justify-content: center;
   margin-inline: auto;
 }
 
