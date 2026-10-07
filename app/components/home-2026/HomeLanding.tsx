@@ -28,7 +28,7 @@ const content = {
       title: 'Descubre dónde está tu organización.',
       accent: 'Transformamos comunidades fortaleciendo a quienes las sirven.',
       body: 'Nuestra herramienta diagnóstica evalúa tu organización en 5 ejes estratégicos para identificar oportunidades de fortalecimiento y conectarte con una ruta de crecimiento. Así podrás desarrollar las capacidades necesarias para fortalecer tu gestión, ampliar tu alcance y demostrar con evidencia el cambio que generas en las comunidades.',
-      cta: 'Comienza tu autoevaluación gratuita',
+      cta: 'Solicita tu autoevaluación gratuita',
       frameworkTitle: 'SIGUE Scale-Up™',
       frameworkSubtitle: 'Autoevaluación diagnóstica por ejes',
       axes: [
@@ -135,7 +135,7 @@ const content = {
         ['B', 'Conoce la fase de desarrollo de tu organización'],
         ['C', 'Decide dónde comenzar a fortalecer tu gestión, visibilidad e impacto'],
       ],
-      cta: 'Completa tu autoevaluación gratuita',
+      cta: 'Solicita tu autoevaluación gratuita',
       imageAlt: 'Acompañamiento estratégico entre miembros de SIGUE',
       storyLabel: 'TESTIMONIOS DE QUIENES YA DIERON ESTE PASO',
       storyOrg: 'FUNDACIÓN Misiones on Fire',
@@ -186,7 +186,7 @@ const content = {
       title: 'Descubre tu potencial',
       accent: 'Escala tu impacto.',
       body: 'Completa la autoevaluación gratuita, conoce la fase de desarrollo de tu organización y decide dónde comenzar a fortalecer su gestión, visibilidad e impacto integral en las comunidades que sirve.',
-      cta: 'Completa tu autoevaluación gratuita',
+      cta: 'Solicita tu autoevaluación gratuita',
       imageAlt: 'Miembros del equipo SIGUE Network',
     },
     footer: {
@@ -206,7 +206,7 @@ const content = {
       title: 'Discover where your organization stands.',
       accent: 'We transform communities by strengthening those who serve them.',
       body: 'Our diagnostic tool evaluates your organization across 5 strategic dimensions to identify opportunities for growth and connect you with a development path. Build the capabilities you need to strengthen management, expand your reach, and demonstrate the change you create in communities.',
-      cta: 'Start your free self-assessment',
+      cta: 'Request your free assessment',
       frameworkTitle: 'SIGUE Scale-Up™',
       frameworkSubtitle: 'Diagnostic self-assessment by dimension',
       axes: [
@@ -268,7 +268,7 @@ const content = {
       accent: 'to action',
       body: 'Your growth path guides you from diagnosis to action in three steps: A. Complete the SIGUE Scale-Up™ self-assessment, B. Learn your organization’s development stage, and C. Decide where to begin strengthening your management, visibility, and holistic impact.',
       steps: [['A', 'Complete your SIGUE Scale-Up™ self-assessment'], ['B', 'Learn your organization’s development stage'], ['C', 'Decide where to begin strengthening management, visibility, and impact']],
-      cta: 'Complete your free self-assessment',
+      cta: 'Request your free assessment',
       imageAlt: 'Strategic support between SIGUE members',
       storyLabel: 'STORIES FROM THOSE WHO HAVE ALREADY TAKEN THIS STEP',
       storyOrg: 'Misiones on Fire Foundation',
@@ -319,7 +319,7 @@ const content = {
       title: 'Discover your potential',
       accent: 'Scale your impact.',
       body: 'Complete the free self-assessment, learn your organization’s development stage, and decide where to begin strengthening its management, visibility, and holistic impact in the communities it serves.',
-      cta: 'Complete your free self-assessment',
+      cta: 'Request your free assessment',
       imageAlt: 'SIGUE Network team members',
     },
     footer: {
