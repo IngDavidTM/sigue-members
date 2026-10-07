@@ -69,9 +69,10 @@ web no modifica esos registros.
 El 7 de octubre se confirmó que Sandra Prieto ya tiene una propiedad de prefijo
 `https://siguenetwork.org/` en Search Console. Se envió `/sitemap.xml` y se
 solicitó indexar `/es`. La prueba en vivo de Google pudo acceder a ambos; el
-informe del sitemap aún mostraba `Couldn't fetch` inmediatamente después del
-envío. `/wp-sitemap.xml` figuraba registrado antes del retiro de las páginas
-públicas de WordPress. La indexación histórica (83 páginas indexadas y 97 no indexadas)
+informe del sitemap mostró `Couldn't fetch` inmediatamente después del envío,
+pero el 7 de octubre cambió a **Success** con 202 páginas descubiertas.
+Se retiró de Search Console el envío antiguo de `/wp-sitemap.xml`; solo queda
+`/sitemap.xml`. La indexación histórica (83 páginas indexadas y 97 no indexadas)
 tenía fecha de actualización del 3 de octubre, anterior a este cambio.
 
 ## Evaluación para reducir GoDaddy
@@ -138,6 +139,10 @@ clics y 11 impresiones; cinco rutas de organizadores, sedes y paneles tuvieron
 cero clics y 16 impresiones. El usuario confirmó el retiro de estas rutas públicas.
 El siguiente paso es inventariar y migrar o preservar los medios restantes,
 probar `/wp-admin/` y definir dónde alojarlo antes de retirar el hosting.
+Una vez que el administrador y los enlaces a medios ya no dependan del origen
+GoDaddy, se podrá conectar el dominio raíz directamente a Vercel en Cloudflare,
+verificar su certificado y retirar el Worker puente. GoDaddy seguirá siendo
+el registrador del dominio; los registros de correo no se deben modificar.
 
 Si alguna ruta crítica falla, quitar la ruta Worker `siguenetwork.org/*` en
 Cloudflare. El registro A raíz seguirá sirviendo WordPress. No cambiar MX al
