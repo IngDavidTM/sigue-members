@@ -4,7 +4,7 @@
 
 Cloudflare conserva la zona DNS y recibe todo el tráfico de `siguenetwork.org`.
 El registro A raíz permanece en GoDaddy. El Worker `sigue-wordpress-bridge`
-envía las páginas nuevas a `app.siguenetwork.org`, cuyo certificado Vercel ya
+envía las páginas nuevas a `sigue-members.vercel.app`, cuyo certificado Vercel ya
 está activo, y deja las rutas antiguas en el origen WordPress. La aplicación Next.js
 y Supabase publican el inicio, las páginas institucionales, el blog, los eventos,
 los recursos y los formularios nuevos.
@@ -41,13 +41,14 @@ web no modifica esos registros.
 ## Operación y verificación
 
 1. Mantener en Vercel `siguenetwork.org` en Production, `www.siguenetwork.org`
-   como redirección 308 al dominio raíz y `NEXT_PUBLIC_SITE_URL` apuntando al raíz.
+   y `app.siguenetwork.org` como redirecciones 308 al dominio raíz, y
+   `NEXT_PUBLIC_SITE_URL` apuntando al raíz.
 2. Publicar la rama probada en `main`; esperar a que el despliegue de Vercel esté
    Ready. El repo contiene `wrangler.toml` y la fuente del Worker actualmente
    publicado en Cloudflare.
 3. Mantener el registro A raíz en `107.180.26.71`, con proxy naranja, y activar
    la ruta Worker `siguenetwork.org/*`. El Worker usa la conexión TLS del
-   subdominio `app` para servir las páginas nuevas bajo el dominio raíz.
+   dominio de producción de Vercel para servir las páginas nuevas bajo el raíz.
    Vercel puede mostrar `Invalid Configuration` para el dominio raíz agregado
    directamente al proyecto; la URL pública funciona por el Worker.
 4. Comprobar `/es`, `/en`, `/sitemap.xml`, `/robots.txt`, `/recursos`, `/blog`,

@@ -1,5 +1,5 @@
 // Keep WordPress on the existing apex origin and serve Next.js from the
-// already verified Vercel subdomain. Visitors keep a single public hostname.
+// already verified Vercel production hostname. Visitors keep a single public hostname.
 const WORDPRESS_PAGES = new Set([
   'confirmacion-de-donacion',
   'event-organizers',
@@ -67,15 +67,15 @@ const handler = {
       return fetch(request);
     }
 
-    url.hostname = 'app.siguenetwork.org';
+    url.hostname = 'sigue-members.vercel.app';
     const upstream = await fetch(new Request(url, request));
     const location = upstream.headers.get('location');
-    if (!location || !location.startsWith('https://app.siguenetwork.org/')) {
+    if (!location || !location.startsWith('https://sigue-members.vercel.app/')) {
       return upstream;
     }
 
     const headers = new Headers(upstream.headers);
-    headers.set('location', location.replace('https://app.siguenetwork.org/', 'https://siguenetwork.org/'));
+    headers.set('location', location.replace('https://sigue-members.vercel.app/', 'https://siguenetwork.org/'));
     return new Response(upstream.body, { status: upstream.status, statusText: upstream.statusText, headers });
   },
 };
