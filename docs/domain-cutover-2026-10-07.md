@@ -45,6 +45,8 @@ web no modifica esos registros.
 3. Mantener el registro A raíz en `107.180.26.71`, con proxy naranja, y activar
    la ruta Worker `siguenetwork.org/*`. El Worker usa la conexión TLS del
    subdominio `app` para servir las páginas nuevas bajo el dominio raíz.
+   Vercel puede mostrar `Invalid Configuration` para el dominio raíz agregado
+   directamente al proyecto; la URL pública funciona por el Worker.
 4. Comprobar `/es`, `/en`, `/sitemap.xml`, `/robots.txt`, `/recursos`, `/blog`,
    una redirección de blog, `/producto/reed-fan/`, `/event-organizers/`,
    `/wp-admin/`, `/wp-content/` y `www` con HTTP, títulos y canonical correctos.
