@@ -28,8 +28,8 @@ Datos permitidos: información no personal que se podría registrar, como ruta, 
 Fuente necesaria: herramienta o sistema que tendría que proporcionar los datos, por ejemplo, GA4/GTM, Zeffy o una fuente autorizada.
 Forma de comprobarla: manera de verificar que la interacción existe en el sitio o que una conversión fue confirmada por la fuente correspondiente.
 
-| Nombre estable | Página/componente | Acción del usuario | Objetivo de negocio | Datos permitidos | Fuente necesaria | Forma de comprobarla | 
-|---|---|---|---|---|---|---|    
+| Nombre estable | Página/componente | Acción del usuario | Objetivo de negocio | Datos permitidos | Fuente necesaria | Forma de comprobarla |
+|---|---|---|---|---|---|---|
 | blog_click | Navegación global | Clic en Blog | Medir interés en contenido | Ruta,idioma, fecha/hora | GA4/GTM | Comprobar el enlace al Blog en la navegación global |
 | membership_click | inicio→Miembros/HomeLanding.tsx | Clic en membresía | Medir interés en la membresía | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace hacia /es/miembros-sigue |
 | events_click | inicio→Eventos/HomeLanding.tsx | Clic en Eventos | Medir interés en eventos |  Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace existente a eventos |
@@ -39,7 +39,7 @@ Forma de comprobarla: manera de verificar que la interacción existe en el sitio
 | cumbre_conversion_confirmed | Cumbre-Zeffy | Completar el pago o inscripción | Medir conversiones externas reales | Fecha/hora y datos no personales autorizados | Zeffy o conciliación externa | Requiere confirmación o exportación de la fuente externa |
 | donation_zeffy_embed_rendered | Donación / DonationEmbed.tsx | Renderizar el embed de Zeffy en la página | Identificar las páginas donde se carga el formulario de donación de Zeffy | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar que el embed de Zeffy se renderiza en la página |
 | donation_conversion_confirmed | Donación-Zeffy | Completar una donación | Medir donaciones confirmadas | Fecha/hora y datos no personales autorizados | Zeffy o conciliación externa |Requiere confirmación o exportación de Zeffy |
-| form_submit_confirmed | Formulario público/DynamicForm.tsx | Enviar correctamente el formulario | Contabilizar formularios confirmados | Ruta, idioma, tipo de formulario, fecha/hora | Analítica futura/fuente del formulario | Verificar un submissionId válido generado después de la persistencia; excluir el honeypot |
+| form_submit_confirmed | Formulario público/DynamicForm.tsx | Enviar correctamente el formulario | Contabilizar formularios confirmados | Ruta, idioma, tipo de formulario, fecha/hora | Analítica futura/fuente del formulario | La confirmación visual de DynamicForm no es válida por sí sola porque el honeypot también devuelve success. El evento futuro debe emitirse en el servidor después de que el RPC devuelva un submissionId, o mediante una confirmación segura y no personal en el cliente. |
 
 ## 5. Embudos de conversión
 Embudo de Cumbre
@@ -86,7 +86,7 @@ Fórmula: cantidad de clics registrados en un botón o enlace específico durant
 Estado actual: no calculable con datos reales.
 
 Fuente necesaria: GA4/GTM u otra solución de analítica autorizada.
- 
+
 Limitación: los botones y enlaces existen en el sitio, pero actualmente no se encontró un colector que registre sus clics.
 
 Descargas iniciadas
@@ -101,9 +101,9 @@ Limitación: este indicador no debe interpretarse como una descarga completada s
 
 Formularios confirmados
 
-Fórmula: cantidad de envíos que terminan en una confirmación exitosa del formulario. 
+Fórmula: cantidad de envíos que terminan en una confirmación exitosa del formulario.
 
-Estado actual: la confirmación está contemplada en el componente del formulario, pero no existe 
+Estado actual: la confirmación está contemplada en el componente del formulario, pero no existe
 actualmente una fuente histórica de analítica que permita obtener el volumen real.
 
 Fuente necesaria: fuente de analítica o del formulario que registre únicamente la confirmación del envío.
@@ -112,7 +112,7 @@ Limitación: no se deben registrar nombres, correos, teléfonos, respuestas ni o
 
 Conversiones externas
 
-Fórmula: cantidad de pagos, inscripciones o donaciones confirmadas por la fuente externa correspondiente. 
+Fórmula: cantidad de pagos, inscripciones o donaciones confirmadas por la fuente externa correspondiente.
 
 Estado actual: no calculable con datos reales desde el repositorio actual.
 
@@ -130,7 +130,7 @@ Los nombres técnicos de los eventos se mantienen estables en español e inglés
 | cumbre_registration_click | Clic en inscripción de Cumbre | Cumbre registration click |
 | cumbre_zeffy_click | Clic hacia Zeffy en Cumbre | Cumbre Zeffy click |
 | cumbre_conversion_confirmed | Conversión de Cumbre confirmada | Confirmed Cumbre conversion |
-| donation_zeffy_view | Visualización del formulario de donación de Zeffy | Zeffy donation form view |
+| donation_zeffy_embed_rendered | Visualización del formulario de donación de Zeffy | Zeffy donation form view |
 | donation_conversion_confirmed | Donación confirmada | Confirmed donation |
 | form_submit_confirmed | Formulario enviado y confirmado | Confirmed form submission |
 | cumbre_transfer_calculator_use | Uso de la calculadora de transferencia | Transfer calculator use |
@@ -183,4 +183,3 @@ Datos permitidos en GA4/GTM: solo deben enviarse datos necesarios para la medici
 Exportaciones de Zeffy: cualquier información obtenida mediante exportaciones de Zeffy debe utilizarse únicamente con autorización y bajo las reglas de acceso, retención y privacidad definidas por la organización.
 
 Criterio general: ningún evento debe diseñarse de forma que permita identificar directamente a una persona. Las conversiones externas deben basarse únicamente en información confirmada por la fuente autorizada correspondiente.
-
