@@ -21,7 +21,7 @@ export default function robots(): MetadataRoute.Robots {
         '/wp-content/uploads/woocommerce_uploads/',
       ],
     },
-    sitemap: [absoluteUrl('/sitemap.xml'), absoluteUrl('/product-sitemap.xml')],
+    sitemap: absoluteUrl('/sitemap.xml'),
     host: getSiteUrl(),
   };
 }

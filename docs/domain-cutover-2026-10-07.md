@@ -4,33 +4,35 @@
 
 Cloudflare conserva la zona DNS y recibe todo el tráfico de `siguenetwork.org`.
 El registro A raíz permanece en GoDaddy. El Worker `sigue-wordpress-bridge`
-envía las páginas nuevas a `sigue-members.vercel.app`, cuyo certificado Vercel ya
-está activo, y deja las rutas antiguas en el origen WordPress. La aplicación Next.js
-y Supabase publican el inicio, las páginas institucionales, el blog, los eventos,
-los recursos y los formularios nuevos.
+envía las páginas públicas a `sigue-members.vercel.app`, cuyo certificado Vercel ya
+está activo. WordPress permanece para su administración y archivos antiguos.
+La aplicación Next.js y Supabase publican el inicio, las páginas institucionales,
+el blog, los eventos, los recursos y los formularios nuevos.
 
 | Destino | Rutas |
 | --- | --- |
 | Next.js | `/`, `/es/*`, `/en/*`, `/blog`, `/eventos`, `/contacto`, `/recursos`, `/herramientas-y-guias`, páginas institucionales y las 60 redirecciones históricas de artículos/eventos |
-| WordPress | `/producto/*` (12 productos), `/event-organizers/*`, `/event-venues/*`, `/my-calendar/*`, `/organizer-dashboard/*`, `/venue-dashboard/*`, `/submit-organizer-form/*`, `/submit-venue-form/*`, `/confirmacion-de-donacion/*`, rutas de carrito/checkout/cuenta, `/wp-*`, `/wp-json/*` y sitemaps antiguos de Rank Math |
+| WordPress | `/wp-admin/*`, `/wp-login.php`, `/wp-json/*`, `/wp-content/*` y demás rutas técnicas `/wp-*` necesarias para el administrador y medios antiguos |
+| Retiradas (HTTP 410) | `/producto/*`, tienda, carrito, pago, cuenta, organizadores/sedes y sitemaps antiguos de WordPress |
 
-Las variantes antiguas con prefijo `/es/` o `/en/` de esas rutas se redirigen
-permanentemente a su única URL WordPress sin prefijo.
+Las variantes antiguas con prefijo `/es/` o `/en/` de las rutas retiradas
+también devuelven 410. Los 12 productos de muestra de 2016 se enviaron a la
+papelera de WordPress; no se eliminaron definitivamente.
 
 El Worker deja `/wp-content/*` en GoDaddy para preservar los enlaces antiguos.
 Las 29 imágenes y documentos que la app referenciaba directamente ya se sirven
 desde `/legacy-media/*` en Vercel. La biblioteca de WordPress conserva 639
 archivos en total; antes de apagar el hosting hay que decidir qué enlaces
 antiguos deben mantenerse. **No se debe cancelar el hosting de GoDaddy ni
-WordPress** mientras el Worker siga enviando productos y otras rutas allí.
+WordPress** mientras sigan alojados allí el administrador y los medios antiguos.
 La zona DNS contiene MX, SPF, DKIM y DMARC de Google; el cambio del registro
 web no modifica esos registros.
 
 ## SEO
 
 - La app publica `/sitemap.xml` con las secciones institucionales en español e
-  inglés, artículos, eventos, series y etiquetas. `robots.txt` anuncia ese mapa
-  y `/product-sitemap.xml` de WordPress.
+  inglés, artículos, eventos, series y etiquetas. `robots.txt` anuncia solo ese
+  mapa; los sitemaps antiguos de WordPress devuelven 410.
 - Los cinco enlaces de sección que Google mostraba en la captura (Recursos,
   Conoce SIGUE, Únete, Miembros SIGUE, Herramientas y Guías) siguen teniendo
   páginas accesibles, enlaces internos y entradas en el sitemap nuevo.
@@ -38,8 +40,8 @@ web no modifica esos registros.
   sus nuevas rutas localizadas. Los canonical y `hreflang` nuevos usan
   `https://siguenetwork.org`. Google decide si y cuándo muestra sitelinks; no
   existe una configuración que garantice conservar exactamente su presentación.
-- Los sitemaps antiguos de WordPress quedan accesibles para que las URLs de
-  productos no desaparezcan durante la transición.
+- Las URLs de productos y las otras rutas públicas de WordPress sin sustituto
+  devuelven 410 y `X-Robots-Tag: noindex`; no se redirigen a una página distinta.
 
 ## Operación y verificación
 
@@ -58,8 +60,8 @@ web no modifica esos registros.
    La URL pública funciona por el Worker aunque el dominio raíz no tenga una
    conexión DNS directa con Vercel.
 4. Comprobar `/es`, `/en`, `/sitemap.xml`, `/robots.txt`, `/recursos`, `/blog`,
-   una redirección de blog, `/producto/reed-fan/`, `/event-organizers/`,
-   `/wp-admin/`, `/wp-content/` y `www` con HTTP, títulos y canonical correctos.
+   una redirección de blog, 410 en `/producto/reed-fan/` y
+   `/event-organizers/`, acceso a `/wp-admin/`, un medio de `/wp-content/` y `www`.
 5. Vigilar `/sitemap.xml` en Search Console, 404, formularios, pagos y logs de
    Cloudflare/Vercel. Los correos automáticos de formularios requieren
    configurar el proveedor de email y el cron.
@@ -68,8 +70,8 @@ El 7 de octubre se confirmó que Sandra Prieto ya tiene una propiedad de prefijo
 `https://siguenetwork.org/` en Search Console. Se envió `/sitemap.xml` y se
 solicitó indexar `/es`. La prueba en vivo de Google pudo acceder a ambos; el
 informe del sitemap aún mostraba `Couldn't fetch` inmediatamente después del
-envío. `/wp-sitemap.xml` permanece registrado mientras se resuelve el retiro
-de WordPress. La indexación histórica (83 páginas indexadas y 97 no indexadas)
+envío. `/wp-sitemap.xml` figuraba registrado antes del retiro de las páginas
+públicas de WordPress. La indexación histórica (83 páginas indexadas y 97 no indexadas)
 tenía fecha de actualización del 3 de octubre, anterior a este cambio.
 
 ## Evaluación para reducir GoDaddy
@@ -89,8 +91,8 @@ reserva. La portada de Sandra en el origen GoDaddy tiene una modificación
 distinta de la portada pública y el certificado del origen está vencido;
 son más indicios de una copia antigua. El usuario indicó que Sandra es el
 único sitio adicional que necesita conservar, pero SIGUE **sí depende hoy** de
-WordPress para `/producto/*`, administración, medios antiguos y las demás
-rutas indicadas arriba. Confirmar que las copias de Sandra y SP-ACT no
+WordPress para administración y medios antiguos. Confirmar que las copias de
+Sandra y SP-ACT no
 ejecutan procesos ni sirven correos necesarios antes de retirar el hosting
 cuando SIGUE ya no dependa de WordPress.
 
@@ -129,19 +131,20 @@ Referencias de GoDaddy: [límites de recursos](https://www.godaddy.com/en-ca/hel
 [cambio de versión de PHP](https://www.godaddy.com/es-es/help/ver-o-cambiar-la-version-php-para-mi-web-hosting-cpanel-16090)
 y [tipos de respaldo](https://www.godaddy.com/en/help/what-is-a-website-backup-20318).
 
-WooCommerce muestra cero pedidos. Sus 12 productos son entradas del tema de
-2016; los listados de organizadores y sedes tienen cero registros. En Search
+WooCommerce muestra cero pedidos. Sus 12 productos eran entradas del tema de
+2016 y están en la papelera; los listados de organizadores y sedes tienen cero registros. En Search
 Console, del 5 de julio al 4 de octubre, cinco URL de productos tuvieron cero
 clics y 11 impresiones; cinco rutas de organizadores, sedes y paneles tuvieron
-cero clics y 16 impresiones. Antes de eliminar estas rutas, confirmar si SIGUE
-piensa usarlas y decidir redirecciones o sustitutos. Migrar o preservar los
-medios restantes y probar todas las rutas críticas antes de retirar el hosting.
+cero clics y 16 impresiones. El usuario confirmó el retiro de estas rutas públicas.
+El siguiente paso es inventariar y migrar o preservar los medios restantes,
+probar `/wp-admin/` y definir dónde alojarlo antes de retirar el hosting.
 
 Si alguna ruta crítica falla, quitar la ruta Worker `siguenetwork.org/*` en
 Cloudflare. El registro A raíz seguirá sirviendo WordPress. No cambiar MX al
 revertir. El 7 de octubre se probó el CNAME directo hacia Vercel y produjo 525
 en páginas nuevas por falta de certificado para el dominio raíz; se revirtió
-el DNS y se confirmó respuesta 200 en Inicio, Recursos y un producto.
+el DNS y se confirmó respuesta 200 en Inicio, Recursos y un producto. Ese
+producto se retiró posteriormente por decisión del usuario.
 
 ## Estado de la importación final
 

@@ -1,6 +1,6 @@
-// Keep WordPress on the existing apex origin and serve Next.js from the
-// already verified Vercel production hostname. Visitors keep a single public hostname.
-const WORDPRESS_PAGES = new Set([
+// WordPress still serves its administration and legacy media. Public pages
+// retired during the migration must not reappear through an origin cache.
+const RETIRED_PAGES = new Set([
   'confirmacion-de-donacion',
   'event-organizers',
   'event-venues',
@@ -21,7 +21,8 @@ const WORDPRESS_PAGES = new Set([
   'product-tag',
 ]);
 
-const WORDPRESS_SITEMAPS = new Set([
+const RETIRED_SITEMAPS = new Set([
+  '/wp-sitemap.xml',
   '/sitemap_index.xml',
   '/post-sitemap.xml',
   '/page-sitemap.xml',
@@ -31,18 +32,32 @@ const WORDPRESS_SITEMAPS = new Set([
   '/category-sitemap.xml',
 ]);
 
-function shouldRouteToWordPress(url) {
+function isRetired(url) {
   const path = url.pathname;
   const firstSegment = path.split('/')[1];
 
-  return path.startsWith('/wp-')
-    || path.startsWith('/producto/')
-    || WORDPRESS_PAGES.has(firstSegment)
-    || WORDPRESS_SITEMAPS.has(path)
+  return path.startsWith('/producto/')
+    || path.startsWith('/product/')
+    || RETIRED_PAGES.has(firstSegment)
+    || RETIRED_SITEMAPS.has(path)
     || url.searchParams.has('wc-ajax')
     || url.searchParams.has('wc-api')
-    || url.searchParams.has('add-to-cart')
-    || url.searchParams.has('rest_route');
+    || url.searchParams.has('add-to-cart');
+}
+
+function shouldRouteToWordPress(url) {
+  return url.pathname.startsWith('/wp-') || url.searchParams.has('rest_route');
+}
+
+function retiredResponse() {
+  return new Response('Esta página fue retirada.', {
+    status: 410,
+    headers: {
+      'content-type': 'text/plain; charset=utf-8',
+      'x-robots-tag': 'noindex',
+      'cache-control': 'no-store',
+    },
+  });
 }
 
 const handler = {
@@ -55,12 +70,19 @@ const handler = {
     const localizedPath = url.pathname.match(/^\/(?:es|en)\/(.+)$/);
     if (localizedPath) {
       const wordpressUrl = new URL(`/${localizedPath[1]}`, url);
+      if (isRetired(wordpressUrl)) {
+        return retiredResponse();
+      }
       if (shouldRouteToWordPress(wordpressUrl)) {
         if (!wordpressUrl.pathname.endsWith('/') && !wordpressUrl.pathname.startsWith('/wp-')) {
           wordpressUrl.pathname += '/';
         }
         return Response.redirect(wordpressUrl.toString(), 308);
       }
+    }
+
+    if (isRetired(url)) {
+      return retiredResponse();
     }
 
     if (shouldRouteToWordPress(url)) {
