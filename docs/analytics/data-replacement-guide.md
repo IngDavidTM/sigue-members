@@ -40,10 +40,11 @@ El identificador example_id utilizado en los datos sintéticos puede reemplazars
 
 1. Reemplazar el archivo CSV de ejemplo por el archivo real autorizado.
 2. Mantener la misma estructura y los mismos nombres de columnas.
-3. Abrir el archivo .pbix.
-4. Actualizar los datos mediante *Actualizar*.
-5. Revisar que las visualizaciones continúen funcionando.
-6. Verificar que los tipos de datos y los filtros se mantengan correctamente.
+3. Abrir la plantilla `SIGUE_Analytics.pbit`.
+4. Al abrir la plantilla, establecer el parámetro `RutaCSV` con la ruta local donde se encuentra `events-sample.csv`.
+5. Actualizar los datos mediante *Actualizar*.
+6. Revisar que las visualizaciones continúen funcionando.
+7. Verificar que los tipos de datos y los filtros se mantengan correctamente.
 
 Si la fuente real utiliza otra estructura, primero se debe adaptar la consulta para conservar el esquema esperado por el modelo.
 
