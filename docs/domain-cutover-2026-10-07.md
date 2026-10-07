@@ -75,10 +75,44 @@ tenía fecha de actualización del 3 de octubre, anterior a este cambio.
 ## Evaluación para reducir GoDaddy
 
 GoDaddy puede continuar como registrador del dominio aunque el hosting de
-WordPress se retire. El plan contratado, su consumo de almacenamiento y precio
-de renovación no se pudieron leer: la cuenta de GoDaddy requiere inicio de
-sesión y bloqueó el navegador automatizado. No recomendar una rebaja concreta
-sin esos datos; cambiar de plan podría modificar la IP de origen.
+WordPress se retire. La cuenta autenticada de Sandra muestra que
+`siguenetwork.org`, `sandraprieto.org` y `sp-act.education` comparten **una**
+cuenta de Web Hosting Ultimate (cPanel), cuyo dominio principal es
+`sp-act.education`. Por tanto, retirar SIGUE del hosting no elimina el costo
+del plan mientras los otros dos sitios lo usen. En particular,
+`sandraprieto.org` figura con una instalación de WordPress 5.7.11.
+
+El 7 de octubre de 2026 el panel mostró 2,91 GB de disco, 99.750 de 250.000
+archivos, 494,69 MB de bases de datos y una copia automática reciente de
+2,62 GB. La renovación del hosting figura para el **27 de octubre de 2026**.
+En el selector de GoDaddy, Ultimate cuesta **$26,99/mes** y Deluxe
+**$19,99/mes**. El ahorro nominal de cambiar a Deluxe sería $7/mes antes de
+impuestos o prorrateos. Los límites publicados por GoDaddy para Deluxe son
+50 GB de disco, 250.000 archivos, 1 GB de RAM y un núcleo de CPU; el uso de
+disco y archivos actual cabe, pero hay que comprobar el rendimiento de los
+tres sitios y disponer de una copia restaurable antes de rebajar. El cambio
+podría afectar al origen web y a su IP; verificar el registro A de Cloudflare
+y las tres webs inmediatamente después.
+
+Hay además una suscripción separada de **Respaldo de sitio web Essential de
+5GB**, a **$3,99/mes**, también con fecha del 27 de octubre. En el panel de
+seguridad aparece como **un plan disponible para configurar**, sin dominio
+asignado. El hosting ya tiene su propia copia automática. Verificar el alcance
+y la retención de esa copia y, si nadie necesita el producto separado,
+cancelar únicamente el respaldo Essential. El ahorro nominal adicional sería
+$3,99/mes. `Páginas Web + Marketing` de SIGUE es gratuito; no justifica un
+cambio de plan. El dominio `siguenetwork.org` y su protección total se
+renuevan el 12 de enero de 2029 y pueden seguir en GoDaddy.
+
+GoDaddy advierte que PHP 8.2 en este hosting requerirá soporte extendido de
+pago a partir de la próxima renovación. Antes de esa fecha, actualizar la
+versión de PHP compatible con **los tres sitios**, con prueba de páginas,
+formularios y administración, para evitar el cargo y mantener seguridad.
+La instalación WordPress de Sandra debe revisarse especialmente por su
+antigüedad. No aplicar una versión de PHP a todo el cPanel sin esa prueba.
+Referencias de GoDaddy: [límites de recursos](https://www.godaddy.com/en-ca/help/resource-limits-12001),
+[cambio de versión de PHP](https://www.godaddy.com/es-es/help/ver-o-cambiar-la-version-php-para-mi-web-hosting-cpanel-16090)
+y [tipos de respaldo](https://www.godaddy.com/en/help/what-is-a-website-backup-20318).
 
 WooCommerce muestra cero pedidos. Sus 12 productos son entradas del tema de
 2016; los listados de organizadores y sedes tienen cero registros. En Search
