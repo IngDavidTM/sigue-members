@@ -3,9 +3,9 @@
 ## Arquitectura
 
 Cloudflare conserva la zona DNS y recibe todo el tráfico de `siguenetwork.org`.
-El Worker `sigue-wordpress-bridge` enruta la mayoría de las solicitudes a Vercel.
-Las rutas que todavía necesitan WordPress se envían al origen de GoDaddy mediante
-`wp-origin.siguenetwork.org`, sin cambiar el `Host` público. La aplicación Next.js
+El registro A raíz permanece en GoDaddy. El Worker `sigue-wordpress-bridge`
+envía las páginas nuevas a `app.siguenetwork.org`, cuyo certificado Vercel ya
+está activo, y deja las rutas antiguas en el origen WordPress. La aplicación Next.js
 y Supabase publican el inicio, las páginas institucionales, el blog, los eventos,
 los recursos y los formularios nuevos.
 
@@ -42,9 +42,9 @@ web no modifica esos registros.
 2. Publicar la rama probada en `main`; esperar a que el despliegue de Vercel esté
    Ready. El repo contiene `wrangler.toml` y la fuente del Worker actualmente
    publicado en Cloudflare.
-3. Cambiar solo el registro A raíz en Cloudflare por el CNAME que Vercel indica
-   para `siguenetwork.org`, conservando el proxy naranja. Dejar `wp-origin` hacia
-   `107.180.26.71` y la ruta Worker `siguenetwork.org/*` activos.
+3. Mantener el registro A raíz en `107.180.26.71`, con proxy naranja, y activar
+   la ruta Worker `siguenetwork.org/*`. El Worker usa la conexión TLS del
+   subdominio `app` para servir las páginas nuevas bajo el dominio raíz.
 4. Comprobar `/es`, `/en`, `/sitemap.xml`, `/robots.txt`, `/recursos`, `/blog`,
    una redirección de blog, `/producto/reed-fan/`, `/event-organizers/`,
    `/wp-admin/`, `/wp-content/` y `www` con HTTP, títulos y canonical correctos.
@@ -52,9 +52,11 @@ web no modifica esos registros.
    formularios, pagos y logs de Cloudflare/Vercel. Los correos automáticos de
    formularios requieren configurar el proveedor de email y el cron.
 
-Si alguna ruta crítica falla, restaurar el registro A raíz de Cloudflare a
-`107.180.26.71`. El Worker puede seguir activo: su destino principal volverá a
-WordPress. No cambiar MX ni eliminar `wp-origin` al revertir.
+Si alguna ruta crítica falla, quitar la ruta Worker `siguenetwork.org/*` en
+Cloudflare. El registro A raíz seguirá sirviendo WordPress. No cambiar MX al
+revertir. El 7 de octubre se probó el CNAME directo hacia Vercel y produjo 525
+en páginas nuevas por falta de certificado para el dominio raíz; se revirtió
+el DNS y se confirmó respuesta 200 en Inicio, Recursos y un producto.
 
 ## Estado de la importación final
 

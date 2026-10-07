@@ -1,6 +1,5 @@
-// Keep the small set of WordPress-only features on their existing public URLs.
-// The proxied wp-origin record points to the current GoDaddy server. Cloudflare
-// sends the original Host header, so WordPress continues to see siguenetwork.org.
+// Keep WordPress on the existing apex origin and serve Next.js from the
+// already verified Vercel subdomain. Visitors keep a single public hostname.
 const WORDPRESS_PAGES = new Set([
   'confirmacion-de-donacion',
   'event-organizers',
@@ -14,6 +13,12 @@ const WORDPRESS_PAGES = new Set([
   'checkout',
   'finalizar-compra',
   'mi-cuenta',
+  'cart',
+  'my-account',
+  'shop',
+  'tienda',
+  'product-category',
+  'product-tag',
 ]);
 
 const WORDPRESS_SITEMAPS = new Set([
@@ -34,19 +39,29 @@ function shouldRouteToWordPress(url) {
     || path.startsWith('/producto/')
     || WORDPRESS_PAGES.has(firstSegment)
     || WORDPRESS_SITEMAPS.has(path)
-    || url.searchParams.has('wc-ajax');
+    || url.searchParams.has('wc-ajax')
+    || url.searchParams.has('wc-api')
+    || url.searchParams.has('add-to-cart')
+    || url.searchParams.has('rest_route');
 }
 
 const handler = {
   async fetch(request) {
     const url = new URL(request.url);
-    if (url.hostname !== 'siguenetwork.org' || !shouldRouteToWordPress(url)) {
+    if (url.hostname !== 'siguenetwork.org' || shouldRouteToWordPress(url)) {
       return fetch(request);
     }
 
-    return fetch(request, {
-      cf: { resolveOverride: 'wp-origin.siguenetwork.org' },
-    });
+    url.hostname = 'app.siguenetwork.org';
+    const upstream = await fetch(new Request(url, request));
+    const location = upstream.headers.get('location');
+    if (!location || !location.startsWith('https://app.siguenetwork.org/')) {
+      return upstream;
+    }
+
+    const headers = new Headers(upstream.headers);
+    headers.set('location', location.replace('https://app.siguenetwork.org/', 'https://siguenetwork.org/'));
+    return new Response(upstream.body, { status: upstream.status, statusText: upstream.statusText, headers });
   },
 };
 

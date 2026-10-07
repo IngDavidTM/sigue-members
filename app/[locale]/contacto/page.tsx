@@ -1,9 +1,31 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PageHero from '@/app/components/ui/PageHero';
 import Reveal from '@/app/components/ui/Reveal';
 import SocialLinks from '@/app/components/ui/SocialLinks';
 import DynamicForm from '@/app/components/forms/DynamicForm';
 import { getPublishedDynamicForm } from '@/lib/forms/public';
+import { absoluteUrl } from '@/lib/site-url';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: requestedLocale } = await params;
+  const locale = requestedLocale === 'en' ? 'en' : 'es';
+  const title = locale === 'en' ? 'Contact SIGUE Network' : 'Contacto | SIGUE Network';
+  const description = locale === 'en'
+    ? 'Contact SIGUE Network to learn about membership, partnerships, volunteering, and our programs.'
+    : 'Contacta a SIGUE Network para conocer la membresía, las alianzas, el voluntariado y nuestros programas.';
+  const canonical = absoluteUrl(`/${locale}/contacto`);
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+      languages: { es: absoluteUrl('/es/contacto'), en: absoluteUrl('/en/contacto') },
+    },
+    openGraph: { type: 'website', title, description, url: canonical, siteName: 'SIGUE Network' },
+  };
+}
 
 export default async function ContactoPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: rawLocale } = await params;
