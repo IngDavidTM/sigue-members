@@ -81,6 +81,13 @@ cuenta de Web Hosting Ultimate (cPanel), cuyo dominio principal es
 `sp-act.education`. Por tanto, retirar SIGUE del hosting no elimina el costo
 del plan mientras los otros dos sitios lo usen. En particular,
 `sandraprieto.org` figura con una instalación de WordPress 5.7.11.
+La comprobación pública de DNS matiza este inventario: `sandraprieto.org`
+apunta a `162.241.203.121`, con servidores de nombres HostGator, no al
+origen GoDaddy de SIGUE (`107.180.26.71`); `sp-act.education` no resuelve
+actualmente. Las copias de ambos sitios en cPanel podrían ser antiguas o de
+reserva. Confirmar con sus responsables que no reciben tráfico, procesos ni
+correos necesarios antes de retirar el hosting una vez que SIGUE deje de
+depender de WordPress.
 
 El 7 de octubre de 2026 el panel mostró 2,91 GB de disco, 99.750 de 250.000
 archivos, 494,69 MB de bases de datos y una copia automática reciente de
