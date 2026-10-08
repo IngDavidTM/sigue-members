@@ -1,8 +1,10 @@
 name = "sigue-wordpress-bridge"
 main = "workers/legacy-wordpress.js"
 compatibility_date = "2026-10-07"
+# Desde el 8 de octubre de 2026, siguenetwork.org y www se sirven directamente
+# desde Vercel (CNAME en modo DNS only). Este Worker solo atiende el administrador
+# de WordPress en wp.siguenetwork.org. No volver a añadir el dominio raíz ni www:
+# el cambio de host rompe las Server Actions (formularios, login y admin).
 routes = [
-  { pattern = "siguenetwork.org", custom_domain = true },
-  { pattern = "www.siguenetwork.org/*", zone_name = "siguenetwork.org" },
   { pattern = "wp.siguenetwork.org/*", zone_name = "siguenetwork.org" },
 ]
