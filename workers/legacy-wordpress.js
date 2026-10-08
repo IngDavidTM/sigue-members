@@ -1,7 +1,6 @@
 // WordPress still serves its administration and legacy media. Public pages
 // retired during the migration must not reappear through an origin cache.
 const RETIRED_PAGES = new Set([
-  'confirmacion-de-donacion',
   'event-organizers',
   'event-venues',
   'my-calendar',
