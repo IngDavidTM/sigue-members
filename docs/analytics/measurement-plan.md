@@ -130,7 +130,7 @@ Los nombres técnicos de los eventos se mantienen estables en español e inglés
 | cumbre_registration_click | Clic en inscripción de Cumbre | Cumbre registration click |
 | cumbre_zeffy_click | Clic hacia Zeffy en Cumbre | Cumbre Zeffy click |
 | cumbre_conversion_confirmed | Conversión de Cumbre confirmada | Confirmed Cumbre conversion |
-| donation_zeffy_embed_rendered | Visualización del formulario de donación de Zeffy | Zeffy donation form view |
+| donation_zeffy_embed_rendered | Render del embed de donación de Zeffy / Zeffy donation embed rendered |
 | donation_conversion_confirmed | Donación confirmada | Confirmed donation |
 | form_submit_confirmed | Formulario enviado y confirmado | Confirmed form submission |
 | cumbre_transfer_calculator_use | Uso de la calculadora de transferencia | Transfer calculator use |
@@ -142,26 +142,26 @@ Prioridad alta
 
 Implementar primero los eventos de navegación y llamadas a la acción dentro del sitio:
 
-membership_click
-blog_click
-events_click
-cumbre_registration_click
-cumbre_zeffy_click
-cumbre_transfer_calculator_use
+-membership_click
+-blog_click
+-events_click
+-cumbre_registration_click
+-cumbre_zeffy_click
+-cumbre_transfer_calculator_use
 Estos eventos permitirían conocer qué contenidos, servicios y acciones generan mayor interés. Para su medición sería necesaria una herramienta de analítica como GA4/GTM u otra solución autorizada.
 
 Prioridad media
 
 Implementar el seguimiento de formularios confirmados:
 
-form_submit_confirmed
+-form_submit_confirmed
 Este evento permitiría contabilizar envíos confirmados sin registrar información personal de los usuarios. Requiere una fuente de datos que permita registrar la confirmación del formulario.
 
 Prioridad dependiente de fuente externa
 
 Las conversiones externas deben implementarse únicamente cuando exista una fuente autorizada:
-cumbre_conversion_confirmed
-donation_conversion_confirmed
+-cumbre_conversion_confirmed
+-donation_conversion_confirmed
 Para estos eventos se requiere información confirmada por Zeffy o una fuente externa de conciliación. Un clic hacia Zeffy no debe considerarse una conversión.
 
 Estado actual
