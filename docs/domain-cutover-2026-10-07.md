@@ -48,7 +48,8 @@ web no modifica esos registros.
   mantiene `Full` porque su certificado de origen aún está vencido. Las dos URL
   generales de WordPress ahora apuntan a `https://wp.siguenetwork.org`.
   El Worker permite allí `/wp-admin/*`, `/wp-login.php`, `/wp-json/*` y recursos
-  `/wp-content/*` y `/wp-includes/*`; bloquea la portada y sitemaps públicos,
+  `/wp-content/*` y `/wp-includes/*`; envía `/` al administrador, bloquea otras
+  páginas públicas y sitemaps,
   y sirve `robots.txt` con `Disallow: /`. En el dominio raíz, `/wp-admin/*` y
   `/wp-login.php` redirigen al subdominio. El formulario de acceso y el salto
   desde `/wp-admin/` ya usan el nuevo nombre. Falta comprobar un inicio de

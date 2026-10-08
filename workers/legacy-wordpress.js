@@ -74,6 +74,12 @@ const handler = {
   async fetch(request) {
     const url = new URL(request.url);
     if (url.hostname === 'wp.siguenetwork.org') {
+      if (url.pathname === '/') {
+        return new Response(null, {
+          status: 302,
+          headers: { location: 'https://wp.siguenetwork.org/wp-admin/', 'cache-control': 'no-store' },
+        });
+      }
       if (/^\/\.well-known\/(?:acme-challenge|pki-validation)\//.test(url.pathname)) {
         return fetch(request);
       }
