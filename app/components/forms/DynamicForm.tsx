@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import Link from "next/link";
 
 import { submitDynamicForm, type PublicFormState } from "@/app/[locale]/formularios/actions";
 import { getFieldMaxLength, localizedField } from "@/lib/forms/options";
@@ -58,6 +59,7 @@ export default function DynamicForm({
         })}
       </div>
       {state.message ? <p className={styles.error} role="alert">{state.message}</p> : null}
+      <p><Link href={`/${locale}/politica-de-privacidad`} target="_blank" rel="noopener noreferrer">{locale === "es" ? "Consulta nuestra política de privacidad" : "Read our privacy policy"}</Link></p>
       <button type="submit" disabled={pending}>{pending ? (locale === "es" ? "Enviando…" : "Sending…") : submitLabel}</button>
     </form>
   </section>;

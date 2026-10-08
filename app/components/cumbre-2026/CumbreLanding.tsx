@@ -269,13 +269,6 @@ const pricing = [
     lodging: tariffs.general.lodging,
   },
   {
-    id: 'early' as const,
-    name: ['Early Bird', 'Early Bird'] as LocalizedText,
-    price: tariffs.early.pass,
-    lodging: tariffs.early.lodging,
-    benefit: ['15% de beneficio', '15% savings'] as LocalizedText,
-  },
-  {
     id: 'member' as const,
     name: ['Miembro Activo SIGUE', 'Active SIGUE Member'] as LocalizedText,
     price: tariffs.member.pass,

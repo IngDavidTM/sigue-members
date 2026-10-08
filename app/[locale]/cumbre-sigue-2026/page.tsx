@@ -259,14 +259,6 @@ function getStructuredData(locale: CumbreLocale) {
           },
           {
             '@type': 'Offer',
-            name: 'Early Bird',
-            price: '489000',
-            priceCurrency: 'COP',
-            availability: 'https://schema.org/LimitedAvailability',
-            url: `${pageUrl}#inscripcion`,
-          },
-          {
-            '@type': 'Offer',
             name: locale === 'es' ? 'Miembro Activo SIGUE' : 'Active SIGUE Member',
             price: '449000',
             priceCurrency: 'COP',

@@ -165,8 +165,20 @@
 
 .cardActions {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
 }
+
+.actionPrimary, .actionSecondary {
+    display: inline-block;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.actionPrimary { background: var(--color-primary); color: white; }
+.actionSecondary { border: 1px solid var(--color-primary); color: var(--color-primary); }
 
 .statsGrid {
     display: grid;

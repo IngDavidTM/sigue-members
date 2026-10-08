@@ -14,7 +14,6 @@ type Locale = 'es' | 'en';
 type LocalizedText = readonly [spanish: string, english: string];
 
 const heroImage = '/legacy-media/2024/11/banner_siguenetwork_mebresia.jpg';
-const membershipForm = 'https://docs.google.com/forms/d/e/1FAIpQLSf22j0OHyaerFaAWZisk0QEmiT1wGJEXD_KZx2izujeFPRUtg/viewform';
 const volunteerForm = 'https://docs.google.com/forms/d/1JYUumNnWCHKOCYZGvCZX-tko3UowVio2nHweL41Us2o/viewform?edit_requested=true';
 const prayerForm = 'https://docs.google.com/forms/d/e/1FAIpQLSdj0gs75NwmuRb0qQdSrdZ4Y2SwQRdroBd5XxS7QtN960SR7w/viewform';
 
@@ -162,6 +161,7 @@ function localized(text: LocalizedText, locale: Locale) {
 }
 
 export default function MembershipLanding({ locale, interestFormAvailable = false }: { locale: Locale; interestFormAvailable?: boolean }) {
+  const membershipForm = `/${locale}/formularios/membresia-solicitud`;
   const c = copy[locale];
 
   return (
@@ -191,7 +191,7 @@ export default function MembershipLanding({ locale, interestFormAvailable = fals
         <div className={styles.membershipCta}>
           <p>{c.ctaLead}</p>
           <h2>{c.ctaTitle}</h2>
-          <a className={styles.button} href={membershipForm} target="_blank" rel="noreferrer">{c.cta}</a>
+          <a className={styles.button} href={membershipForm}>{c.cta}</a>
           {interestFormAvailable ? <p>
             <a href="#membresia-interes">{locale === 'es' ? '¿Tienes preguntas? Déjanos tus datos y te contactamos.' : 'Have questions? Leave your details and we will contact you.'}</a>
           </p> : null}
@@ -262,7 +262,7 @@ export default function MembershipLanding({ locale, interestFormAvailable = fals
           <a href={volunteerForm} target="_blank" rel="noreferrer">
             <h3>{c.volunteerTitle}</h3><p>{c.volunteerBody}</p><ArrowRight aria-hidden="true" />
           </a>
-          <a className={styles.membershipCard} href={membershipForm} target="_blank" rel="noreferrer">
+          <a className={styles.membershipCard} href={membershipForm}>
             <h3>{c.membershipTitle}</h3><p>{c.membershipBody}</p><ArrowRight aria-hidden="true" />
           </a>
         </div>

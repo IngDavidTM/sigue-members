@@ -10,6 +10,7 @@ const content = {
     discover: 'DESCUBRE',
     participate: 'PARTICIPA',
     rights: '© 2026 SIGUE NETWORK. TODOS LOS DERECHOS RESERVADOS.',
+    privacy: 'Política de datos',
     discoverLinks: [
       ['Inicio', ''],
       ['Conoce SIGUE', '/conoce-sigue'],
@@ -29,6 +30,7 @@ const content = {
     discover: 'DISCOVER',
     participate: 'PARTICIPATE',
     rights: '© 2026 SIGUE NETWORK. ALL RIGHTS RESERVED.',
+    privacy: 'Privacy policy',
     discoverLinks: [
       ['Home', ''],
       ['About SIGUE', '/conoce-sigue'],
@@ -84,6 +86,7 @@ export default function SiteFooter2026({ locale }: { locale: Locale }) {
       </div>
       <div className={styles.footerBottom}>
         <p>{c.rights}</p>
+        <Link href={`/${locale}/politica-de-privacidad`}>{c.privacy}</Link>
         <nav aria-label={locale === 'es' ? 'Redes sociales' : 'Social media'}>
           <a href="https://www.instagram.com/siguenetwork/" target="_blank" rel="noreferrer">INSTAGRAM</a>
           <a href="https://www.facebook.com/people/SIGUE-Network/61566310019607/" target="_blank" rel="noreferrer">FACEBOOK</a>

@@ -17,7 +17,8 @@
     "migrate:wordpress:apply": "node scripts/migrate-wordpress-content.mjs --apply",
     "content:english": "node scripts/apply-english-content.mjs",
     "content:english:apply": "node scripts/apply-english-content.mjs --apply",
-    "test:admin:ui": "node tests/admin-ui.mjs"
+    "test:admin:ui": "node tests/admin-ui.mjs",
+    "test:redirects": "node tests/legacy-redirects.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.9.0",

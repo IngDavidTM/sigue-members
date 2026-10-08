@@ -23,6 +23,7 @@ const staticRoutes = [
   { path: "/eventos", priority: 0.9 },
   { path: "/recursos", priority: 0.8 },
   { path: "/herramientas-y-guias", priority: 0.8 },
+  { path: "/politica-de-privacidad", priority: 0.3 },
 ] as const;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -30,7 +31,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const languages = { es: absoluteUrl(`/es${path}`), en: absoluteUrl(`/en${path}`) };
     return (["es", "en"] as const).map((locale) => ({
       url: languages[locale],
-      lastModified: new Date("2026-08-29"),
       changeFrequency: "weekly" as const,
       priority,
       alternates: { languages },
@@ -110,7 +110,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
       translations.forEach((item) => routes.push({
         url: absoluteUrl(`/${item.locale}/${segment}/${item.slug}`),
-        lastModified: new Date("2026-08-31"),
         changeFrequency: "weekly",
         priority: 0.65,
         alternates: { languages: languageMaps.get(item.ownerId) ?? {} },

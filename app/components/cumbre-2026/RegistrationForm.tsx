@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRegistration } from './RegistrationControls';
 import { dayPass, money, summitDays, tariffs, type Tariff } from './registration';
 import styles from './CumbreLanding.module.css';
@@ -15,8 +16,7 @@ export default function RegistrationForm({ locale = 'es' }: { locale?: 'es' | 'e
   const text = (spanish: string, englishText: string) => (english ? englishText : spanish);
   const tariffLabel = (key: Tariff) => {
     if (key === 'general') return text('Tarifa General', 'General Rate');
-    if (key === 'member') return text('Miembro Activo SIGUE', 'Active SIGUE Member');
-    return 'Early Bird';
+    return text('Miembro Activo SIGUE', 'Active SIGUE Member');
   };
   const transferTotal = passType === 'day' ? dayPass.cop : withLodging ? tariffs[tariff].lodging : tariffs[tariff].pass;
 
@@ -143,9 +143,10 @@ export default function RegistrationForm({ locale = 'es' }: { locale?: 'es' | 'e
           </div>
 
           <p className={styles.breReceipt}>
-            {text('Después del pago, envía el comprobante, tu nombre completo y tus datos de facturación a ', 'After payment, send the receipt, your full name, and billing details to ')}
+            {text('Después del pago, registra la transferencia para que podamos verificarla: ', 'After payment, report your transfer so we can verify it: ')}
+            <Link href={`/${locale}/formularios/cumbre-reportar-pago`}>{text('Reportar pago', 'Report payment')}</Link>.{' '}
+            {text('Si necesitas enviar un comprobante o datos de facturación, escríbenos a ', 'To send a receipt or billing details, email ')}
             <a href="mailto:info@siguenetwork.org">info@siguenetwork.org</a>.{' '}
-            {passType === 'day' ? text('Indica también el día de asistencia seleccionado.', 'Also include your selected attendance day.') + ' ' : null}
             {text('Tu cupo y factura se confirman una vez verificado el pago.', 'Your place and invoice are confirmed once payment is verified.')}
           </p>
         </article>

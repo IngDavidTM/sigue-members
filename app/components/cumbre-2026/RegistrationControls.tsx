@@ -16,7 +16,7 @@ const RegistrationContext = createContext<RegistrationContextValue | null>(null)
 
 export function RegistrationProvider({ children }: { children: ReactNode }) {
   const [passType, setPassType] = useState<'full' | 'day'>('full');
-  const [tariff, setTariff] = useState<Tariff>('early');
+  const [tariff, setTariff] = useState<Tariff>('general');
   const [withLodging, setWithLodging] = useState(false);
 
   return (

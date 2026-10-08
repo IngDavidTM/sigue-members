@@ -37,8 +37,8 @@ export async function updatePassword(formData: FormData) {
         return { error: "La contraseña es obligatoria." };
     }
 
-    if (password.length < 6) {
-        return { error: "La contraseña debe tener al menos 6 caracteres." };
+    if (password.length < 8) {
+        return { error: "La contraseña debe tener al menos 8 caracteres." };
     }
 
     const supabase = await createClient();

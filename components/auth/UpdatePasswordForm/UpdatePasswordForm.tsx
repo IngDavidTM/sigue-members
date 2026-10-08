@@ -33,8 +33,8 @@ export function UpdatePasswordForm() {
 
         if (!passwordVal) {
             errors.password = "Este campo es obligatorio";
-        } else if (passwordVal.length < 6) {
-            errors.password = "La contraseña debe tener al menos 6 caracteres";
+        } else if (passwordVal.length < 8) {
+            errors.password = "La contraseña debe tener al menos 8 caracteres";
         }
 
         if (!confirmPasswordVal) {

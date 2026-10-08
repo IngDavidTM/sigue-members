@@ -20,6 +20,7 @@ export function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [errorStr, setErrorStr] = useState<string | null>(null);
+    const [successStr, setSuccessStr] = useState<string | null>(null);
     const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
     const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
@@ -31,6 +32,7 @@ export function RegisterForm() {
 
     async function handleRegister(formData: FormData) {
         setErrorStr(null);
+        setSuccessStr(null);
         setFieldErrors({});
 
         const firstNameVal = formData.get("firstName") as string;
@@ -51,7 +53,7 @@ export function RegisterForm() {
         }
 
         if (!passwordVal) errors.password = "Este campo es obligatorio";
-        else if (passwordVal.length < 6) errors.password = "La contraseña debe tener al menos 6 caracteres";
+        else if (passwordVal.length < 8) errors.password = "La contraseña debe tener al menos 8 caracteres";
 
         if (!confirmPasswordVal) errors.confirmPassword = "Este campo es obligatorio";
 
@@ -61,7 +63,7 @@ export function RegisterForm() {
 
         if (!terms) {
             // General error for terms
-            setErrorStr("Debes aceptar las políticas de privacidad y términos de uso");
+            setErrorStr("Debes aceptar la política de privacidad");
             if (Object.keys(errors).length > 0) setFieldErrors(errors);
             return;
         }
@@ -74,6 +76,8 @@ export function RegisterForm() {
         const result = await registerWithEmail(formData);
         if (result?.error) {
             setErrorStr(result.error);
+        } else if (result?.success) {
+            setSuccessStr(result.success);
         }
     }
 
@@ -192,12 +196,13 @@ export function RegisterForm() {
                         <label className={styles.checkboxLabel}>
                             <input type="checkbox" name="terms" required className={styles.checkbox} />
                             <span className={styles.termsText}>
-                                Estoy de acuerdo con las políticas de privacidad & terminos de uso
+                                Acepto la <Link href="/es/politica-de-privacidad" target="_blank">política de privacidad</Link>
                             </span>
                         </label>
                     </div>
 
                     {errorStr && <p className={sharedStyles.errorMessage}>{errorStr}</p>}
+                    {successStr && <p role="status" className={sharedStyles.successMessage}>{successStr}</p>}
 
                     <div className={sharedStyles.actions}>
                         <RegisterSubmitButton />
