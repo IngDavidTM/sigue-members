@@ -28,6 +28,36 @@ WordPress** mientras sigan alojados allí el administrador y los medios antiguos
 La zona DNS contiene MX, SPF, DKIM y DMARC de Google; el cambio del registro
 web no modifica esos registros.
 
+### Auditoría de medios del 7 de octubre
+
+- La API de WordPress informó 639 entradas de medios. La lectura paginada
+  devolvió 638 durante el inventario; los originales con tamaño declarado
+  suman 127 MiB y sus metadatos enumeran 8.339 variantes. No se debe asumir
+  que cada variante es una entrada de biblioteca independiente.
+- cPanel midió `siguenetwork/wp-content/uploads` en 611,32 MB. Las carpetas
+  anuales 2016–2019 y 2024–2026 ocupan casi todo ese espacio. Las carpetas
+  técnicas de plugins, incluida `woocommerce_uploads`, se dejaron fuera del
+  archivo de preservación.
+- Se creó `/home/slyqr4o7cxeu/siguenetwork-media-2026-10-07.zip` fuera del
+  directorio público: 577,47 MB y 8.673 archivos añadidos según cPanel. Es una
+  copia en el mismo hosting, **todavía no una copia independiente**.
+- cPanel creó `wp.siguenetwork.org` con raíz
+  `/home/slyqr4o7cxeu/siguenetwork`, la misma instalación que el dominio raíz.
+  Aún no hay registro DNS público ni certificado comprobado para ese nombre;
+  WordPress conserva su URL principal en `siguenetwork.org`. La creación del
+  dominio en cPanel es solo una preparación, no un traslado del administrador.
+- Las 94 traducciones de blog, 28 traducciones de eventos, 47 registros de
+  blogs y 14 eventos en Supabase no contienen enlaces a `wp-content` en sus
+  campos de contenido e imagen destacados. Una lectura de las 202 URLs del
+  sitemap público encontró 0 errores HTTP y 0 referencias a `wp-content`
+  en el HTML. La app conserva únicamente los 29 recursos heredados que usa
+  directamente en `/legacy-media/*`. Por decisión del usuario no se hará una
+  copia local masiva del resto de la biblioteca de WordPress.
+- Antes de retirar GoDaddy, guardar una copia independiente del archivo,
+  decidir dónde se servirán los enlaces directos antiguos a `wp-content`,
+  mover o aislar WordPress para `/wp-admin/` y verificar el certificado del
+  dominio raíz al conectarlo directamente a Vercel.
+
 ## SEO
 
 - La app publica `/sitemap.xml` con las secciones institucionales en español e
@@ -137,8 +167,9 @@ WooCommerce muestra cero pedidos. Sus 12 productos eran entradas del tema de
 Console, del 5 de julio al 4 de octubre, cinco URL de productos tuvieron cero
 clics y 11 impresiones; cinco rutas de organizadores, sedes y paneles tuvieron
 cero clics y 16 impresiones. El usuario confirmó el retiro de estas rutas públicas.
-El siguiente paso es inventariar y migrar o preservar los medios restantes,
-probar `/wp-admin/` y definir dónde alojarlo antes de retirar el hosting.
+La biblioteca de medios ya está inventariada y tiene una copia temporal en el
+mismo hosting. El siguiente paso para retirar ese hosting es definir el destino
+del administrador WordPress y de los enlaces históricos directos a medios.
 Una vez que el administrador y los enlaces a medios ya no dependan del origen
 GoDaddy, se podrá conectar el dominio raíz directamente a Vercel en Cloudflare,
 verificar su certificado y retirar el Worker puente. GoDaddy seguirá siendo
