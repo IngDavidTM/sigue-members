@@ -44,7 +44,7 @@ function isRetired(url) {
     || url.searchParams.has('add-to-cart');
 }
 
-function shouldRouteToWordPress(url) {
+function isWordPressTechnical(url) {
   return (url.pathname.startsWith('/wp-') && !url.pathname.startsWith('/wp-content/'))
     || url.searchParams.has('rest_route');
 }
@@ -96,6 +96,10 @@ const handler = {
         headers: { 'x-robots-tag': 'noindex', 'cache-control': 'no-store' },
       });
     }
+    if (url.hostname === 'www.siguenetwork.org') {
+      url.hostname = 'siguenetwork.org';
+      return Response.redirect(url.toString(), 308);
+    }
     if (url.hostname !== 'siguenetwork.org') {
       return new Response('Not found', { status: 404 });
     }
@@ -117,11 +121,8 @@ const handler = {
       if (wordpressUrl.pathname.startsWith('/wp-content/')) {
         return Response.redirect(wordpressUrl.toString(), 308);
       }
-      if (shouldRouteToWordPress(wordpressUrl)) {
-        if (!wordpressUrl.pathname.endsWith('/') && !wordpressUrl.pathname.startsWith('/wp-')) {
-          wordpressUrl.pathname += '/';
-        }
-        return Response.redirect(wordpressUrl.toString(), 308);
+      if (isWordPressTechnical(wordpressUrl)) {
+        return retiredResponse();
       }
     }
 
@@ -129,8 +130,8 @@ const handler = {
       return retiredResponse();
     }
 
-    if (shouldRouteToWordPress(url)) {
-      return fetch(request);
+    if (isWordPressTechnical(url)) {
+      return retiredResponse();
     }
 
     url.hostname = 'sigue-members.vercel.app';
