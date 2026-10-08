@@ -43,9 +43,13 @@ web no modifica esos registros.
   copia en el mismo hosting, **todavía no una copia independiente**.
 - cPanel creó `wp.siguenetwork.org` con raíz
   `/home/slyqr4o7cxeu/siguenetwork`, la misma instalación que el dominio raíz.
-  Aún no hay registro DNS público ni certificado comprobado para ese nombre;
+  Aún no hay registro DNS público ni certificado válido para ese nombre;
   WordPress conserva su URL principal en `siguenetwork.org`. La creación del
   dominio en cPanel es solo una preparación, no un traslado del administrador.
+  La prueba directa al origen devuelve 200 en `/wp-login.php`, pero el
+  certificado TLS de `wp.siguenetwork.org` es autofirmado. Antes de publicar el
+  nombre en Cloudflare hace falta un certificado válido y limitar sus rutas
+  públicas al administrador y sus recursos técnicos.
 - Las 94 traducciones de blog, 28 traducciones de eventos, 47 registros de
   blogs y 14 eventos en Supabase no contienen enlaces a `wp-content` en sus
   campos de contenido e imagen destacados. Una lectura de las 202 URLs del
