@@ -13,4 +13,4 @@ Defnir las columnas que utilizará el modelo de datos de Power BI para analizar 
 | path | Texto | Página donde ocurrió | /es/blog |
 | event_name | Texto | Acción que queremos medir | blog_click |
 | source | Texto | Fuente del dato | website | 
-| example_id | Texto | Identificador ficticio | EVT001 |
+| example_id | Texto | Identificador ficticio | EVT001 |git diff --check
