@@ -24,8 +24,8 @@ export async function deliverFormNotification(submissionId: string) {
   }
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    await supabase.from("dynamic_form_notifications").update({ status: "failed", attempts: notification.data.attempts + 1, last_error: "RESEND_API_KEY no configurada", attempted_at: new Date().toISOString() }).eq("id", notification.data.id);
-    return "failed" as const;
+    // Keep the notification queued until an email provider is configured.
+    return "skipped" as const;
   }
   const answers = submission.data.answers && !Array.isArray(submission.data.answers) && typeof submission.data.answers === "object" ? submission.data.answers : {};
   const lines = fields.data.map((field) => {

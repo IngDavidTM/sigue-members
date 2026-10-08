@@ -38,6 +38,8 @@ La migración `202610040001_lead_capture_forms.sql` crea, sin sobrescribir formu
 
 Para activar avisos por correo en producción, configurar `RESEND_API_KEY` y `FORM_FROM_EMAIL`. El remitente debe usar un dominio verificado, por ejemplo `SIGUE Network <formularios@siguenetwork.org>`. Si el proveedor rechaza un aviso, la respuesta permanece en el admin y se puede reintentar desde su detalle. La integración usa una clave de idempotencia por respuesta para evitar mensajes duplicados.
 
+Mientras no exista `RESEND_API_KEY`, los avisos permanecen pendientes y no consumen reintentos. El usuario decidió posponer los correos; no programar el cron hasta configurar el proveedor y `CRON_SECRET`.
+
 Configurar `FORM_RATE_LIMIT_SECRET` con una cadena aleatoria de al menos 32 bytes. Si falta, el servidor usa temporalmente la clave de servicio para calcular una huella HMAC; nunca se guarda la IP original. Cada formulario permite hasta cinco intentos por origen en diez minutos y el RPC de escritura solo acepta llamadas con rol de servicio.
 
 Configurar `CRON_SECRET` y programar una petición `GET /api/cron/form-notifications` con `Authorization: Bearer <CRON_SECRET>` cada cinco minutos. El trabajo recupera hasta 25 avisos pendientes o fallidos por ejecución y deja de reintentar automáticamente después de cinco intentos; el reintento manual desde el admin reinicia ese contador.
@@ -70,4 +72,4 @@ La importación dejó 46 blogs de WordPress, 12 etiquetas utilizadas, un comenta
 
 Las versiones registradas en `supabase_migrations.schema_migrations` coinciden con los archivos locales hasta `202609120003`. Para ejecutar login, admin y formularios localmente todavía deben estar configuradas la URL y la clave pública de Supabase. Nunca usar la clave de servicio como `NEXT_PUBLIC_SUPABASE_ANON_KEY`. El despliegue final del frontend, el último incremento de contenido y el cambio de DNS siguen pendientes.
 
-Se actualizaron Next.js a 16.3.5 y sharp a 0.35.4. Referencias: [aviso de Next.js sobre AVIF](https://github.com/advisories/GHSA-2xp9-vwfh-vxw4) y [release de sharp](https://github.com/lovell/sharp/releases/tag/v0.35.4).
+Se actualizaron Next.js a 16.3.8 y sharp a 0.35.4. Referencias: [aviso de Next.js sobre AVIF](https://github.com/advisories/GHSA-2xp9-vwfh-vxw4) y [release de sharp](https://github.com/lovell/sharp/releases/tag/v0.35.4).

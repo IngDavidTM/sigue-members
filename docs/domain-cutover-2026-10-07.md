@@ -15,6 +15,10 @@ el blog, los eventos, los recursos y los formularios nuevos.
 | WordPress | `wp.siguenetwork.org` para el administrador y sus recursos técnicos; el dominio raíz redirige `/wp-admin/*` y `/wp-login.php` allí y conserva `/wp-content/*` para enlaces antiguos |
 | Retiradas (HTTP 410) | `/producto/*`, tienda, carrito, pago, cuenta, organizadores/sedes y sitemaps antiguos de WordPress |
 
+La confirmación de donación ya se sirve en la aplicación; informa que el pago
+debe verificarse por el canal correspondiente y no confirma una transacción
+solo por visitar la URL.
+
 Las variantes antiguas con prefijo `/es/` o `/en/` de las rutas retiradas
 también devuelven 410. Los 12 productos de muestra de 2016 se enviaron a la
 papelera de WordPress; no se eliminaron definitivamente.
@@ -51,10 +55,8 @@ web no modifica esos registros.
   `/wp-content/*` y `/wp-includes/*`; envía `/` al administrador, bloquea otras
   páginas públicas y sitemaps,
   y sirve `robots.txt` con `Disallow: /`. En el dominio raíz, `/wp-admin/*` y
-  `/wp-login.php` redirigen al subdominio. El formulario de acceso y el salto
-  desde `/wp-admin/` ya usan el nuevo nombre. Falta comprobar un inicio de
-  sesión real con el usuario; el cambio de nombre puede pedir autenticarse
-  de nuevo. Para revertir solo el administrador, devolver las dos URL de
+  `/wp-login.php` redirigen al subdominio. El usuario confirmó que pudo iniciar
+  sesión en el administrador nuevo. Para revertir solo el administrador, devolver las dos URL de
   WordPress a `https://siguenetwork.org` y retirar las redirecciones del
   Worker antes de quitar su ruta `wp.siguenetwork.org/*`.
 - Las 94 traducciones de blog, 28 traducciones de eventos, 47 registros de
@@ -105,8 +107,11 @@ web no modifica esos registros.
    `/event-organizers/`, acceso en `wp.siguenetwork.org/wp-admin/`, un medio de
    `/wp-content/` y `www`.
 5. Vigilar `/sitemap.xml` en Search Console, 404, formularios, pagos y logs de
-   Cloudflare/Vercel. Los correos automáticos de formularios requieren
-   configurar el proveedor de email y el cron.
+   Cloudflare/Vercel. Las respuestas de los formularios se guardan en Supabase.
+   Los avisos por correo quedan en cola sin consumir reintentos hasta configurar
+   Resend y después un cron autenticado. Los boletos Early Bird se retiraron de
+   la aplicación, pero también deben desactivarse en Zeffy cuando se abra su
+   cuenta administradora.
 
 El 7 de octubre se confirmó que Sandra Prieto ya tiene una propiedad de prefijo
 `https://siguenetwork.org/` en Search Console. Se envió `/sitemap.xml` y se
