@@ -109,9 +109,11 @@ web no modifica esos registros.
 5. Vigilar `/sitemap.xml` en Search Console, 404, formularios, pagos y logs de
    Cloudflare/Vercel. Las respuestas de los formularios se guardan en Supabase.
    Los avisos por correo quedan en cola sin consumir reintentos hasta configurar
-   Resend y después un cron autenticado. Los boletos Early Bird se retiraron de
-   la aplicación, pero también deben desactivarse en Zeffy cuando se abra su
-   cuenta administradora.
+   Resend y después un cron autenticado. El 8 de octubre se cerraron en Zeffy
+   las ventas de Early Bird y Early Bird + Accomodations. Sus ocho ventas
+   anteriores permanecen en el historial; la página pública las muestra como
+   «Sales ended» y deshabilita el botón de compra. Las otras tarifas siguen
+   disponibles, incluida la tarifa de miembro activo.
 
 El 7 de octubre se confirmó que Sandra Prieto ya tiene una propiedad de prefijo
 `https://siguenetwork.org/` en Search Console. Se envió `/sitemap.xml` y se
