@@ -201,13 +201,17 @@ export default function MembershipLanding({ locale, interestFormAvailable = fals
       <section id="comunidad" className={styles.members} aria-labelledby="members-title">
         <h2 id="members-title">{c.membersTitle}</h2>
         <p className={styles.membersEyebrow}>{c.membersEyebrow}</p>
-        <div className={styles.logoViewport}>
-          <div className={styles.logoTrack}>
-            {[...memberLogoFiles, ...memberLogoFiles].map((logo, index) => (
-              <div className={styles.logoCard} key={`${logo}-${index}`} aria-hidden={index >= memberLogoFiles.length}>
-                <Image src={logo} alt={index < memberLogoFiles.length ? `SIGUE Network member ${index + 1}` : ''} fill sizes="180px" />
-              </div>
-            ))}
+        <div
+          className={styles.logoCarousel}
+        >
+          <div className={styles.logoViewport}>
+            <div className={styles.logoTrack}>
+              {[...memberLogoFiles, ...memberLogoFiles].map((logo, index) => (
+                <div className={styles.logoCard} data-logo-card key={`${logo}-${index}`} aria-hidden={index >= memberLogoFiles.length}>
+                  <Image src={logo} alt={index < memberLogoFiles.length ? `SIGUE Network member ${index + 1}` : ''} fill sizes="180px" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <p className={styles.membersBody}>{c.membersBody}</p>

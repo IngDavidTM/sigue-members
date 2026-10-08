@@ -17,7 +17,7 @@ const images = {
 const content = {
   es: {
     hero: {
-      badge: 'SIGUE HUB',
+      badge: 'SIGUE Hub',
       title: 'SIGUE Hub: tu centro de conexión y crecimiento',
       body: 'Recursos, inspiración y conexiones para líderes de impacto integral.',
       cta: 'Descarga nuestro último blog',

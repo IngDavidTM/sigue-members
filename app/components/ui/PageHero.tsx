@@ -47,7 +47,7 @@ export default function PageHero({
       </div>
 
       <div
-        className="absolute bottom-full left-0 mb-1 flex h-[76px] w-[76px] items-center justify-center bg-secondary/80 text-center font-heading text-sm font-black tracking-wide text-white sm:bottom-auto sm:right-full sm:left-auto sm:top-0 sm:mr-1 sm:h-[100px] sm:w-[100px] sm:text-base"
+        className="absolute bottom-full left-0 mb-1 flex h-[76px] w-[76px] items-center justify-center bg-secondary/80 text-center font-heading text-base font-black tracking-wide text-white sm:bottom-auto sm:right-full sm:left-auto sm:top-0 sm:mr-1 sm:h-[100px] sm:w-[100px] sm:text-lg"
         aria-hidden="true"
       >
         {badge}
