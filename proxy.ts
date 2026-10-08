@@ -55,6 +55,7 @@ export async function proxy(request: NextRequest) {
     if (
         pathname === "/robots.txt" ||
         pathname === "/sitemap.xml" ||
+        pathname.startsWith("/wp-content/") ||
         pathname === "/api/exchange-rate" ||
         pathname === "/api/cron/form-notifications"
     ) {

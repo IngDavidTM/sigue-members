@@ -1,5 +1,5 @@
-// WordPress still serves its administration and legacy media. Public pages
-// retired during the migration must not reappear through an origin cache.
+// WordPress still serves its administration. Essential legacy media redirects
+// are handled by the app; retired public paths must not reappear from origin.
 const RETIRED_PAGES = new Set([
   'event-organizers',
   'event-venues',
@@ -45,7 +45,8 @@ function isRetired(url) {
 }
 
 function shouldRouteToWordPress(url) {
-  return url.pathname.startsWith('/wp-') || url.searchParams.has('rest_route');
+  return (url.pathname.startsWith('/wp-') && !url.pathname.startsWith('/wp-content/'))
+    || url.searchParams.has('rest_route');
 }
 
 function isAdminHostPath(path) {
@@ -112,6 +113,9 @@ const handler = {
       const wordpressUrl = new URL(`/${localizedPath[1]}`, url);
       if (isRetired(wordpressUrl)) {
         return retiredResponse();
+      }
+      if (wordpressUrl.pathname.startsWith('/wp-content/')) {
+        return Response.redirect(wordpressUrl.toString(), 308);
       }
       if (shouldRouteToWordPress(wordpressUrl)) {
         if (!wordpressUrl.pathname.endsWith('/') && !wordpressUrl.pathname.startsWith('/wp-')) {
