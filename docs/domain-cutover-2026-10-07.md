@@ -12,7 +12,7 @@ el blog, los eventos, los recursos y los formularios nuevos.
 | Destino | Rutas |
 | --- | --- |
 | Next.js | `/`, `/es/*`, `/en/*`, `/blog`, `/eventos`, `/contacto`, `/recursos`, `/herramientas-y-guias`, páginas institucionales y las 60 redirecciones históricas de artículos/eventos |
-| WordPress | `/wp-admin/*`, `/wp-login.php`, `/wp-json/*`, `/wp-content/*` y demás rutas técnicas `/wp-*` necesarias para el administrador y medios antiguos |
+| WordPress | `wp.siguenetwork.org` para el administrador y sus recursos técnicos; el dominio raíz redirige `/wp-admin/*` y `/wp-login.php` allí y conserva `/wp-content/*` para enlaces antiguos |
 | Retiradas (HTTP 410) | `/producto/*`, tienda, carrito, pago, cuenta, organizadores/sedes y sitemaps antiguos de WordPress |
 
 Las variantes antiguas con prefijo `/es/` o `/en/` de las rutas retiradas
@@ -41,15 +41,21 @@ web no modifica esos registros.
 - Se creó `/home/slyqr4o7cxeu/siguenetwork-media-2026-10-07.zip` fuera del
   directorio público: 577,47 MB y 8.673 archivos añadidos según cPanel. Es una
   copia en el mismo hosting, **todavía no una copia independiente**.
-- cPanel creó `wp.siguenetwork.org` con raíz
-  `/home/slyqr4o7cxeu/siguenetwork`, la misma instalación que el dominio raíz.
-  Aún no hay registro DNS público ni certificado válido para ese nombre;
-  WordPress conserva su URL principal en `siguenetwork.org`. La creación del
-  dominio en cPanel es solo una preparación, no un traslado del administrador.
-  La prueba directa al origen devuelve 200 en `/wp-login.php`, pero el
-  certificado TLS de `wp.siguenetwork.org` es autofirmado. Antes de publicar el
-  nombre en Cloudflare hace falta un certificado válido y limitar sus rutas
-  públicas al administrador y sus recursos técnicos.
+- El 8 de octubre se publicó `wp.siguenetwork.org` con raíz
+  `/home/slyqr4o7cxeu/siguenetwork`, la misma instalación. Tiene DNS con proxy
+  Cloudflare y certificado Origin CA para ese nombre instalado en GoDaddy. Una
+  regla Cloudflare aplica TLS **Strict** solo a ese subdominio; el dominio raíz
+  mantiene `Full` porque su certificado de origen aún está vencido. Las dos URL
+  generales de WordPress ahora apuntan a `https://wp.siguenetwork.org`.
+  El Worker permite allí `/wp-admin/*`, `/wp-login.php`, `/wp-json/*` y recursos
+  `/wp-content/*` y `/wp-includes/*`; bloquea la portada y sitemaps públicos,
+  y sirve `robots.txt` con `Disallow: /`. En el dominio raíz, `/wp-admin/*` y
+  `/wp-login.php` redirigen al subdominio. El formulario de acceso y el salto
+  desde `/wp-admin/` ya usan el nuevo nombre. Falta comprobar un inicio de
+  sesión real con el usuario; el cambio de nombre puede pedir autenticarse
+  de nuevo. Para revertir solo el administrador, devolver las dos URL de
+  WordPress a `https://siguenetwork.org` y retirar las redirecciones del
+  Worker antes de quitar su ruta `wp.siguenetwork.org/*`.
 - Las 94 traducciones de blog, 28 traducciones de eventos, 47 registros de
   blogs y 14 eventos en Supabase no contienen enlaces a `wp-content` en sus
   campos de contenido e imagen destacados. Una lectura de las 202 URLs del
@@ -57,10 +63,10 @@ web no modifica esos registros.
   en el HTML. La app conserva únicamente los 29 recursos heredados que usa
   directamente en `/legacy-media/*`. Por decisión del usuario no se hará una
   copia local masiva del resto de la biblioteca de WordPress.
-- Antes de retirar GoDaddy, guardar una copia independiente del archivo,
-  decidir dónde se servirán los enlaces directos antiguos a `wp-content`,
-  mover o aislar WordPress para `/wp-admin/` y verificar el certificado del
-  dominio raíz al conectarlo directamente a Vercel.
+- Antes de retirar GoDaddy, decidir dónde se servirán los enlaces directos
+  antiguos a `wp-content`, guardar fuera del hosting los archivos necesarios
+  para ello y verificar el certificado del dominio raíz al conectarlo
+  directamente a Vercel.
 
 ## SEO
 
@@ -95,7 +101,8 @@ web no modifica esos registros.
    conexión DNS directa con Vercel.
 4. Comprobar `/es`, `/en`, `/sitemap.xml`, `/robots.txt`, `/recursos`, `/blog`,
    una redirección de blog, 410 en `/producto/reed-fan/` y
-   `/event-organizers/`, acceso a `/wp-admin/`, un medio de `/wp-content/` y `www`.
+   `/event-organizers/`, acceso en `wp.siguenetwork.org/wp-admin/`, un medio de
+   `/wp-content/` y `www`.
 5. Vigilar `/sitemap.xml` en Search Console, 404, formularios, pagos y logs de
    Cloudflare/Vercel. Los correos automáticos de formularios requieren
    configurar el proveedor de email y el cron.
@@ -172,8 +179,9 @@ Console, del 5 de julio al 4 de octubre, cinco URL de productos tuvieron cero
 clics y 11 impresiones; cinco rutas de organizadores, sedes y paneles tuvieron
 cero clics y 16 impresiones. El usuario confirmó el retiro de estas rutas públicas.
 La biblioteca de medios ya está inventariada y tiene una copia temporal en el
-mismo hosting. El siguiente paso para retirar ese hosting es definir el destino
-del administrador WordPress y de los enlaces históricos directos a medios.
+mismo hosting. El administrador ya tiene un nombre separado, pero continúa en
+GoDaddy. El siguiente paso para retirar ese hosting es decidir el destino del
+administrador WordPress y de los enlaces históricos directos a medios.
 Una vez que el administrador y los enlaces a medios ya no dependan del origen
 GoDaddy, se podrá conectar el dominio raíz directamente a Vercel en Cloudflare,
 verificar su certificado y retirar el Worker puente. GoDaddy seguirá siendo

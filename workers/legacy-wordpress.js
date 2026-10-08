@@ -49,6 +49,16 @@ function shouldRouteToWordPress(url) {
   return url.pathname.startsWith('/wp-') || url.searchParams.has('rest_route');
 }
 
+function isAdminHostPath(path) {
+  return path === '/wp-admin'
+    || path.startsWith('/wp-admin/')
+    || path === '/wp-login.php'
+    || path === '/wp-json'
+    || path.startsWith('/wp-json/')
+    || path.startsWith('/wp-content/')
+    || path.startsWith('/wp-includes/');
+}
+
 function retiredResponse() {
   return new Response('Esta página fue retirada.', {
     status: 410,
@@ -63,8 +73,33 @@ function retiredResponse() {
 const handler = {
   async fetch(request) {
     const url = new URL(request.url);
+    if (url.hostname === 'wp.siguenetwork.org') {
+      if (/^\/\.well-known\/(?:acme-challenge|pki-validation)\//.test(url.pathname)) {
+        return fetch(request);
+      }
+      if (url.pathname === '/robots.txt') {
+        return new Response('User-agent: *\nDisallow: /\n', {
+          headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' },
+        });
+      }
+      if (isAdminHostPath(url.pathname)) {
+        return fetch(request);
+      }
+      return new Response('Not found', {
+        status: 404,
+        headers: { 'x-robots-tag': 'noindex', 'cache-control': 'no-store' },
+      });
+    }
     if (url.hostname !== 'siguenetwork.org') {
       return new Response('Not found', { status: 404 });
+    }
+
+    if (url.pathname === '/wp-admin' || url.pathname.startsWith('/wp-admin/') || url.pathname === '/wp-login.php') {
+      url.hostname = 'wp.siguenetwork.org';
+      return new Response(null, {
+        status: request.method === 'GET' || request.method === 'HEAD' ? 302 : 307,
+        headers: { location: url.toString(), 'cache-control': 'no-store' },
+      });
     }
 
     const localizedPath = url.pathname.match(/^\/(?:es|en)\/(.+)$/);
