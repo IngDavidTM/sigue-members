@@ -34,6 +34,9 @@ const migratedStaticPaths: Record<string, string> = {
     "/eventos": "/es/eventos",
     "/evento": "/es/eventos",
     "/contacto": "/es/contacto",
+    "/herramientas-y-guias": "/es/herramientas",
+    "/es/herramientas-y-guias": "/es/herramientas",
+    "/en/herramientas-y-guias": "/en/herramientas",
 };
 
 export async function proxy(request: NextRequest) {
