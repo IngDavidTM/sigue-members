@@ -6,7 +6,7 @@ Documentar las medidas utilizadas en el prototipo de Power BI y aclarar los supu
 
 ## Medidas
 
-| Indicador | Cálculo | Interpretación | Interpretación |
+| Indicador | Cálculo | Interpretación |
 |---|---|---|
 | Interacciones registradas | Conteo de event_name o example_id | Cantidad total de eventos registrados en los datos de ejemplo. |
 | Eventos por fecha | Conteo de eventos agrupados por datetime | Muestra la evolución de las interacciones a lo largo del tiempo. |
