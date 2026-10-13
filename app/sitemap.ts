@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { createClient } from "@supabase/supabase-js";
 
+import { toolAxes } from "@/app/components/resources/toolsLibrary";
 import { absoluteUrl } from "@/lib/site-url";
 import type { Database } from "@/types/supabase";
 
@@ -22,7 +23,8 @@ const staticRoutes = [
   { path: "/blog", priority: 0.9 },
   { path: "/eventos", priority: 0.9 },
   { path: "/recursos", priority: 0.8 },
-  { path: "/herramientas-y-guias", priority: 0.8 },
+  { path: "/herramientas", priority: 0.8 },
+  ...toolAxes.map((axis) => ({ path: `/herramientas/${axis.slug}`, priority: 0.7 })),
   { path: "/politica-de-privacidad", priority: 0.3 },
 ] as const;
 

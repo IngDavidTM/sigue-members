@@ -49,7 +49,7 @@ const content = {
         title: 'Herramientas y guías: recursos descargables',
         question: '¿Buscas recursos para fortalecer y hacer más efectivo tu proyecto u organización?',
         body: 'Accede a recursos y herramientas que apoyan proyectos sociales, ONGs, emprendimientos sociales y equipos de acción social de iglesias a transformar comunidades de manera integral. Encuentra guías prácticas e innovadoras que te ayudan a fortalecer tu capacidad de servicio y ampliar tu impacto.',
-        cta: 'Descárgalos aquí', path: '/herramientas-y-guias', image: images.resources,
+        cta: 'Descárgalos aquí', path: '/herramientas', image: images.resources,
         alt: 'Herramientas digitales y guías descargables',
       },
       {
@@ -102,7 +102,7 @@ const content = {
         title: 'Tools and guides: downloadable resources',
         question: 'Are you looking for resources to strengthen your project or organization and make it more effective?',
         body: 'Access resources and tools that support social projects, NGOs, social enterprises, and church social-action teams as they transform communities holistically. Find practical, innovative guides that help strengthen your capacity to serve and expand your impact.',
-        cta: 'Download them here', path: '/herramientas-y-guias', image: images.resources,
+        cta: 'Download them here', path: '/herramientas', image: images.resources,
         alt: 'Digital tools and downloadable guides',
       },
       {
