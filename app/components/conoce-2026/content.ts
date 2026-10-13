@@ -215,7 +215,7 @@ export const conoceContent = {
       subtitle: 'Accede a estrategias y conocimientos para fortalecer tu proyecto e impulsar tu impacto',
       imageAlt: 'Personas revisando informes y estrategias de impacto',
       items: [
-        ['Descarga herramientas', 'Encuentra guías prácticas y materiales clave.', 'Acceder', '/herramientas-y-guias'],
+        ['Descarga herramientas', 'Encuentra guías prácticas y materiales clave.', 'Acceder', '/herramientas'],
         ['Lee el blog', 'Explora artículos con estrategias sobre financiamiento, visibilidad y sostenibilidad organizacional.', 'Leer artículos', '/blog'],
         ['Mira un video', 'Accede a webinars y capacitaciones en YouTube con expertos en impacto social y liderazgo.', 'Ver videos', 'https://www.youtube.com/@SIGUENetwork'],
       ],
@@ -437,7 +437,7 @@ export const conoceContent = {
       subtitle: 'Access strategies and knowledge to strengthen your project and advance your impact',
       imageAlt: 'People reviewing impact reports and strategies',
       items: [
-        ['Download tools', 'Find practical guides and essential materials.', 'Access', '/herramientas-y-guias'],
+        ['Download tools', 'Find practical guides and essential materials.', 'Access', '/herramientas'],
         ['Read the blog', 'Explore strategies for funding, visibility, and organizational sustainability.', 'Read articles', '/blog'],
         ['Watch a video', 'Access YouTube webinars and training with experts in social impact and leadership.', 'Watch videos', 'https://www.youtube.com/@SIGUENetwork'],
       ],

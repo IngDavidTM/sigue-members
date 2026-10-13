@@ -21,7 +21,7 @@ const content = {
         question: '¿Estás enfrentando desafíos para ser financiable y encontrable?',
         body: 'Te ofrecemos recursos para evaluar qué tan financiable y visible es tu proyecto, ayudándote a identificar áreas clave para fortalecer tu organización.',
         cta: 'Descárgalos aquí',
-        href: '/herramientas-y-guias',
+        href: '/herramientas',
       },
       {
         title: 'Webinars y talleres para fortalecer tus proyectos sociales',
@@ -53,7 +53,7 @@ const content = {
         question: 'Are you facing challenges becoming fundable and visible?',
         body: 'We offer resources to assess how fundable and visible your project is, helping you identify key areas where your organization can grow stronger.',
         cta: 'Download here',
-        href: '/herramientas-y-guias',
+        href: '/herramientas',
       },
       {
         title: 'Webinars and workshops to strengthen your social projects',
