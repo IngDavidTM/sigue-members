@@ -4,65 +4,80 @@ Documentar las principales interacciones que pueden medirse en el sitio de SIGUE
 El objetivo es proporcionar una base para una futura implementación de analítica y visualización en Power BI, sin realizar cambios de código ni conexiones con herramientas externas.
 ## 2. Alcance y fuentes actuales
 El análisis contempla los recorridos públicos disponibles en español (ES) e inglés (EN):
-Inicio → servicios/membresía.
-Inicio → Blog/Recursos.
-Inicio → Eventos.
-Cumbre → Zeffy / transferencia.
-Donación → Zeffy.
-Formulario público → confirmación de envío.
+
+- Inicio → servicios/membresía.
+- Inicio → Blog/Recursos.
+- Inicio → Eventos.
+- Cumbre → Zeffy / transferencia.
+- Donación → Zeffy.
+- Formulario público → confirmación de envío.
+
 En el frontend actual no se encontró una implementación de GA4, Google Tag Manager, Power BI u otro colector de analítica.
 Por esta razón, actualmente no existe en el repositorio una fuente de datos que permita conocer de forma histórica las visitas, sesiones o cantidad real de clics.
 Las interacciones propuestas en este documento corresponden a elementos y recorridos existentes en el sitio. La propuesta no implica que los eventos estén actualmente registrados.
 ## 3. Criterio de medición
 Se distinguen tres tipos de resultados:
-Clic observable en nuestro sitio: interacción realizada por el usuario sobre un enlace, botón o elemento medible del sitio.
-Envío confirmado por nuestro formulario: envío que puede identificarse cuando el formulario muestra la confirmación correspondiente.
-Pago o donación confirmado externamente: resultado que solo puede considerarse conversión cuando existe confirmación proveniente de Zeffy o de una fuente externa autorizada.
+
+- Clic observable en nuestro sitio: interacción realizada por el usuario sobre un enlace, botón o elemento medible del sitio.
+- Envío confirmado por nuestro formulario: envío identificado mediante un submissionId persistido correctamente. Mostrar un mensaje de éxito en el formulario, por sí solo, no confirma que el envío se haya registrado.
+- Pago o donación confirmado externamente: resultado que solo puede considerarse conversión cuando existe confirmación proveniente de Zeffy o de una fuente externa autorizada.
+
 Un clic hacia Zeffy no se considera por sí mismo un registro, una venta, un pago ni una donación.
 ## 4. Interacciones prioritarias
-Nombre estable: nombre único que identifica la interacción o evento.
-Página/componente: lugar del sitio donde ocurre la interacción.
-Acción del usuario: actividad que realiza la persona, por ejemplo, hacer clic o enviar un formulario.
-Objetivo: propósito de medir esa interacción y qué pregunta de negocio ayuda a responder.
-Datos permitidos: información no personal que se podría registrar, como ruta, idioma y fecha/hora.
-Fuente necesaria: herramienta o sistema que tendría que proporcionar los datos, por ejemplo, GA4/GTM, Zeffy o una fuente autorizada.
-Forma de comprobarla: manera de verificar que la interacción existe en el sitio o que una conversión fue confirmada por la fuente correspondiente.
+- Nombre estable: nombre único que identifica la interacción o evento.
+- Página/componente: lugar del sitio donde ocurre la interacción.
+- Acción del usuario: actividad que realiza la persona, por ejemplo, hacer clic o enviar un formulario.
+- Objetivo: propósito de medir esa interacción y qué pregunta de negocio ayuda a responder.
+- Datos permitidos: información no personal que se podría registrar, como ruta, idioma y fecha/hora.
+- Fuente necesaria: herramienta o sistema que tendría que proporcionar los datos, por ejemplo, GA4/GTM, Zeffy o una fuente autorizada.
+- Forma de comprobarla: manera de verificar que la interacción existe en el sitio o que una conversión fue confirmada por la fuente correspondiente.
 
 | Nombre estable | Página/componente | Acción del usuario | Objetivo de negocio | Datos permitidos | Fuente necesaria | Forma de comprobarla |
 |---|---|---|---|---|---|---|
-| blog_click | Navegación global | Clic en Blog | Medir interés en contenido | Ruta,idioma, fecha/hora | GA4/GTM | Comprobar el enlace al Blog en la navegación global |
+| blog_click | Navegación global | Clic en Blog | Medir interés en contenido | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace al Blog en la navegación global |
 | membership_click | inicio→Miembros/HomeLanding.tsx | Clic en membresía | Medir interés en la membresía | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace hacia /es/miembros-sigue |
-| events_click | inicio→Eventos/HomeLanding.tsx | Clic en Eventos | Medir interés en eventos |  Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace existente a eventos |
+| events_click | inicio→Eventos/HomeLanding.tsx | Clic en Eventos | Medir interés en eventos |Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace existente a eventos |
 | cumbre_registration_click | Cumbre/CumbreLanding.tsx / RegistrationControls.tsx | Clic en inscribirme | Medir el inicio del recorrido de inscripción | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el botón y el acceso a #inscripcion |
 | cumbre_zeffy_click | Cumbre/RegistrationForm.tsx | Clic en Pagar con tarjeta en Zeffy | Medir la salida hacia el proveedor externo | Ruta, idioma, fecha/hora, destino | GA4/GTM | Comprobar el enlace hacia Zeffy |
 | cumbre_transfer_calculator_use | Cumbre / RegistrationForm.tsx | Primera modificación manual de tarifa u hospedaje | Medir interés en la alternativa de transferencia | Ruta, idioma, fecha/hora | GA4/GTM | Verificar la calculadora en RegistrationForm.tsx |
 | cumbre_conversion_confirmed | Cumbre-Zeffy | Completar el pago o inscripción | Medir conversiones externas reales | Fecha/hora y datos no personales autorizados | Zeffy o conciliación externa | Requiere confirmación o exportación de la fuente externa |
 | donation_zeffy_embed_rendered | Donación / DonationEmbed.tsx | Renderizar el embed de Zeffy en la página | Identificar las páginas donde se carga el formulario de donación de Zeffy | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar que el embed de Zeffy se renderiza en la página |
-| donation_conversion_confirmed | Donación-Zeffy | Completar una donación | Medir donaciones confirmadas | Fecha/hora y datos no personales autorizados | Zeffy o conciliación externa |Requiere confirmación o exportación de Zeffy |
+| donation_conversion_confirmed | Donación-Zeffy | Completar una donación | Medir donaciones confirmadas | Fecha/hora y datos no personales autorizados | Zeffy o conciliación externa | Requiere confirmación o exportación de Zeffy |
 | form_submit_confirmed | Formulario público/DynamicForm.tsx | Enviar correctamente el formulario | Contabilizar formularios confirmados | Ruta, idioma, tipo de formulario, fecha/hora | Analítica futura/fuente del formulario | La confirmación visual de DynamicForm no es válida por sí sola porque el honeypot también devuelve success. El evento futuro debe emitirse en el servidor después de que el RPC devuelva un submissionId, o mediante una confirmación segura y no personal en el cliente. |
 
 ## 5. Embudos de conversión
-Embudo de Cumbre
-El recorrido de Cumbre se plantea de la siguiente manera:
-Inicio del recorrido → Clic en “Inscribirme” → Acceso a Zeffy o alternativa de transferencia → Pago o inscripción completada → Conversión confirmada
-Fuentes disponibles:
-Clic en “Inscribirme”: actualmente no existe un colector de analítica en el repositorio. Para medirlo se requeriría GA4/GTM.
-Acceso a Zeffy: puede medirse como clic en nuestro sitio mediante una futura implementación de analítica.
-Uso de la alternativa de transferencia: puede medirse mediante una futura implementación de analítica si la interacción es observable.
-Pago o inscripción completada: no puede confirmarse únicamente desde nuestro sitio.
-Conversión confirmada: requiere información o exportación autorizada de Zeffy o una fuente externa de conciliación.
 
-Embudo de membresía / donación
-Membresía:
-Inicio → Clic en “Membresía” → Acción de membresía → Conversión confirmada
-Donación:
-Inicio → Clic en “Donar” → Formulario de Zeffy → Donación completada → Donación confirmada
+### Embudo de Cumbre
+
+El recorrido de Cumbre se plantea de la siguiente manera:
+
+- Inicio del recorrido → Clic en “Inscribirme” → Acceso a Zeffy o alternativa de transferencia → Pago o inscripción completada → Conversión confirmada
+
 Fuentes disponibles:
-Clic en “Membresía” o “Donar”: actualmente no existe un colector de analítica en el repositorio. Para medirlos se requeriría GA4/GTM.
-Visualización o interacción con Zeffy: puede requerir analítica del sitio y/o información proporcionada por Zeffy.
-Acción o conversión de membresía: requiere una fuente que confirme la acción.
-Donación completada: requiere confirmación de Zeffy.
-Donación confirmada: requiere una fuente autorizada de Zeffy o una conciliación externa.
+
+- Clic en “Inscribirme”: actualmente no existe un colector de analítica en el repositorio. Para medirlo se requeriría GA4/GTM.
+- Acceso a Zeffy: puede medirse como clic en nuestro sitio mediante una futura implementación de analítica.
+- Uso de la alternativa de transferencia: puede medirse mediante una futura implementación de analítica si la interacción es observable.
+- Pago o inscripción completada: no puede confirmarse únicamente desde nuestro sitio.
+- Conversión confirmada: requiere información o exportación autorizada de Zeffy o una fuente externa de conciliación.
+
+### Embudo de membresía / donación
+
+Membresía:
+
+- Inicio → Clic en “Membresía” → Acción de membresía → Conversión confirmada
+
+Donación:
+
+- Inicio → Clic en “Donar” → Formulario de Zeffy → Donación completada → Donación confirmada
+
+Fuentes disponibles:
+
+- Clic en “Membresía” o “Donar”: actualmente no existe un colector de analítica en el repositorio. Para medirlos se requeriría GA4/GTM.
+- Visualización o interacción con Zeffy: puede requerir analítica del sitio y/o información proporcionada por Zeffy.
+- Acción o conversión de membresía: requiere una fuente que confirme la acción.
+- Donación completada: requiere confirmación de Zeffy.
+- Donación confirmada: requiere una fuente autorizada de Zeffy o una conciliación externa.
 
 Nota: Un clic o una visualización no se considera una conversión. Las conversiones externas solo deben contabilizarse cuando exista una confirmación de la fuente correspondiente.
 
@@ -138,7 +153,7 @@ Los nombres técnicos de los eventos se mantienen estables en español e inglés
 ## 8. Prioridad de implementación
 La prioridad propuesta se basa en la utilidad de los eventos para el análisis y en la disponibilidad de las fuentes de datos.
 
-Prioridad alta
+### Prioridad alta
 
 Implementar primero los eventos de navegación y llamadas a la acción dentro del sitio:
 
@@ -148,23 +163,27 @@ Implementar primero los eventos de navegación y llamadas a la acción dentro de
 - cumbre_registration_click
 - cumbre_zeffy_click
 - cumbre_transfer_calculator_use
+
 Estos eventos permitirían conocer qué contenidos, servicios y acciones generan mayor interés. Para su medición sería necesaria una herramienta de analítica como GA4/GTM u otra solución autorizada.
 
-Prioridad media
+### Prioridad media
 
 Implementar el seguimiento de formularios confirmados:
 
 - form_submit_confirmed
+
 Este evento permitiría contabilizar envíos confirmados sin registrar información personal de los usuarios. Requiere una fuente de datos que permita registrar la confirmación del formulario.
 
-Prioridad dependiente de fuente externa
+### Prioridad dependiente de fuente externa
 
 Las conversiones externas deben implementarse únicamente cuando exista una fuente autorizada:
+
 - cumbre_conversion_confirmed
 - donation_conversion_confirmed
+
 Para estos eventos se requiere información confirmada por Zeffy o una fuente externa de conciliación. Un clic hacia Zeffy no debe considerarse una conversión.
 
-Estado actual
+### Estado actual
 
 Actualmente el repositorio no contiene un colector de analítica que permita obtener estos indicadores con datos históricos reales. Por tanto, esta prioridad corresponde a una propuesta de implementación futura y no implica que los eventos estén actualmente registrados.
 
