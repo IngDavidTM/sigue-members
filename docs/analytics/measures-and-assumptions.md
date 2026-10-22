@@ -12,7 +12,7 @@ Documentar las medidas utilizadas en el prototipo de Power BI y aclarar los supu
 | Eventos por fecha | Conteo de eventos agrupados por datetime | Muestra la evolución de las interacciones a lo largo del tiempo. |
 | Eventos por idioma | Conteo de eventos agrupados por locale | Permite comparar las interacciones registradas en español (es) e inglés (en). |
 | Eventos por página | Conteo de eventos agrupados por path | Permite identificar las páginas con mayor cantidad de interacciones registradas. |
-| Eventos por tipo | Conteo de eventos agrupados por event_name | Permite identificar las acciones registradas con mayor frecuencia. |               |
+| Eventos por tipo | Conteo de eventos agrupados por event_name | Permite identificar las acciones registradas con mayor frecuencia. |
 
 ## Supuestos
 
@@ -30,9 +30,10 @@ Documentar las medidas utilizadas en el prototipo de Power BI y aclarar los supu
 
 Los eventos relacionados con Cumbre permiten representar diferentes interacciones:
 
-cumbre_registration_click: clic para iniciar el proceso de inscripción.
-cumbre_zeffy_click: clic hacia el servicio externo Zeffy.
-cumbre_transfer_calculator_use: uso de la calculadora de transferencia. cumbre_conversion_confirmed: conversión confirmada.
+- cumbre_registration_click: clic para iniciar el proceso de inscripción.
+- cumbre_zeffy_click: clic hacia el servicio externo Zeffy.
+- cumbre_transfer_calculator_use: uso de la calculadora de transferencia
+- cumbre_conversion_confirmed: conversión confirmada.
 
 El clic hacia Zeffy no se considera una conversión confirmada.
 
