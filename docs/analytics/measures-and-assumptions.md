@@ -32,7 +32,7 @@ Los eventos relacionados con Cumbre permiten representar diferentes interaccione
 
 - cumbre_registration_click: clic para iniciar el proceso de inscripción.
 - cumbre_zeffy_click: clic hacia el servicio externo Zeffy.
-- cumbre_transfer_calculator_use: uso de la calculadora de transferencia
+- cumbre_transfer_calculator_use: uso de la calculadora de transferencia.
 - cumbre_conversion_confirmed: conversión confirmada.
 
 El clic hacia Zeffy no se considera una conversión confirmada.
@@ -41,8 +41,8 @@ En el conjunto de datos sintéticos actual no se incluyen registros de cumbre_co
 
 ## Donaciones
 
-donation_zeffy_embed_rendered: registro de visualización o carga del componente externo de donación.
-donation_conversion_confirmed: donación confirmada.
+- donation_zeffy_embed_rendered : render/carga del embed de Zeffy.
+- donation_conversion_confirmed : donación confirmada.
 
 La visualización del componente de Zeffy no equivale a una donación realizada.
 
