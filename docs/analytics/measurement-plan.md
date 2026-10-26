@@ -36,7 +36,7 @@ Un clic hacia Zeffy no se considera por sí mismo un registro, una venta, un pag
 |---|---|---|---|---|---|---|
 | blog_click | Navegación global | Clic en Blog | Medir interés en contenido | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace al Blog en la navegación global |
 | membership_click | inicio→Miembros/HomeLanding.tsx | Clic en membresía | Medir interés en la membresía | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace hacia /es/miembros-sigue |
-| events_click | inicio→Eventos/HomeLanding.tsx | Clic en Eventos | Medir interés en eventos |Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace existente a eventos |
+| events_click | inicio→Eventos/HomeLanding.tsx | Clic en Eventos | Medir interés en eventos | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace existente a eventos |
 | cumbre_registration_click | Cumbre/CumbreLanding.tsx / RegistrationControls.tsx | Clic en inscribirme | Medir el inicio del recorrido de inscripción | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el botón y el acceso a #inscripcion |
 | cumbre_zeffy_click | Cumbre/RegistrationForm.tsx | Clic en Pagar con tarjeta en Zeffy | Medir la salida hacia el proveedor externo | Ruta, idioma, fecha/hora, destino | GA4/GTM | Comprobar el enlace hacia Zeffy |
 | cumbre_transfer_calculator_use | Cumbre / RegistrationForm.tsx | Primera modificación manual de tarifa u hospedaje | Medir interés en la alternativa de transferencia | Ruta, idioma, fecha/hora | GA4/GTM | Verificar la calculadora en RegistrationForm.tsx |
@@ -84,7 +84,7 @@ Nota: Un clic o una visualización no se considera una conversión. Las conversi
 ## 6. KPIs y limitaciones
 Los siguientes indicadores permiten medir las principales interacciones del sitio. Debido a que actualmente no se encontró un colector de analítica en el frontend, algunos indicadores no pueden calcularse con datos reales en este momento.
 
-Páginas vistas
+### Páginas vistas
 
 Fórmula: cantidad de vistas registradas de una página o ruta durante un período.
 
@@ -94,7 +94,7 @@ Fuente necesaria: GA4 u otra herramienta de analítica autorizada.
 
 Limitación: actualmente el repositorio no contiene una fuente que registre visitas o sesiones históricas.
 
-Clics en CTA
+### Clics en CTA
 
 Fórmula: cantidad de clics registrados en un botón o enlace específico durante un período.
 
@@ -104,7 +104,7 @@ Fuente necesaria: GA4/GTM u otra solución de analítica autorizada.
 
 Limitación: los botones y enlaces existen en el sitio, pero actualmente no se encontró un colector que registre sus clics.
 
-Descargas iniciadas
+### Descargas iniciadas
 
 Fórmula: cantidad de descargas iniciadas de un recurso durante un período.
 
@@ -114,9 +114,9 @@ Fuente necesaria: GA4/GTM u otra herramienta de analítica autorizada.
 
 Limitación: este indicador no debe interpretarse como una descarga completada si la fuente solo registra el inicio de la acción.
 
-Formularios confirmados
+### Formularios confirmados
 
-Fórmula: cantidad de envíos que terminan en una confirmación exitosa del formulario.
+Fórmula: cantidad de envíos con un submissionId persistido correctamente
 
 Estado actual: la confirmación está contemplada en el componente del formulario, pero no existe
 actualmente una fuente histórica de analítica que permita obtener el volumen real.
@@ -125,7 +125,7 @@ Fuente necesaria: fuente de analítica o del formulario que registre únicamente
 
 Limitación: no se deben registrar nombres, correos, teléfonos, respuestas ni otros datos personales para este indicador.
 
-Conversiones externas
+### Conversiones externas
 
 Fórmula: cantidad de pagos, inscripciones o donaciones confirmadas por la fuente externa correspondiente.
 
