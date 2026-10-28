@@ -54,7 +54,7 @@ export default function SigueTracksLanding({ locale }: { locale: Locale }) {
           <span className={styles.heroSquare} aria-hidden="true" />
           <div>
             <h1 id="tracks-title"><strong>{t('banner.badgeLine1')}</strong> {t('banner.badgeLine2')}</h1>
-            <p>{t('banner.badgeLine3')}<br />{t('banner.badgeLine4')}<br />{t('banner.badgeLine5')}</p>
+            <p>{t('banner.badgeLine3')} {t('banner.badgeLine4')} {t('banner.badgeLine5')}</p>
           </div>
         </div>
       </section>
