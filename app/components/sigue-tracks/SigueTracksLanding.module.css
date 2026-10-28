@@ -130,6 +130,7 @@
   padding: 0.8rem 1.25rem;
   color: #fff;
   background: var(--tracks-pink);
+  border-radius: 6px;
   box-shadow: 0 0 0 2px transparent;
   font-size: 0.75rem;
   font-weight: 800;
@@ -141,6 +142,7 @@
 .actionButton strong,
 .actionButton span {
   font: inherit;
+  font-weight: 800;
 }
 
 .actionButton:hover,
