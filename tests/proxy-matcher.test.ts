@@ -6,6 +6,7 @@ import { config } from "../proxy";
 
 test("las páginas prerenderizadas evitan Proxy sin perder rutas antiguas ni privadas", () => {
   for (const path of [
+    "/",
     "/es",
     "/en",
     "/es/conoce-sigue",
