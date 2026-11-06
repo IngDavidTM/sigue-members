@@ -22,12 +22,12 @@ const fixture = await startPublicContentFixture(origin);
 await mkdir(route); // Refuse to overwrite an existing route.
 try {
   await writeFile(new URL('page.tsx', route), `
-import { ActionForm } from '@/app/admin/components/ActionForm';
-import { RichTextEditor } from '@/app/admin/components/RichTextEditor';
-import { MediaField } from '@/app/admin/components/MediaField';
-import { SeoAssistant } from '@/app/admin/components/SeoAssistant';
+import { ActionForm } from '@/app/(system)/admin/components/ActionForm';
+import { RichTextEditor } from '@/app/(system)/admin/components/RichTextEditor';
+import { MediaField } from '@/app/(system)/admin/components/MediaField';
+import { SeoAssistant } from '@/app/(system)/admin/components/SeoAssistant';
 import DynamicForm from '@/app/components/forms/DynamicForm';
-import type { AdminActionState } from '@/app/admin/actions/types';
+import type { AdminActionState } from '@/app/(system)/admin/actions/types';
 import type { DynamicFormFieldRow, DynamicFormRow } from '@/types/supabase';
 export default function Page() {
   async function save(_state: AdminActionState, _form: FormData): Promise<AdminActionState> {
