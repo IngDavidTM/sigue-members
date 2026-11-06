@@ -11,18 +11,27 @@ export default function NewsletterForm({ locale, emailLabel, submitLabel }: {
   emailLabel: string;
   submitLabel: string;
 }) {
-  const [form, setForm] = useState<PublicDynamicForm | null>(null);
+  const [state, setState] = useState<
+    { status: "loading" } | { status: "ready"; form: PublicDynamicForm } | { status: "unavailable" }
+  >({ status: "loading" });
 
   useEffect(() => {
     const controller = new AbortController();
     fetch("/api/public/forms/novedades", { signal: controller.signal })
-      .then((response) => response.ok ? response.json() as Promise<PublicDynamicForm> : null)
-      .then((result) => { if (result) setForm(result); })
-      .catch(() => {});
+      .then((response) => {
+        if (!response.ok) throw new Error("Newsletter form unavailable");
+        return response.json() as Promise<PublicDynamicForm>;
+      })
+      .then((form) => setState({ status: "ready", form }))
+      .catch(() => { if (!controller.signal.aborted) setState({ status: "unavailable" }); });
     return () => controller.abort();
   }, []);
 
-  if (form) return <DynamicForm {...form} locale={locale} sourcePath={`/${locale}`} compact />;
+  if (state.status === "ready") return <DynamicForm {...state.form} locale={locale} sourcePath={`/${locale}`} compact />;
+
+  if (state.status === "loading") {
+    return <p role="status">{locale === "es" ? "Cargando formulario…" : "Loading form…"}</p>;
+  }
 
   return <form action={`/${locale}/contacto`} method="get" className={styles.newsletterForm}>
     <label htmlFor={`newsletter-${locale}`} className={styles.srOnly}>{emailLabel}</label>
