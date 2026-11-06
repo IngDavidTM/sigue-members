@@ -12,9 +12,8 @@ import {
   Store,
 } from 'lucide-react';
 import Reveal from '@/app/components/ui/Reveal';
-import DynamicForm from '@/app/components/forms/DynamicForm';
+import NewsletterForm from './NewsletterForm';
 import { absoluteUrl } from '@/lib/site-url';
-import type { PublishedDynamicForm } from '@/types/supabase';
 import styles from './HomeLanding.module.css';
 
 type Locale = 'es' | 'en';
@@ -378,7 +377,7 @@ function PrimaryLink({ locale, href, children }: { locale: Locale; href: string;
   );
 }
 
-export default function HomeLanding({ locale, newsletterForm }: { locale: Locale; newsletterForm: PublishedDynamicForm | null; preview?: boolean }) {
+export default function HomeLanding({ locale }: { locale: Locale }) {
   const c = content[locale];
   const organizationJsonLd = {
     '@context': 'https://schema.org',
@@ -607,15 +606,7 @@ export default function HomeLanding({ locale, newsletterForm }: { locale: Locale
           <Reveal className={styles.newsletterCopy} variant="slide-right">
             <SectionHeading label={c.newsletter.label} title={c.newsletter.title} accent={c.newsletter.accent} centered={false} />
             <p>{c.newsletter.body}</p>
-            {newsletterForm ? (
-              <DynamicForm {...newsletterForm} locale={locale} sourcePath={`/${locale}`} compact />
-            ) : (
-              <form action={`/${locale}/contacto`} method="get" className={styles.newsletterForm}>
-                <label htmlFor={`newsletter-${locale}`} className={styles.srOnly}>{c.newsletter.email}</label>
-                <input id={`newsletter-${locale}`} name="email" type="email" autoComplete="email" required placeholder={c.newsletter.email} />
-                <button type="submit">{c.newsletter.cta}</button>
-              </form>
-            )}
+            <NewsletterForm locale={locale} emailLabel={c.newsletter.email} submitLabel={c.newsletter.cta} />
           </Reveal>
         </section>
 

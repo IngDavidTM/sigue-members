@@ -229,6 +229,11 @@ export type PublishedDynamicForm = {
   fields: DynamicFormFieldRow[];
 };
 
+export type PublicDynamicForm = {
+  form: Pick<DynamicFormRow, 'id' | 'slug' | 'title_es' | 'title_en' | 'description_es' | 'description_en' | 'submit_label_es' | 'submit_label_en'>;
+  fields: DynamicFormFieldRow[];
+};
+
 export type DynamicFormFieldRow = {
   id: string;
   form_id: string;

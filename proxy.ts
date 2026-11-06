@@ -121,6 +121,6 @@ export const config = {
     matcher: [
         // These localized pages are prerendered and do not need locale detection.
         // Keep their trailing-slash variants in Proxy for the canonical redirect.
-        "/((?!(?:es|en)/(?:confirmacion-de-donacion|conoce-sigue|donacion|ecosistema|eventos|inicio-2026|politica-de-privacidad|recursos|sigue-academy|sigue-hub|sigue-tracks)$|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif|pdf|docx|mp4|webm)$).*)",
+        "/((?!(?:es|en)(?:/(?:confirmacion-de-donacion|conoce-sigue|donacion|ecosistema|eventos|inicio-2026|politica-de-privacidad|recursos|sigue-academy|sigue-hub|sigue-tracks))?$|api/public/forms/novedades$|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif|pdf|docx|mp4|webm)$).*)",
     ],
 };
