@@ -130,6 +130,7 @@
   padding: 0.8rem 1.25rem;
   color: #fff;
   background: var(--tracks-pink);
+  border-radius: 6px;
   box-shadow: 0 0 0 2px transparent;
   font-size: 0.75rem;
   font-weight: 800;
@@ -141,6 +142,7 @@
 .actionButton strong,
 .actionButton span {
   font: inherit;
+  font-weight: 800;
 }
 
 .actionButton:hover,
@@ -287,7 +289,7 @@
 .assessmentVisual {
   display: grid;
   min-height: 10.5rem;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: minmax(0, 3fr) minmax(9rem, 1fr);
   gap: clamp(2.25rem, 5.2vw, 4.7rem);
 }
 
@@ -303,7 +305,7 @@
   align-items: flex-end;
   justify-content: center;
   min-width: 0;
-  padding: 1rem clamp(1rem, 2vw, 1.7rem);
+  padding: 1rem 1rem 1rem clamp(1rem, 2vw, 1.7rem);
   color: #fff;
   background: var(--tracks-violet);
   font-size: clamp(.84rem, 1.1vw, 1rem);
@@ -341,6 +343,36 @@
 
 .actionButtonCompact {
   min-width: 12rem;
+}
+
+@media (max-width: 1440px) {
+  .heroPanel h1 {
+    font-size: clamp(2.6rem, 2vw, 3.2rem);
+  }
+
+  .heroPanel p {
+    font-size: clamp(2.5rem, 2vw, 2.95rem);
+  }
+}
+
+@media (max-width: 1080px) {
+  .heroPanel h1 {
+    font-size: clamp(2.8rem, 2.5vw, 3.3rem);
+  }
+
+  .heroPanel p {
+    font-size: clamp(2.35rem, 2.2vw, 2.8rem);
+  }
+}
+
+@media (max-width: 1024px) {
+  .heroPanel h1 {
+    font-size: clamp(2.8rem, 3vw, 3.4rem);
+  }
+
+  .heroPanel p {
+    font-size: clamp(2.4rem, 2.7vw, 2.9rem);
+  }
 }
 
 @media (max-width: 900px) {
@@ -392,13 +424,29 @@
   }
 
   .assessmentVisual {
-    grid-template-columns: 6fr 5fr;
-    gap: 2rem;
+    grid-template-columns: minmax(0, 6fr) minmax(9rem, 5fr);
+    gap: clamp(1rem, 4vw, 2rem);
   }
 
   .assessment > p {
     width: min(72%, 34rem);
     font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .heroPanel h1 {
+    font-size: clamp(2.3rem, 5.5vw, 2.8rem);
+  }
+
+  .heroPanel p {
+    font-size: clamp(1.95rem, 4.8vw, 2.3rem);
+    line-height: 1.08;
+  }
+
+  .introCopy,
+  .routesCopy {
+    padding: 2.5rem 1.5rem;
   }
 }
 
@@ -427,6 +475,17 @@
     right: 0;
     left: auto;
     width: 5.5rem;
+  }
+
+  .heroPanel h1 {
+    font-size: clamp(2rem, 7vw, 2.5rem);
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  .heroPanel p {
+    font-size: clamp(1.6rem, 5.5vw, 2rem);
+    line-height: 1.1;
   }
 
   .introCopy,
@@ -468,6 +527,18 @@
 
   .assessment > p {
     width: min(32rem, 100%);
+  }
+}
+
+@media (max-width: 390px) {
+  .heroPanel h1 {
+    font-size: clamp(1.8rem, 7.5vw, 2.2rem);
+    line-height: 1.08;
+  }
+
+  .heroPanel p {
+    font-size: clamp(1.45rem, 5.8vw, 1.8rem);
+    line-height: 1.12;
   }
 }
 
