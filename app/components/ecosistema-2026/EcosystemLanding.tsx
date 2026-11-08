@@ -122,7 +122,7 @@ const content = {
       resources: [
         ['Comunidad online', 'Conecta, aprende y crece en red', 'Espacios de encuentro, aprendizaje y apoyo entre líderes y organizaciones que comparten valores, experiencias y desafíos.', 'Únete a la comunidad', '/miembros-sigue'],
         ['Blogs', 'Ideas prácticas para fortalecer tu misión', 'Contenido breve y accionable sobre estrategia, impacto, liderazgo, visibilidad, sostenibilidad y levantamiento de recursos.', 'Lee nuestros blogs', '/blog'],
-        ['Herramientas', 'Recursos listos para poner en práctica', 'Plantillas, guías y matrices que facilitan la gestión, la medición de impacto, la comunicación y otros procesos clave de tu organización.', 'Explora las herramientas', '/herramientas-y-guias'],
+        ['Herramientas', 'Recursos listos para poner en práctica', 'Plantillas, guías y matrices que facilitan la gestión, la medición de impacto, la comunicación y otros procesos clave de tu organización.', 'Explora las herramientas', '/herramientas'],
         ['Eventos', 'Encuentros que conectan y abren oportunidades', 'Espacios en vivo para aprender, inspirarte, ampliar relaciones y conectar con aliados, oportunidades y nuevas formas de colaboración.', 'Ver próximos eventos', '/eventos'],
       ] as const,
     },
@@ -269,7 +269,7 @@ const content = {
       resources: [
         ['Online community', 'Connect, learn, and grow together', 'Gathering, learning, and support spaces for leaders and organizations who share values, experiences, and challenges.', 'Join the community', '/miembros-sigue'],
         ['Blog', 'Practical ideas to strengthen your mission', 'Brief, actionable content on strategy, impact, leadership, visibility, sustainability, and fundraising.', 'Read our blog', '/blog'],
-        ['Tools', 'Ready-to-use practical resources', 'Templates, guides, and matrices that make management, impact measurement, communication, and other key processes easier.', 'Explore the tools', '/herramientas-y-guias'],
+        ['Tools', 'Ready-to-use practical resources', 'Templates, guides, and matrices that make management, impact measurement, communication, and other key processes easier.', 'Explore the tools', '/herramientas'],
         ['Events', 'Gatherings that connect and open opportunities', 'Live spaces to learn, be inspired, expand relationships, and connect with allies, opportunities, and new forms of collaboration.', 'See upcoming events', '/eventos'],
       ] as const,
     },

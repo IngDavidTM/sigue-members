@@ -976,12 +976,32 @@
   line-height: 1.35;
 }
 
-.agendaGrid a {
+.agendaDetails {
   margin-top: auto;
+}
+
+.agendaDetails summary {
   padding-top: 1rem;
   border-top: 1px solid var(--cumbre-purple);
   color: var(--cumbre-pink);
+  cursor: pointer;
   text-transform: uppercase;
+}
+
+.agendaDetails summary:focus-visible {
+  outline: 2px solid var(--cumbre-purple);
+  outline-offset: 4px;
+}
+
+.agendaDetails ul {
+  margin: 1rem 0 0;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.agendaDetails li + li {
+  margin-top: 0.65rem;
 }
 
 .agendaSection > .primaryButton {

@@ -701,23 +701,58 @@ export default function CumbreLanding({ locale = 'es', partnershipForm }: { loca
                   day: text('Día 1 · Escuchar', 'Day 1 · Listen'),
                   date: text('27 de octubre · tarde', 'October 27 · afternoon'),
                   quote: text('“Toda transformación comienza aprendiendo a escuchar.”', '“Every transformation begins by learning to listen.”'),
+                  sessions: [
+                    ['1:00–2:00', text('Registro general y entrega del Pasaporte C.O.N.E.C.T.A.™', 'General check-in and C.O.N.E.C.T.A.™ Passport pickup')],
+                    ['2:00–2:45', text('Bienvenida, adoración y apertura espiritual', 'Welcome, worship, and spiritual opening')],
+                    ['2:45–3:30', text('Bienvenidos a SIGUE Network', 'Welcome to SIGUE Network')],
+                    ['3:30–4:00', text('Antes de responder, aprendamos a escuchar', 'Before responding, let us learn to listen')],
+                    ['4:30–6:00', text('Mesas de Escucha', 'Listening roundtables')],
+                    ['6:30–8:00', text('Cena de participantes', 'Participant dinner')],
+                    ['8:00–9:30', text('Conexiones Intencionales', 'Intentional connections')],
+                  ],
                 },
                 {
                   day: text('Día 2 · Descubrir', 'Day 2 · Discover'),
                   date: text('28 de octubre', 'October 28'),
                   quote: text('“Escuchar mejor para comprender antes de actuar.”', '“Listen better to understand before acting.”'),
+                  sessions: [
+                    ['8:00–9:00', text('Devocional y adoración', 'Devotional and worship')],
+                    ['9:00–10:00', text('Cuando escuchar cambia la respuesta', 'When listening changes the response')],
+                    ['10:30–12:00', text('Laboratorio SIGUE · Método de los Cinco Sentidos™', 'SIGUE Lab · Five Senses Method™')],
+                    ['1:30–3:00', text('Plaza SIGUE · Mapa vivo del ecosistema', 'SIGUE Plaza · Living ecosystem map')],
+                    ['3:00–4:30', text('Clínicas de Casos', 'Case clinics')],
+                    ['5:00–6:15', text('Showcase SIGUE Fellows™', 'SIGUE Fellows™ showcase')],
+                    ['6:30–8:00', text('Cena Especial SIGUE', 'Special SIGUE dinner')],
+                    ['8:00–9:45', text('Noche de Adoración, Ministración y Consagración', 'Night of worship, ministry, and consecration')],
+                  ],
                 },
                 {
                   day: text('Día 3 · Responder', 'Day 3 · Respond'),
                   date: text('29 de octubre', 'October 29'),
                   quote: text('“Las mejores respuestas nacen de una escucha profunda.”', '“The best responses are born from deep listening.”'),
+                  sessions: [
+                    ['8:00–9:00', text('Devocional y adoración', 'Devotional and worship')],
+                    ['9:00–10:00', text('Responder con pertinencia, fe y estrategia', 'Responding with relevance, faith, and strategy')],
+                    ['10:30–11:45', text('Primicias y Premio SIGUE Network', 'First fruits and SIGUE Network Award')],
+                    ['11:45–12:00', text('Cosecha colectiva de aprendizajes', 'Collective harvest of learnings')],
+                    ['1:30–3:00', text('Diseñando Respuestas · Plan 30–60–90', 'Designing responses · 30–60–90 plan')],
+                    ['3:00–4:00', text('Ceremonia de Graduación SIGUE Fellows™', 'SIGUE Fellows™ graduation ceremony')],
+                    ['4:30–6:00', text('Celebración SIGUE Network y Ceremonia de Envío', 'SIGUE Network celebration and sending ceremony')],
+                  ],
                 },
               ].map((item) => (
                 <article key={item.day}>
                   <p>{item.day}</p>
                   <h3>{item.date}</h3>
                   <blockquote>{item.quote}</blockquote>
-                  <a href="#inscripcion">{text('Ver detalle', 'View details')}</a>
+                  <details className={styles.agendaDetails}>
+                    <summary>{text('Ver detalle', 'View details')}</summary>
+                    <ul>
+                      {item.sessions.map(([time, title]) => (
+                        <li key={time}><strong>{time}</strong> {title}</li>
+                      ))}
+                    </ul>
+                  </details>
                 </article>
               ))}
             </div>
