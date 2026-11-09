@@ -5,7 +5,8 @@ export const conoceContent = {
     skip: 'Saltar al contenido',
     hero: {
       title: ['Unidos', 'para servir,', 'Fuertes', 'para impactar'],
-      cta: 'Descubre cómo SIGUE fortalece organizaciones',
+      ctaLead: 'Descubre',
+      ctaBody: 'cómo SIGUE fortalece organizaciones',
       imageAlt: 'Tres niñas unidas en una comunidad latinoamericana',
     },
     urgency: {
@@ -30,7 +31,12 @@ export const conoceContent = {
       eyebrow: 'LAS BARRERAS QUE LIMITAN SU IMPACTO',
       title: 'Miles de organizaciones ya están transformando comunidades,',
       accent: 'pero enfrentan barreras para multiplicar su impacto.',
-      survival: '1 de cada 3 organizaciones no supera los primeros 5 años de operación.',
+      survival: [
+        { text: '1 de cada 3', highlight: true },
+        { text: ' organizaciones no supera los primeros ', highlight: false },
+        { text: '5 años', highlight: true },
+        { text: ' de operación.', highlight: false },
+      ],
       note: 'No por falta de compromiso, sino por la ausencia de capacidades para crecer de manera sostenible y escalar su impacto.',
       items: [
         ['Falta de financiamiento', 'Dificultades para acceder a recursos limitan la sostenibilidad y el crecimiento de sus iniciativas.'],
@@ -231,7 +237,8 @@ export const conoceContent = {
     skip: 'Skip to content',
     hero: {
       title: ['United', 'to serve,', 'Stronger', 'to make an impact'],
-      cta: 'Discover how SIGUE strengthens organizations',
+      ctaLead: 'Discover',
+      ctaBody: 'how SIGUE strengthens organizations',
       imageAlt: 'Three girls together in a Latin American community',
     },
     urgency: {
@@ -256,7 +263,12 @@ export const conoceContent = {
       eyebrow: 'THE BARRIERS LIMITING THEIR IMPACT',
       title: 'Thousands of organizations are already transforming communities,',
       accent: 'but they face barriers to multiplying their impact.',
-      survival: '1 in 3 organizations does not make it beyond its first 5 years of operation.',
+      survival: [
+        { text: '1 in 3', highlight: true },
+        { text: ' organizations does not make it beyond its first ', highlight: false },
+        { text: '5 years', highlight: true },
+        { text: ' of operation.', highlight: false },
+      ],
       note: 'Not for lack of commitment, but because they lack the capabilities needed to grow sustainably and scale their impact.',
       items: [
         ['Limited funding', 'Difficulty accessing resources limits the sustainability and growth of their initiatives.'],

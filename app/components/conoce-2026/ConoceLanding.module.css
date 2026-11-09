@@ -191,8 +191,23 @@
   width: 19.7%;
   min-height: 10.2%;
   padding: 0.45rem 1rem;
+  flex-direction: column;
+  gap: 0.12rem;
   font-size: clamp(0.68rem, 1.1vw, 1rem);
   line-height: 1.05;
+}
+
+/* El CTA del hero va en dos niveles, como el diseno aprobado. */
+.heroCtaLead,
+.heroCtaBody {
+  display: block;
+}
+
+.heroCtaBody {
+  font-size: 0.82em;
+  font-weight: 800;
+  line-height: 1.15;
+  text-transform: none;
 }
 
 .heroCta:hover,
@@ -306,6 +321,11 @@
   color: var(--pink-soft);
   font-size: 1.35rem;
   line-height: 1.35;
+}
+
+/* Las cifras van en blanco dentro de la frase rosa. */
+.survivalHighlight {
+  color: #fff;
 }
 
 .barriersLead > p:last-child {
@@ -2130,5 +2150,16 @@
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  /* Alternativa estatica: se oculta el video y queda el poster como fondo. */
+  .heroVideo {
+    display: none;
+  }
+
+  .hero {
+    background-image: url('/images/conoce-2026/hero-video-poster.webp');
+    background-position: center;
+    background-size: cover;
   }
 }

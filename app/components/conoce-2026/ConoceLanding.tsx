@@ -18,9 +18,17 @@ function ActionLink({ locale, href, children, secondary = false }: {
   secondary?: boolean;
 }) {
   const external = href.startsWith('http');
+  const linkClass = `${styles.actionLink} ${secondary ? styles.actionLinkSecondary : ''}`;
+
+  // Los saltos dentro de la misma pagina usan un <a> nativo: next/link no
+  // resuelve los href que son solo "#ancla" sobre rutas con prefijo de idioma.
+  if (href.startsWith('#')) {
+    return <a className={linkClass} href={href}>{children}</a>;
+  }
+
   return (
     <Link
-      className={`${styles.actionLink} ${secondary ? styles.actionLinkSecondary : ''}`}
+      className={linkClass}
       href={localizedHref(locale, href)}
       target={external ? '_blank' : undefined}
       rel={external ? 'noopener noreferrer' : undefined}
@@ -100,9 +108,10 @@ export default function ConoceLanding({ locale }: { locale: ConoceLocale }) {
               <span>{c.hero.title[3]}</span>
             </h1>
           </div>
-          <Link className={`${styles.actionLink} ${styles.heroCta}`} href="#urgencia">
-            {c.hero.cta}
-          </Link>
+          <a className={`${styles.actionLink} ${styles.heroCta}`} href="#urgencia">
+            <span className={styles.heroCtaLead}>{c.hero.ctaLead}</span>{' '}
+            <span className={styles.heroCtaBody}>{c.hero.ctaBody}</span>
+          </a>
         </section>
 
         <section id="urgencia" className={styles.urgency} aria-labelledby="urgency-title">
@@ -131,7 +140,16 @@ export default function ConoceLanding({ locale }: { locale: ConoceLocale }) {
               <Reveal className={styles.barriersLead} variant="slide-left">
                 <p className={styles.eyebrow}>{c.barriers.eyebrow}</p>
                 <h2 id="barriers-title">{c.barriers.title} <em>{c.barriers.accent}</em></h2>
-                <strong className={styles.survival}>{c.barriers.survival}</strong>
+                <strong className={styles.survival}>
+                  {c.barriers.survival.map((segment) => (
+                    <span
+                      className={segment.highlight ? styles.survivalHighlight : undefined}
+                      key={segment.text}
+                    >
+                      {segment.text}
+                    </span>
+                  ))}
+                </strong>
                 <p>{c.barriers.note}</p>
               </Reveal>
               <div className={styles.barrierList}>
