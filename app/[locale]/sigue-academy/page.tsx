@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       languages: {
         es: absoluteUrl('/es/sigue-academy'),
         en: absoluteUrl('/en/sigue-academy'),
+        'x-default': absoluteUrl('/es/sigue-academy'),
       },
     },
     openGraph: {

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import DonationEmbed from '@/app/components/donation/DonationEmbed';
+import { defaultOgImage } from '@/lib/seo';
 import { absoluteUrl } from '@/lib/site-url';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       languages: {
         es: absoluteUrl('/es/donacion'),
         en: absoluteUrl('/en/donacion'),
+        'x-default': absoluteUrl('/es/donacion'),
       },
     },
     openGraph: {
@@ -30,6 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       siteName: 'SIGUE Network',
       title,
       description,
+      images: [defaultOgImage],
     },
   };
 }

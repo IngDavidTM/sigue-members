@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import styles from "@/app/components/content/ContentPages.module.css";
 import { getPublicBlogListing } from "@/lib/content/public-queries";
+import { openGraphDefaults } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site-url";
 
 type Props = {
@@ -25,9 +26,9 @@ export async function generateMetadata({ params }: Pick<Props, "params">): Promi
     description,
     alternates: {
       canonical: absoluteUrl(`/${locale}/blog`),
-      languages: { es: absoluteUrl("/es/blog"), en: absoluteUrl("/en/blog") },
+      languages: { es: absoluteUrl("/es/blog"), en: absoluteUrl("/en/blog"), "x-default": absoluteUrl("/es/blog") },
     },
-    openGraph: { title, description, type: "website", url: absoluteUrl(`/${locale}/blog`) },
+    openGraph: { ...openGraphDefaults(locale), title, description, type: "website", url: absoluteUrl(`/${locale}/blog`) },
   };
 }
 

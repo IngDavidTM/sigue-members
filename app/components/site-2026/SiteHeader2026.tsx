@@ -107,11 +107,14 @@ export default function SiteHeader2026({
   onHomePage = false,
   previewHome = false,
   localePath,
+  alternatePaths,
 }: {
   locale: SiteLocale;
   onHomePage?: boolean;
   previewHome?: boolean;
   localePath: string;
+  /** Translated paths for pages whose slug changes with the language. */
+  alternatePaths?: { es?: string; en?: string } | null;
 }) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement>(null);
@@ -139,7 +142,7 @@ export default function SiteHeader2026({
     <>
       <nav className={styles.localeToggle} aria-label={locale === 'es' ? 'Cambiar idioma' : 'Change language'}>
         <Link
-          href={`/es${localePath}`}
+          href={`/es${alternatePaths?.es ?? localePath}`}
           className={locale === 'es' ? styles.localeActive : undefined}
           aria-current={locale === 'es' ? 'page' : undefined}
           hrefLang="es"
@@ -148,7 +151,7 @@ export default function SiteHeader2026({
           ES
         </Link>
         <Link
-          href={`/en${localePath}`}
+          href={`/en${alternatePaths?.en ?? localePath}`}
           className={locale === 'en' ? styles.localeActive : undefined}
           aria-current={locale === 'en' ? 'page' : undefined}
           hrefLang="en"
