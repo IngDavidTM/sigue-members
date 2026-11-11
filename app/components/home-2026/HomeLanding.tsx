@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import Reveal from '@/app/components/ui/Reveal';
 import NewsletterForm from './NewsletterForm';
-import { absoluteUrl } from '@/lib/site-url';
+import { JsonLd, founderNode, organizationNode, webPageNode, websiteNode } from '@/lib/structured-data';
 import styles from './HomeLanding.module.css';
 
 type Locale = 'es' | 'en';
@@ -379,33 +379,17 @@ function PrimaryLink({ locale, href, children }: { locale: Locale; href: string;
 
 export default function HomeLanding({ locale }: { locale: Locale }) {
   const c = content[locale];
-  const organizationJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'NGO',
-    name: 'SIGUE Network',
-    url: absoluteUrl(`/${locale}`),
-    logo: absoluteUrl('/images/home-2026/logo-transparent.png'),
-    email: 'info@siguenetwork.org',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: '3913 Griese Lane',
-      addressLocality: 'Grovetown',
-      addressRegion: 'GA',
-      postalCode: '30813',
-      addressCountry: 'US',
-    },
-    sameAs: [
-      'https://www.instagram.com/siguenetwork/',
-      'https://www.facebook.com/people/SIGUE-Network/61566310019607/',
-      'https://www.linkedin.com/company/sigue-network/',
-      'https://www.youtube.com/@SIGUENetwork',
-    ],
-  };
-
   return (
     <div data-home-2026 id="inicio" className={styles.page}>
       <a className={styles.skipLink} href="#contenido-principal">{c.skip}</a>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
+      <JsonLd
+        nodes={[
+          organizationNode(locale),
+          founderNode(locale),
+          websiteNode(),
+          webPageNode(locale, { path: '', name: 'SIGUE Network' }),
+        ]}
+      />
 
       <main id="contenido-principal">
         <section className={styles.hero} aria-labelledby="home-hero-title">

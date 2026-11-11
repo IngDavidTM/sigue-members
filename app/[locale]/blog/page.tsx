@@ -27,6 +27,7 @@ export async function generateMetadata({ params }: Pick<Props, "params">): Promi
     alternates: {
       canonical: absoluteUrl(`/${locale}/blog`),
       languages: { es: absoluteUrl("/es/blog"), en: absoluteUrl("/en/blog"), "x-default": absoluteUrl("/es/blog") },
+      types: { "application/rss+xml": absoluteUrl(`/${locale}/feed.xml`) },
     },
     openGraph: { ...openGraphDefaults(locale), title, description, type: "website", url: absoluteUrl(`/${locale}/blog`) },
   };

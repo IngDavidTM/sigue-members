@@ -36,10 +36,10 @@ test("las URL antiguas de WordPress con barra final llegan a su página en un sa
 
 test("feeds, autores, fechas y paginación de WordPress redirigen a una página viva", async () => {
   const expected: Record<string, string> = {
-    "/feed/": "/es/blog",
-    "/feed": "/es/blog",
-    "/es/feed": "/es/blog",
-    "/en/feed": "/en/blog",
+    "/feed/": "/es/feed.xml",
+    "/feed": "/es/feed.xml",
+    "/es/feed": "/es/feed.xml",
+    "/en/feed": "/en/feed.xml",
     "/comments/feed/": "/es/blog",
     "/author/admin/": "/es/blog",
     "/2024/05/": "/es/blog",
