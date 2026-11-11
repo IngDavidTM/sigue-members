@@ -1,11 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import styles from "@/app/components/content/ContentPages.module.css";
 import { getPublicEvent } from "@/lib/content/public-queries";
 import { sanitizeRichText } from "@/lib/content/admin-utils";
+import LocaleAlternates from "@/app/components/layout/LocaleAlternates";
+import { defaultOgImage, openGraphDefaults, translationAlternates, translationPaths } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site-url";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
@@ -24,13 +26,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     alternates: {
       canonical: translation.canonical_url || absoluteUrl(`/${locale}/evento/${translation.slug}`),
-      languages: Object.fromEntries(
-        alternateTranslations.map((item) => [item.locale, absoluteUrl(`/${item.locale}/evento/${item.slug}`)]),
-      ),
+      languages: translationAlternates(alternateTranslations, (item) => `/${item.locale}/evento/${item.slug}`),
     },
     robots: { index: !translation.noindex, follow: !translation.nofollow },
-    openGraph: { type: "website", title: translation.og_title || title, description: translation.og_description || description, url: absoluteUrl(`/${locale}/evento/${translation.slug}`), images: image ? [{ url: image, alt: translation.image_alt || translation.title }] : undefined },
-    twitter: { card: "summary_large_image", title: translation.og_title || title, description: translation.og_description || description, images: image ? [image] : undefined },
+    openGraph: { ...openGraphDefaults(locale), type: "website", title: translation.og_title || title, description: translation.og_description || description, url: absoluteUrl(`/${locale}/evento/${translation.slug}`), images: image ? [{ url: image, alt: translation.image_alt || translation.title }] : [defaultOgImage] },
+    twitter: { card: "summary_large_image", title: translation.og_title || title, description: translation.og_description || description, images: [image || defaultOgImage.url] },
   };
 }
 
@@ -41,7 +41,7 @@ export default async function EventPage({ params }: Props) {
   const data = await getPublicEvent(locale, slug);
   if (!data) notFound();
   const { event, translation, venue, virtualUrl, upcoming, currentTime } = data;
-  if (translation.slug !== slug) redirect(`/${locale}/evento/${translation.slug}`);
+  if (translation.slug !== slug) permanentRedirect(`/${locale}/evento/${translation.slug}`);
   const registrationOpen = event.status !== "cancelled" && new Date(event.ends_at).getTime() >= currentTime && (!event.registration_deadline || new Date(event.registration_deadline).getTime() >= currentTime);
   const eventUrl = absoluteUrl(`/${locale}/evento/${translation.slug}`);
   const virtualLocation = { "@type": "VirtualLocation", url: virtualUrl || eventUrl };
@@ -67,6 +67,7 @@ export default async function EventPage({ params }: Props) {
   const end = new Date(event.ends_at);
   const modeLabel = event.attendance_mode === "virtual" ? (es ? "Virtual" : "Online") : event.attendance_mode === "hybrid" ? (es ? "Híbrido" : "Hybrid") : (es ? "Presencial" : "In person");
   return <article className={styles.root}>
+    <LocaleAlternates {...translationPaths(data.alternateTranslations, "evento")} />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
     <header className={styles.articleHeader}><div className={styles.breadcrumbs}><Link href={`/${locale}`}>{es ? "Inicio" : "Home"}</Link> · <Link href={`/${locale}/eventos`}>{es ? "Eventos" : "Events"}</Link></div>{event.status === "cancelled" ? <strong>{es ? "Evento cancelado" : "Cancelled event"}</strong> : null}<h1>{translation.title}</h1>{translation.excerpt ? <p>{translation.excerpt}</p> : null}</header>
     <div className={styles.articleLayout}>

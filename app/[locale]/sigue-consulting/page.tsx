@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       languages: {
         es: absoluteUrl('/es/sigue-consulting'),
         en: absoluteUrl('/en/sigue-consulting'),
+        'x-default': absoluteUrl('/es/sigue-consulting'),
       },
     },
     openGraph: {

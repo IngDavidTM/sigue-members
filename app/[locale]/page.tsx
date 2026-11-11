@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description,
     alternates: {
       canonical,
-      languages: { es: absoluteUrl('/es'), en: absoluteUrl('/en') },
+      languages: { es: absoluteUrl('/es'), en: absoluteUrl('/en'), 'x-default': absoluteUrl('/es') },
     },
     openGraph: {
       type: 'website',

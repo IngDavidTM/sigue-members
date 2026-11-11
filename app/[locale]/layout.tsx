@@ -6,6 +6,7 @@ import { routing } from '@/i18n/routing';
 import Header from '@/app/components/layout/header';
 import Footer from '@/app/components/layout/footer';
 import { heebo, roboto } from '@/lib/fonts';
+import { openGraphDefaults } from '@/lib/seo';
 import { siteMetadata } from '@/lib/site-metadata';
 import '../globals.css';
 
@@ -24,6 +25,8 @@ export async function generateMetadata({
   return {
     ...siteMetadata,
     title: 'SIGUE Network',
+    // Fallback for pages that define no Open Graph block of their own.
+    openGraph: { ...openGraphDefaults(isEnglish ? 'en' : 'es'), type: 'website' },
     description: isEnglish
       ? 'SIGUE Network connects and strengthens leaders and organizations transforming communities.'
       : 'SIGUE Network conecta y fortalece líderes y organizaciones que transforman comunidades.',

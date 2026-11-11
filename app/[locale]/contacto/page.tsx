@@ -5,6 +5,7 @@ import Reveal from '@/app/components/ui/Reveal';
 import SocialLinks from '@/app/components/ui/SocialLinks';
 import DynamicForm from '@/app/components/forms/DynamicForm';
 import { getPublishedDynamicForm } from '@/lib/forms/public';
+import { openGraphDefaults } from '@/lib/seo';
 import { absoluteUrl } from '@/lib/site-url';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -21,9 +22,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description,
     alternates: {
       canonical,
-      languages: { es: absoluteUrl('/es/contacto'), en: absoluteUrl('/en/contacto') },
+      languages: { es: absoluteUrl('/es/contacto'), en: absoluteUrl('/en/contacto'), 'x-default': absoluteUrl('/es/contacto') },
     },
-    openGraph: { type: 'website', title, description, url: canonical, siteName: 'SIGUE Network' },
+    openGraph: { ...openGraphDefaults(locale), type: 'website', title, description, url: canonical },
   };
 }
 

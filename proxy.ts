@@ -39,9 +39,47 @@ const migratedStaticPaths: Record<string, string> = {
     "/en/herramientas-y-guias": "/en/herramientas",
 };
 
+const applicationPrefixes = ["/api", "/auth", "/admin", "/dashboard", "/login", "/register", "/forgot-password", "/reset-password"];
+
+function isApplicationPath(pathname: string) {
+    return applicationPrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
+}
+
+/**
+ * WordPress archive URLs that have no page of their own in the app: feeds,
+ * author and date archives, and paginated listings. Each resolves in one
+ * permanent redirect to the closest living page instead of ending in a 404.
+ */
+function resolveArchivePath(wordpressPath: string, locale: string): string | null {
+    const cleanPath = wordpressPath
+        .replace(/\/feed(?:\/(?:rss2?|rdf|atom))?$/, "")
+        .replace(/\/page\/\d+$/, "");
+    const hadSuffix = cleanPath !== wordpressPath;
+
+    if (/^\/author(?:\/|$)/.test(cleanPath)) return `/${locale}/blog`;
+
+    const dateArchive = cleanPath.match(/^\/\d{4}(?:\/\d{1,2}){0,2}(?:\/([^/]+))?$/);
+    if (dateArchive) {
+        const post = dateArchive[1] ? (legacyRedirects as Record<string, string>)[`/${dateArchive[1]}`] : undefined;
+        return post ?? `/${locale}/blog`;
+    }
+
+    if (!hadSuffix) return null;
+    if (cleanPath === "" || cleanPath === "/comments" || cleanPath === "/blog") return `/${locale}/blog`;
+    if (cleanPath === "/eventos" || cleanPath === "/evento" || cleanPath === "/event") return `/${locale}/eventos`;
+    return (legacyRedirects as Record<string, string>)[cleanPath] ?? `/${locale}${cleanPath}`;
+}
+
+/** next-intl answers with 307 when it adds the locale prefix; the move is permanent. */
+function asPermanentRedirect(response: NextResponse) {
+    if (response.status !== 307 || !response.headers.has("location")) return response;
+    return new NextResponse(null, { status: 308, headers: response.headers });
+}
+
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const normalizedPath = pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
+    const localePrefix = normalizedPath.match(/^\/(es|en)(?=\/|$)/)?.[1];
     const wordpressPath = normalizedPath.replace(/^\/(?:es|en)(?=\/)/, "");
     const firstSegment = wordpressPath.split("/")[1];
 
@@ -64,6 +102,13 @@ export async function proxy(request: NextRequest) {
     ) {
         return retiredResponse();
     }
+    const archiveTarget = isApplicationPath(normalizedPath) ? null : resolveArchivePath(wordpressPath, localePrefix ?? "es");
+    if (archiveTarget) {
+        const target = new URL(archiveTarget, request.url);
+        target.search = "";
+        return NextResponse.redirect(target, 308);
+    }
+
     const legacyTarget = (legacyRedirects as Record<string, string>)[normalizedPath] ?? migratedStaticPaths[normalizedPath];
 
     if (legacyTarget) {
@@ -95,7 +140,13 @@ export async function proxy(request: NextRequest) {
     // Keep one canonical URL for new routes while accepting the trailing slash
     // used by WordPress long enough to resolve legacy paths above in one hop.
     if (pathname.length > 1 && pathname.endsWith("/")) {
-        const target = new URL(normalizedPath, request.url);
+        // Old WordPress pages had no locale prefix and were Spanish: add it here
+        // so they reach their page in one hop instead of two.
+        const needsLocale = !localePrefix
+            && !isApplicationPath(normalizedPath)
+            && !normalizedPath.startsWith("/wp-content/")
+            && !/\.[a-z0-9]+$/i.test(normalizedPath);
+        const target = new URL(needsLocale ? `/es${normalizedPath}` : normalizedPath, request.url);
         target.search = request.nextUrl.search;
         return NextResponse.redirect(target, 308);
     }
@@ -110,9 +161,7 @@ export async function proxy(request: NextRequest) {
         return NextResponse.next();
     }
 
-    const applicationPath = ["/api", "/auth", "/admin", "/dashboard", "/login", "/register", "/forgot-password", "/reset-password"]
-        .some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
-    if (!applicationPath) return handleI18nRouting(request);
+    if (!isApplicationPath(pathname)) return asPermanentRedirect(handleI18nRouting(request));
 
     return await updateSession(request);
 }
