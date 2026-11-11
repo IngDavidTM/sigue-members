@@ -8,6 +8,7 @@ import { getPublicBlogSeries } from "@/lib/content/public-queries";
 import LocaleAlternates from "@/app/components/layout/LocaleAlternates";
 import { isIndexableTaxonomy, openGraphDefaults, translationAlternates, translationPaths } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site-url";
+import { JsonLd, breadcrumbNode, webPageNode } from "@/lib/structured-data";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -34,6 +35,17 @@ export default async function CategoryPage({ params }: Props) {
   if (data.translation.slug !== slug) permanentRedirect(`/${locale}/category/${data.translation.slug}`);
   return <main className={styles.root}>
     <LocaleAlternates {...translationPaths(data.alternateTranslations, "category")} />
+    <JsonLd nodes={[
+      {
+        ...webPageNode(locale, { path: `/category/${data.translation.slug}`, name: data.translation.name, type: "CollectionPage" }),
+        hasPart: data.cards.map(({ translation }) => ({ "@type": "BlogPosting", headline: translation.title, url: absoluteUrl(`/${locale}/blog/${translation.slug}`) })),
+      },
+      breadcrumbNode(locale, [
+        { name: "Blog", path: "/blog" },
+        ...(data.parent ? [{ name: data.parent.name, path: `/category/${data.parent.slug}` }] : []),
+        { name: data.translation.name, path: `/category/${data.translation.slug}` },
+      ]),
+    ]} />
     <header className={styles.articleHeader}><div className={styles.breadcrumbs}><Link href={`/${locale}/blog`}>Blog</Link>{data.parent ? <> · <Link href={`/${locale}/category/${data.parent.slug}`}>{data.parent.name}</Link></> : null}</div><h1>{data.translation.name}</h1>{data.translation.description ? <p>{data.translation.description}</p> : null}{data.children.length ? <nav className={styles.filterBar} aria-label={es ? "Subseries" : "Subseries"}>{data.children.map((child) => <Link href={`/${locale}/category/${child.slug}`} key={child.series_id}>{child.name}</Link>)}</nav> : null}</header>
     <section className={styles.container}>{data.cards.length ? <div className={styles.cardGrid}>{data.cards.map(({ post, translation, series }) => <article className={styles.postCard} key={post.id}><Link className={styles.cardImage} href={`/${locale}/blog/${translation.slug}`}>{post.featured_image_url ? <img src={post.featured_image_url} alt={translation.image_alt || translation.title} /> : <span className={styles.imagePlaceholder}>SIGUE</span>}</Link><div className={styles.cardMeta}>{series ? <span>{series.name}</span> : null}</div><h2><Link href={`/${locale}/blog/${translation.slug}`}>{translation.title}</Link></h2>{translation.excerpt ? <p>{translation.excerpt}</p> : null}</article>)}</div> : <div className={styles.empty}><h2>{es ? "Aún no hay publicaciones" : "No posts yet"}</h2></div>}</section>
   </main>;

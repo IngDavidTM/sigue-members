@@ -10,6 +10,7 @@ import { sanitizeRichText } from "@/lib/content/admin-utils";
 import LocaleAlternates from "@/app/components/layout/LocaleAlternates";
 import { defaultOgImage, openGraphDefaults, translationAlternates, translationPaths } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site-url";
+import { JsonLd, authorNode, breadcrumbNode, organizationNode, organizationRef, websiteRef } from "@/lib/structured-data";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -45,21 +46,33 @@ export default async function BlogPostPage({ params }: Props) {
   if (translation.slug !== slug) permanentRedirect(`/${locale}/blog/${translation.slug}`);
   const url = absoluteUrl(`/${locale}/blog/${translation.slug}`);
   const structuredData = {
-    "@context": "https://schema.org",
     "@type": translation.schema_type,
+    "@id": `${url}#article`,
     headline: translation.title,
     description: translation.seo_description || translation.excerpt,
-    image: translation.og_image_url || post.featured_image_url,
+    image: translation.og_image_url || post.featured_image_url || defaultOgImage.url,
     datePublished: post.published_at,
     dateModified: post.updated_at,
     inLanguage: locale,
     mainEntityOfPage: url,
-    author: { "@type": "Person", name: post.author_name },
-    publisher: { "@type": "Organization", name: "SIGUE Network", url: absoluteUrl(`/${locale}`) },
+    url,
+    isPartOf: websiteRef,
+    articleSection: series?.name,
+    keywords: tags.map((tag) => tag.name).join(", "),
+    author: authorNode(post.author_name, locale),
+    publisher: organizationRef,
   };
   return <article className={styles.root}>
     <LocaleAlternates {...translationPaths(data.alternateTranslations, "blog")} />
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
+    <JsonLd nodes={[
+      structuredData,
+      organizationNode(locale),
+      breadcrumbNode(locale, [
+        { name: "Blog", path: "/blog" },
+        ...(series ? [{ name: series.name, path: `/category/${series.slug}` }] : []),
+        { name: translation.title, path: `/blog/${translation.slug}` },
+      ]),
+    ]} />
     <header className={styles.articleHeader}><div className={styles.breadcrumbs}><Link href={`/${locale}`}>{es ? "Inicio" : "Home"}</Link> · <Link href={`/${locale}/blog`}>Blog</Link>{series ? <> · <Link href={`/${locale}/category/${series.slug}`}>{series.name}</Link></> : null}</div><h1>{translation.title}</h1>{translation.excerpt ? <p>{translation.excerpt}</p> : null}</header>
     <div className={styles.articleLayout}>
       <main>

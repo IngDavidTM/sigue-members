@@ -1,15 +1,21 @@
 import type { Metadata } from 'next';
 import SigueTracksLanding from '@/app/components/sigue-tracks/SigueTracksLanding';
 import { absoluteUrl } from '@/lib/site-url';
+import { JsonLd, breadcrumbNode, serviceNode, webPageNode } from '@/lib/structured-data';
+
+function pageCopy(isEnglish: boolean) {
+  const title = isEnglish ? 'SIGUE Tracks | Find your path to grow' : 'SIGUE Tracks | Descubre tu ruta para crecer';
+  const description = isEnglish
+    ? 'Explore flexible SIGUE routes that combine strategic consulting, training, and connections to strengthen your organization.'
+    : 'Explora rutas flexibles que combinan asesoría estratégica, formación y conexiones para fortalecer tu organización.';
+  return { title, description };
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: requestedLocale } = await params;
   const locale = requestedLocale === 'en' ? 'en' : 'es';
   const isEnglish = locale === 'en';
-  const title = isEnglish ? 'SIGUE Tracks | Find your path to grow' : 'SIGUE Tracks | Descubre tu ruta para crecer';
-  const description = isEnglish
-    ? 'Explore flexible SIGUE routes that combine strategic consulting, training, and connections to strengthen your organization.'
-    : 'Explora rutas flexibles que combinan asesoría estratégica, formación y conexiones para fortalecer tu organización.';
+  const { title, description } = pageCopy(isEnglish);
   const canonical = absoluteUrl(`/${locale}/sigue-tracks`);
 
   return {
@@ -45,5 +51,25 @@ export default async function SigueTracksPage({ params }: { params: Promise<{ lo
   const { locale: requestedLocale } = await params;
   const locale = requestedLocale === 'en' ? 'en' : 'es';
 
-  return <SigueTracksLanding locale={locale} />;
+  const isEnglish = locale === 'en';
+  const { description } = pageCopy(isEnglish);
+
+  return (
+    <>
+      <JsonLd
+        nodes={[
+          serviceNode(locale, {
+            path: '/sigue-tracks',
+            name: 'SIGUE Tracks',
+            description,
+            serviceType: isEnglish ? 'Organizational strengthening tracks' : 'Rutas de fortalecimiento organizacional',
+            audience: isEnglish ? 'Social-impact organizations and their leadership teams' : 'Organizaciones sociales y sus equipos de liderazgo',
+          }),
+          webPageNode(locale, { path: '/sigue-tracks', name: 'SIGUE Tracks', description }),
+          breadcrumbNode(locale, [{ name: 'SIGUE Tracks', path: '/sigue-tracks' }]),
+        ]}
+      />
+      <SigueTracksLanding locale={locale} />
+    </>
+  );
 }

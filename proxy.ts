@@ -65,6 +65,8 @@ function resolveArchivePath(wordpressPath: string, locale: string): string | nul
     }
 
     if (!hadSuffix) return null;
+    // The site-wide WordPress feed maps to the RSS feed of the same language.
+    if (cleanPath === "" && /\/feed/.test(wordpressPath)) return `/${locale}/feed.xml`;
     if (cleanPath === "" || cleanPath === "/comments" || cleanPath === "/blog") return `/${locale}/blog`;
     if (cleanPath === "/eventos" || cleanPath === "/evento" || cleanPath === "/event") return `/${locale}/eventos`;
     return (legacyRedirects as Record<string, string>)[cleanPath] ?? `/${locale}${cleanPath}`;
@@ -154,6 +156,7 @@ export async function proxy(request: NextRequest) {
     if (
         pathname === "/robots.txt" ||
         pathname === "/sitemap.xml" ||
+        pathname === "/llms.txt" ||
         pathname.startsWith("/wp-content/") ||
         pathname === "/api/exchange-rate" ||
         pathname === "/api/cron/form-notifications"

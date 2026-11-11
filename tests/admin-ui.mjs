@@ -152,7 +152,11 @@ export default function Page() {
     assert.equal(await page.locator('meta[property="og:title"]').getAttribute('content'), 'Título social configurado');
     assert.match(await page.locator('meta[name=robots]').getAttribute('content'), /nofollow/);
     assert.equal(await page.locator('[class*="richText"] img').evaluate((img) => img.complete && img.naturalWidth > 0), true);
-    const schema = await page.locator('script[type="application/ld+json"]').evaluateAll((scripts) => scripts.map((script) => JSON.parse(script.textContent)));
+    const schema = await page.locator('script[type="application/ld+json"]').evaluateAll((scripts) => scripts.flatMap((script) => {
+      // Pages publish their schema.org nodes inside a single @graph.
+      const data = JSON.parse(script.textContent);
+      return data['@graph'] ?? [data];
+    }));
     assert.ok(schema.some((item) => item['@type'] === (segment === 'blog' ? 'BlogPosting' : 'Event')));
     await page.goto(`${origin}/en/${segment}/${slug}`);
     assert.match(page.url(), segment === 'blog' ? /test-article$/ : /test-event$/);
