@@ -45,7 +45,7 @@ export default async function BlogPostPage({ params }: Props) {
   const { post, translation, series, tags, comments, recent, allSeries } = data;
   if (translation.slug !== slug) permanentRedirect(`/${locale}/blog/${translation.slug}`);
   const url = absoluteUrl(`/${locale}/blog/${translation.slug}`);
-  // "Uncategorized" is a WordPress placeholder, not a section worth declaring.
+  // "Uncategorized" is a WordPress placeholder, not a section worth declaring or linking.
   const section = series && !isPlaceholderTaxonomy(series.slug) ? series : null;
   const structuredData = {
     "@type": translation.schema_type,
@@ -75,7 +75,7 @@ export default async function BlogPostPage({ params }: Props) {
         { name: translation.title, path: `/blog/${translation.slug}` },
       ]),
     ]} />
-    <header className={styles.articleHeader}><div className={styles.breadcrumbs}><Link href={`/${locale}`}>{es ? "Inicio" : "Home"}</Link> · <Link href={`/${locale}/blog`}>Blog</Link>{series ? <> · <Link href={`/${locale}/category/${series.slug}`}>{series.name}</Link></> : null}</div><h1>{translation.title}</h1>{translation.excerpt ? <p>{translation.excerpt}</p> : null}</header>
+    <header className={styles.articleHeader}><div className={styles.breadcrumbs}><Link href={`/${locale}`}>{es ? "Inicio" : "Home"}</Link> · <Link href={`/${locale}/blog`}>Blog</Link>{section ? <> · <Link href={`/${locale}/category/${section.slug}`}>{section.name}</Link></> : null}</div><h1>{translation.title}</h1>{translation.excerpt ? <p>{translation.excerpt}</p> : null}</header>
     <div className={styles.articleLayout}>
       <main>
         <div className={styles.articleMeta}><span>{post.author_name}</span>{post.published_at ? <time dateTime={post.published_at}>{new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(new Date(post.published_at))}</time> : null}<span>{post.reading_time_minutes} {es ? "min de lectura" : "min read"}</span></div>
@@ -87,7 +87,7 @@ export default async function BlogPostPage({ params }: Props) {
       </main>
       <aside className={styles.sidebar}>
         <section className={styles.sideBlock}><h2>{es ? "Publicaciones recientes" : "Recent posts"}</h2><ul>{recent.map((item) => <li key={item.post.id}><Link href={`/${locale}/blog/${item.translation.slug}`}>{item.translation.title}</Link></li>)}</ul></section>
-        <section className={styles.sideBlock}><h2>{es ? "Series" : "Series"}</h2><ul>{allSeries.map((item) => <li key={item.series_id}><Link href={`/${locale}/category/${item.slug}`}>{item.name}</Link></li>)}</ul></section>
+        <section className={styles.sideBlock}><h2>{es ? "Series" : "Series"}</h2><ul>{allSeries.filter((item) => !isPlaceholderTaxonomy(item.slug)).map((item) => <li key={item.series_id}><Link href={`/${locale}/category/${item.slug}`}>{item.name}</Link></li>)}</ul></section>
         <section className={styles.sideBlock}><h2>SIGUE Network</h2><p>{es ? "Fortalecemos y conectamos a quienes sirven para multiplicar su impacto." : "We strengthen and connect those who serve to multiply their impact."}</p></section>
       </aside>
     </div>
