@@ -51,10 +51,15 @@ export function translationPaths(
 
 const placeholderTaxonomySlug = /^(?:uncategorized|sin-categoria)(?:-\d+)?$/;
 
+/** True for the category WordPress assigns to posts that were never categorized. */
+export function isPlaceholderTaxonomy(slug: string) {
+  return placeholderTaxonomySlug.test(slug);
+}
+
 /**
  * A category or tag page is worth indexing only when it lists posts and is not
  * the placeholder category WordPress assigns by default.
  */
 export function isIndexableTaxonomy(slug: string, postCount: number) {
-  return postCount > 0 && !placeholderTaxonomySlug.test(slug);
+  return postCount > 0 && !isPlaceholderTaxonomy(slug);
 }

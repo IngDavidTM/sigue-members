@@ -8,7 +8,7 @@ import styles from "@/app/components/content/ContentPages.module.css";
 import { getPublicBlogPost } from "@/lib/content/public-queries";
 import { sanitizeRichText } from "@/lib/content/admin-utils";
 import LocaleAlternates from "@/app/components/layout/LocaleAlternates";
-import { defaultOgImage, openGraphDefaults, translationAlternates, translationPaths } from "@/lib/seo";
+import { defaultOgImage, isPlaceholderTaxonomy, openGraphDefaults, translationAlternates, translationPaths } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site-url";
 import { JsonLd, authorNode, breadcrumbNode, organizationNode, organizationRef, websiteRef } from "@/lib/structured-data";
 
@@ -45,6 +45,8 @@ export default async function BlogPostPage({ params }: Props) {
   const { post, translation, series, tags, comments, recent, allSeries } = data;
   if (translation.slug !== slug) permanentRedirect(`/${locale}/blog/${translation.slug}`);
   const url = absoluteUrl(`/${locale}/blog/${translation.slug}`);
+  // "Uncategorized" is a WordPress placeholder, not a section worth declaring.
+  const section = series && !isPlaceholderTaxonomy(series.slug) ? series : null;
   const structuredData = {
     "@type": translation.schema_type,
     "@id": `${url}#article`,
@@ -57,7 +59,7 @@ export default async function BlogPostPage({ params }: Props) {
     mainEntityOfPage: url,
     url,
     isPartOf: websiteRef,
-    articleSection: series?.name,
+    articleSection: section?.name,
     keywords: tags.map((tag) => tag.name).join(", "),
     author: authorNode(post.author_name, locale),
     publisher: organizationRef,
@@ -69,7 +71,7 @@ export default async function BlogPostPage({ params }: Props) {
       organizationNode(locale),
       breadcrumbNode(locale, [
         { name: "Blog", path: "/blog" },
-        ...(series ? [{ name: series.name, path: `/category/${series.slug}` }] : []),
+        ...(section ? [{ name: section.name, path: `/category/${section.slug}` }] : []),
         { name: translation.title, path: `/blog/${translation.slug}` },
       ]),
     ]} />
