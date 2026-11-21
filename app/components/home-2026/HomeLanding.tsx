@@ -369,9 +369,13 @@ function SectionHeading({
   );
 }
 
-function PrimaryLink({ locale, href, children }: { locale: Locale; href: string; children: React.ReactNode }) {
+function PrimaryLink({ locale, href, children, analyticsId }: { locale: Locale; href: string; children: React.ReactNode; analyticsId?: string }) {
   return (
-    <Link className={styles.primaryButton} href={localizedHref(locale, href)}>
+    <Link
+      className={styles.primaryButton}
+      href={localizedHref(locale, href)}
+      data-analytics-id={analyticsId}
+    >
       {children}
     </Link>
   );
@@ -399,7 +403,7 @@ export default function HomeLanding({ locale }: { locale: Locale }) {
               <h1 id="home-hero-title">{c.hero.title}</h1>
               <p className={styles.heroAccent}>{c.hero.accent}</p>
               <p className={styles.heroBody}>{c.hero.body}</p>
-              <PrimaryLink locale={locale} href="/sigue-tracks">{c.hero.cta}</PrimaryLink>
+              <PrimaryLink locale={locale} href="/sigue-tracks" analyticsId="sigue_tracks_click">{c.hero.cta}</PrimaryLink>
               <div className={styles.heroStats}>
                 {c.hero.stats.map(([value, label]) => (
                   <div key={label}><strong>{value}</strong><span>{label}</span></div>
@@ -434,7 +438,7 @@ export default function HomeLanding({ locale }: { locale: Locale }) {
               <h2 id="network-title">{c.network.title} <em>{c.network.accent}</em></h2>
               {c.network.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </Reveal>
-            <PrimaryLink locale={locale} href="/conoce-sigue">{c.network.cta}</PrimaryLink>
+            <PrimaryLink locale={locale} href="/conoce-sigue" analyticsId="conoce_sigue_click">{c.network.cta}</PrimaryLink>
           </div>
         </section>
 
@@ -454,7 +458,7 @@ export default function HomeLanding({ locale }: { locale: Locale }) {
                 );
               })}
             </div>
-            <div className={styles.centeredButton}><PrimaryLink locale={locale} href="/miembros-sigue">{c.audience.cta}</PrimaryLink></div>
+            <div className={styles.centeredButton}><PrimaryLink locale={locale} href="/miembros-sigue" analyticsId="membership_click">{c.audience.cta}</PrimaryLink></div>
           </div>
           <div className={styles.communityGallery} aria-label={c.audience.galleryAlt}>
             {['community-1.webp', 'community-2.webp', 'community-3.webp'].map((file) => (
