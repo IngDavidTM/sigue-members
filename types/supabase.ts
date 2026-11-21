@@ -224,10 +224,8 @@ export type DynamicFormRow = {
   updated_at: string;
 };
 
-export type PublishedDynamicForm = {
-  form: DynamicFormRow;
-  fields: DynamicFormFieldRow[];
-};
+// A published form as public pages receive it: only visitor-facing columns.
+export type PublishedDynamicForm = PublicDynamicForm;
 
 export type PublicDynamicForm = {
   form: Pick<DynamicFormRow, 'id' | 'slug' | 'title_es' | 'title_en' | 'description_es' | 'description_en' | 'submit_label_es' | 'submit_label_en'>;

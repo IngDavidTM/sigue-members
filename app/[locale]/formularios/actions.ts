@@ -12,6 +12,24 @@ export type PublicFormState = {
   message?: string;
 };
 
+// The page path the form was sent from. Only a local path is accepted, so a
+// visitor cannot pass a value such as "wordpress://..." that the notification
+// queue treats as an imported record.
+function normalizeSourcePath(value: FormDataEntryValue | null) {
+  const path = String(value ?? "").trim().slice(0, 500);
+  return /^\/(?!\/)[^\s]*$/.test(path) ? path : null;
+}
+
+async function getClientIp() {
+  const requestHeaders = await headers();
+  return (
+    requestHeaders.get("x-real-ip")?.trim()
+    || requestHeaders.get("x-vercel-forwarded-for")?.split(",")[0]?.trim()
+    || requestHeaders.get("x-forwarded-for")?.split(",").at(-1)?.trim()
+    || "unknown"
+  );
+}
+
 export async function submitDynamicForm(
   slug: string,
   locale: "es" | "en",
@@ -23,12 +41,12 @@ export async function submitDynamicForm(
 
   const fingerprintSecret = process.env.FORM_RATE_LIMIT_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!fingerprintSecret) return { message: locale === "es" ? "El formulario no está disponible temporalmente." : "The form is temporarily unavailable." };
-  const requestHeaders = await headers();
-  const forwardedFor = requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim();
-  const address = forwardedFor || requestHeaders.get("x-real-ip") || "unknown";
-  const userAgent = requestHeaders.get("user-agent") || "unknown";
+  // Rate-limit by client IP only. On Vercel, x-real-ip / x-vercel-forwarded-for
+  // are set by the platform and cannot be spoofed by the visitor; the first
+  // x-forwarded-for entry and the User-Agent can, so they are not used.
+  const address = await getClientIp();
   const requestFingerprint = createHmac("sha256", fingerprintSecret)
-    .update(`${address.slice(0, 128)}\n${userAgent.slice(0, 256)}`)
+    .update(address.slice(0, 128))
     .digest("hex");
   const supabase = createAdminClient();
   const formResult = await supabase
@@ -69,7 +87,7 @@ export async function submitDynamicForm(
     p_slug: slug,
     p_locale: locale,
     p_answers: answers,
-    p_source_path: String(formData.get("sourcePath") ?? "").slice(0, 500) || null,
+    p_source_path: normalizeSourcePath(formData.get("sourcePath")),
     p_request_fingerprint: requestFingerprint,
   });
   if (error) {

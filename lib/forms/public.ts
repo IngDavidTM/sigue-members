@@ -4,11 +4,18 @@ import { cache } from "react";
 
 import { createClient } from "@/lib/supabase/server";
 
-export const getPublishedDynamicForm = cache(async (slug: string) => {
+import type { PublicDynamicForm } from "@/types/supabase";
+
+// Only the columns a visitor needs. The form row also holds staff inboxes
+// (notification_emails), reply-to settings and admin user IDs, which must not
+// reach public pages.
+const PUBLIC_FORM_COLUMNS = "id,slug,title_es,title_en,description_es,description_en,submit_label_es,submit_label_en";
+
+export const getPublishedDynamicForm = cache(async (slug: string): Promise<PublicDynamicForm | null> => {
   const supabase = await createClient();
   const formResult = await supabase
     .from("dynamic_forms")
-    .select("*")
+    .select(PUBLIC_FORM_COLUMNS)
     .eq("slug", slug)
     .eq("status", "published")
     .maybeSingle();

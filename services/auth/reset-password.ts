@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { authErrorMessage } from "@/lib/auth/errors";
 
 import { createClient } from "@/lib/supabase/server";
 import { getURL } from "@/lib/utils";
@@ -23,9 +24,12 @@ export async function resetPasswordForEmail(formData: FormData) {
         redirectTo: `${getURL()}/auth/callback?next=/reset-password`,
     });
 
-    if (error) {
-        return { error: error.message };
+    // Answer the same whether or not the email has an account, so the form
+    // cannot be used to find out who is registered. Only rate limits surface.
+    if (error && (error.status === 429 || error.code?.startsWith("over_"))) {
+        return { error: authErrorMessage(error, "reset") };
     }
+    if (error) console.error("Auth reset error:", error.code ?? error.status, error.message);
 
     return { success: true };
 }
@@ -46,7 +50,7 @@ export async function updatePassword(formData: FormData) {
     const { error } = await supabase.auth.updateUser({ password });
 
     if (error) {
-        return { error: error.message };
+        return { error: authErrorMessage(error, "update") };
     }
 
     redirect("/login");
