@@ -1,13 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import { CommentForm } from "@/app/components/content/CommentForm";
 import styles from "@/app/components/content/ContentPages.module.css";
 import { getPublicBlogPost } from "@/lib/content/public-queries";
 import { sanitizeRichText } from "@/lib/content/admin-utils";
+import LocaleAlternates from "@/app/components/layout/LocaleAlternates";
+import { defaultOgImage, isPlaceholderTaxonomy, openGraphDefaults, translationAlternates, translationPaths } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site-url";
+import { JsonLd, authorNode, breadcrumbNode, organizationNode, organizationRef, websiteRef } from "@/lib/structured-data";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -25,13 +28,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     alternates: {
       canonical: translation.canonical_url || absoluteUrl(`/${locale}/blog/${translation.slug}`),
-      languages: Object.fromEntries(
-        alternateTranslations.map((item) => [item.locale, absoluteUrl(`/${item.locale}/blog/${item.slug}`)]),
-      ),
+      languages: translationAlternates(alternateTranslations, (item) => `/${item.locale}/blog/${item.slug}`),
     },
     robots: { index: !translation.noindex, follow: !translation.nofollow },
-    openGraph: { type: "article", title: translation.og_title || title, description: translation.og_description || description, url: absoluteUrl(`/${locale}/blog/${translation.slug}`), publishedTime: post.published_at || undefined, modifiedTime: post.updated_at, images: image ? [{ url: image, alt: translation.image_alt || translation.title }] : undefined },
-    twitter: { card: "summary_large_image", title: translation.og_title || title, description: translation.og_description || description, images: image ? [image] : undefined },
+    openGraph: { ...openGraphDefaults(locale), type: "article", title: translation.og_title || title, description: translation.og_description || description, url: absoluteUrl(`/${locale}/blog/${translation.slug}`), publishedTime: post.published_at || undefined, modifiedTime: post.updated_at, images: image ? [{ url: image, alt: translation.image_alt || translation.title }] : [defaultOgImage] },
+    twitter: { card: "summary_large_image", title: translation.og_title || title, description: translation.og_description || description, images: [image || defaultOgImage.url] },
   };
 }
 
@@ -42,24 +43,39 @@ export default async function BlogPostPage({ params }: Props) {
   const data = await getPublicBlogPost(locale, slug);
   if (!data) notFound();
   const { post, translation, series, tags, comments, recent, allSeries } = data;
-  if (translation.slug !== slug) redirect(`/${locale}/blog/${translation.slug}`);
+  if (translation.slug !== slug) permanentRedirect(`/${locale}/blog/${translation.slug}`);
   const url = absoluteUrl(`/${locale}/blog/${translation.slug}`);
+  // "Uncategorized" is a WordPress placeholder, not a section worth declaring or linking.
+  const section = series && !isPlaceholderTaxonomy(series.slug) ? series : null;
   const structuredData = {
-    "@context": "https://schema.org",
     "@type": translation.schema_type,
+    "@id": `${url}#article`,
     headline: translation.title,
     description: translation.seo_description || translation.excerpt,
-    image: translation.og_image_url || post.featured_image_url,
+    image: translation.og_image_url || post.featured_image_url || defaultOgImage.url,
     datePublished: post.published_at,
     dateModified: post.updated_at,
     inLanguage: locale,
     mainEntityOfPage: url,
-    author: { "@type": "Person", name: post.author_name },
-    publisher: { "@type": "Organization", name: "SIGUE Network", url: absoluteUrl(`/${locale}`) },
+    url,
+    isPartOf: websiteRef,
+    articleSection: section?.name,
+    keywords: tags.map((tag) => tag.name).join(", "),
+    author: authorNode(post.author_name, locale),
+    publisher: organizationRef,
   };
   return <article className={styles.root}>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
-    <header className={styles.articleHeader}><div className={styles.breadcrumbs}><Link href={`/${locale}`}>{es ? "Inicio" : "Home"}</Link> · <Link href={`/${locale}/blog`}>Blog</Link>{series ? <> · <Link href={`/${locale}/category/${series.slug}`}>{series.name}</Link></> : null}</div><h1>{translation.title}</h1>{translation.excerpt ? <p>{translation.excerpt}</p> : null}</header>
+    <LocaleAlternates {...translationPaths(data.alternateTranslations, "blog")} />
+    <JsonLd nodes={[
+      structuredData,
+      organizationNode(locale),
+      breadcrumbNode(locale, [
+        { name: "Blog", path: "/blog" },
+        ...(section ? [{ name: section.name, path: `/category/${section.slug}` }] : []),
+        { name: translation.title, path: `/blog/${translation.slug}` },
+      ]),
+    ]} />
+    <header className={styles.articleHeader}><div className={styles.breadcrumbs}><Link href={`/${locale}`}>{es ? "Inicio" : "Home"}</Link> · <Link href={`/${locale}/blog`}>Blog</Link>{section ? <> · <Link href={`/${locale}/category/${section.slug}`}>{section.name}</Link></> : null}</div><h1>{translation.title}</h1>{translation.excerpt ? <p>{translation.excerpt}</p> : null}</header>
     <div className={styles.articleLayout}>
       <main>
         <div className={styles.articleMeta}><span>{post.author_name}</span>{post.published_at ? <time dateTime={post.published_at}>{new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(new Date(post.published_at))}</time> : null}<span>{post.reading_time_minutes} {es ? "min de lectura" : "min read"}</span></div>
@@ -71,7 +87,7 @@ export default async function BlogPostPage({ params }: Props) {
       </main>
       <aside className={styles.sidebar}>
         <section className={styles.sideBlock}><h2>{es ? "Publicaciones recientes" : "Recent posts"}</h2><ul>{recent.map((item) => <li key={item.post.id}><Link href={`/${locale}/blog/${item.translation.slug}`}>{item.translation.title}</Link></li>)}</ul></section>
-        <section className={styles.sideBlock}><h2>{es ? "Series" : "Series"}</h2><ul>{allSeries.map((item) => <li key={item.series_id}><Link href={`/${locale}/category/${item.slug}`}>{item.name}</Link></li>)}</ul></section>
+        <section className={styles.sideBlock}><h2>{es ? "Series" : "Series"}</h2><ul>{allSeries.filter((item) => !isPlaceholderTaxonomy(item.slug)).map((item) => <li key={item.series_id}><Link href={`/${locale}/category/${item.slug}`}>{item.name}</Link></li>)}</ul></section>
         <section className={styles.sideBlock}><h2>SIGUE Network</h2><p>{es ? "Fortalecemos y conectamos a quienes sirven para multiplicar su impacto." : "We strengthen and connect those who serve to multiply their impact."}</p></section>
       </aside>
     </div>

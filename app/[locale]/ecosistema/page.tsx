@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description,
     alternates: {
       canonical,
-      languages: { es: absoluteUrl('/es/ecosistema'), en: absoluteUrl('/en/ecosistema') },
+      languages: { es: absoluteUrl('/es/ecosistema'), en: absoluteUrl('/en/ecosistema'), 'x-default': absoluteUrl('/es/ecosistema') },
     },
     openGraph: {
       type: 'website',

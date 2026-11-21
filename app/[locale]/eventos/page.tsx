@@ -6,6 +6,7 @@ import Link from "next/link";
 import styles from "@/app/components/content/ContentPages.module.css";
 import type { PublicEventCard } from "@/lib/content/public-queries";
 import { getPublicEventGroups } from "@/lib/content/public-queries";
+import { openGraphDefaults } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site-url";
 
 type Props = { params: Promise<{ locale: string }> };
@@ -21,8 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: absoluteUrl(`/${locale}/eventos`), languages: { es: absoluteUrl("/es/eventos"), en: absoluteUrl("/en/eventos") } },
-    openGraph: { title, description, type: "website", url: absoluteUrl(`/${locale}/eventos`) },
+    alternates: { canonical: absoluteUrl(`/${locale}/eventos`), languages: { es: absoluteUrl("/es/eventos"), en: absoluteUrl("/en/eventos"), "x-default": absoluteUrl("/es/eventos") } },
+    openGraph: { ...openGraphDefaults(locale), title, description, type: "website", url: absoluteUrl(`/${locale}/eventos`) },
   };
 }
 

@@ -22,12 +22,12 @@ const fixture = await startPublicContentFixture(origin);
 await mkdir(route); // Refuse to overwrite an existing route.
 try {
   await writeFile(new URL('page.tsx', route), `
-import { ActionForm } from '@/app/admin/components/ActionForm';
-import { RichTextEditor } from '@/app/admin/components/RichTextEditor';
-import { MediaField } from '@/app/admin/components/MediaField';
-import { SeoAssistant } from '@/app/admin/components/SeoAssistant';
+import { ActionForm } from '@/app/(system)/admin/components/ActionForm';
+import { RichTextEditor } from '@/app/(system)/admin/components/RichTextEditor';
+import { MediaField } from '@/app/(system)/admin/components/MediaField';
+import { SeoAssistant } from '@/app/(system)/admin/components/SeoAssistant';
 import DynamicForm from '@/app/components/forms/DynamicForm';
-import type { AdminActionState } from '@/app/admin/actions/types';
+import type { AdminActionState } from '@/app/(system)/admin/actions/types';
 import type { DynamicFormFieldRow, DynamicFormRow } from '@/types/supabase';
 export default function Page() {
   async function save(_state: AdminActionState, _form: FormData): Promise<AdminActionState> {
@@ -152,7 +152,11 @@ export default function Page() {
     assert.equal(await page.locator('meta[property="og:title"]').getAttribute('content'), 'Título social configurado');
     assert.match(await page.locator('meta[name=robots]').getAttribute('content'), /nofollow/);
     assert.equal(await page.locator('[class*="richText"] img').evaluate((img) => img.complete && img.naturalWidth > 0), true);
-    const schema = await page.locator('script[type="application/ld+json"]').evaluateAll((scripts) => scripts.map((script) => JSON.parse(script.textContent)));
+    const schema = await page.locator('script[type="application/ld+json"]').evaluateAll((scripts) => scripts.flatMap((script) => {
+      // Pages publish their schema.org nodes inside a single @graph.
+      const data = JSON.parse(script.textContent);
+      return data['@graph'] ?? [data];
+    }));
     assert.ok(schema.some((item) => item['@type'] === (segment === 'blog' ? 'BlogPosting' : 'Event')));
     await page.goto(`${origin}/en/${segment}/${slug}`);
     assert.match(page.url(), segment === 'blog' ? /test-article$/ : /test-event$/);
