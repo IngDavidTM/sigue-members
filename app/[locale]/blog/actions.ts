@@ -20,7 +20,7 @@ export async function submitComment(
     locale: z.enum(["es", "en"], es ? "El idioma no es válido." : "The language is invalid."),
     authorName: z.string().trim().min(2, es ? "Escribe tu nombre." : "Enter your name.").max(100, es ? "El nombre es demasiado largo." : "The name is too long."),
     authorEmail: z.email(es ? "Escribe un correo válido." : "Enter a valid email address.").trim().toLowerCase(),
-    authorWebsite: z.union([z.url(es ? "Escribe una URL válida." : "Enter a valid URL."), z.literal("")]),
+    authorWebsite: z.union([z.url({ protocol: /^https?$/, message: es ? "Escribe una URL válida (http o https)." : "Enter a valid URL (http or https)." }), z.literal("")]),
     content: z.string().trim().min(2, es ? "Escribe tu comentario." : "Enter your comment.").max(4000, es ? "El comentario es demasiado largo." : "The comment is too long."),
     parentId: z.union([z.uuid(es ? "La respuesta no es válida." : "The reply is invalid."), z.literal("")]),
   }).safeParse({

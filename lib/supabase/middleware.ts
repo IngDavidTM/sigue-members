@@ -68,6 +68,10 @@ export async function updateSession(request: NextRequest) {
         !request.nextUrl.pathname.startsWith("/forgot-password") &&
         !request.nextUrl.pathname.startsWith("/auth")
     ) {
+        // API callers get a 401 instead of an HTML redirect to the login page.
+        if (request.nextUrl.pathname.startsWith("/api/")) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
         // No user session, redirect to login page
         const url = request.nextUrl.clone();
         url.pathname = "/login";
