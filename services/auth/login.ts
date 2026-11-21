@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { authErrorMessage } from "@/lib/auth/errors";
 
 import { createClient } from "@/lib/supabase/server";
 import { getURL } from "@/lib/utils";
@@ -39,7 +40,7 @@ export async function loginWithEmail(formData: FormData) {
     const { data: authData, error } = await supabase.auth.signInWithPassword(data);
 
     if (error) {
-        return { error: error.message };
+        return { error: authErrorMessage(error, "login") };
     }
 
     const destination = await getDestinationForUser(supabase, authData.user.id);
@@ -62,7 +63,7 @@ export async function loginWithGoogle() {
     });
 
     if (error) {
-        return { error: error.message };
+        return { error: authErrorMessage(error, "oauth") };
     }
 
     if (data.url) {

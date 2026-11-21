@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 
 import { getAuthenticatedProfile } from "@/lib/auth/authorization";
 import { createClient } from "@/lib/supabase/server";
@@ -6,14 +7,17 @@ import type { DynamicFormSubmissionRow } from "@/types/supabase";
 
 function csv(value: unknown) {
   const raw = String(value ?? "");
-  const safe = /^[=+\-@\t\r]/.test(raw) ? `'${raw}` : raw;
+  // Prefix values a spreadsheet would treat as a formula (also after spaces).
+  const safe = /^\s*[=+\-@|\t\r]/.test(raw) ? `'${raw}` : raw;
   return `"${safe.replaceAll('"', '""')}"`;
 }
 
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   const profile = await getAuthenticatedProfile();
   if (!profile || profile.role !== "admin") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  const { id } = await params; const supabase = await createClient();
+  const { id } = await params;
+  if (!z.uuid().safeParse(id).success) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  const supabase = await createClient();
   const [form, fields] = await Promise.all([
     supabase.from("dynamic_forms").select("name,slug").eq("id", id).maybeSingle(),
     supabase.from("dynamic_form_fields").select("field_key,label_es").eq("form_id", id).order("sort_order"),

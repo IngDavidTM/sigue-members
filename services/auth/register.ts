@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { getURL } from "@/lib/utils";
+import { authErrorMessage } from "@/lib/auth/errors";
 
 export async function registerWithEmail(formData: FormData) {
     const supabase = await createClient();
@@ -43,7 +44,7 @@ export async function registerWithEmail(formData: FormData) {
     });
 
     if (error) {
-        return { error: error.message };
+        return { error: authErrorMessage(error, "register") };
     }
 
     return { success: signUpData.session ? "Tu cuenta está lista. Ya puedes iniciar sesión." : "Te enviamos un enlace de confirmación. Revisa tu correo para activar tu cuenta." };

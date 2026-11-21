@@ -74,3 +74,11 @@ test("las páginas localizadas no anuncian hreflang en la cabecera Link", async 
   assert.equal(result.status, 200);
   assert.equal(result.link, null);
 });
+
+test("las barras iniciales repetidas nunca redirigen a otro dominio", async () => {
+  for (const path of ["//evil.example/", "///evil.example/", "//evil.example.com/"]) {
+    const response = await proxy(new NextRequest(`${origin}${path}`));
+    const location = response.headers.get("location");
+    if (location) assert.equal(new URL(location, origin).origin, origin, path);
+  }
+});

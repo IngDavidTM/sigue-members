@@ -80,7 +80,9 @@ function asPermanentRedirect(response: NextResponse) {
 
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
-    const normalizedPath = pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
+    // Collapse leading slashes first: "//evil.example/" must never become a
+    // protocol-relative redirect target.
+    const normalizedPath = pathname.length > 1 ? pathname.replace(/^\/+/, "/").replace(/\/$/, "") : pathname;
     const localePrefix = normalizedPath.match(/^\/(es|en)(?=\/|$)/)?.[1];
     const wordpressPath = normalizedPath.replace(/^\/(?:es|en)(?=\/)/, "");
     const firstSegment = wordpressPath.split("/")[1];
