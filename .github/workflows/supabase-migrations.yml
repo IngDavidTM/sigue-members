@@ -1,0 +1,42 @@
+name: Supabase migrations
+
+# Applies new files in supabase/migrations to the production database when
+# they reach main. Supabase records every applied file in
+# supabase_migrations.schema_migrations, so each migration runs only once.
+#
+# Requires the repository secret SUPABASE_DB_URL: the Session pooler
+# connection string from Supabase → Connect (with the database password).
+#
+# Vercel deploys main at the same time, so a migration must work with both
+# the previous and the new version of the app (add first, remove later).
+
+on:
+  push:
+    branches: [main]
+    paths: ["supabase/migrations/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-migrations
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.122.1
+      - name: Pending migrations
+        run: supabase db push --db-url "$SUPABASE_DB_URL" --dry-run
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      - name: Apply migrations
+        run: supabase db push --db-url "$SUPABASE_DB_URL"
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}

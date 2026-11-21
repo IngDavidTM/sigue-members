@@ -73,3 +73,11 @@ La importación dejó 46 blogs de WordPress, 12 etiquetas utilizadas, un comenta
 Para ejecutar login, admin y formularios localmente deben estar configuradas la URL y la clave pública de Supabase. Nunca usar la clave de servicio como `NEXT_PUBLIC_SUPABASE_ANON_KEY`. El sitio público ya sirve la aplicación mediante el Worker de Cloudflare; WordPress sigue alojando su administrador y medios antiguos. La migración de formularios del 8 de octubre se aplicó a Supabase y se importaron 34 respuestas humanas de los formularios vigentes.
 
 Se actualizaron Next.js a 16.3.8 y sharp a 0.35.4. Referencias: [aviso de Next.js sobre AVIF](https://github.com/advisories/GHSA-2xp9-vwfh-vxw4) y [release de sharp](https://github.com/lovell/sharp/releases/tag/v0.35.4).
+
+## Migraciones automáticas (desde noviembre de 2026)
+
+Las migraciones nuevas de `supabase/migrations` se aplican solas cuando llegan a `main`, mediante `.github/workflows/supabase-migrations.yml` (`supabase db push`). Supabase anota cada archivo aplicado en `supabase_migrations.schema_migrations`, así que cada uno corre una sola vez.
+
+- Requisito único: el secreto `SUPABASE_DB_URL` del repositorio (Supabase → **Connect** → *Session pooler*, con la contraseña de la base).
+- Vercel despliega `main` al mismo tiempo, así que cada migración debe funcionar con la versión anterior y la nueva de la aplicación: primero se agrega, y lo que se quita va en una migración posterior.
+- Para repetir una ejecución: GitHub → Actions → *Supabase migrations* → *Run workflow*.
