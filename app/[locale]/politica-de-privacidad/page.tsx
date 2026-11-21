@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { openGraphDefaults } from '@/lib/seo';
 import { absoluteUrl } from '@/lib/site-url';
 
 const details = {
@@ -41,9 +42,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: `${details[locale].title} | SIGUE Network`,
     description: details[locale].intro,
+    openGraph: {
+      ...openGraphDefaults(locale),
+      type: 'website',
+      title: `${details[locale].title} | SIGUE Network`,
+      description: details[locale].intro,
+      url: absoluteUrl(`/${locale}/politica-de-privacidad`),
+    },
     alternates: {
       canonical: absoluteUrl(`/${locale}/politica-de-privacidad`),
-      languages: { es: absoluteUrl('/es/politica-de-privacidad'), en: absoluteUrl('/en/politica-de-privacidad') },
+      languages: { es: absoluteUrl('/es/politica-de-privacidad'), en: absoluteUrl('/en/politica-de-privacidad'), 'x-default': absoluteUrl('/es/politica-de-privacidad') },
     },
   };
 }

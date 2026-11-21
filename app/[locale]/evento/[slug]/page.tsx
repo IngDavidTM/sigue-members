@@ -1,12 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import styles from "@/app/components/content/ContentPages.module.css";
 import { getPublicEvent } from "@/lib/content/public-queries";
 import { sanitizeRichText } from "@/lib/content/admin-utils";
+import LocaleAlternates from "@/app/components/layout/LocaleAlternates";
+import { defaultOgImage, openGraphDefaults, translationAlternates, translationPaths } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site-url";
+import { JsonLd, breadcrumbNode, localizeInternalUrl, organizationNode, organizationRef } from "@/lib/structured-data";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -24,13 +27,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     alternates: {
       canonical: translation.canonical_url || absoluteUrl(`/${locale}/evento/${translation.slug}`),
-      languages: Object.fromEntries(
-        alternateTranslations.map((item) => [item.locale, absoluteUrl(`/${item.locale}/evento/${item.slug}`)]),
-      ),
+      languages: translationAlternates(alternateTranslations, (item) => `/${item.locale}/evento/${item.slug}`),
     },
     robots: { index: !translation.noindex, follow: !translation.nofollow },
-    openGraph: { type: "website", title: translation.og_title || title, description: translation.og_description || description, url: absoluteUrl(`/${locale}/evento/${translation.slug}`), images: image ? [{ url: image, alt: translation.image_alt || translation.title }] : undefined },
-    twitter: { card: "summary_large_image", title: translation.og_title || title, description: translation.og_description || description, images: image ? [image] : undefined },
+    openGraph: { ...openGraphDefaults(locale), type: "website", title: translation.og_title || title, description: translation.og_description || description, url: absoluteUrl(`/${locale}/evento/${translation.slug}`), images: image ? [{ url: image, alt: translation.image_alt || translation.title }] : [defaultOgImage] },
+    twitter: { card: "summary_large_image", title: translation.og_title || title, description: translation.og_description || description, images: [image || defaultOgImage.url] },
   };
 }
 
@@ -41,25 +42,26 @@ export default async function EventPage({ params }: Props) {
   const data = await getPublicEvent(locale, slug);
   if (!data) notFound();
   const { event, translation, venue, virtualUrl, upcoming, currentTime } = data;
-  if (translation.slug !== slug) redirect(`/${locale}/evento/${translation.slug}`);
+  if (translation.slug !== slug) permanentRedirect(`/${locale}/evento/${translation.slug}`);
   const registrationOpen = event.status !== "cancelled" && new Date(event.ends_at).getTime() >= currentTime && (!event.registration_deadline || new Date(event.registration_deadline).getTime() >= currentTime);
   const eventUrl = absoluteUrl(`/${locale}/evento/${translation.slug}`);
   const virtualLocation = { "@type": "VirtualLocation", url: virtualUrl || eventUrl };
   const physicalLocation = { "@type": "Place", name: venue?.name, url: venue?.map_url || undefined, address: venue ? { "@type": "PostalAddress", streetAddress: [venue.address_line_1, venue.address_line_2].filter(Boolean).join(", "), addressLocality: venue.city, addressRegion: venue.region, addressCountry: venue.country, postalCode: venue.postal_code } : undefined, geo: venue?.latitude != null && venue.longitude != null ? { "@type": "GeoCoordinates", latitude: venue.latitude, longitude: venue.longitude } : undefined };
   const location = event.attendance_mode === "virtual" ? virtualLocation : event.attendance_mode === "hybrid" ? [physicalLocation, virtualLocation] : physicalLocation;
+  const registrationUrl = event.registration_url ? localizeInternalUrl(event.registration_url, locale) : null;
   const structuredData = {
-    "@context": "https://schema.org",
     "@type": "Event",
+    "@id": `${eventUrl}#event`,
     name: translation.title,
     description: translation.seo_description || translation.excerpt,
-    image: translation.og_image_url || event.featured_image_url,
+    image: translation.og_image_url || event.featured_image_url || defaultOgImage.url,
     startDate: event.starts_at,
     endDate: event.ends_at,
     eventStatus: event.status === "cancelled" ? "https://schema.org/EventCancelled" : "https://schema.org/EventScheduled",
     eventAttendanceMode: event.attendance_mode === "virtual" ? "https://schema.org/OnlineEventAttendanceMode" : event.attendance_mode === "hybrid" ? "https://schema.org/MixedEventAttendanceMode" : "https://schema.org/OfflineEventAttendanceMode",
     location,
-    organizer: { "@type": "Organization", name: event.organizer_name || "SIGUE Network", url: absoluteUrl(`/${locale}`) },
-    offers: event.registration_url ? { "@type": "Offer", url: event.registration_url, price: event.is_free ? 0 : event.price_amount, priceCurrency: event.currency, availability: registrationOpen ? "https://schema.org/InStock" : "https://schema.org/SoldOut", validThrough: event.registration_deadline || undefined } : undefined,
+    organizer: !event.organizer_name || event.organizer_name === "SIGUE Network" ? organizationRef : { "@type": "Organization", name: event.organizer_name },
+    offers: registrationUrl ? { "@type": "Offer", url: registrationUrl, price: event.is_free ? 0 : event.price_amount, priceCurrency: event.currency, availability: registrationOpen ? "https://schema.org/InStock" : "https://schema.org/SoldOut", validThrough: event.registration_deadline || undefined } : undefined,
     inLanguage: locale,
     url: eventUrl,
   };
@@ -67,7 +69,15 @@ export default async function EventPage({ params }: Props) {
   const end = new Date(event.ends_at);
   const modeLabel = event.attendance_mode === "virtual" ? (es ? "Virtual" : "Online") : event.attendance_mode === "hybrid" ? (es ? "Híbrido" : "Hybrid") : (es ? "Presencial" : "In person");
   return <article className={styles.root}>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
+    <LocaleAlternates {...translationPaths(data.alternateTranslations, "evento")} />
+    <JsonLd nodes={[
+      structuredData,
+      organizationNode(locale),
+      breadcrumbNode(locale, [
+        { name: es ? "Eventos" : "Events", path: "/eventos" },
+        { name: translation.title, path: `/evento/${translation.slug}` },
+      ]),
+    ]} />
     <header className={styles.articleHeader}><div className={styles.breadcrumbs}><Link href={`/${locale}`}>{es ? "Inicio" : "Home"}</Link> · <Link href={`/${locale}/eventos`}>{es ? "Eventos" : "Events"}</Link></div>{event.status === "cancelled" ? <strong>{es ? "Evento cancelado" : "Cancelled event"}</strong> : null}<h1>{translation.title}</h1>{translation.excerpt ? <p>{translation.excerpt}</p> : null}</header>
     <div className={styles.articleLayout}>
       <main>
@@ -85,7 +95,7 @@ export default async function EventPage({ params }: Props) {
           {event.capacity ? <div><span>{es ? "Cupo" : "Capacity"}</span><strong>{event.capacity}</strong></div> : null}
           <div><span>{es ? "Inversión" : "Price"}</span><strong>{event.is_free ? (es ? "Sin costo" : "Free") : new Intl.NumberFormat(locale, { style: "currency", currency: event.currency }).format(event.price_amount ?? 0)}</strong></div>
         </section>
-        {event.registration_url && registrationOpen ? <a className={styles.eventButton} href={event.registration_url} target="_blank" rel="noreferrer">{es ? "Inscribirme" : "Register"}</a> : event.registration_url ? <p>{event.status === "cancelled" ? (es ? "Este evento fue cancelado." : "This event was cancelled.") : (es ? "La inscripción está cerrada." : "Registration is closed.")}</p> : null}
+        {registrationUrl && registrationOpen ? <a className={styles.eventButton} href={registrationUrl} target="_blank" rel="noreferrer">{es ? "Inscribirme" : "Register"}</a> : event.registration_url ? <p>{event.status === "cancelled" ? (es ? "Este evento fue cancelado." : "This event was cancelled.") : (es ? "La inscripción está cerrada." : "Registration is closed.")}</p> : null}
         {virtualUrl && event.status !== "cancelled" && end.getTime() >= currentTime ? <a className={styles.eventButton} href={virtualUrl} target="_blank" rel="noreferrer">{es ? "Entrar al evento" : "Join event"}</a> : null}
         {upcoming.length ? <section className={styles.sideBlock}><h2>{es ? "Otros eventos" : "Other events"}</h2><ul>{upcoming.map((item) => <li key={item.event.id}><Link href={`/${locale}/evento/${item.translation.slug}`}>{item.translation.title}</Link></li>)}</ul></section> : null}
       </aside>

@@ -1,10 +1,18 @@
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Header from '@/app/components/layout/header';
 import Footer from '@/app/components/layout/footer';
+import { heebo, roboto } from '@/lib/fonts';
+import { openGraphDefaults } from '@/lib/seo';
+import { siteMetadata } from '@/lib/site-metadata';
+import '../globals.css';
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 export async function generateMetadata({
   params,
@@ -15,7 +23,10 @@ export async function generateMetadata({
   const isEnglish = locale === 'en';
 
   return {
+    ...siteMetadata,
     title: 'SIGUE Network',
+    // Fallback for pages that define no Open Graph block of their own.
+    openGraph: { ...openGraphDefaults(isEnglish ? 'en' : 'es'), type: 'website' },
     description: isEnglish
       ? 'SIGUE Network connects and strengthens leaders and organizations transforming communities.'
       : 'SIGUE Network conecta y fortalece líderes y organizaciones que transforman comunidades.',
@@ -35,15 +46,20 @@ export default async function LocaleLayout({
     notFound();
   }
 
+  setRequestLocale(locale);
   const messages = await getMessages();
 
   return (
-    <div lang={locale} className="min-h-screen flex flex-col antialiased font-sans">
-      <NextIntlClientProvider messages={messages}>
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-      </NextIntlClientProvider>
-    </div>
+    <html lang={locale} className={`${heebo.variable} ${roboto.variable}`}>
+      <body>
+        <div className="min-h-screen flex flex-col antialiased font-sans">
+          <NextIntlClientProvider messages={messages}>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </NextIntlClientProvider>
+        </div>
+      </body>
+    </html>
   );
 }

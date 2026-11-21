@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { submitDynamicForm, type PublicFormState } from "@/app/[locale]/formularios/actions";
 import { getFieldMaxLength, localizedField } from "@/lib/forms/options";
-import type { DynamicFormFieldRow, DynamicFormRow } from "@/types/supabase";
+import type { PublicDynamicForm } from "@/types/supabase";
 
 import styles from "./DynamicForm.module.css";
 
@@ -18,8 +18,8 @@ export default function DynamicForm({
   sourcePath,
   compact = false,
 }: {
-  form: DynamicFormRow;
-  fields: DynamicFormFieldRow[];
+  form: PublicDynamicForm["form"];
+  fields: PublicDynamicForm["fields"];
   locale: "es" | "en";
   sourcePath: string;
   compact?: boolean;

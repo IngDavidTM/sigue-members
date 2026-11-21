@@ -130,8 +130,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     alternates: {
       canonical,
       languages: {
-        'es-CO': getPageUrl('es'),
-        'en-US': getPageUrl('en'),
+        es: getPageUrl('es'),
+        en: getPageUrl('en'),
         'x-default': getPageUrl('es'),
       },
     },

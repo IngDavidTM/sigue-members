@@ -39,6 +39,7 @@ export function buildToolsMetadata(locale: ToolsLocale, axisSlug: string | null)
       languages: {
         es: absoluteUrl(`/es${path}`),
         en: absoluteUrl(`/en${path}`),
+        'x-default': absoluteUrl(`/es${path}`),
       },
     },
     openGraph: {

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, BriefcaseBusiness, GraduationCap, HeartHandshake, Instagram, Linkedin } from 'lucide-react';
 import Reveal from '@/app/components/ui/Reveal';
-import { absoluteUrl } from '@/lib/site-url';
+import { JsonLd, breadcrumbNode, founderNode, organizationNode, webPageNode } from '@/lib/structured-data';
 import { conoceContent, type ConoceLocale } from './content';
 import styles from './ConoceLanding.module.css';
 
@@ -44,34 +44,17 @@ function DecorativeHeading({ title, accent, subtitle }: { title: string; accent:
 
 export default function ConoceLanding({ locale }: { locale: ConoceLocale }) {
   const c = conoceContent[locale];
-  const organizationJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'NGO',
-    name: 'SIGUE Network',
-    url: absoluteUrl(`/${locale}/conoce-sigue`),
-    logo: absoluteUrl('/images/home-2026/logo-transparent.png'),
-    founder: { '@type': 'Person', name: 'Sandra Prieto', url: 'https://sandraprieto.org' },
-    email: 'info@siguenetwork.org',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: '3913 Griese Lane',
-      addressLocality: 'Grovetown',
-      addressRegion: 'GA',
-      postalCode: '30813',
-      addressCountry: 'US',
-    },
-    sameAs: [
-      'https://www.instagram.com/siguenetwork/',
-      'https://www.facebook.com/people/SIGUE-Network/61566310019607/',
-      'https://www.linkedin.com/company/sigue-network/',
-      'https://www.youtube.com/@SIGUENetwork',
-    ],
-  };
-
   return (
     <div data-conoce-2026 className={styles.page}>
       <a className={styles.skipLink} href="#contenido-conoce">{c.skip}</a>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
+      <JsonLd
+        nodes={[
+          organizationNode(locale),
+          founderNode(locale),
+          webPageNode(locale, { path: '/conoce-sigue', name: locale === 'en' ? 'About SIGUE Network' : 'Conoce SIGUE Network', type: 'AboutPage' }),
+          breadcrumbNode(locale, [{ name: locale === 'en' ? 'About SIGUE' : 'Conoce SIGUE', path: '/conoce-sigue' }]),
+        ]}
+      />
 
       <div id="contenido-conoce">
         <section

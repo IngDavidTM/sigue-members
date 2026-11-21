@@ -174,5 +174,7 @@ export const siteNavigation: Record<SiteLocale, NavigationContent> = {
 export function localizedNavigationHref(locale: SiteLocale, href: string) {
   if (href.startsWith('http') || href.startsWith('mailto:')) return href;
   if (href === '/') return `/${locale}`;
+  // Home anchors: /es#impacto, not /es/#impacto (the slash form redirects).
+  if (href.startsWith('/#')) return `/${locale}${href.slice(1)}`;
   return `/${locale}${href}`;
 }
