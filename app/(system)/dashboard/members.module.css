@@ -321,3 +321,175 @@
 .richText ul { list-style: disc; }
 .richText ol { list-style: decimal; }
 .richText li + li { margin-top: 4px; }
+
+/* Organization onboarding ------------------------------------------ */
+.eyebrow { margin: 0 0 6px; color: var(--rose); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.muted { margin: 0; color: var(--muted); line-height: 1.5; }
+.narrow { max-width: 620px; }
+.missingValue { color: #a991b2; font-style: italic; }
+
+.form { display: flex; flex-direction: column; gap: 22px; }
+.formGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px 20px; }
+.formStack { display: flex; flex-direction: column; gap: 22px; }
+
+.field { display: grid; gap: 6px; min-width: 0; }
+.fieldLabel { display: grid; gap: 2px; color: var(--ink); font-size: 0.92rem; font-weight: 700; }
+.fieldLabel abbr { color: var(--rose); text-decoration: none; }
+.fieldLabel small { color: var(--muted); font-size: 0.82rem; font-weight: 400; line-height: 1.4; }
+
+.field input,
+.field select,
+.field textarea,
+.percentInput input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #d9c9e4;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+}
+
+.field textarea { resize: vertical; line-height: 1.5; }
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible,
+.percentInput input:focus-visible,
+.chip input:focus-visible + span,
+.choice input:focus-visible { outline: 2px solid var(--rose); outline-offset: 1px; }
+
+.form [aria-invalid="true"] { border-color: #d0103f; }
+.form fieldset[aria-invalid="true"] { padding-left: 10px; border-left: 3px solid #d0103f; }
+.fieldError { color: #b3083a; font-size: 0.84rem; font-weight: 600; }
+.formError { margin: 0; padding: 12px 14px; border-radius: 10px; background: #fde7ef; color: #9c0733; font-weight: 600; }
+
+.choiceGroup { display: grid; gap: 10px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.choices { display: flex; flex-wrap: wrap; gap: 10px 18px; }
+.choice { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 600; cursor: pointer; }
+.choice input { width: 18px; height: 18px; accent-color: var(--rose); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; cursor: pointer; }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+.chip input:checked + span { border-color: var(--plum); background: var(--plum); color: #fff; }
+
+.percentGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px 18px; }
+.percentField { display: grid; gap: 6px; font-size: 0.9rem; font-weight: 600; }
+.percentInput { position: relative; display: block; max-width: 140px; }
+.percentInput input { padding-right: 34px; }
+.percentInput b { position: absolute; top: 50%; right: 12px; color: var(--muted); transform: translateY(-50%); }
+
+.formActions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+
+.submitButton,
+.secondaryButton {
+  min-height: 46px;
+  padding: 0 20px;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.submitButton { border: 0; background: var(--rose); color: #fff; }
+.submitButton:hover { background: #c4124c; }
+.secondaryButton { border: 1px solid var(--line); background: #fff; color: var(--plum); }
+.submitButton:disabled,
+.secondaryButton:disabled { opacity: 0.6; cursor: progress; }
+.submitButton:focus-visible,
+.secondaryButton:focus-visible,
+.linkButton:focus-visible { outline: 2px solid var(--plum); outline-offset: 2px; }
+
+.linkButton { padding: 6px 8px; border: 0; background: none; color: var(--rose); font: inherit; font-weight: 700; cursor: pointer; }
+
+.stepper ol { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.stepper a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.stepper b { display: grid; flex-shrink: 0; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--wash); color: var(--plum); }
+.stepper a[data-complete] b { background: #e6f6ec; color: #1f6a3a; }
+.stepper a[aria-current="step"] { border-color: var(--plum); box-shadow: inset 0 -3px 0 var(--rose); }
+.stepper a[aria-current="step"] b { background: var(--plum); color: #fff; }
+
+.statusBadge { display: inline-block; margin-right: 6px; padding: 3px 10px; border-radius: 999px; background: #efe6f6; color: var(--plum); font-size: 0.82rem; font-weight: 800; vertical-align: 1px; }
+.statusBadge[data-status="submitted"] { background: #e3f1ff; color: #155a9c; }
+.statusBadge[data-status="changes_requested"] { background: #fff1d6; color: #8a5300; }
+.statusBadge[data-status="approved"] { background: #e6f6ec; color: #1f6a3a; }
+
+.notice { margin: 0; padding: 12px 16px; border-radius: 10px; background: #e6f6ec; color: #1f6a3a; font-weight: 700; }
+.reviewMessage { padding: 18px 20px; border-left: 4px solid #e0a100; border-radius: 10px; background: #fff8e8; }
+.reviewMessage h2 { margin: 0 0 6px; font-size: 1rem; }
+.reviewMessage p { margin: 0; white-space: pre-line; }
+
+.progressBar { overflow: hidden; height: 10px; border-radius: 999px; background: var(--wash); }
+.progressBar span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--plum), var(--rose)); }
+
+.summaryGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+.teamList { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.teamList li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.teamList li:last-child { border-bottom: 0; }
+.teamList li > span { display: grid; min-width: 0; overflow-wrap: anywhere; }
+.teamList small { color: var(--muted); }
+.teamList form { margin-left: auto; }
+
+.consent { display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+.consent input { flex-shrink: 0; width: 18px; height: 18px; margin-top: 3px; accent-color: var(--rose); }
+
+.inviteLink { display: grid; gap: 8px; padding: 14px; border: 1px solid #b9dcc5; border-radius: 10px; background: #f1fbf4; }
+.inviteLink input { width: 100%; padding: 10px 12px; border: 1px solid #b9dcc5; border-radius: 8px; background: #fff; font: inherit; font-size: 0.88rem; }
+.inviteLink small { color: #2b5a3b; line-height: 1.45; }
+
+@media (max-width: 860px) {
+  .stepper ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .formActions { flex-direction: column-reverse; }
+  .submitButton, .secondaryButton { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip span { transition: none; }
+}
+
+.orgCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(220px, 1fr);
+  align-items: center;
+  gap: 20px 32px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: linear-gradient(120deg, #fff 55%, #fdf0f6);
+}
+.orgCard h2 { margin: 0 0 6px; color: var(--plum); font-size: 1.25rem; }
+.orgCardSide { display: grid; gap: 10px; justify-items: start; }
+.orgCardSide .progressBar { width: 100%; }
+.orgCardSide small { color: var(--muted); font-weight: 600; }
+.primaryCta { display: inline-flex; align-items: center; min-height: 46px; padding: 0 20px; border-radius: 10px; background: var(--rose); color: #fff; font-weight: 800; text-decoration: none; }
+.primaryCta:hover { background: #c4124c; }
+.primaryCta:focus-visible { outline: 2px solid var(--plum); outline-offset: 2px; }
+@media (max-width: 860px) { .orgCard { grid-template-columns: 1fr; } }
+.percentGrid { align-items: end; }

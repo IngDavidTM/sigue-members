@@ -202,6 +202,82 @@ export type EventRecordingRow = {
 
 export type PublicEventRecordingRow = Pick<EventRecordingRow, 'event_id' | 'sigue_axis'>;
 
+export type OrganizationStatus = 'draft' | 'submitted' | 'changes_requested' | 'approved';
+export type OrganizationRole = 'owner' | 'editor' | 'viewer';
+
+export type OrganizationRow = {
+  id: string;
+  name: string;
+  legal_name: string | null;
+  entity_type: string | null;
+  country: string | null;
+  city: string | null;
+  founded_year: number | null;
+  tax_id: string | null;
+  website: string | null;
+  social_url: string | null;
+  mission: string | null;
+  vision: string | null;
+  causes: string[];
+  populations: string | null;
+  regions: string | null;
+  beneficiaries_range: string | null;
+  paid_staff_range: string | null;
+  volunteers_range: string | null;
+  has_board: boolean | null;
+  board_size: number | null;
+  contact_name: string | null;
+  contact_email: string | null;
+  contact_phone: string | null;
+  annual_budget_range: string | null;
+  budget_currency: string;
+  income_mix: Record<string, number>;
+  expense_programs_pct: number | null;
+  expense_admin_pct: number | null;
+  expense_fundraising_pct: number | null;
+  has_financial_statements: boolean | null;
+  has_external_audit: boolean | null;
+  status: OrganizationStatus;
+  data_consent_at: string | null;
+  submitted_at: string | null;
+  reviewed_at: string | null;
+  reviewed_by: string | null;
+  review_message: string | null;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type OrganizationEditableFields = Partial<Omit<OrganizationRow,
+  'id' | 'status' | 'data_consent_at' | 'submitted_at' | 'reviewed_at' | 'reviewed_by' | 'review_message' | 'created_by' | 'created_at' | 'updated_at'>>;
+
+export type OrganizationMemberRow = {
+  organization_id: string;
+  user_id: string;
+  role: OrganizationRole;
+  created_at: string;
+};
+
+export type OrganizationInvitationRow = {
+  id: string;
+  organization_id: string;
+  email: string;
+  role: OrganizationRole;
+  invited_by: string | null;
+  expires_at: string;
+  accepted_at: string | null;
+  accepted_by: string | null;
+  created_at: string;
+};
+
+export type OrganizationNoteRow = {
+  id: string;
+  organization_id: string;
+  author_id: string | null;
+  body: string;
+  created_at: string;
+};
+
 export type EventTranslationRow = {
   event_id: string;
   locale: ContentLocale;
@@ -470,6 +546,10 @@ export interface Database {
         created_at?: string;
         updated_at?: string;
       }>;
+      organizations: TableDefinition<OrganizationRow, OrganizationEditableFields & { name: string }, OrganizationEditableFields>;
+      organization_members: TableDefinition<OrganizationMemberRow, OrganizationMemberRow>;
+      organization_invitations: TableDefinition<OrganizationInvitationRow, never>;
+      organization_notes: TableDefinition<OrganizationNoteRow, { organization_id: string; author_id?: string | null; body: string }>;
       event_translations: TableDefinition<EventTranslationRow, {
         event_id: string;
         locale: ContentLocale;
@@ -593,6 +673,11 @@ export interface Database {
         Args: { p_id: string | null; p_record: Json; p_translations: Json; p_expected_updated_at: string | null; p_tag_ids: string[] };
         Returns: string;
       };
+      create_organization: { Args: { p_name: string }; Returns: string };
+      submit_organization: { Args: { p_organization_id: string }; Returns: undefined };
+      review_organization: { Args: { p_organization_id: string; p_status: OrganizationStatus; p_message: string | null }; Returns: undefined };
+      create_organization_invitation: { Args: { p_organization_id: string; p_email: string; p_role: OrganizationRole }; Returns: string };
+      accept_organization_invitation: { Args: { p_token: string }; Returns: string };
       save_event_content: {
         Args: { p_id: string | null; p_record: Json; p_translations: Json; p_expected_updated_at: string | null; p_access: Json };
         Returns: string;
@@ -628,6 +713,8 @@ export interface Database {
       comment_status: CommentStatus;
       event_status: EventStatus;
       event_attendance_mode: EventAttendanceMode;
+      organization_status: OrganizationStatus;
+      organization_role: OrganizationRole;
     };
     CompositeTypes: Record<PropertyKey, never>;
   };

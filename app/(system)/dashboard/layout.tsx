@@ -4,6 +4,7 @@ import { LogOut } from "lucide-react";
 
 import { requireUser } from "@/lib/auth/authorization";
 import { memberCopy } from "@/lib/members/copy";
+import { organizationCopy } from "@/lib/members/organization-copy";
 import { getMemberLocale } from "@/lib/members/locale";
 import { logout } from "@/services/auth/logout";
 
@@ -21,6 +22,7 @@ export default async function MemberLayout({ children }: { children: React.React
   const copy = memberCopy(locale);
   const items = [
     { href: "/dashboard", label: copy.nav.overview, icon: "overview" as const, exact: true },
+    { href: "/dashboard/organizacion", label: organizationCopy(locale).navLabel, icon: "organization" as const },
     { href: "/dashboard/webinars", label: copy.nav.webinars, icon: "webinars" as const },
     { href: `/${locale}/blog`, label: copy.nav.blog, icon: "blog" as const, external: true },
     { href: `/${locale}/eventos`, label: copy.nav.events, icon: "events" as const, external: true },

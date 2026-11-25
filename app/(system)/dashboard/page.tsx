@@ -3,6 +3,9 @@ import Link from "next/link";
 import { getAuthenticatedProfile } from "@/lib/auth/authorization";
 import { memberCopy } from "@/lib/members/copy";
 import { getMemberLocale } from "@/lib/members/locale";
+import { completeness } from "@/lib/members/organization";
+import { organizationCopy } from "@/lib/members/organization-copy";
+import { getMyOrganization } from "@/lib/members/organization-queries";
 import { countUpcomingEvents, listMemberWebinars } from "@/lib/members/queries";
 import { createClient } from "@/lib/supabase/server";
 
@@ -18,12 +21,15 @@ export default async function MemberOverviewPage() {
   const locale = await getMemberLocale();
   const copy = memberCopy(locale);
   const supabase = await createClient();
-  const [profile, { data: { user } }, webinars, upcoming] = await Promise.all([
+  const [profile, { data: { user } }, webinars, upcoming, mine] = await Promise.all([
     getAuthenticatedProfile(),
     supabase.auth.getUser(),
     listMemberWebinars(locale, { limit: 3 }),
     countUpcomingEvents(),
+    getMyOrganization(),
   ]);
+  const org = organizationCopy(locale);
+  const organization = mine.available ? mine.organization : null;
   const firstName = profile?.full_name?.trim().split(/\s+/)[0];
   const lastAccess = user?.last_sign_in_at
     ? new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(new Date(user.last_sign_in_at))
@@ -34,6 +40,28 @@ export default async function MemberOverviewPage() {
       <h1>{firstName ? copy.overview.welcome(firstName) : copy.overview.welcomeFallback}</h1>
       <p>{copy.overview.intro}</p>
     </section>
+
+    {mine.available ? <section className={styles.orgCard} aria-labelledby="org-card">
+      {organization ? <>
+        <div>
+          <p className={styles.eyebrow}>{org.title}</p>
+          <h2 id="org-card">{organization.name} <span className={styles.statusBadge} data-status={organization.status}>{org.status[organization.status]}</span></h2>
+          <p className={styles.muted}>{org.statusHelp[organization.status]}</p>
+        </div>
+        <div className={styles.orgCardSide}>
+          <div className={styles.progressBar} role="progressbar" aria-valuenow={completeness(organization)} aria-valuemin={0} aria-valuemax={100} aria-label={org.overview.progress}><span style={{ width: `${completeness(organization)}%` }} /></div>
+          <small>{org.overview.progress}: {completeness(organization)}%</small>
+          <Link href="/dashboard/organizacion" className={styles.textLink}>{org.title} →</Link>
+        </div>
+      </> : <>
+        <div>
+          <p className={styles.eyebrow}>{org.navLabel}</p>
+          <h2 id="org-card">{org.create.title}</h2>
+          <p className={styles.muted}>{org.create.intro}</p>
+        </div>
+        <div className={styles.orgCardSide}><Link href="/dashboard/organizacion" className={styles.primaryCta}>{org.create.submit} →</Link></div>
+      </>}
+    </section> : null}
 
     <section aria-labelledby="latest-webinars">
       <div className={styles.sectionHeading}>
