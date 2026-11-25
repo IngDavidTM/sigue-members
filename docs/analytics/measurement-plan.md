@@ -36,6 +36,8 @@ Un clic hacia Zeffy no se considera por sí mismo un registro, una venta, un pag
 |---|---|---|---|---|---|---|
 | blog_click | Navegación global | Clic en Blog | Medir interés en contenido | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace al Blog en la navegación global |
 | membership_click | inicio→Miembros/HomeLanding.tsx | Clic en membresía | Medir interés en la membresía | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace hacia /es/miembros-sigue |
+| sigue_tracks_click | inicio→SIGUE Tracks/HomeLanding.tsx | Clic en SIGUE Tracks | Medir interés en SIGUE Tracks | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace hacia SIGUE Tracks |
+| conoce_sigue_click | inicio→Nuestra red/HomeLanding.tsx | Clic en Conoce SIGUE | Medir interés en conocer SIGUE | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace hacia Conoce SIGUE |
 | events_click | inicio→Eventos/HomeLanding.tsx | Clic en Eventos | Medir interés en eventos | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el enlace existente a eventos |
 | cumbre_registration_click | Cumbre/CumbreLanding.tsx / RegistrationControls.tsx | Clic en inscribirme | Medir el inicio del recorrido de inscripción | Ruta, idioma, fecha/hora | GA4/GTM | Comprobar el botón y el acceso a #inscripcion |
 | cumbre_zeffy_click | Cumbre/RegistrationForm.tsx | Clic en Pagar con tarjeta en Zeffy | Medir la salida hacia el proveedor externo | Ruta, idioma, fecha/hora, destino | GA4/GTM | Comprobar el enlace hacia Zeffy |
@@ -140,6 +142,8 @@ Los nombres técnicos de los eventos se mantienen estables en español e inglés
 | Término / evento | Español | English |
 |---|---|---|
 | membership_click | Clic en membresía | Membership click |
+| sigue_tracks_click | Clic en SIGUE Tracks | SIGUE Tracks click |
+| conoce_sigue_click | Clic en Conoce SIGUE | Learn about SIGUE click |
 | blog_click | Clic en Blog | Blog click |
 | events_click | Clic en Eventos | Events click |
 | cumbre_registration_click | Clic en inscripción de Cumbre | Cumbre registration click |
@@ -158,6 +162,8 @@ La prioridad propuesta se basa en la utilidad de los eventos para el análisis y
 Implementar primero los eventos de navegación y llamadas a la acción dentro del sitio:
 
 - membership_click
+- sigue_tracks_click
+- conoce_sigue_click
 - blog_click
 - events_click
 - cumbre_registration_click
