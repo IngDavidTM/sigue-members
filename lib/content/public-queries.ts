@@ -2,6 +2,7 @@ import "server-only";
 
 import { cache } from "react";
 
+import { isMissingRelation } from "@/lib/supabase/errors";
 import { createClient } from "@/lib/supabase/server";
 import type {
   ApprovedBlogCommentRow,
@@ -369,18 +370,21 @@ export const getPublicEvent = cache(async function getPublicEvent(locale: Conten
       if (venueResult.error) throw venueResult.error;
       venue = venueResult.data;
     }
-    const [allEvents, accessResult, alternateTranslationsResult] = await Promise.all([
+    const [allEvents, accessResult, alternateTranslationsResult, recordingResult] = await Promise.all([
       getPublicEvents(locale),
       supabase.from("public_event_access").select("virtual_url").eq("event_id", event.id).maybeSingle(),
       supabase.from("event_translations").select("locale,slug").eq("event_id", event.id),
+      supabase.from("public_event_recordings").select("event_id").eq("event_id", event.id).maybeSingle(),
     ]);
     if (accessResult.error) throw accessResult.error;
     if (alternateTranslationsResult.error) throw alternateTranslationsResult.error;
+    if (recordingResult.error && !isMissingRelation(recordingResult.error)) throw recordingResult.error;
     return {
       event,
       translation,
       venue,
       virtualUrl: accessResult.data?.virtual_url ?? null,
+      hasMemberRecording: Boolean(recordingResult.data),
       currentTime: Date.now(),
       alternateTranslations: alternateTranslationsResult.data,
       upcoming: allEvents.filter((item) => item.event.id !== event.id && item.event.status !== "cancelled" && new Date(item.event.ends_at).getTime() >= Date.now()).slice(0, 4),

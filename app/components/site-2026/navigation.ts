@@ -90,7 +90,7 @@ export const siteNavigation: Record<SiteLocale, NavigationContent> = {
         children: [
           { label: 'Blogs', description: 'Ideas prácticas para tu misión', href: '/blog', icon: 'blog', color: '#501f76' },
           { label: 'Herramientas prácticas', description: 'Plantillas, guías y matrices', href: '/herramientas', icon: 'tools', color: '#5e17eb' },
-          { label: 'Webinars', description: 'Sesiones grabadas por eje SIGUE', icon: 'webinars', color: '#b41ba1' },
+          { label: 'Webinars', description: 'Sesiones grabadas por eje SIGUE', href: '/dashboard/webinars', icon: 'webinars', color: '#b41ba1' },
           { label: 'Próximos eventos', description: 'Agenda de la Red SIGUE', href: '/eventos', icon: 'events', color: '#ef1451' },
         ],
       },
@@ -150,7 +150,7 @@ export const siteNavigation: Record<SiteLocale, NavigationContent> = {
         children: [
           { label: 'Blog', description: 'Practical ideas for your mission', href: '/blog', icon: 'blog', color: '#501f76' },
           { label: 'Practical tools', description: 'Templates, guides, and matrices', href: '/herramientas', icon: 'tools', color: '#5e17eb' },
-          { label: 'Webinars', description: 'Recorded sessions by SIGUE axis', icon: 'webinars', color: '#b41ba1' },
+          { label: 'Webinars', description: 'Recorded sessions by SIGUE axis', href: '/dashboard/webinars', icon: 'webinars', color: '#b41ba1' },
           { label: 'Upcoming events', description: 'SIGUE Network calendar', href: '/eventos', icon: 'events', color: '#ef1451' },
         ],
       },
@@ -173,6 +173,8 @@ export const siteNavigation: Record<SiteLocale, NavigationContent> = {
 
 export function localizedNavigationHref(locale: SiteLocale, href: string) {
   if (href.startsWith('http') || href.startsWith('mailto:')) return href;
+  // The member area is not localized: it follows the language last used on the site.
+  if (href === '/dashboard' || href.startsWith('/dashboard/')) return href;
   if (href === '/') return `/${locale}`;
   // Home anchors: /es#impacto, not /es/#impacto (the slash form redirects).
   if (href.startsWith('/#')) return `/${locale}${href.slice(1)}`;

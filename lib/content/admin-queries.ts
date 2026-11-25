@@ -1,6 +1,7 @@
 import "server-only";
 
 import { requireAdmin } from "@/lib/auth/authorization";
+import { isMissingRelation } from "@/lib/supabase/errors";
 import { createClient } from "@/lib/supabase/server";
 
 export async function getBlogTaxonomyOptions() {
@@ -85,4 +86,13 @@ export async function getAdminEvent(id: string) {
     virtualUrl: accessResult.data?.virtual_url ?? null,
     organizerEmail: accessResult.data?.organizer_email ?? null,
   };
+}
+
+export async function getAdminEventRecording(eventId: string) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("event_recordings").select("*").eq("event_id", eventId).maybeSingle();
+  if (isMissingRelation(error)) return { recording: null, available: false };
+  if (error) throw new Error(error.message);
+  return { recording: data, available: true };
 }

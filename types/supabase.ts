@@ -182,6 +182,26 @@ export type EventPrivateAccessRow = {
 
 export type PublicEventAccessRow = Pick<EventPrivateAccessRow, 'event_id' | 'virtual_url'>;
 
+export type SigueAxis = 'servir' | 'impactar' | 'guiar' | 'unir' | 'equipar';
+
+export type RecordingMaterial = { label: string; url: string };
+
+export type EventRecordingRow = {
+  event_id: string;
+  video_url: string;
+  sigue_axis: SigueAxis | null;
+  summary_es_html: string;
+  summary_en_html: string;
+  materials: RecordingMaterial[];
+  is_published: boolean;
+  created_by: string | null;
+  updated_by: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type PublicEventRecordingRow = Pick<EventRecordingRow, 'event_id' | 'sigue_axis'>;
+
 export type EventTranslationRow = {
   event_id: string;
   locale: ContentLocale;
@@ -437,6 +457,19 @@ export interface Database {
         organizer_email?: string | null;
         updated_at?: string;
       }>;
+      event_recordings: TableDefinition<EventRecordingRow, {
+        event_id: string;
+        video_url: string;
+        sigue_axis?: SigueAxis | null;
+        summary_es_html?: string;
+        summary_en_html?: string;
+        materials?: RecordingMaterial[];
+        is_published?: boolean;
+        created_by?: string | null;
+        updated_by?: string | null;
+        created_at?: string;
+        updated_at?: string;
+      }>;
       event_translations: TableDefinition<EventTranslationRow, {
         event_id: string;
         locale: ContentLocale;
@@ -548,6 +581,10 @@ export interface Database {
       };
       public_event_access: {
         Row: PublicEventAccessRow;
+        Relationships: [];
+      };
+      public_event_recordings: {
+        Row: PublicEventRecordingRow;
         Relationships: [];
       };
     };
