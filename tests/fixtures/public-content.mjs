@@ -68,7 +68,7 @@ export async function startPublicContentFixture(siteOrigin) {
     ],
     dynamic_forms: [dynamicForm, ...leadForms], dynamic_form_fields: [...dynamicFields, ...leadFields],
     dynamic_form_notifications: [], dynamic_form_submissions: [], dynamic_form_submission_attempts: [],
-    blog_series: [], blog_series_translations: [], blog_post_tags: [], approved_blog_comments: [], blog_tags: [], blog_tag_translations: [], event_venues: [], public_event_access: [],
+    blog_series: [], blog_series_translations: [], blog_post_tags: [], approved_blog_comments: [], blog_tags: [], blog_tag_translations: [], event_venues: [], public_event_access: [], public_event_recordings: [],
   };
   const requests = [];
   const submissions = [];
