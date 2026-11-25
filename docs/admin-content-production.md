@@ -44,6 +44,15 @@ Configurar `FORM_RATE_LIMIT_SECRET` con una cadena aleatoria de al menos 32 byte
 
 Configurar `CRON_SECRET` y programar una petición `GET /api/cron/form-notifications` con `Authorization: Bearer <CRON_SECRET>` cada cinco minutos. El trabajo recupera hasta 25 avisos pendientes o fallidos por ejecución y deja de reintentar automáticamente después de cinco intentos; el reintento manual desde el admin reinicia ese contador.
 
+## Grabaciones de webinars para miembros
+
+- En **Admin → Eventos** la columna «Grabación» muestra qué eventos pasados no tienen grabación («Añadir»).
+- En la edición del evento, la sección **Grabación para miembros** guarda el enlace (YouTube, Vimeo o Zoom), el eje SIGUE, un resumen por idioma y materiales (`Nombre | https://…`, uno por línea).
+- Los miembros con sesión la ven en `/dashboard/webinars` cuando el evento ya terminó y la casilla «Visible para los miembros» está marcada.
+- La página pública del evento solo muestra «Grabación para miembros» con un botón al panel; el enlace del video y el resumen nunca van en el HTML público (tabla `event_recordings` sin acceso para visitantes, vista `public_event_recordings` solo con el ID).
+- En YouTube sube el video como **No listado**: no aparece en búsquedas, aunque quien tenga el enlace puede compartirlo.
+- Prueba de permisos: `psql -v ON_ERROR_STOP=1 -f tests/event-recordings.sql` en una base de pruebas con las migraciones aplicadas.
+
 ## Verificación reproducible
 
 ```sh

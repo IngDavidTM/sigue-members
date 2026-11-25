@@ -1,0 +1,91 @@
+import type { MemberLocale } from "./recordings";
+
+const es = {
+  areaName: "Área de miembros",
+  nav: { overview: "Resumen", webinars: "Webinars", blog: "Blog", events: "Eventos", membership: "Membresía", admin: "Administración" },
+  logout: "Cerrar sesión",
+  language: "Idioma",
+  switchTo: "English",
+  overview: {
+    title: "Resumen",
+    welcome: (name: string) => `¡Hola, ${name}!`,
+    welcomeFallback: "¡Bienvenido a SIGUE Network!",
+    intro: "Este es tu espacio en la Red SIGUE. Aquí encontrarás las grabaciones de los webinars y, muy pronto, el perfil de tu organización y tu diagnóstico SIGUE.",
+    latestWebinars: "Últimos webinars",
+    seeAll: "Ver todos",
+    noWebinars: "Aún no hay grabaciones disponibles. Te avisaremos cuando se publique la primera.",
+    account: "Tu cuenta",
+    email: "Correo electrónico",
+    confirmed: "Confirmado",
+    pending: "Pendiente de confirmación",
+    lastAccess: "Último acceso",
+    never: "Sin registro",
+    comingSoon: "Próximamente",
+    comingSoonItems: ["Perfil de tu organización", "Proyectos y finanzas", "Diagnóstico SIGUE por ejes"],
+    upcoming: "Próximos eventos",
+    upcomingCta: "Ver la agenda",
+  },
+  webinars: {
+    title: "Webinars",
+    intro: "Revive las sesiones de la Red SIGUE: video, resumen de lo que se trató y materiales para aplicar en tu organización.",
+    allAxes: "Todos los ejes",
+    empty: "No hay grabaciones para este eje todavía.",
+    watch: "Ver grabación",
+    back: "Volver a webinars",
+    summary: "Qué se trató",
+    noSummary: "El resumen de esta sesión estará disponible pronto.",
+    materials: "Materiales",
+    openRecording: "Abrir la grabación",
+    openRecordingHint: "La grabación se abre en una pestaña nueva.",
+    eventPage: "Página pública del evento",
+    axis: "Eje",
+  },
+};
+
+export type MemberCopy = typeof es;
+
+const en: MemberCopy = {
+  areaName: "Member area",
+  nav: { overview: "Overview", webinars: "Webinars", blog: "Blog", events: "Events", membership: "Membership", admin: "Admin" },
+  logout: "Sign out",
+  language: "Language",
+  switchTo: "Español",
+  overview: {
+    title: "Overview",
+    welcome: (name: string) => `Hi, ${name}!`,
+    welcomeFallback: "Welcome to SIGUE Network!",
+    intro: "This is your space in the SIGUE Network. Here you will find webinar recordings and, soon, your organization profile and SIGUE assessment.",
+    latestWebinars: "Latest webinars",
+    seeAll: "See all",
+    noWebinars: "No recordings yet. We will let you know when the first one is published.",
+    account: "Your account",
+    email: "Email",
+    confirmed: "Confirmed",
+    pending: "Pending confirmation",
+    lastAccess: "Last sign-in",
+    never: "Not recorded",
+    comingSoon: "Coming soon",
+    comingSoonItems: ["Your organization profile", "Projects and finances", "SIGUE assessment by axis"],
+    upcoming: "Upcoming events",
+    upcomingCta: "See the agenda",
+  },
+  webinars: {
+    title: "Webinars",
+    intro: "Catch up on SIGUE Network sessions: the video, a summary of what was covered and materials to apply in your organization.",
+    allAxes: "All axes",
+    empty: "No recordings for this axis yet.",
+    watch: "Watch recording",
+    back: "Back to webinars",
+    summary: "What was covered",
+    noSummary: "The summary of this session will be available soon.",
+    materials: "Materials",
+    openRecording: "Open the recording",
+    openRecordingHint: "The recording opens in a new tab.",
+    eventPage: "Public event page",
+    axis: "Axis",
+  },
+};
+
+export function memberCopy(locale: MemberLocale): MemberCopy {
+  return locale === "en" ? en : es;
+}

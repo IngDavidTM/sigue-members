@@ -1,4 +1,5 @@
 import { LoginForm } from "@/components/auth/LoginForm/LoginForm";
+import { safeNextPath } from "@/lib/auth/next-path";
 import styles from "./page.module.css";
 
 export const metadata = {
@@ -6,10 +7,13 @@ export const metadata = {
     description: "Accede a tu cuenta de SIGUE Network",
 };
 
-export default function LoginPage() {
+type Props = { searchParams: Promise<{ next?: string }> };
+
+export default async function LoginPage({ searchParams }: Props) {
+    const { next } = await searchParams;
     return (
         <main className={styles.main}>
-            <LoginForm />
+            <LoginForm next={safeNextPath(next)} />
         </main>
     );
 }
