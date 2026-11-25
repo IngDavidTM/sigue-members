@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { authErrorMessage } from "@/lib/auth/errors";
+import { safeNextPath } from "@/lib/auth/next-path";
 
 import { createClient } from "@/lib/supabase/server";
 import { getURL } from "@/lib/utils";
@@ -43,18 +44,19 @@ export async function loginWithEmail(formData: FormData) {
         return { error: authErrorMessage(error, "login") };
     }
 
-    const destination = await getDestinationForUser(supabase, authData.user.id);
+    const destination = safeNextPath(formData.get("next")) ?? await getDestinationForUser(supabase, authData.user.id);
     revalidatePath("/", "layout");
     redirect(destination);
 }
 
-export async function loginWithGoogle() {
+export async function loginWithGoogle(next?: string | null) {
     const supabase = await createClient();
+    const safeNext = safeNextPath(next);
 
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-            redirectTo: `${getURL()}/auth/callback`,
+            redirectTo: `${getURL()}/auth/callback${safeNext ? `?next=${encodeURIComponent(safeNext)}` : ""}`,
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",

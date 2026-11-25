@@ -15,7 +15,7 @@ import sharedStyles from "../AuthShared.module.css";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function LoginForm() {
+export function LoginForm({ next }: { next?: string | null }) {
     const [showPassword, setShowPassword] = useState(false);
     const [errorStr, setErrorStr] = useState<string | null>(null);
     const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
@@ -53,7 +53,7 @@ export function LoginForm() {
 
     async function handleGoogleLogin() {
         setIsGoogleLoading(true);
-        await loginWithGoogle();
+        await loginWithGoogle(next);
         // No need to set false as it will redirect
     }
 
@@ -67,6 +67,7 @@ export function LoginForm() {
 
             <div className={sharedStyles.formContent}>
                 <form action={handleEmailLogin} className={sharedStyles.form} noValidate>
+                    {next ? <input type="hidden" name="next" value={next} /> : null}
                     <div className={sharedStyles.inputs}>
                         <Input
                             id="email"

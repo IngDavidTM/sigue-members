@@ -1,6 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+import { safeNextPath } from "@/lib/auth/next-path";
+
 export async function updateSession(request: NextRequest) {
     if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
         if (request.nextUrl.pathname.startsWith("/api/")) {
@@ -72,9 +74,12 @@ export async function updateSession(request: NextRequest) {
         if (request.nextUrl.pathname.startsWith("/api/")) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
-        // No user session, redirect to login page
+        // No user session, redirect to login page. Member pages come back after signing in.
         const url = request.nextUrl.clone();
         url.pathname = "/login";
+        url.search = "";
+        const next = safeNextPath(`${request.nextUrl.pathname}${request.nextUrl.search}`);
+        if (next) url.searchParams.set("next", next);
         return NextResponse.redirect(url);
     }
 
