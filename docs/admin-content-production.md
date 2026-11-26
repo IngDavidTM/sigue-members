@@ -53,6 +53,15 @@ Configurar `CRON_SECRET` y programar una petición `GET /api/cron/form-notificat
 - En YouTube sube el video como **No listado**: no aparece en búsquedas, aunque quien tenga el enlace puede compartirlo.
 - Prueba de permisos: `psql -v ON_ERROR_STOP=1 -f tests/event-recordings.sql` en una base de pruebas con las migraciones aplicadas.
 
+## Organizaciones miembro
+
+- Cualquier persona con cuenta registra su organización en `/dashboard/organizacion` y queda como **responsable**. Completa 4 pasos (identidad, misión y alcance, equipo y contacto, finanzas en rangos y porcentajes) y la envía a revisión aceptando el uso de sus datos.
+- **Admin → Miembros** lista las organizaciones por estado (en revisión, necesita cambios, aprobada, borrador). La ficha muestra todos los datos, una lectura rápida (gasto en programas, concentración de ingresos, estados financieros, junta directiva), las personas y las invitaciones.
+- En la ficha se **aprueba** o se **piden cambios** (el mensaje es obligatorio y la organización lo ve en su panel). Las **notas internas** solo las ve el equipo de SIGUE.
+- El responsable invita a otras personas como **editor** o **lector**. La invitación es un enlace de un solo uso, válido 14 días y solo para el correo invitado; si `RESEND_API_KEY` está configurada también se envía por correo.
+- Una cuenta pertenece a una sola organización.
+- Prueba de permisos: `psql -v ON_ERROR_STOP=1 -f tests/member-organizations.sql` en una base de pruebas con las migraciones aplicadas.
+
 ## Verificación reproducible
 
 ```sh

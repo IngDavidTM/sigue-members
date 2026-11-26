@@ -12,6 +12,7 @@ import {
   MessageSquareText,
   Inbox,
   Tags,
+  Building2,
 } from "lucide-react";
 
 import { requireAdmin } from "@/lib/auth/authorization";
@@ -30,6 +31,7 @@ const navigation = [
   { href: "/admin/series", label: "Series", icon: FolderTree },
   { href: "/admin/tags", label: "Etiquetas", icon: Tags },
   { href: "/admin/comentarios", label: "Comentarios", icon: MessageSquareText },
+  { href: "/admin/miembros", label: "Miembros", icon: Building2 },
   { href: "/admin/eventos", label: "Eventos", icon: CalendarDays },
   { href: "/admin/sedes", label: "Sedes", icon: MapPin },
   { href: "/admin/formularios", label: "Formularios", icon: ClipboardList },

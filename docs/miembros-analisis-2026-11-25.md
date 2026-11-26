@@ -162,3 +162,8 @@ La fase 1 da valor inmediato (cumple lo que el menú ya promete y convierte los 
 3. **Hospedaje del video:** YouTube no listado o Vimeo con restricción de dominio.
 4. **Nivel de detalle financiero:** solo resumen anual o también registro de gastos individuales desde el inicio.
 5. **Preguntas del diagnóstico SIGUE:** conviene que las redacte el equipo de SIGUE (Sandra) para que coincidan con la metodología de Consulting y Tracks.
+
+## 11. Estado
+
+- **Fase 1** (webinars + base del panel): en producción desde el 25-nov (#47, #49). Cualquier cuenta registrada ve las grabaciones.
+- **Fase 2** (organización, onboarding, equipo y aprobación): implementada. Membresía gratuita con aprobación del admin; el pago se puede conectar después al estado de la organización.
